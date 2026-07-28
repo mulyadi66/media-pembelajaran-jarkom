@@ -1172,3 +1172,252 @@ a { text-decoration: none; color: inherit; }
   .ws-question { break-inside: avoid; page-break-inside: avoid; }
   .ws-q-hint { color: #666 !important; background: #f5f5f5 !important; }
 }
+
+/* ========== MODUL AJAR ========== */
+.ma-layout { display: flex; min-height: calc(100vh - 70px); }
+
+.ma-sidebar {
+  width: 260px; position: sticky; top: 70px; height: calc(100vh - 70px);
+  background: var(--bg-card); border-right: 1px solid var(--border);
+  display: flex; flex-direction: column; overflow-y: auto; flex-shrink: 0;
+}
+
+.ma-sidebar-header {
+  padding: 20px; border-bottom: 1px solid var(--border);
+}
+
+.ma-sidebar-header h4 { font-size: 1rem; font-weight: 700; }
+
+.ma-nav { list-style: none; padding: 8px; flex: 1; }
+
+.ma-nav-link {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px; border-radius: 8px;
+  font-size: 0.8rem; font-weight: 500; color: var(--text-light);
+  cursor: pointer; transition: all 0.2s; text-decoration: none;
+}
+
+.ma-nav-link:hover { background: var(--bg); color: var(--text); }
+.ma-nav-link.active { background: rgba(99,102,241,0.1); color: var(--primary); font-weight: 600; }
+
+.ma-print-btn { margin: 12px; width: calc(100% - 24px); justify-content: center; }
+
+.ma-content { flex: 1; padding: 0 30px 30px; max-width: 900px; }
+
+.ma-title-block {
+  text-align: center; padding: 30px 0 20px;
+  border-bottom: 2px solid var(--border); margin-bottom: 24px;
+}
+
+.ma-badge {
+  display: inline-block; background: var(--primary); color: white;
+  padding: 4px 14px; border-radius: 20px; font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 2px; margin-bottom: 12px;
+}
+
+.ma-title-block h1 { font-size: 1.5rem; font-weight: 800; margin-bottom: 8px; }
+.ma-title-block p { color: var(--text-light); font-size: 0.9rem; }
+
+.ma-section {
+  border: 1px solid var(--border); border-radius: var(--radius-lg);
+  margin-bottom: 16px; overflow: hidden; background: var(--bg-card);
+}
+
+.ma-section-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 20px; cursor: pointer; transition: background 0.2s;
+}
+
+.ma-section-header:hover { background: var(--bg); }
+
+.ma-section-title {
+  display: flex; align-items: center; gap: 10px;
+  font-weight: 700; font-size: 0.95rem;
+}
+
+.ma-section-title svg { color: var(--primary); }
+
+.ma-section-body { padding: 0 20px 20px; }
+.ma-section-body ul, .ma-section-body ol { padding-left: 20px; }
+.ma-section-body li { margin-bottom: 8px; font-size: 0.9rem; color: var(--text-light); line-height: 1.6; }
+.ma-section-body li strong { color: var(--text); }
+.ma-section-body p { font-size: 0.9rem; color: var(--text-light); margin-bottom: 8px; line-height: 1.6; }
+.ma-section-body h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 10px; color: var(--text); }
+.ma-section-body h5 { font-size: 0.88rem; font-weight: 700; margin-bottom: 8px; color: var(--primary); }
+
+/* Identitas */
+.ma-identitas-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
+}
+
+.ma-identitas-item {
+  padding: 10px 14px; border-radius: 8px;
+  background: var(--bg); border: 1px solid var(--border);
+}
+
+.ma-identitas-key {
+  display: block; font-size: 0.72rem; font-weight: 700;
+  color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px;
+  margin-bottom: 2px;
+}
+
+.ma-identitas-val { font-size: 0.88rem; font-weight: 500; color: var(--text); }
+
+/* Dimensi Profil Lulusan */
+.ma-profil-list { display: flex; flex-direction: column; gap: 12px; }
+
+.ma-profil-card {
+  padding: 16px; border-radius: var(--radius);
+  background: var(--bg); border: 1px solid var(--border);
+}
+
+.ma-profil-card h4 { margin-bottom: 6px; }
+.ma-profil-card p { margin-bottom: 8px; }
+
+.ma-profil-contoh {
+  font-size: 0.85rem; padding: 8px 12px;
+  background: rgba(99,102,241,0.05); border-radius: 6px;
+  color: var(--text-light); border-left: 3px solid var(--primary);
+}
+
+/* Sarana */
+.ma-remedial-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+/* Target */
+.ma-target-card { margin-bottom: 12px; }
+
+/* Model */
+.ma-model-list { display: flex; flex-direction: column; gap: 12px; }
+
+.ma-model-card {
+  padding: 16px; border-radius: var(--radius);
+  background: var(--bg); border: 1px solid var(--border);
+}
+
+.ma-model-card h4 { margin-bottom: 6px; color: var(--primary); }
+.ma-model-penerapan {
+  font-size: 0.85rem; margin-top: 8px; padding: 8px 12px;
+  background: rgba(99,102,241,0.05); border-radius: 6px;
+  color: var(--text-light); border-left: 3px solid var(--primary);
+}
+
+/* Tujuan Pembelajaran */
+.ma-aspek-tag {
+  display: inline-block; padding: 2px 8px; border-radius: 6px;
+  font-size: 0.72rem; font-weight: 700;
+  background: rgba(99,102,241,0.1); color: var(--primary);
+}
+
+/* Pemahaman Bermakna */
+.ma-pemahaman-list { display: flex; flex-direction: column; gap: 12px; }
+
+.ma-pemahaman-card {
+  padding: 16px; border-radius: var(--radius);
+  background: var(--bg); border: 1px solid var(--border);
+}
+
+.ma-pemahaman-q {
+  font-style: italic; font-size: 0.95rem; font-weight: 600;
+  color: var(--text); margin-bottom: 8px;
+}
+
+.ma-pemahaman-a { font-size: 0.88rem; color: var(--text-light); }
+
+/* Pertemuan */
+.ma-pertemuan {
+  padding: 20px; margin-bottom: 16px;
+  border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--bg);
+}
+
+.ma-pertemuan-header {
+  display: flex; gap: 10px; align-items: center; margin-bottom: 12px; flex-wrap: wrap;
+}
+
+.ma-pertemuan-badge {
+  background: var(--primary); color: white;
+  padding: 4px 12px; border-radius: 8px;
+  font-size: 0.75rem; font-weight: 700;
+}
+
+.ma-pertemuan-model {
+  background: rgba(16,185,129,0.1); color: var(--success);
+  padding: 4px 10px; border-radius: 6px;
+  font-size: 0.72rem; font-weight: 700;
+}
+
+.ma-pertemuan-durasi {
+  color: var(--text-light); font-size: 0.78rem; font-weight: 600;
+}
+
+.ma-kegiatan-phase {
+  margin-bottom: 14px; padding-left: 12px;
+  border-left: 3px solid var(--border);
+}
+
+.ma-kegiatan-phase h5 { margin-bottom: 6px; }
+
+.ma-asesmen-label {
+  padding: 8px 12px; border-radius: 6px;
+  background: rgba(99,102,241,0.05); font-size: 0.85rem;
+  color: var(--text-light); border: 1px solid var(--border);
+}
+
+/* Asesmen */
+.ma-asesmen-section { margin-bottom: 20px; }
+
+.ma-asesmen-soal { margin-top: 10px; }
+
+/* Pengayaan & Remedial */
+.ma-remedial-box {
+  padding: 16px; border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+
+.ma-remedial-box.pengayaan { background: #ecfdf515; border-color: var(--success); }
+.ma-remedial-box.remedial { background: #fef2f215; border-color: var(--warning); }
+
+.ma-remedial-box h4 { margin-bottom: 10px; }
+
+/* Refleksi */
+.ma-refleksi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+/* Footer */
+.ma-footer {
+  text-align: center; padding: 20px 0;
+  color: var(--text-lighter); font-size: 0.82rem;
+  border-top: 1px solid var(--border); margin-top: 24px;
+}
+
+/* ========== RESPONSIVE MA ========== */
+@media (max-width: 1024px) {
+  .ma-identitas-grid { grid-template-columns: 1fr; }
+  .ma-remedial-grid { grid-template-columns: 1fr; }
+  .ma-refleksi-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+  .ma-sidebar { display: none; }
+  .ma-content { padding: 0 16px 16px; }
+}
+
+/* ========== PRINT MODUL AJAR ========== */
+@media print {
+  .ma-sidebar, .topbar, .sidebar, .mobile-menu-btn,
+  .sidebar-overlay, .ma-print-btn, .btn { display: none !important; }
+
+  .ma-layout { display: block; }
+  .ma-content { max-width: 100%; padding: 0; }
+
+  .ma-section { break-inside: avoid; page-break-inside: avoid; border: 1px solid #ccc; }
+  .ma-section-header { background: #f0f0f0; padding: 10px 14px; }
+  .ma-section-body { padding: 0 14px 14px; }
+
+  .ma-title-block { border-bottom: 2px solid #333; }
+  .ma-title-block h1 { color: #1e293b; }
+
+  .ma-pertemuan { break-inside: avoid; page-break-inside: avoid; }
+
+  body { background: white; color: black; font-size: 11pt; }
+  .materi-table th { background: #333 !important; color: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}

@@ -12,6 +12,7 @@ import GlossaryPage from './pages/GlossaryPage';
 import DeviceSimulator from './pages/DeviceSimulator';
 import ChallengePage from './pages/ChallengePage';
 import WorksheetPage from './pages/WorksheetPage';
+import ModulAjarPage from './pages/ModulAjarPage';
 import Kasus from './pages/Kasus';
 import PreTest from './pages/PreTest';
 import PostTest from './pages/PostTest';
@@ -37,6 +38,7 @@ export default function App() {
               <Route path="/pretest" element={<PreTest />} />
               <Route path="/posttest" element={<PostTest />} />
               <Route path="/worksheet" element={<WorksheetPage />} />
+              <Route path="/modul-ajar" element={<ModulAjarPage />} />
               <Route path="/glossary" element={<GlossaryPage />} />
               <Route path="/hasil" element={<Hasil />} />
             </Route>

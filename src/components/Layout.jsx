@@ -14,6 +14,7 @@ const navItems = [
   { to: '/modul1', icon: Server, label: 'Modul 1: Peralatan Jaringan' },
   { to: '/modul2', icon: Projector, label: 'Modul 2: Topologi Jaringan' },
   { to: '/modul3', icon: CreditCard, label: 'Modul 3: Pengalamatan Jaringan' },
+  { to: '/modul-ajar', icon: FileText, label: 'Modul Ajar' },
   { to: '/flashcard', icon: BookOpen, label: 'Flashcard' },
   { to: '/simulator', icon: Network, label: 'Simulator Jaringan' },
   { to: '/dragdrop', icon: Puzzle, label: 'Drag & Drop Subnetting' },
@@ -29,6 +30,7 @@ const navItems = [
 const pageTitles = {
   '/': 'Dashboard', '/modul1': 'Modul 1: Peralatan Jaringan',
   '/modul2': 'Modul 2: Topologi Jaringan', '/modul3': 'Modul 3: Pengalamatan Jaringan',
+  '/modul-ajar': 'Modul Ajar',
   '/flashcard': 'Flashcard Interaktif', '/simulator': 'Simulator Jaringan',
   '/dragdrop': 'Drag & Drop Subnetting', '/challenge': 'Latihan Cepat',
   '/kasus': 'Studi Kasus', '/pretest': 'Pre-Test', '/posttest': 'Post-Test',
@@ -41,6 +43,7 @@ const pageDescriptions = {
   '/modul1': 'Kebutuhan teknis pengguna dan peralatan jaringan',
   '/modul2': 'Perancangan dan simulasi berbagai topologi jaringan',
   '/modul3': 'IP Address, Subnetting, CIDR, dan VLSM',
+  '/modul-ajar': 'Modul Ajar: Perencanaan & Pengalamatan Jaringan',
   '/flashcard': 'Kartu interaktif istilah jaringan komputer',
   '/simulator': 'Simulasi jaringan drag & drop',
   '/dragdrop': 'Latihan interaktif drag & drop',
