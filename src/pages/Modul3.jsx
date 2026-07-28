@@ -237,7 +237,7 @@ export default function Modul3() {
 
       <div className="materi-card">
         <h3><Globe size={18} /> Video Pembelajaran</h3>
-        <VideoEmbed videoId="BcVNLfpXfko" title="Subnetting Lengkap - IP Address & CIDR" />
+        <VideoEmbed videoId="9GtL8dW8rYY" title="IP Subnetting Lengkap - Binary, Class, VLSM & CIDR" />
       </div>
     </div>
   );

@@ -194,7 +194,7 @@ export default function Modul2() {
 
       <div className="materi-card">
         <h3><Projector size={18} /> Video Pembelajaran</h3>
-        <VideoEmbed videoId="IiQt2GMZ8gE" title="Topologi Jaringan - Materi Lengkap" />
+        <VideoEmbed videoId="QGykYWbdf0A" title="Topologi Jaringan - Bus, Ring, Star, Mesh, Tree" />
       </div>
     </div>
   );

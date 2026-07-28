@@ -126,7 +126,7 @@ export default function Modul1() {
       </MateriCard>
 
       <MateriCard icon={Wifi} title="Video Pembelajaran">
-        <VideoEmbed videoId="cU3BqRMbIeY" title="Pengenalan Peralatan Jaringan" />
+        <VideoEmbed videoId="LiMdHeaS4zY" title="Network Fundamentals - Peralatan Jaringan (Router, Switch, Hub)" />
       </MateriCard>
     </div>
   );
