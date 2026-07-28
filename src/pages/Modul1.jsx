@@ -1,6 +1,15 @@
 import { useEffect } from 'react';
 import { useApp } from '../context/AppContext';
 import { Server, Wifi, Plug, Monitor, Settings, Cable, Info, AlertTriangle, Star } from 'lucide-react';
+import VideoEmbed from '../components/VideoEmbed';
+import SectionTracker from '../components/SectionTracker';
+
+const sections = [
+  { id: 's1', label: '1.1 Kebutuhan Teknis Pengguna' },
+  { id: 's2', label: '1.2 Peralatan Jaringan' },
+  { id: 's3', label: '1.3 Standar Kabel dan Konektor' },
+  { id: 's4', label: '1.4 Teknologi Jaringan' },
+];
 
 export default function Modul1() {
   const { markModuleRead } = useApp();
@@ -8,6 +17,8 @@ export default function Modul1() {
 
   return (
     <div className="content-section">
+      <SectionTracker moduleId="modul1" sections={sections} />
+
       <MateriCard icon={Info} title="1.1 Kebutuhan Teknis Pengguna">
         <p>Sebelum merancang jaringan, seorang teknisi harus memahami kebutuhan teknis pengguna. Kebutuhan ini menjadi dasar dalam menentukan peralatan dan teknologi yang akan digunakan.</p>
         <div className="info-box">
@@ -112,6 +123,10 @@ export default function Modul1() {
           <strong><Star size={14} /> Tips Memilih</strong>
           <p>Jaringan kantor = minimal Gigabit Ethernet. Mobilitas = Wi-Fi 5/6. Backbone/server = Fiber Optik.</p>
         </div>
+      </MateriCard>
+
+      <MateriCard icon={Wifi} title="Video Pembelajaran">
+        <VideoEmbed videoId="cU3BqRMbIeY" title="Pengenalan Peralatan Jaringan" />
       </MateriCard>
     </div>
   );

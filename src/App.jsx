@@ -9,6 +9,9 @@ import Modul3 from './pages/Modul3';
 import DragDropSubnet from './pages/DragDropSubnet';
 import FlashcardPage from './pages/FlashcardPage';
 import GlossaryPage from './pages/GlossaryPage';
+import DeviceSimulator from './pages/DeviceSimulator';
+import ChallengePage from './pages/ChallengePage';
+import WorksheetPage from './pages/WorksheetPage';
 import Kasus from './pages/Kasus';
 import PreTest from './pages/PreTest';
 import PostTest from './pages/PostTest';
@@ -27,10 +30,13 @@ export default function App() {
               <Route path="/modul2" element={<Modul2 />} />
               <Route path="/modul3" element={<Modul3 />} />
               <Route path="/flashcard" element={<FlashcardPage />} />
+              <Route path="/simulator" element={<DeviceSimulator />} />
               <Route path="/dragdrop" element={<DragDropSubnet />} />
+              <Route path="/challenge" element={<ChallengePage />} />
               <Route path="/kasus" element={<Kasus />} />
               <Route path="/pretest" element={<PreTest />} />
               <Route path="/posttest" element={<PostTest />} />
+              <Route path="/worksheet" element={<WorksheetPage />} />
               <Route path="/glossary" element={<GlossaryPage />} />
               <Route path="/hasil" element={<Hasil />} />
             </Route>

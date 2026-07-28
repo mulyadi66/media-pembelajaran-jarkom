@@ -1,6 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { Globe, Scissors, Code, Sliders, Calculator, Info, AlertTriangle, Star } from 'lucide-react';
+import VideoEmbed from '../components/VideoEmbed';
+import SectionTracker from '../components/SectionTracker';
+
+const sections = [
+  { id: 's1', label: '3.1 IP Address' },
+  { id: 's2', label: '3.2 Subnetting' },
+  { id: 's3', label: '3.3 CIDR' },
+  { id: 's4', label: '3.4 VLSM' },
+  { id: 's5', label: '3.5 Kalkulator Subnetting' },
+  { id: 's6', label: '3.6 Kalkulator VLSM' },
+];
 
 function calcSubnet(ip, cidr) {
   const parts = ip.split('.').map(Number);
@@ -61,6 +72,8 @@ export default function Modul3() {
 
   return (
     <div className="content-section">
+      <SectionTracker moduleId="modul3" sections={sections} />
+
       <div className="materi-card">
         <h3><Globe size={18} /> 3.1 IP Address</h3>
         <p>IP Address adalah alamat numerik yang diberikan kepada setiap perangkat yang terhubung ke jaringan yang menggunakan protokol IP.</p>
@@ -220,6 +233,11 @@ export default function Modul3() {
             </div>
           )}
         </div>
+      </div>
+
+      <div className="materi-card">
+        <h3><Globe size={18} /> Video Pembelajaran</h3>
+        <VideoEmbed videoId="BcVNLfpXfko" title="Subnetting Lengkap - IP Address & CIDR" />
       </div>
     </div>
   );

@@ -1,6 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { Projector, Star, Minus, Circle, GitBranch, Network, Info, AlertTriangle, Calculator } from 'lucide-react';
+import VideoEmbed from '../components/VideoEmbed';
+import SectionTracker from '../components/SectionTracker';
+
+const sections = [
+  { id: 's1', label: '2.1 Pengertian Topologi' },
+  { id: 's2', label: '2.2 - 2.7 Jenis Topologi' },
+  { id: 's3', label: '2.8 Perbandingan' },
+  { id: 's4', label: '2.9 Simulasi Interaktif' },
+];
 
 const topologies = [
   { id: 'star', label: 'Star', icon: Star },
@@ -114,6 +123,8 @@ export default function Modul2() {
 
   return (
     <div className="content-section">
+      <SectionTracker moduleId="modul2" sections={sections} />
+
       <div className="materi-card">
         <h3><Info size={18} /> 2.1 Pengertian Topologi Jaringan</h3>
         <p>Topologi jaringan adalah cara atau metode pengaturan dan penghubungan antara satu komputer dengan komputer lainnya dalam sebuah jaringan.</p>
@@ -179,6 +190,11 @@ export default function Modul2() {
             <svg id="topoSvg" viewBox="0 0 600 400" />
           </div>
         </div>
+      </div>
+
+      <div className="materi-card">
+        <h3><Projector size={18} /> Video Pembelajaran</h3>
+        <VideoEmbed videoId="IiQt2GMZ8gE" title="Topologi Jaringan - Materi Lengkap" />
       </div>
     </div>
   );

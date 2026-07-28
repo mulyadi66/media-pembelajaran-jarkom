@@ -6,7 +6,7 @@ import StreakCounter from './StreakCounter';
 import {
   Home, Server, Projector, CreditCard, Briefcase,
   ClipboardCheck, FileText, BarChart3, Menu, X, Trophy, User, Search,
-  Network, Puzzle, BookOpen, BookA
+  Network, Puzzle, BookOpen, BookA, Zap, FileDown
 } from 'lucide-react';
 
 const navItems = [
@@ -15,10 +15,13 @@ const navItems = [
   { to: '/modul2', icon: Projector, label: 'Modul 2: Topologi Jaringan' },
   { to: '/modul3', icon: CreditCard, label: 'Modul 3: Pengalamatan Jaringan' },
   { to: '/flashcard', icon: BookOpen, label: 'Flashcard' },
+  { to: '/simulator', icon: Network, label: 'Simulator Jaringan' },
   { to: '/dragdrop', icon: Puzzle, label: 'Drag & Drop Subnetting' },
+  { to: '/challenge', icon: Zap, label: 'Latihan Cepat' },
   { to: '/kasus', icon: Briefcase, label: 'Studi Kasus' },
   { to: '/pretest', icon: ClipboardCheck, label: 'Pre-Test' },
   { to: '/posttest', icon: FileText, label: 'Post-Test' },
+  { to: '/worksheet', icon: FileDown, label: 'Lembar Kerja' },
   { to: '/glossary', icon: BookA, label: 'Glossarium' },
   { to: '/hasil', icon: BarChart3, label: 'Hasil & Sertifikat' },
 ];
@@ -26,9 +29,11 @@ const navItems = [
 const pageTitles = {
   '/': 'Dashboard', '/modul1': 'Modul 1: Peralatan Jaringan',
   '/modul2': 'Modul 2: Topologi Jaringan', '/modul3': 'Modul 3: Pengalamatan Jaringan',
-  '/flashcard': 'Flashcard Interaktif', '/dragdrop': 'Drag & Drop Subnetting',
+  '/flashcard': 'Flashcard Interaktif', '/simulator': 'Simulator Jaringan',
+  '/dragdrop': 'Drag & Drop Subnetting', '/challenge': 'Latihan Cepat',
   '/kasus': 'Studi Kasus', '/pretest': 'Pre-Test', '/posttest': 'Post-Test',
-  '/glossary': 'Glossarium Jaringan', '/hasil': 'Hasil & Sertifikat',
+  '/worksheet': 'Lembar Kerja', '/glossary': 'Glossarium Jaringan',
+  '/hasil': 'Hasil & Sertifikat',
 };
 
 const pageDescriptions = {
@@ -36,11 +41,14 @@ const pageDescriptions = {
   '/modul1': 'Kebutuhan teknis pengguna dan peralatan jaringan',
   '/modul2': 'Perancangan dan simulasi berbagai topologi jaringan',
   '/modul3': 'IP Address, Subnetting, CIDR, dan VLSM',
-  '/dragdrop': 'Latihan interaktif drag & drop',
   '/flashcard': 'Kartu interaktif istilah jaringan komputer',
+  '/simulator': 'Simulasi jaringan drag & drop',
+  '/dragdrop': 'Latihan interaktif drag & drop',
+  '/challenge': 'Latihan cepat subnetting melawan waktu',
   '/kasus': 'Terapkan pemahaman dalam permasalahan nyata',
   '/pretest': 'Uji pemahaman awal sebelum mempelajari materi',
   '/posttest': 'Evaluasi pemahaman setelah belajar. Target: ≥70',
+  '/worksheet': 'Lembar kerja praktik offline',
   '/glossary': 'Daftar istilah penting dalam jaringan komputer',
   '/hasil': 'Ringkasan, pencapaian, dan sertifikat',
 };

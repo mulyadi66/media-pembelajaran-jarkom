@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { checkBadges } from '../components/Badges';
-import { Server, Projector, CreditCard, Briefcase, ClipboardCheck, FileText, BarChart3, BookOpen, Trophy, Network, Monitor, Puzzle, Award, BookA } from 'lucide-react';
+import { Server, Projector, CreditCard, Briefcase, ClipboardCheck, FileText, BarChart3, BookOpen, Trophy, Network, Monitor, Puzzle, Award, BookA, Zap, FileDown } from 'lucide-react';
 
 export default function Dashboard() {
   const { modulesRead, scores, streak } = useApp();
@@ -15,12 +15,15 @@ export default function Dashboard() {
 
   const quickActions = [
     { to: '/flashcard', icon: BookOpen, title: 'Flashcard', desc: 'Hafal istilah jaringan', color: ['#8b5cf6', '#6d28d9'] },
-    { to: '/dragdrop', icon: Puzzle, title: 'Drag & Drop', desc: 'Latihan interaktif subnetting', color: ['#ec4899', '#db2777'] },
-    { to: '/kasus', icon: Briefcase, title: 'Studi Kasus', desc: 'Skenario jaringan nyata', color: ['#6366f1', '#818cf8'] },
-    { to: '/pretest', icon: ClipboardCheck, title: 'Pre-Test', desc: 'Uji pemahaman awal', color: ['#f59e0b', '#f97316'] },
-    { to: '/posttest', icon: FileText, title: 'Post-Test', desc: 'Evaluasi setelah belajar', color: ['#10b981', '#059669'] },
-    { to: '/glossary', icon: BookA, title: 'Glossarium', desc: 'Daftar istilah jaringan', color: ['#06b6d4', '#0891b2'] },
-    { to: '/hasil', icon: BarChart3, title: 'Hasil & Sertifikat', desc: 'Pencapaian & download', color: ['#f43f5e', '#e11d48'] },
+    { to: '/simulator', icon: Network, title: 'Simulator', desc: 'Bangun jaringan sendiri', color: ['#6366f1', '#818cf8'] },
+    { to: '/dragdrop', icon: Puzzle, title: 'Drag & Drop', desc: 'Latihan interaktif', color: ['#ec4899', '#db2777'] },
+    { to: '/challenge', icon: Zap, title: 'Latihan Cepat', desc: 'Subnetting race', color: ['#f59e0b', '#f97316'] },
+    { to: '/kasus', icon: Briefcase, title: 'Studi Kasus', desc: 'Skenario nyata', color: ['#10b981', '#059669'] },
+    { to: '/pretest', icon: ClipboardCheck, title: 'Pre-Test', desc: 'Uji awal', color: ['#06b6d4', '#0891b2'] },
+    { to: '/posttest', icon: FileText, title: 'Post-Test', desc: 'Evaluasi akhir', color: ['#ef4444', '#dc2626'] },
+    { to: '/worksheet', icon: FileDown, title: 'Lembar Kerja', desc: 'Soal offline', color: ['#7c3aed', '#6d28d9'] },
+    { to: '/glossary', icon: BookA, title: 'Glossarium', desc: 'Istilah jaringan', color: ['#0ea5e9', '#0284c7'] },
+    { to: '/hasil', icon: BarChart3, title: 'Hasil', desc: 'Pencapaian & sertifikat', color: ['#f43f5e', '#e11d48'] },
   ];
 
   return (

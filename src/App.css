@@ -1021,3 +1021,154 @@ a { text-decoration: none; color: inherit; }
 /* ========== QUIZ MODE SELECT (fix) ========== */
 .quiz-mode-select { text-align: center; max-width: 600px; margin: 0 auto; }
 .quiz-mode-select h2 { font-size: 1.4rem; font-weight: 800; margin-bottom: 8px; }
+
+/* ========== VIDEO EMBED ========== */
+.video-embed { margin: 16px 0; }
+
+.video-label {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.85rem; font-weight: 600; color: var(--text-light);
+  margin-bottom: 10px;
+}
+
+.video-label svg { color: var(--primary); }
+
+.video-wrapper {
+  position: relative; width: 100%;
+  padding-bottom: 56.25%; height: 0; overflow: hidden;
+  border-radius: var(--radius); background: #000;
+}
+
+.video-wrapper iframe {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 100%; border: none;
+}
+
+/* ========== SECTION TRACKER ========== */
+.section-tracker {
+  background: var(--bg-card); border-radius: var(--radius-lg); padding: 20px;
+  box-shadow: var(--shadow); margin-bottom: 20px; border: 1px solid var(--border);
+}
+
+.st-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 10px;
+}
+
+.st-title { font-weight: 700; font-size: 0.9rem; }
+.st-count { font-size: 0.8rem; color: var(--primary); font-weight: 600; }
+
+.st-list { display: flex; flex-direction: column; gap: 6px; }
+
+.st-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 12px; border-radius: 8px; cursor: pointer;
+  transition: all 0.2s; font-size: 0.88rem; color: var(--text-light);
+}
+
+.st-item:hover { background: var(--bg); }
+.st-item.done { color: var(--success); font-weight: 600; }
+
+/* ========== WORKSHEET ========== */
+.ws-tabs {
+  display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap;
+}
+
+.ws-tab {
+  padding: 8px 16px; border: 2px solid var(--border); border-radius: 8px;
+  background: var(--bg-card); font-family: inherit; font-size: 0.85rem; font-weight: 600;
+  cursor: pointer; transition: all 0.2s; color: var(--text-light);
+}
+
+.ws-tab:hover { border-color: var(--primary); color: var(--primary); }
+.ws-tab.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+.ws-questions { display: flex; flex-direction: column; gap: 12px; }
+
+.ws-question {
+  border: 1px solid var(--border); border-radius: var(--radius);
+  overflow: hidden; background: var(--bg-card);
+}
+
+.ws-q-header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 16px; cursor: pointer; transition: background 0.2s;
+}
+
+.ws-q-header:hover { background: var(--bg); }
+
+.ws-q-num {
+  background: var(--primary); color: white;
+  padding: 3px 10px; border-radius: 6px;
+  font-size: 0.75rem; font-weight: 700; flex-shrink: 0;
+}
+
+.ws-q-text {
+  flex: 1; font-size: 0.9rem; font-weight: 500; color: var(--text);
+  line-height: 1.5;
+}
+
+.ws-q-hint {
+  padding: 12px 16px; background: var(--bg);
+  border-top: 1px solid var(--border);
+  font-size: 0.85rem; color: var(--text-light); line-height: 1.6;
+}
+
+.ws-q-hint strong { color: var(--primary); }
+
+/* ========== CHALLENGE ========== */
+.challenge-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 12px;
+}
+
+.challenge-question {
+  font-size: 1.15rem; font-weight: 700; color: var(--text);
+  text-align: center; padding: 24px 16px;
+  background: var(--bg); border-radius: var(--radius);
+  line-height: 1.5;
+}
+
+/* ========== DEVICE SIMULATOR ========== */
+.sim-toolbar {
+  display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap;
+}
+
+.sim-device {
+  position: absolute; width: 64px; text-align: center;
+  cursor: grab; transition: box-shadow 0.2s; z-index: 2;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  padding: 8px 4px; border-radius: 10px; background: var(--bg-card);
+  border: 2px solid var(--border); box-shadow: var(--shadow);
+}
+
+.sim-device:hover { box-shadow: var(--shadow-lg); }
+.sim-device.selected { box-shadow: 0 0 0 3px var(--primary), var(--shadow-lg); }
+.sim-device:active { cursor: grabbing; }
+
+.sim-device-label {
+  font-size: 0.65rem; font-weight: 700; color: var(--text);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 60px;
+}
+
+.sim-device-ip {
+  font-size: 0.55rem; color: var(--primary); font-weight: 600;
+  font-family: 'Courier New', monospace;
+}
+
+.sim-device-remove {
+  position: absolute; top: -6px; right: -6px;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--danger); color: white; border: none;
+  display: none; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 0.6rem; padding: 0;
+}
+
+.sim-device:hover .sim-device-remove { display: flex; }
+
+/* ========== PRINT WORKSHEET ========== */
+@media print {
+  .ws-tab, .btn, .st-item, .sim-toolbar, .sim-device-remove { display: none !important; }
+  .ws-question { break-inside: avoid; page-break-inside: avoid; }
+  .ws-q-hint { color: #666 !important; background: #f5f5f5 !important; }
+}
