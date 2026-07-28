@@ -389,7 +389,7 @@ a { text-decoration: none; color: inherit; }
 .sim-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
 
 .sim-canvas {
-  width: 100%; height: 400px; background: #f8fafc;
+  position: relative; width: 100%; height: 400px; background: #f8fafc;
   border: 2px dashed var(--border); border-radius: var(--radius); overflow: hidden;
 }
 
