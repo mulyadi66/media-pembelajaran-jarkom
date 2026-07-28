@@ -3,13 +3,13 @@ export const modulAjar = {
     namaModul: 'Perencanaan dan Pengalamatan Jaringan',
     mataPelajaran: 'Teknik Jaringan Komputer dan Telekomunikasi',
     kode: 'TJKT-XII',
-    fase: 'E',
-    kelas: 'XII SMK',
+    fase: 'F',
+    kelas: 'XI TJKT',
     semester: 'Ganjil',
     alokasiWaktu: '24 JP (8 Pertemuan × 3 JP)',
-    tahunPelajaran: '2025/2026',
+    tahunPelajaran: '2026/2026',
     penyusun: 'Guru TJKT',
-    institusi: 'SMK Teknik Jaringan Komputer dan Telekomunikasi',
+    institusi: 'SMK Negeri 2 Kuningan',
   },
 
   kompetensiAwal: [

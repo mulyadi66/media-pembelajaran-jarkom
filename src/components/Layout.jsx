@@ -43,7 +43,7 @@ const pageDescriptions = {
   '/modul1': 'Kebutuhan teknis pengguna dan peralatan jaringan',
   '/modul2': 'Perancangan dan simulasi berbagai topologi jaringan',
   '/modul3': 'IP Address, Subnetting, CIDR, dan VLSM',
-  '/modul-ajar': 'Modul Ajar: Perencanaan & Pengalamatan Jaringan',
+  '/modul-ajar': 'Modul Ajar Perencanaan & Pengalamatan Jaringan — Fase F',
   '/flashcard': 'Kartu interaktif istilah jaringan komputer',
   '/simulator': 'Simulasi jaringan drag & drop',
   '/dragdrop': 'Latihan interaktif drag & drop',
