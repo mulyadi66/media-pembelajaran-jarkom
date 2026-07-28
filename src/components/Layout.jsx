@@ -6,7 +6,7 @@ import StreakCounter from './StreakCounter';
 import {
   Home, Server, Projector, CreditCard, Briefcase,
   ClipboardCheck, FileText, BarChart3, Menu, X, Trophy, User, Search,
-  Network, Puzzle
+  Network, Puzzle, BookOpen, BookA
 } from 'lucide-react';
 
 const navItems = [
@@ -14,18 +14,21 @@ const navItems = [
   { to: '/modul1', icon: Server, label: 'Modul 1: Peralatan Jaringan' },
   { to: '/modul2', icon: Projector, label: 'Modul 2: Topologi Jaringan' },
   { to: '/modul3', icon: CreditCard, label: 'Modul 3: Pengalamatan Jaringan' },
+  { to: '/flashcard', icon: BookOpen, label: 'Flashcard' },
   { to: '/dragdrop', icon: Puzzle, label: 'Drag & Drop Subnetting' },
   { to: '/kasus', icon: Briefcase, label: 'Studi Kasus' },
   { to: '/pretest', icon: ClipboardCheck, label: 'Pre-Test' },
   { to: '/posttest', icon: FileText, label: 'Post-Test' },
+  { to: '/glossary', icon: BookA, label: 'Glossarium' },
   { to: '/hasil', icon: BarChart3, label: 'Hasil & Sertifikat' },
 ];
 
 const pageTitles = {
   '/': 'Dashboard', '/modul1': 'Modul 1: Peralatan Jaringan',
   '/modul2': 'Modul 2: Topologi Jaringan', '/modul3': 'Modul 3: Pengalamatan Jaringan',
-  '/dragdrop': 'Drag & Drop Subnetting', '/kasus': 'Studi Kasus',
-  '/pretest': 'Pre-Test', '/posttest': 'Post-Test', '/hasil': 'Hasil & Sertifikat',
+  '/flashcard': 'Flashcard Interaktif', '/dragdrop': 'Drag & Drop Subnetting',
+  '/kasus': 'Studi Kasus', '/pretest': 'Pre-Test', '/posttest': 'Post-Test',
+  '/glossary': 'Glossarium Jaringan', '/hasil': 'Hasil & Sertifikat',
 };
 
 const pageDescriptions = {
@@ -34,9 +37,11 @@ const pageDescriptions = {
   '/modul2': 'Perancangan dan simulasi berbagai topologi jaringan',
   '/modul3': 'IP Address, Subnetting, CIDR, dan VLSM',
   '/dragdrop': 'Latihan interaktif drag & drop',
+  '/flashcard': 'Kartu interaktif istilah jaringan komputer',
   '/kasus': 'Terapkan pemahaman dalam permasalahan nyata',
   '/pretest': 'Uji pemahaman awal sebelum mempelajari materi',
   '/posttest': 'Evaluasi pemahaman setelah belajar. Target: ≥70',
+  '/glossary': 'Daftar istilah penting dalam jaringan komputer',
   '/hasil': 'Ringkasan, pencapaian, dan sertifikat',
 };
 
