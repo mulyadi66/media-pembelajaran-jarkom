@@ -88,7 +88,7 @@ export default function Dashboard() {
                 <span className="module-tag">Modul {to.split('/modul').pop()}</span>
                 <h3>{title}</h3><p>{desc}</p>
                 <div className="module-progress">
-                  <div className="progress-bar"><div className="progress-fill" style={{width: modulesRead[to.split('/').pop()] ? '100' : '0' + '%'}} /></div>
+                  <div className="progress-bar"><div className="progress-fill" style={{width: (modulesRead[to.split('/').pop()] ? '100' : '0') + '%'}} /></div>
                   <span>{modulesRead[to.split('/').pop()] ? '100%' : '0%'}</span>
                 </div>
               </div>

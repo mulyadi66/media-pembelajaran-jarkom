@@ -88,8 +88,8 @@ export default function DashboardDKK() {
                 <span className="module-tag">Elemen {to.split('/dkk/elemen').pop()}</span>
                 <h3>{title}</h3><p>{desc}</p>
                 <div className="module-progress">
-                  <div className="progress-bar"><div className="progress-fill" style={{width: modulesRead[to.split('/').pop()] ? '100' : '0' + '%'}} /></div>
-                  <span>{modulesRead[to.split('/').pop()] ? '100%' : '0%'}</span>
+                  <div className="progress-bar"><div className="progress-fill" style={{width: (modulesRead['dkk_' + to.split('/').pop()] ? '100' : '0') + '%'}} /></div>
+                  <span>{modulesRead['dkk_' + to.split('/').pop()] ? '100%' : '0%'}</span>
                 </div>
               </div>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{color:'var(--text-lighter)', flexShrink:0}} aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
