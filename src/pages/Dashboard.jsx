@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { checkBadges } from '../data/badges';
-import { Server, Projector, CreditCard, Briefcase, ClipboardCheck, FileText, BarChart3, BookOpen, Trophy, Network, Monitor, Puzzle, Award, BookA, Zap, FileDown, ExternalLink } from 'lucide-react';
+import { Server, Projector, CreditCard, Briefcase, ClipboardCheck, FileText, BarChart3, BookOpen, Trophy, Network, Monitor, Puzzle, Award, BookA, Zap, FileDown, ExternalLink, Globe } from 'lucide-react';
 
 export default function Dashboard() {
   const { modulesRead, scores } = useApp();
@@ -24,6 +24,7 @@ export default function Dashboard() {
     { to: '/mpk1/worksheet', icon: FileDown, title: 'Lembar Kerja', desc: 'Soal offline', color: ['#7c3aed', '#6d28d9'] },
     { to: '/mpk1/glossary', icon: BookA, title: 'Glossarium', desc: 'Istilah jaringan', color: ['#0ea5e9', '#0284c7'] },
     { to: '/mpk1/hasil', icon: BarChart3, title: 'Hasil', desc: 'Pencapaian & sertifikat', color: ['#f43f5e', '#e11d48'] },
+    { to: 'https://tjkt.smkn2-kng.sch.id/', icon: Globe, title: 'Website TJKT', desc: 'Kembali ke portal sekolah', color: ['#1e293b', '#334155'], external: true },
   ];
 
   return (
@@ -101,13 +102,22 @@ export default function Dashboard() {
       <section className="section-block">
         <h2><Briefcase size={20} /> Akses Cepat</h2>
         <div className="actions-grid">
-          {quickActions.map(({ to, icon: Icon, title, desc, color }) => (
-            <Link to={to} className="action-card" key={to}>
-              <div className="action-icon" style={{background: `linear-gradient(135deg, ${color[0]}, ${color[1]})`}}>
-                <Icon size={22} color="white" />
-              </div>
-              <h4>{title}</h4><p>{desc}</p>
-            </Link>
+          {quickActions.map(({ to, icon: Icon, title, desc, color, external }) => (
+            external ? (
+              <a href={to} target="_blank" rel="noopener noreferrer" className="action-card" key={to}>
+                <div className="action-icon" style={{background: `linear-gradient(135deg, ${color[0]}, ${color[1]})`}}>
+                  <Icon size={22} color="white" />
+                </div>
+                <h4>{title} <ExternalLink size={12} style={{opacity:0.6,verticalAlign:'middle'}} /></h4><p>{desc}</p>
+              </a>
+            ) : (
+              <Link to={to} className="action-card" key={to}>
+                <div className="action-icon" style={{background: `linear-gradient(135deg, ${color[0]}, ${color[1]})`}}>
+                  <Icon size={22} color="white" />
+                </div>
+                <h4>{title}</h4><p>{desc}</p>
+              </Link>
+            )
           ))}
         </div>
       </section>
