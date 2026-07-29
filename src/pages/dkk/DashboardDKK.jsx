@@ -44,12 +44,12 @@ export default function DashboardDKK() {
         </div>
         <div className="hero-visual">
           <div className="network-animation">
-            <div className="node center-node"><Monitor size={28} /></div>
-            <div className="node node-1"><Globe size={18} /></div>
-            <div className="node node-2"><Shield size={18} /></div>
-            <div className="node node-3"><Radio size={18} /></div>
-            <div className="node node-4"><Ruler size={18} /></div>
-            <svg className="lines" viewBox="0 0 300 300">
+            <div className="node center-node" aria-hidden="true"><Monitor size={28} /></div>
+            <div className="node node-1" aria-hidden="true"><Globe size={18} /></div>
+            <div className="node node-2" aria-hidden="true"><Shield size={18} /></div>
+            <div className="node node-3" aria-hidden="true"><Radio size={18} /></div>
+            <div className="node node-4" aria-hidden="true"><Ruler size={18} /></div>
+            <svg className="lines" viewBox="0 0 300 300" aria-hidden="true">
               <line x1="150" y1="150" x2="50" y2="50" stroke="rgba(16,185,129,0.4)" strokeWidth="2"/>
               <line x1="150" y1="150" x2="250" y2="50" stroke="rgba(245,158,11,0.4)" strokeWidth="2"/>
               <line x1="150" y1="150" x2="50" y2="250" stroke="rgba(239,68,68,0.4)" strokeWidth="2"/>
@@ -92,7 +92,7 @@ export default function DashboardDKK() {
                   <span>{modulesRead[to.split('/').pop()] ? '100%' : '0%'}</span>
                 </div>
               </div>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{color:'var(--text-lighter)', flexShrink:0}}><polyline points="9 18 15 12 9 6"/></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{color:'var(--text-lighter)', flexShrink:0}} aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
             </Link>
           ))}
         </div>

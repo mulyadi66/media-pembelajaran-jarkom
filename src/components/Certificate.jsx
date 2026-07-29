@@ -39,7 +39,7 @@ export default function Certificate({ studentName = 'Siswa', module }) {
 
         <div style={{ textAlign: 'center', position: 'relative', zIndex: 1 }}>
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>
-            <Award size={48} color="#4f46e5" />
+            <Award size={48} color="#4f46e5" aria-hidden="true" />
           </div>
           <h1 style={{ fontSize: 36, color: '#4f46e5', marginBottom: 4, fontWeight: 700 }}>SERTIFIKAT</h1>
           <p style={{ fontSize: 14, color: '#64748b', letterSpacing: 4, textTransform: 'uppercase', marginBottom: 24 }}>Penyelesaian Pembelajaran</p>

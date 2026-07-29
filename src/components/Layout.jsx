@@ -131,7 +131,7 @@ export default function Layout() {
 
   return (
     <div className={`app-layout ${sidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
-      {sidebarOpen && <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)} />}
+      {sidebarOpen && <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)} role="button" tabIndex={0} aria-label="Tutup menu navigasi" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSidebarOpen(false); }}} />}
 
       <nav className={`sidebar ${sidebarOpen ? 'mobile-open' : ''} ${sidebarCollapsed ? 'collapsed' : ''}`} aria-label="Navigasi utama">
         <div className="sidebar-header">
@@ -182,7 +182,7 @@ export default function Layout() {
               <Trophy size={16} />
               <span>{totalScore}</span> pts
             </div>
-            <div className="avatar"><User size={18} /></div>
+            <div className="avatar" aria-hidden="true"><User size={18} /></div>
           </div>
         </header>
 

@@ -45,12 +45,12 @@ export default function Dashboard() {
           </div>
         <div className="hero-visual">
           <div className="network-animation">
-            <div className="node center-node"><Monitor size={28} /></div>
-            <div className="node node-1"><Server size={18} /></div>
-            <div className="node node-2"><Monitor size={18} /></div>
-            <div className="node node-3"><Network size={18} /></div>
-            <div className="node node-4"><Projector size={18} /></div>
-            <svg className="lines" viewBox="0 0 300 300">
+            <div className="node center-node" aria-hidden="true"><Monitor size={28} /></div>
+            <div className="node node-1" aria-hidden="true"><Server size={18} /></div>
+            <div className="node node-2" aria-hidden="true"><Monitor size={18} /></div>
+            <div className="node node-3" aria-hidden="true"><Network size={18} /></div>
+            <div className="node node-4" aria-hidden="true"><Projector size={18} /></div>
+            <svg className="lines" viewBox="0 0 300 300" aria-hidden="true">
               <line x1="150" y1="150" x2="50" y2="50" stroke="rgba(99,102,241,0.4)" strokeWidth="2"/>
               <line x1="150" y1="150" x2="250" y2="50" stroke="rgba(99,102,241,0.4)" strokeWidth="2"/>
               <line x1="150" y1="150" x2="50" y2="250" stroke="rgba(99,102,241,0.4)" strokeWidth="2"/>
@@ -92,7 +92,7 @@ export default function Dashboard() {
                   <span>{modulesRead[to.split('/').pop()] ? '100%' : '0%'}</span>
                 </div>
               </div>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{color:'var(--text-lighter)', flexShrink:0}}><polyline points="9 18 15 12 9 6"/></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{color:'var(--text-lighter)', flexShrink:0}} aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>{/* eslint-disable-line */}
             </Link>
           ))}
         </div>

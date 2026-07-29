@@ -139,7 +139,10 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
                 padding: 12, marginBottom: 10, borderRadius: 10,
                 border: `2px solid ${isCorrect ? 'var(--success)' : 'var(--danger)'}`,
                 background: isCorrect ? '#ecfdf5' : '#fef2f2', cursor: 'pointer'
-              }} onClick={() => { setCurrentIdx(i); setShowExplanation(prev => ({...prev, [i]: true})); }}>
+              }} onClick={() => { setCurrentIdx(i); setShowExplanation(prev => ({...prev, [i]: true})); }}
+                role="button" tabIndex={0}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setCurrentIdx(i); setShowExplanation(prev => ({...prev, [i]: true})); } }}
+                aria-label={`Lihat soal ${i + 1}`}>
                 <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom: 4}}>
                   <span style={{fontWeight: 700, fontSize: '0.85rem'}}>Soal {i + 1} — {q.level}</span>
                   {isCorrect ? <CheckCircle size={18} color="var(--success)" /> : <XCircle size={18} color="var(--danger)" />}

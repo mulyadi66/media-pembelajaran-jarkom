@@ -24,7 +24,7 @@ export default function Portal() {
       <header className="portal-header">
         <div className="portal-header-inner">
           <div className="portal-logo">
-            <School size={28} />
+            <School size={28} aria-hidden="true" />
             <div>
               <h1>Media Pembelajaran TJKT</h1>
               <p>SMK Negeri 2 Kuningan</p>
@@ -47,31 +47,31 @@ export default function Portal() {
               return (
                 <a key={s.id} href={s.external} className="portal-card active" style={{'--card-color': s.color}}>
                   <div className="portal-card-icon" style={{background: `linear-gradient(135deg, ${s.color}, ${s.color}dd)`}}>
-                    <Icon size={28} />
+                    <Icon size={28} aria-hidden="true" />
                   </div>
                   <div className="portal-card-body">
                     <span className="portal-card-badge">{s.label}</span>
                     <h3>{s.title}</h3>
                   </div>
-                  <ExternalLink size={18} className="portal-card-arrow" />
+                  <ExternalLink size={18} className="portal-card-arrow" aria-hidden="true" />
                 </a>
               );
             }
             return s.active ? (
               <Link key={s.id} to={s.path} className="portal-card active" style={{'--card-color': s.color}}>
                 <div className="portal-card-icon" style={{background: `linear-gradient(135deg, ${s.color}, ${s.color}dd)`}}>
-                  <Icon size={28} />
+                  <Icon size={28} aria-hidden="true" />
                 </div>
                 <div className="portal-card-body">
                   <span className="portal-card-badge">{s.label}</span>
                   <h3>{s.title}</h3>
                 </div>
-                <ChevronRight size={20} className="portal-card-arrow" />
+                <ChevronRight size={20} className="portal-card-arrow" aria-hidden="true" />
               </Link>
             ) : (
               <div key={s.id} className="portal-card disabled">
                 <div className="portal-card-icon" style={{background: `linear-gradient(135deg, ${s.color}44, ${s.color}22)`}}>
-                  <Icon size={28} />
+                  <Icon size={28} aria-hidden="true" />
                 </div>
                 <div className="portal-card-body">
                   <span className="portal-card-badge">{s.label}</span>

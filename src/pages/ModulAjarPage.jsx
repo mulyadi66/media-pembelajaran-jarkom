@@ -43,16 +43,18 @@ const m = modulAjar;
 
 function Section({ id, title, icon: Icon, children, defaultOpen }) {
   const [open, setOpen] = useState(defaultOpen || false);
+  const bodyId = `ma-body-${id}`;
   return (
     <div className="ma-section" id={`ma-${id}`}>
-      <div className="ma-section-header" onClick={() => setOpen(!open)}>
+      <div className="ma-section-header" onClick={() => setOpen(!open)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setOpen(!open); } }}
+        role="button" tabIndex={0} aria-expanded={open} aria-controls={bodyId} aria-label={title}>
         <div className="ma-section-title">
-          <Icon size={18} />
+          <Icon size={18} aria-hidden="true" />
           <span>{title}</span>
         </div>
-        {open ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+        {open ? <ChevronUp size={18} aria-hidden="true" /> : <ChevronDown size={18} aria-hidden="true" />}
       </div>
-      {open && <div className="ma-section-body">{children}</div>}
+      {open && <div className="ma-section-body" id={bodyId}>{children}</div>}
     </div>
   );
 }
@@ -125,7 +127,7 @@ export default function ModulAjarPage() {
   return (
     <div className="ma-layout">
       {/* Sidebar */}
-      <nav className="ma-sidebar">
+      <nav className="ma-sidebar" aria-label="Daftar isi modul ajar">
         <div className="ma-sidebar-header">
           <h4>Modul Ajar</h4>
           <p style={{fontSize:'0.72rem',color:'var(--text-lighter)'}}>Perencanaan & Pengalamatan Jaringan</p>
