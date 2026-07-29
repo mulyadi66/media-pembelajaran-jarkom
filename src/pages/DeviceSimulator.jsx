@@ -73,6 +73,7 @@ export default function DeviceSimulator() {
 
   const startDrag = (id, e) => {
     e.stopPropagation();
+    if (e.touches) e.preventDefault();
     setSelectedDevice(id);
     const pos = getPosFromEvent(e);
     const rect = canvasRef.current.getBoundingClientRect();

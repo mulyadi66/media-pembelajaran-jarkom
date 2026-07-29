@@ -1262,6 +1262,7 @@ a { text-decoration: none; color: inherit; }
 .sim-device {
   position: absolute; width: 64px; text-align: center;
   cursor: grab; transition: box-shadow 0.2s; z-index: 2;
+  touch-action: none;
   display: flex; flex-direction: column; align-items: center; gap: 2px;
   padding: 8px 4px; border-radius: 10px; background: var(--bg-card);
   border: 2px solid var(--border); box-shadow: var(--shadow);
