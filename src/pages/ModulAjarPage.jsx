@@ -1,5 +1,5 @@
-import { useState, useMemo } from 'react';
-import { Printer, ChevronDown, ChevronUp, BookOpen, CheckCircle, Users, Target, Lightbulb, ClipboardList, Award, ArrowRight, Layers } from 'lucide-react';
+import { useState, useMemo, useRef } from 'react';
+import { Printer, FileDown, ChevronDown, ChevronUp, BookOpen, CheckCircle, Users, Target, Lightbulb, ClipboardList, Award, ArrowRight, Layers } from 'lucide-react';
 import { modulAjar } from '../data/modulAjar';
 
 const MODUL_FILTERS = [
@@ -71,6 +71,48 @@ function Table({ headers, rows }) {
 export default function ModulAjarPage() {
   const [activeSection, setActiveSection] = useState('identitas');
   const [modulFilter, setModulFilter] = useState('all');
+  const contentRef = useRef(null);
+  const [pdfLoading, setPdfLoading] = useState(false);
+
+  const downloadPDF = async () => {
+    setPdfLoading(true);
+    try {
+      const html2canvas = (await import('html2canvas')).default;
+      const { jsPDF } = await import('jspdf');
+      const el = contentRef.current;
+      if (!el) return;
+      const canvas = await html2canvas(el, { scale: 2, backgroundColor: '#ffffff' });
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const pdfW = pdf.internal.pageSize.getWidth();
+      const pdfH = pdf.internal.pageSize.getHeight();
+      const imgW = canvas.width;
+      const imgH = canvas.height;
+      let hRatio = pdfW / imgW;
+      let vRatio = pdfH / imgH;
+      let ratio = Math.min(hRatio, vRatio);
+      if (imgH * ratio > pdfH) { ratio = hRatio; }
+      const w = imgW * ratio;
+      let y = 0;
+      while (y < imgH) {
+        const sliceH = Math.min(imgH - y, pdfH / ratio);
+        const sliceCanvas = document.createElement('canvas');
+        sliceCanvas.width = imgW;
+        sliceCanvas.height = sliceH;
+        const ctx = sliceCanvas.getContext('2d');
+        ctx.drawImage(canvas, 0, y, imgW, sliceH, 0, 0, imgW, sliceH);
+        const sliceData = sliceCanvas.toDataURL('image/png');
+        if (y > 0) pdf.addPage();
+        pdf.addImage(sliceData, 'PNG', 0, 0, w, sliceH * ratio);
+        y += sliceH;
+      }
+      const modulLabel = modulFilter === 'all' ? 'Lengkap' : `Modul-${modulFilter}`;
+      pdf.save(`Modul-Ajar-Jarkom-${modulLabel}.pdf`);
+    } catch (err) {
+      console.error('PDF generation failed:', err);
+    } finally {
+      setPdfLoading(false);
+    }
+  };
 
   const filteredKegiatan = useMemo(() => {
     if (modulFilter === 'all') return m.kegiatanPembelajaran;
@@ -101,12 +143,15 @@ export default function ModulAjarPage() {
           ))}
         </ul>
         <button className="btn btn-secondary ma-print-btn" onClick={() => window.print()}>
-          <Printer size={14} /> Cetak Modul Ajar
+          <Printer size={14} /> Cetak
+        </button>
+        <button className="btn btn-primary ma-print-btn" onClick={downloadPDF} disabled={pdfLoading}>
+          <FileDown size={14} /> {pdfLoading ? 'Memproses...' : 'Download PDF'}
         </button>
       </nav>
 
         {/* Content */}
-      <div className="ma-content">
+      <div className="ma-content" ref={contentRef}>
         {/* Modul Filter Tabs */}
         <div className="ma-modul-tabs" role="tablist" aria-label="Filter modul">
           {MODUL_FILTERS.map(f => (
