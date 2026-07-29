@@ -1,10 +1,13 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { checkBadges } from '../data/badges';
 import { Server, Projector, CreditCard, BookOpen, Trophy, Network, Monitor, Puzzle, Award, BookA, Zap, FileDown, BarChart3, Briefcase, ClipboardCheck, FileText, RotateCcw } from 'lucide-react';
+import ConfirmModal from '../components/ConfirmModal';
 
 export default function Dashboard() {
   const { modulesRead, scores, resetAll } = useApp();
+  const [showReset, setShowReset] = useState(false);
   const earnedBadges = checkBadges(scores, modulesRead);
 
   const modules = [
@@ -126,9 +129,18 @@ export default function Dashboard() {
       )}
 
       <section className="section-block" style={{textAlign:'center', marginTop:40}}>
-        <button className="reset-btn" onClick={() => { if (confirm('Yakin ingin mereset semua pengerjaan? Data akan hilang permanen.')) { resetAll(); } }}>
+        <button className="reset-btn" onClick={() => setShowReset(true)}>
           <RotateCcw size={16} /> Reset Pengerjaan
         </button>
+        <ConfirmModal
+          open={showReset}
+          title="Reset Semua Pengerjaan?"
+          message="Semua progress, nilai, jawaban pretest/posttest, dan data lainnya akan dihapus permanen. Tindakan ini tidak bisa dibatalkan."
+          confirmLabel="Ya, Reset"
+          cancelLabel="Batal"
+          onConfirm={() => { resetAll(); setShowReset(false); }}
+          onCancel={() => setShowReset(false)}
+        />
       </section>
 
       <footer className="footer"><p>&copy; 2026 TJKT SMKN 2 KUNINGAN</p></footer>

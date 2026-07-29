@@ -670,6 +670,50 @@ a { text-decoration: none; color: inherit; }
 .result-detail .detail-value { font-size: 1.3rem; font-weight: 700; color: var(--primary); }
 .result-detail .detail-label { font-size: 0.8rem; color: var(--text-light); margin-top: 4px; }
 
+/* ========== MODAL ========== */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center;
+  animation: fadeIn 0.2s ease; padding: 20px;
+}
+.modal-content {
+  background: var(--bg-card); border-radius: 16px; padding: 32px;
+  max-width: 400px; width: 100%; position: relative;
+  text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  animation: slideUp 0.3s ease;
+}
+.modal-close {
+  position: absolute; top: 12px; right: 12px;
+  background: none; border: none; cursor: pointer;
+  color: var(--text-lighter); padding: 4px; border-radius: 6px;
+  display: flex; transition: all 0.2s;
+}
+.modal-close:hover { background: var(--bg-hover); color: var(--text); }
+.modal-icon {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: rgba(239,68,68,0.12); color: #ef4444;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 16px;
+}
+.modal-content h3 { margin: 0 0 8px; font-size: 1.15rem; color: var(--text); }
+.modal-content p { margin: 0 0 24px; font-size: 0.9rem; color: var(--text-light); line-height: 1.5; }
+.modal-actions { display: flex; gap: 12px; justify-content: center; }
+.modal-btn {
+  padding: 10px 24px; border-radius: 10px; font-size: 0.9rem;
+  font-weight: 600; cursor: pointer; border: none; transition: all 0.2s;
+  min-width: 100px;
+}
+.modal-btn-cancel { background: var(--bg-hover); color: var(--text); }
+.modal-btn-cancel:hover { background: var(--border); }
+.modal-btn-confirm { background: #ef4444; color: white; }
+.modal-btn-confirm:hover { background: #dc2626; }
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
 /* ========== FOOTER ========== */
 .reset-btn {
   background: transparent; border: 1px solid var(--border);
