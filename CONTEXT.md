@@ -1,6 +1,6 @@
 # Context Save — Media Pembelajaran Jarkom
 
-**Terakhir diupdate:** 28 Juli 2026
+**Terakhir diupdate:** 29 Juli 2026
 **Branch:** master
 **Status:** Bersih (no uncommitted changes)
 
@@ -19,6 +19,13 @@ Media pembelajaran interaktif React untuk siswa SMK TJKT Kelas XI, Fase F — Pe
 - React 19 + Vite, React Router, Lucide React, html2canvas + jsPDF
 - State: Context API (AppContext), localStorage persistence
 - PWA: manifest.json + service worker
+
+## MPK 2
+- **Mapel:** Teknologi Jaringan Kabel dan Nirkabel
+- **Akronim:** MPK 2, rute `/mpk2/`
+- **5 Modul:** (1) Instalasi & Perawatan Jaringan, (2) Dasar Jaringan Nirkabel, (3) Instalasi Perangkat Nirkabel, (4) VoIP, (5) Fiber Optik
+- **Fitur:** Dashboard, Modul1-5 (materi + video + section tracker), Flashcard (35 istilah), Glossary (35 + search), Worksheet (25 essay), PreTest/PostTest (20 HOTS), Challenge (50 soal cepat), Kasus (3 studi kasus), Hasil (ringkasan + reset)
+- **Data:** `src/data/mpk2/`, halaman: `src/pages/mpk2/`
 
 ## Modul Ajar
 - File: `src/data/modulAjar.js` + `src/pages/ModulAjarPage.jsx`

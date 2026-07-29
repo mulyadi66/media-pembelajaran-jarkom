@@ -7,7 +7,8 @@ import {
   Home, Server, Projector, CreditCard, Briefcase,
   ClipboardCheck, FileText, BarChart3, Menu, X, Trophy, User, Search,
   Network, Puzzle, BookOpen, BookA, Zap, FileDown, PanelLeftClose, PanelLeft,
-  ArrowLeft, Globe, Shield, Radio, Ruler, Wifi, Cable, Phone, Circle
+  ArrowLeft, Globe, Shield, Radio, Ruler, Wifi, Cable, Phone, Circle,
+  Wrench, Signal, Antenna
 } from 'lucide-react';
 
 const subjects = {
@@ -119,9 +120,9 @@ const subjects = {
     title: 'Teknologi Jaringan Kabel dan Nirkabel',
     items: [
       { to: '/mpk2', icon: Home, label: 'Dashboard' },
-      { to: '/mpk2/modul1', icon: Cable, label: 'Modul 1: Instalasi & Perawatan Jaringan' },
-      { to: '/mpk2/modul2', icon: Wifi, label: 'Modul 2: Dasar Jaringan Nirkabel' },
-      { to: '/mpk2/modul3', icon: Radio, label: 'Modul 3: Instalasi Perangkat Nirkabel' },
+      { to: '/mpk2/modul1', icon: Wrench, label: 'Modul 1: Instalasi & Perawatan Jaringan' },
+      { to: '/mpk2/modul2', icon: Signal, label: 'Modul 2: Dasar Jaringan Nirkabel' },
+      { to: '/mpk2/modul3', icon: Antenna, label: 'Modul 3: Instalasi Perangkat Nirkabel' },
       { to: '/mpk2/modul4', icon: Phone, label: 'Modul 4: Voice over IP (VoIP)' },
       { to: '/mpk2/modul5', icon: Circle, label: 'Modul 5: Jaringan Fiber Optik' },
       { to: '/mpk2/flashcard', icon: BookOpen, label: 'Flashcard' },
