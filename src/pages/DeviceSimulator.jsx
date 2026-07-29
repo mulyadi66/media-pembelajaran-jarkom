@@ -86,13 +86,14 @@ export default function DeviceSimulator() {
   };
 
   const moveDrag = useCallback((e) => {
-    if (!dragRef.current) return;
+    const drag = dragRef.current;
+    if (!drag) return;
     e.preventDefault();
     const pos = getPosFromEvent(e);
     const rect = canvasRef.current.getBoundingClientRect();
-    const x = Math.max(0, Math.min(rect.width - 64, pos.clientX - rect.left - dragRef.current.offsetX));
-    const y = Math.max(0, Math.min(rect.height - 100, pos.clientY - rect.top - dragRef.current.offsetY));
-    setDevices(prev => prev.map(d => d.id === dragRef.current.id ? { ...d, x, y } : d));
+    const x = Math.max(0, Math.min(rect.width - 64, pos.clientX - rect.left - drag.offsetX));
+    const y = Math.max(0, Math.min(rect.height - 100, pos.clientY - rect.top - drag.offsetY));
+    setDevices(prev => prev.map(d => d.id === drag.id ? { ...d, x, y } : d));
   }, []);
 
   const endDrag = useCallback(() => {
