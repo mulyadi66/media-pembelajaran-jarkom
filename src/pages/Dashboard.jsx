@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { checkBadges } from '../data/badges';
-import { Server, Projector, CreditCard, BookOpen, Trophy, Award } from 'lucide-react';
+import { Server, Projector, CreditCard, BookOpen, Trophy, Network, Monitor, Puzzle, Award, BookA, Zap, FileDown, BarChart3, Briefcase, ClipboardCheck, FileText } from 'lucide-react';
 
 export default function Dashboard() {
   const { modulesRead, scores } = useApp();
@@ -13,8 +13,50 @@ export default function Dashboard() {
     { to: '/mpk1/modul3', icon: CreditCard, title: 'Pengalamatan Jaringan', desc: 'IP, Subnetting, CIDR, VLSM + kalkulator', color: ['#4facfe', '#00f2fe'] },
   ];
 
+  const quickActions = [
+    { to: '/mpk1/flashcard', icon: BookA, title: 'Flashcard', desc: 'Hafal istilah jaringan', color: ['#8b5cf6', '#6d28d9'] },
+    { to: '/mpk1/simulator', icon: Network, title: 'Simulator', desc: 'Bangun jaringan sendiri', color: ['#6366f1', '#818cf8'] },
+    { to: '/mpk1/dragdrop', icon: Puzzle, title: 'Drag & Drop', desc: 'Latihan interaktif', color: ['#ec4899', '#db2777'] },
+    { to: '/mpk1/challenge', icon: Zap, title: 'Latihan Cepat', desc: 'Subnetting race', color: ['#f59e0b', '#f97316'] },
+    { to: '/mpk1/kasus', icon: Briefcase, title: 'Studi Kasus', desc: 'Skenario nyata', color: ['#10b981', '#059669'] },
+    { to: '/mpk1/pretest', icon: ClipboardCheck, title: 'Pre-Test', desc: 'Uji awal', color: ['#06b6d4', '#0891b2'] },
+    { to: '/mpk1/posttest', icon: FileText, title: 'Post-Test', desc: 'Evaluasi akhir', color: ['#ef4444', '#dc2626'] },
+    { to: '/mpk1/worksheet', icon: FileDown, title: 'Lembar Kerja', desc: 'Soal offline', color: ['#7c3aed', '#6d28d9'] },
+    { to: '/mpk1/glossary', icon: BookOpen, title: 'Glossarium', desc: 'Istilah jaringan', color: ['#0ea5e9', '#0284c7'] },
+    { to: '/mpk1/hasil', icon: BarChart3, title: 'Hasil', desc: 'Pencapaian & sertifikat', color: ['#f43f5e', '#e11d48'] },
+  ];
+
   return (
     <>
+      <section className="hero">
+        <div className="hero-content">
+          <div className="hero-badge">Kelas XI TJKT</div>
+          <h1>Perencanaan & Pengalamatan Jaringan</h1>
+          <p>Mata Pelajaran Kejuruan Teknik Jaringan Komputer dan Telekomunikasi</p>
+          <div className="hero-stats">
+            <div className="stat"><BookOpen size={18} /> <span>3 Modul</span></div>
+            <div className="stat"><Briefcase size={18} /> <span>Studi Kasus</span></div>
+            <div className="stat"><Puzzle size={18} /> <span>Drag & Drop</span></div>
+              <div className="stat"><ClipboardCheck size={18} /> <span>Pre & Post Test</span></div>
+            </div>
+          </div>
+        <div className="hero-visual">
+          <div className="network-animation">
+            <div className="node center-node"><Monitor size={28} /></div>
+            <div className="node node-1"><Server size={18} /></div>
+            <div className="node node-2"><Monitor size={18} /></div>
+            <div className="node node-3"><Network size={18} /></div>
+            <div className="node node-4"><Projector size={18} /></div>
+            <svg className="lines" viewBox="0 0 300 300">
+              <line x1="150" y1="150" x2="50" y2="50" stroke="rgba(99,102,241,0.4)" strokeWidth="2"/>
+              <line x1="150" y1="150" x2="250" y2="50" stroke="rgba(99,102,241,0.4)" strokeWidth="2"/>
+              <line x1="150" y1="150" x2="50" y2="250" stroke="rgba(99,102,241,0.4)" strokeWidth="2"/>
+              <line x1="150" y1="150" x2="250" y2="250" stroke="rgba(99,102,241,0.4)" strokeWidth="2"/>
+            </svg>
+          </div>
+        </div>
+      </section>
+
       <section className="section-block" style={{paddingTop: 30}}>
         <h2><Trophy size={20} /> Tujuan Pembelajaran</h2>
         <div className="objectives-grid">
@@ -48,6 +90,20 @@ export default function Dashboard() {
                 </div>
               </div>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{color:'var(--text-lighter)', flexShrink:0}}><polyline points="9 18 15 12 9 6"/></svg>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section className="section-block">
+        <h2><Briefcase size={20} /> Akses Cepat</h2>
+        <div className="actions-grid">
+          {quickActions.map(({ to, icon: Icon, title, desc, color }) => (
+            <Link to={to} className="action-card" key={to}>
+              <div className="action-icon" style={{background: `linear-gradient(135deg, ${color[0]}, ${color[1]})`}}>
+                <Icon size={22} color="white" />
+              </div>
+              <h4>{title}</h4><p>{desc}</p>
             </Link>
           ))}
         </div>
