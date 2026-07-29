@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { checkBadges } from '../components/Badges';
-import { Server, Projector, CreditCard, Briefcase, ClipboardCheck, FileText, BarChart3, BookOpen, Trophy, Network, Monitor, Puzzle, Award, BookA, Zap, FileDown } from 'lucide-react';
+import { Server, Projector, CreditCard, Briefcase, ClipboardCheck, FileText, BarChart3, BookOpen, Trophy, Network, Monitor, Puzzle, Award, BookA, Zap, FileDown, ExternalLink } from 'lucide-react';
 
 export default function Dashboard() {
   const { modulesRead, scores, streak } = useApp();
@@ -37,9 +37,12 @@ export default function Dashboard() {
             <div className="stat"><BookOpen size={18} /> <span>3 Modul</span></div>
             <div className="stat"><Briefcase size={18} /> <span>Studi Kasus</span></div>
             <div className="stat"><Puzzle size={18} /> <span>Drag & Drop</span></div>
-            <div className="stat"><ClipboardCheck size={18} /> <span>Pre & Post Test</span></div>
+              <div className="stat"><ClipboardCheck size={18} /> <span>Pre & Post Test</span></div>
+            </div>
+            <a href="https://tjkt.smkn2-kng.sch.id/" className="hero-back-btn">
+              <ExternalLink size={16} /> Kembali ke Website TJKT
+            </a>
           </div>
-        </div>
         <div className="hero-visual">
           <div className="network-animation">
             <div className="node center-node"><Monitor size={28} /></div>
