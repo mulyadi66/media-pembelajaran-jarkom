@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import DarkModeToggle from '../components/DarkModeToggle';
 import {
   Network, Server, Globe, Wifi, Cpu, HardDrive, Lock, Smartphone,
-  ChevronRight, School
+  ChevronRight, School, ExternalLink
 } from 'lucide-react';
 
 const subjects = [
@@ -70,6 +70,9 @@ export default function Portal() {
       </main>
 
       <footer className="portal-footer">
+        <a href="https://tjkt.smkn2-kng.sch.id/" target="_blank" rel="noopener noreferrer" className="footer-tjkt-link">
+          <ExternalLink size={16} /> Kembali ke Website TJKT
+        </a>
         <p>&copy; 2026 TJKT SMKN 2 KUNINGAN</p>
       </footer>
     </div>
