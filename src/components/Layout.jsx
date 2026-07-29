@@ -66,19 +66,19 @@ export default function Layout() {
     <div className="app-layout">
       {sidebarOpen && <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)} />}
 
-      <nav className={`sidebar ${sidebarOpen ? 'mobile-open' : ''}`}>
+      <nav className={`sidebar ${sidebarOpen ? 'mobile-open' : ''}`} aria-label="Navigasi utama">
         <div className="sidebar-header">
           <div className="logo">
             <Network size={24} />
             <span>JarkomLab</span>
           </div>
-          <button className="sidebar-close-mobile" onClick={() => setSidebarOpen(false)}>
+          <button className="sidebar-close-mobile" onClick={() => setSidebarOpen(false)} aria-label="Tutup menu navigasi">
             <X size={20} />
           </button>
         </div>
-        <ul className="nav-menu">
+        <ul className="nav-menu" role="list">
           {navItems.map(({ to, icon: Icon, label }) => (
-            <li key={to}>
+            <li key={to} role="listitem">
               <NavLink to={to} className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
                 onClick={() => setSidebarOpen(false)}>
                 <Icon size={18} /><span>{label}</span>
@@ -90,12 +90,13 @@ export default function Layout() {
 
       <main className="main-content">
         <header className="topbar">
-          <button className="mobile-menu-btn" onClick={() => setSidebarOpen(true)}>
+          <button className="mobile-menu-btn" onClick={() => setSidebarOpen(true)}
+            aria-label="Buka menu navigasi" aria-expanded={sidebarOpen}>
             <Menu size={22} />
           </button>
-          <div className="search-box">
+          <div className="search-box" role="search" aria-label="Pencarian">
             <Search size={16} />
-            <input type="text" placeholder="Cari materi..." readOnly />
+            <input type="text" placeholder="Cari materi..." readOnly aria-label="Cari materi" />
           </div>
           <div className="user-info">
             <StreakCounter streak={streak.count} />

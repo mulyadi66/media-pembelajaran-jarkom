@@ -82,13 +82,13 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
         <p style={{ color: 'var(--text-light)', marginBottom: 24 }}>
           {storageKey.includes('pre') ? 'Pre-Test' : 'Post-Test'} — {questions.length} soal HOTS
         </p>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, maxWidth: 500 }}>
-          <button className="mode-card" onClick={() => setMode('practice')}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, maxWidth: 500 }} role="radiogroup" aria-label="Pilih mode quiz">
+          <button className="mode-card" onClick={() => setMode('practice')} role="radio" aria-checked={mode === 'practice'}>
             <Eye size={32} color="#6366f1" />
             <h3>Latihan</h3>
             <p>Tanpa timer, langsung lihat pembahasan setiap soal</p>
           </button>
-          <button className="mode-card" onClick={() => setMode('exam')}>
+          <button className="mode-card" onClick={() => setMode('exam')} role="radio" aria-checked={mode === 'exam'}>
             <Clock size={32} color="#ef4444" />
             <h3>Ujian</h3>
             <p>Timer {timeLimit} menit, soal diacak, nilai terekam</p>
@@ -187,11 +187,12 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
         </div>
       </div>
 
-      <div className="quiz-dots">
+      <div className="quiz-dots" role="tablist" aria-label="Navigasi soal">
         {qs.map((_, i) => (
           <button key={i}
             className={`quiz-dot ${i === currentIdx ? 'current' : ''} ${answers[i] !== undefined ? 'answered' : ''}`}
-            onClick={() => setCurrentIdx(i)}>
+            onClick={() => setCurrentIdx(i)} role="tab" aria-selected={i === currentIdx}
+            aria-label={`Soal ${i + 1}${answers[i] !== undefined ? ' (terjawab)' : ''}`}>
             {i + 1}
           </button>
         ))}
@@ -212,11 +213,14 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
             if (showResult && isSelected && !isCorrect) cls = 'wrong';
 
             return (
-              <div key={i} className={`option-item ${cls}`} onClick={() => selectOption(i)}>
+              <div key={i} className={`option-item ${cls}`} onClick={() => selectOption(i)}
+                role="radio" aria-checked={isSelected} tabIndex={0}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') selectOption(i); }}
+                aria-label={`${letters[i]}: ${opt.substring(3)}${isSelected ? ' (terpilih)' : ''}`}>
                 <div className="option-letter">{letters[i]}</div>
                 <span>{opt.substring(3)}</span>
-                {showResult && isCorrect && <CheckCircle size={16} color="var(--success)" style={{marginLeft: 'auto'}} />}
-                {showResult && isSelected && !isCorrect && <XCircle size={16} color="var(--danger)" style={{marginLeft: 'auto'}} />}
+                {showResult && isCorrect && <CheckCircle size={16} color="var(--success)" style={{marginLeft: 'auto'}} aria-hidden="true" />}
+                {showResult && isSelected && !isCorrect && <XCircle size={16} color="var(--danger)" style={{marginLeft: 'auto'}} aria-hidden="true" />}
               </div>
             );
           })}
@@ -234,8 +238,13 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
         <button className="btn btn-secondary" onClick={() => setCurrentIdx(Math.max(0, currentIdx - 1))} disabled={currentIdx === 0}>
           <ChevronLeft size={16} /> Sebelumnya
         </button>
-        <div style={{fontSize: '0.85rem', color: 'var(--text-light)'}}>
-          {answeredCount}/{total} terjawab
+        <div style={{display:'flex',alignItems:'center',gap:8}}>
+          <span style={{fontSize:'0.85rem',color:'var(--text-light)'}}>
+            {answeredCount}/{total} terjawab
+          </span>
+          <span style={{fontSize:'0.7rem',color:'var(--success)',fontWeight:600}}>
+            Tersimpan
+          </span>
         </div>
         {currentIdx === total - 1 ? (
           <button className="btn btn-success" onClick={handleSubmit} disabled={mode === 'exam' && answeredCount < total}>
