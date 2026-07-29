@@ -1337,6 +1337,20 @@ a { text-decoration: none; color: inherit; }
 
 .ma-content { flex: 1; padding: 0 30px 30px; max-width: 900px; }
 
+.ma-modul-tabs {
+  display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap;
+}
+
+.ma-modul-tab {
+  padding: 8px 20px; border-radius: 8px; border: 1px solid var(--border);
+  background: var(--bg-card); color: var(--text-light); font-weight: 600;
+  font-size: 0.85rem; cursor: pointer; transition: all 0.2s;
+}
+
+.ma-modul-tab:hover { border-color: var(--primary); color: var(--primary); }
+
+.ma-modul-tab.active { background: rgba(99,102,241,0.1); border-color: var(--primary); color: var(--primary); }
+
 .ma-title-block {
   text-align: center; padding: 30px 0 20px;
   border-bottom: 2px solid var(--border); margin-bottom: 24px;

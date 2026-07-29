@@ -1,6 +1,19 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Printer, ChevronDown, ChevronUp, BookOpen, CheckCircle, Users, Target, Lightbulb, ClipboardList, Award, ArrowRight, Layers } from 'lucide-react';
 import { modulAjar } from '../data/modulAjar';
+
+const MODUL_FILTERS = [
+  { key: 'all', label: 'Semua' },
+  { key: 1, label: 'Modul 1' },
+  { key: 2, label: 'Modul 2' },
+  { key: 3, label: 'Modul 3' },
+];
+
+const MODUL_RANGES = {
+  1: ['1-2'],
+  2: ['3-4'],
+  3: ['5-6'],
+};
 
 const navItems = [
   { id: 'identitas', label: 'Identitas', icon: BookOpen },
@@ -19,6 +32,12 @@ const navItems = [
   { id: 'daftarPustaka', label: 'Daftar Pustaka', icon: BookOpen },
   { id: 'lampiran', label: 'Lampiran', icon: ClipboardList },
 ];
+
+const MODUL_NAMES = {
+  1: { judul: 'Peralatan Jaringan', identitas: 'Perencanaan dan Pengalamatan Jaringan (Modul 1: Peralatan Jaringan)' },
+  2: { judul: 'Topologi Jaringan', identitas: 'Perencanaan dan Pengalamatan Jaringan (Modul 2: Topologi Jaringan)' },
+  3: { judul: 'Pengalamatan Jaringan', identitas: 'Perencanaan dan Pengalamatan Jaringan (Modul 3: Pengalamatan Jaringan)' },
+};
 
 const m = modulAjar;
 
@@ -51,6 +70,15 @@ function Table({ headers, rows }) {
 
 export default function ModulAjarPage() {
   const [activeSection, setActiveSection] = useState('identitas');
+  const [modulFilter, setModulFilter] = useState('all');
+
+  const filteredKegiatan = useMemo(() => {
+    if (modulFilter === 'all') return m.kegiatanPembelajaran;
+    const range = MODUL_RANGES[modulFilter];
+    return m.kegiatanPembelajaran.filter(kp => range.includes(kp.pertemuan));
+  }, [modulFilter]);
+
+  const modulInfo = MODUL_NAMES[modulFilter] || null;
 
   return (
     <div className="ma-layout">
@@ -77,12 +105,22 @@ export default function ModulAjarPage() {
         </button>
       </nav>
 
-      {/* Content */}
+        {/* Content */}
       <div className="ma-content">
+        {/* Modul Filter Tabs */}
+        <div className="ma-modul-tabs" role="tablist" aria-label="Filter modul">
+          {MODUL_FILTERS.map(f => (
+            <button key={f.key} className={`ma-modul-tab ${modulFilter === f.key ? 'active' : ''}`}
+              onClick={() => setModulFilter(f.key)} role="tab" aria-selected={modulFilter === f.key}>
+              {f.label}
+            </button>
+          ))}
+        </div>
+
         {/* Title */}
         <div className="ma-title-block">
           <div className="ma-badge">MODUL AJAR</div>
-          <h1>Perencanaan dan Pengalamatan Jaringan</h1>
+          <h1>{modulInfo ? modulInfo.judul : 'Perencanaan dan Pengalamatan Jaringan'}</h1>
           <p>Mata Pelajaran Kejuruan Teknik Jaringan Komputer dan Telekomunikasi</p>
         </div>
 
@@ -180,8 +218,11 @@ export default function ModulAjarPage() {
         </Section>
 
         {/* Kegiatan Pembelajaran */}
-        <Section id="kegiatanPembelajaran" title="10. Kegiatan Pembelajaran" icon={ClipboardList}>
-          {m.kegiatanPembelajaran.map((kp, i) => (
+        <Section id="kegiatanPembelajaran" title={`10. Kegiatan Pembelajaran${modulInfo ? ` — ${modulInfo.judul}` : ''}`} icon={ClipboardList}>
+          {filteredKegiatan.length === 0 && (
+            <p style={{color:'var(--text-lighter)',padding:20,textAlign:'center'}}>Tidak ada kegiatan pembelajaran untuk modul ini.</p>
+          )}
+          {filteredKegiatan.map((kp, i) => (
             <div key={i} className="ma-pertemuan">
               <div className="ma-pertemuan-header">
                 <span className="ma-pertemuan-badge">Pertemuan {kp.pertemuan}</span>
