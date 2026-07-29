@@ -45,9 +45,9 @@ Media pembelajaran interaktif React untuk siswa SMK TJKT Kelas XI, Fase F — Pe
 - Dark mode, PWA, Print styles, Error boundary
 
 ## Potensi Lanjutan
-- [ ] Verifikasi device simulator berfungsi setelah fix `position: relative`
-- [ ] Tambah Modul Ajar per-modul (Modul 1, 2, 3 terpisah)
-- [ ] PDF download untuk Modul Ajar
-- [ ] Quiz bank soal lebih banyak
-- [ ] Export leaderboard ke PDF/image
-- [ ] Aksesibilitas (ARIA labels, keyboard navigation)
+- [x] Verifikasi device simulator — touch-action:none + e.preventDefault() untuk mobile drag
+- [x] Modul Ajar filter Modul 1/2/3 via tabs
+- [x] PDF download Modul Ajar (html2canvas + jsPDF)
+- [x] Bank soal pretest/posttest MPK1 & DKK (15→20 soal per bank)
+- [x] Export leaderboard ke PNG (html2canvas)
+- [x] Aksesibilitas — ARIA labels, keyboard nav, aria-hidden dekoratif
