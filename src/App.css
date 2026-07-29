@@ -97,6 +97,13 @@ a { text-decoration: none; color: inherit; }
 .nav-link:hover { background: rgba(255,255,255,0.1); color: white; }
 .nav-link.active { background: rgba(99,102,241,0.4); color: white; box-shadow: 0 0 20px rgba(99,102,241,0.3); }
 
+.nav-link.back-link {
+  margin-top: 4px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 16px;
+  color: rgba(255,255,255,0.5); font-size: 0.82rem;
+}
+
+.nav-link.back-link:hover { color: white; }
+
 /* ========== SIDEBAR COLLAPSED ========== */
 .sidebar-collapsed .sidebar {
   width: 72px;
@@ -114,6 +121,10 @@ a { text-decoration: none; color: inherit; }
 }
 
 .sidebar-collapsed .nav-link span { display: none; }
+
+.sidebar-collapsed .nav-link.back-link {
+  border-top: none; margin-top: 0; padding-top: 12px;
+}
 
 .sidebar-collapsed .main-content {
   margin-left: 72px;

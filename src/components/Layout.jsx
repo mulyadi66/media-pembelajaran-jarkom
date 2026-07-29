@@ -6,10 +6,12 @@ import StreakCounter from './StreakCounter';
 import {
   Home, Server, Projector, CreditCard, Briefcase,
   ClipboardCheck, FileText, BarChart3, Menu, X, Trophy, User, Search,
-  Network, Puzzle, BookOpen, BookA, Zap, FileDown, PanelLeftClose, PanelLeft
+  Network, Puzzle, BookOpen, BookA, Zap, FileDown, PanelLeftClose, PanelLeft,
+  ArrowLeft
 } from 'lucide-react';
 
 const navItems = [
+  { to: '/', icon: ArrowLeft, label: 'Portal', back: true },
   { to: '/mpk1', icon: Home, label: 'Dashboard' },
   { to: '/mpk1/modul1', icon: Server, label: 'Modul 1: Peralatan Jaringan' },
   { to: '/mpk1/modul2', icon: Projector, label: 'Modul 2: Topologi Jaringan' },
@@ -78,9 +80,9 @@ export default function Layout() {
           </button>
         </div>
         <ul className="nav-menu" role="list">
-          {navItems.map(({ to, icon: Icon, label }) => (
+          {navItems.map(({ to, icon: Icon, label, back }) => (
             <li key={to} role="listitem">
-              <NavLink to={to} className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+              <NavLink to={to} className={({ isActive }) => `nav-link ${isActive ? 'active' : ''} ${back ? 'back-link' : ''}`}
                 onClick={() => setSidebarOpen(false)} title={sidebarCollapsed ? label : undefined}>
                 <Icon size={18} /><span>{label}</span>
               </NavLink>
