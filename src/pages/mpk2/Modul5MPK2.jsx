@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { useApp } from '../../context/AppContext';
 import { Circle, Cable, Radio, Activity, Star, AlertTriangle, CheckCircle } from 'lucide-react';
 import SectionTracker from '../../components/SectionTracker';
+import FiberSplicingSimulator from '../../components/mpk2/FiberSplicingSimulator';
+import OTDRTraceReader from '../../components/mpk2/OTDRTraceReader';
 
 const sections = [
   { id: 's1', label: '5.1 Prinsip Dasar Fiber Optik' },
@@ -128,6 +130,18 @@ export default function Modul5MPK2() {
           <p>Selalu bersihkan konektor fiber dengan alcohol swab atau KSC (Kleen Stick Cleaner) sebelum pengujian. Kotoran pada konektor adalah penyebab utama loss tinggi.</p>
         </div>
       </MateriCard>
+
+      <div className="materi-card">
+        <h3>🔬 Simulasi Fusion Splicing</h3>
+        <p style={{ marginBottom: 16, color: '#94a3b8' }}>Simulasikan proses penyambungan fiber optik step-by-step menggunakan fusion splicer.</p>
+        <FiberSplicingSimulator />
+      </div>
+
+      <div className="materi-card">
+        <h3>📊 Simulasi Pembacaan OTDR</h3>
+        <p style={{ marginBottom: 16, color: '#94a3b8' }}>Pelajari cara membaca trace OTDR dan mengidentifikasi event pada fiber optik.</p>
+        <OTDRTraceReader />
+      </div>
     </div>
   );
 }

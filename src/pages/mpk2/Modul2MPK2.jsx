@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { useApp } from '../../context/AppContext';
 import { Wifi, Radio, Shield, Antenna, Star, Activity } from 'lucide-react';
 import SectionTracker from '../../components/SectionTracker';
+import SignalStrengthVisualizer from '../../components/mpk2/SignalStrengthVisualizer';
+import InterferenceSimulator from '../../components/mpk2/InterferenceSimulator';
 
 const sections = [
   { id: 's1', label: '2.1 Konsep Dasar Wireless' },
@@ -120,6 +122,18 @@ export default function Modul2MPK2() {
           <strong>dBi</strong> — Satuan gain antena. Semakin tinggi dBi, semakin fokus sinyal.</p>
         </div>
       </MateriCard>
+
+      <div className="materi-card">
+        <h3>📡 Simulasi Kekuatan Sinyal</h3>
+        <p style={{ marginBottom: 16, color: '#94a3b8' }}>Geser AP dan Client untuk melihat perubahan RSSI dan kualitas sinyal secara real-time.</p>
+        <SignalStrengthVisualizer />
+      </div>
+
+      <div className="materi-card">
+        <h3>⚠️ Simulasi Interferensi</h3>
+        <p style={{ marginBottom: 16, color: '#94a3b8' }}>Tambahkan sumber interferensi dan lihat dampaknya terhadap kualitas sinyal.</p>
+        <InterferenceSimulator />
+      </div>
     </div>
   );
 }

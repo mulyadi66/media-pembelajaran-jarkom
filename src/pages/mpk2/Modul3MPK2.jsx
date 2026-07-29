@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { useApp } from '../../context/AppContext';
 import { Radio, Map, Settings, Signal, Wifi, Star, AlertTriangle, CheckCircle } from 'lucide-react';
 import SectionTracker from '../../components/SectionTracker';
+import AntennaAlignment from '../../components/mpk2/AntennaAlignment';
+import APConfigSimulator from '../../components/mpk2/APConfigSimulator';
 
 const sections = [
   { id: 's1', label: '3.1 Site Survey & Perencanaan' },
@@ -120,6 +122,18 @@ export default function Modul3MPK2() {
           <p>RSSI target: ≥ -67 dBm. SNR minimal: 25 dB. Latency: &lt; 50 ms. Packet loss: &lt; 1%.</p>
         </div>
       </MateriCard>
+
+      <div className="materi-card">
+        <h3>📡 Simulasi Penyelarasan Antena</h3>
+        <p style={{ marginBottom: 16, color: '#94a3b8' }}>Atur azimuth dan elevasi antena untuk mendapatkan sinyal terbaik.</p>
+        <AntennaAlignment />
+      </div>
+
+      <div className="materi-card">
+        <h3>⚙️ Simulasi Konfigurasi Access Point</h3>
+        <p style={{ marginBottom: 16, color: '#94a3b8' }}>Konfigurasi SSID, keamanan, channel, dan band. Simulasikan koneksi client.</p>
+        <APConfigSimulator />
+      </div>
     </div>
   );
 }

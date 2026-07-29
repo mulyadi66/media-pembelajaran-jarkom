@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { useApp } from '../../context/AppContext';
 import { Phone, Mic, Server, Settings, Star, AlertTriangle, CheckCircle } from 'lucide-react';
 import SectionTracker from '../../components/SectionTracker';
+import CallFlowSimulator from '../../components/mpk2/CallFlowSimulator';
+import CodecComparison from '../../components/mpk2/CodecComparison';
 
 const sections = [
   { id: 's1', label: '4.1 Konsep Dasar VoIP' },
@@ -128,6 +130,18 @@ export default function Modul4MPK2() {
           <p>Setelah konfigurasi, lakukan panggilan antar ekstensi. Jika berhasil, lanjutkan dengan konfigurasi trunk untuk panggilan ke luar (PSTN/mobile).</p>
         </div>
       </MateriCard>
+
+      <div className="materi-card">
+        <h3>📞 Simulasi Alur Panggilan VoIP</h3>
+        <p style={{ marginBottom: 16, color: '#94a3b8' }}>Pelajari tahapan panggilan VoIP dari idle hingga hang up secara interaktif.</p>
+        <CallFlowSimulator />
+      </div>
+
+      <div className="materi-card">
+        <h3>🎛️ Perbandingan Codec VoIP</h3>
+        <p style={{ marginBottom: 16, color: '#94a3b8' }}>Bandingkan berbagai codec VoIP berdasarkan bitrate, bandwidth, MOS, dan latency.</p>
+        <CodecComparison />
+      </div>
     </div>
   );
 }

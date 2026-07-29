@@ -2,9 +2,10 @@ import { useEffect } from 'react';
 import { useApp } from '../../context/AppContext';
 import { Cable, Wrench, Activity, Star, AlertTriangle } from 'lucide-react';
 import SectionTracker from '../../components/SectionTracker';
+import CableCrimpingSimulator from '../../components/mpk2/CableCrimpingSimulator';
 
 const sections = [
-  { id: 's1', label: '1.1 Wrenchs & Perlengkapan' },
+  { id: 's1', label: '1.1 Peralatan & Perlengkapan' },
   { id: 's2', label: '1.2 Crimping & Pengkabelan' },
   { id: 's3', label: '1.3 Instalasi Perangkat Nirkabel' },
   { id: 's4', label: '1.4 Perawatan & Troubleshooting' },
@@ -27,16 +28,16 @@ export default function Modul1MPK2() {
     <div className="content-section">
       <SectionTracker moduleId="mpk2_modul1" sections={sections} />
 
-      <MateriCard icon={Wrench} title="1.1 Wrenchs dan Perlengkapan Jaringan">
+      <MateriCard icon={Wrench} title="1.1 Peralatan dan Perlengkapan Jaringan">
         <p>Seorang teknisi jaringan harus memiliki peralatan yang lengkap untuk instalasi, perawatan, dan perbaikan jaringan. Berikut adalah tools utama yang digunakan:</p>
         <div className="table-responsive">
           <table className="materi-table">
-            <thead><tr><th>Wrench</th><th>Fungsi</th><th>Contoh</th></tr></thead>
+            <thead><tr><th>Tool</th><th>Fungsi</th><th>Contoh</th></tr></thead>
             <tbody>
-              <tr><td><strong>Crimping Wrench</strong></td><td>Memasang konektor RJ-45 ke kabel UTP/STP</td><td>HT-210, HT-568</td></tr>
+              <tr><td><strong>Crimping Tool</strong></td><td>Memasang konektor RJ-45 ke kabel UTP/STP</td><td>HT-210, HT-568</td></tr>
               <tr><td><strong>Cable Stripper</strong></td><td>Mengupas kulit luar kabel</td><td>Cable stripper UTP</td></tr>
               <tr><td><strong>LAN Tester</strong></td><td>Menguji kontinuitas kabel setelah crimping</td><td>LAN Tester 8P</td></tr>
-              <tr><td><strong>Punch Down Wrench</strong></td><td>Memasang kabel ke patch panel / jack dinding</td><td>Punch down 110/66 block</td></tr>
+              <tr><td><strong>Punch Down Tool</strong></td><td>Memasang kabel ke patch panel / jack dinding</td><td>Punch down 110/66 block</td></tr>
               <tr><td><strong>Cable Tester</strong></td><td>Menguji kabel lebih detail (jarak, crosstalk)</td><td>Fluke LinkRunner</td></tr>
               <tr><td><strong>Multimeter</strong></td><td>Mengukur tegangan, arus, dan hambatan</td><td>Multimeter digital</td></tr>
               <tr><td><strong>Toner Probe</strong></td><td>Melacak kabel dalam instalasi padat</td><td>Toner probe kit</td></tr>
@@ -129,6 +130,12 @@ export default function Modul1MPK2() {
           <p>Selalu dokumentasi instalasi: label kabel, catat panjang kabel, foto panel/rack. Ini sangat membantu saat troubleshooting.</p>
         </div>
       </MateriCard>
+
+      <div className="materi-card">
+        <h3>🛠️ Simulasi Crimping Kabel</h3>
+        <p style={{ marginBottom: 16, color: '#94a3b8' }}>Praktikkan urutan kabel standar T568A dan T568B dengan drag-and-drop.</p>
+        <CableCrimpingSimulator />
+      </div>
     </div>
   );
 }
