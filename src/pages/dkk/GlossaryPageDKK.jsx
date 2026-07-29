@@ -19,7 +19,7 @@ export default function GlossaryPageDKK() {
     <div className="content-section">
       <div className="materi-card fade-in">
         <h3><BookOpen size={20} /> Glossarium DKK</h3>
-        <p style={{marginBottom: 20}}>Daftar istilah penting dalam Dasar Keahlian Komunikasi.</p>
+        <p style={{marginBottom: 20}}>Daftar istilah penting dalam Dasar Kompetensi Keahlian.</p>
 
         <div className="glossary-search">
           <Search size={18} />

@@ -33,8 +33,8 @@ export default function DashboardDKK() {
       <section className="hero">
         <div className="hero-content">
           <div className="hero-badge">Kelas XI TJKT</div>
-          <h1>Dasar Keahlian Komunikasi (DKK)</h1>
-          <p>Mata Pelajaran Kejuruan Teknik Jaringan Komputer dan Telekomunikasi</p>
+          <h1>Dasar Kompetensi Keahlian (DKK)</h1>
+          <p>Mata Pelajaran Kejuruan — Kompetensi Dasar Kejuruan TJKT</p>
           <div className="hero-stats">
             <div className="stat"><BookOpen size={18} /> <span>4 Elemen</span></div>
             <div className="stat"><Briefcase size={18} /> <span>Studi Kasus</span></div>

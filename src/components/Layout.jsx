@@ -65,7 +65,7 @@ const subjects = {
     prefix: '/dkk',
     label: 'DKK',
     logo: Globe,
-    title: 'Dasar Keahlian Komunikasi',
+    title: 'Dasar Kompetensi Keahlian',
     items: [
       { to: '/dkk', icon: Home, label: 'Dashboard' },
       { to: '/dkk/elemen1', icon: Globe, label: 'Elemen 1: Wawasan Dunia Kerja' },
@@ -97,12 +97,12 @@ const subjects = {
       '/dkk/hasil': 'Hasil & Sertifikat DKK',
     },
     descs: {
-      '/dkk': 'Media Pembelajaran Dasar Keahlian Komunikasi',
+      '/dkk': 'Media Pembelajaran Dasar Kompetensi Keahlian',
       '/dkk/elemen1': 'Profesi, sertifikasi, dan peluang karir di bidang TJKT',
       '/dkk/elemen2': 'APD, prosedur keselamatan, dan budaya kerja 5S',
       '/dkk/elemen3': 'Media transmisi kabel, nirkabel, dan jaringan telekomunikasi',
       '/dkk/elemen4': 'Multimeter, cable tester, OTDR, dan spectrum analyzer',
-      '/dkk/flashcard': 'Kartu interaktif istilah Dasar Keahlian Komunikasi',
+      '/dkk/flashcard': 'Kartu interaktif istilah Dasar Kompetensi Keahlian',
       '/dkk/challenge': 'Latihan cepat DKK melawan waktu',
       '/dkk/kasus': 'Terapkan pemahaman DKK dalam permasalahan nyata',
       '/dkk/pretest': 'Uji pemahaman awal DKK',

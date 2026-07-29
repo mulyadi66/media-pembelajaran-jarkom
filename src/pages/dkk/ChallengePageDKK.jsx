@@ -91,7 +91,7 @@ export default function ChallengePageDKK() {
         <div className="materi-card fade-in" style={{textAlign:'center', maxWidth: 600, margin: '0 auto'}}>
           <h3><Zap size={20} /> Latihan Cepat DKK</h3>
           <p style={{marginBottom: 24, color:'var(--text-light)'}}>
-            Uji kecepatanmu menjawab pertanyaan seputar Dasar Keahlian Komunikasi!
+            Uji kecepatanmu menjawab pertanyaan seputar Dasar Kompetensi Keahlian!
           </p>
           <div className="calc-grid" style={{marginBottom: 20}}>
             <div className="calc-input-group">
