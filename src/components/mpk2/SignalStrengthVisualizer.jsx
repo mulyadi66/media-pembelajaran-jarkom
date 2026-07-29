@@ -34,14 +34,14 @@ function statusColor(dbm) {
 }
 
 const containerStyle = {
-  background: '#1e1e2e', color: '#fff', borderRadius: 12, padding: 20,
+  background: 'var(--sim-bg)', color: 'var(--sim-text)', borderRadius: 12, padding: 20,
   fontFamily: 'system-ui, sans-serif', maxWidth: 480,
 };
 
 const canvasWrap = {
   position: 'relative', width: W, height: H, margin: '0 auto',
-  border: '1px solid #334155', borderRadius: 8, overflow: 'hidden',
-  cursor: 'default', background: '#16162a',
+  border: '1px solid var(--sim-btn)', borderRadius: 8, overflow: 'hidden',
+  cursor: 'default', background: 'var(--sim-bg)',
 };
 
 const gridCanvas = {
@@ -83,7 +83,7 @@ export default function SignalStrengthVisualizer() {
 
   return (
     <div style={containerStyle}>
-      <h3 style={{ margin: '0 0 8px', textAlign: 'center', color: '#6366f1' }}>
+      <h3 style={{ margin: '0 0 8px', textAlign: 'center', color: 'var(--sim-accent)' }}>
         Signal Strength Visualizer
       </h3>
       <div
@@ -106,7 +106,7 @@ export default function SignalStrengthVisualizer() {
           style={{
             position: 'absolute', left: ap.x - 12, top: ap.y - 12, width: 24, height: 24,
             borderRadius: '50%', background: '#3b82f6', display: 'flex', alignItems: 'center',
-            justifyContent: 'center', fontSize: 8, fontWeight: 700, color: '#fff',
+            justifyContent: 'center', fontSize: 8, fontWeight: 700, color: 'var(--sim-text)',
             cursor: 'grab', border: '2px solid #60a5fa', zIndex: 2, userSelect: 'none',
           }}
         >
@@ -118,7 +118,7 @@ export default function SignalStrengthVisualizer() {
           style={{
             position: 'absolute', left: client.x - 12, top: client.y - 12, width: 24, height: 24,
             borderRadius: '50%', background: '#22c55e', display: 'flex', alignItems: 'center',
-            justifyContent: 'center', fontSize: 7, fontWeight: 700, color: '#fff',
+            justifyContent: 'center', fontSize: 7, fontWeight: 700, color: 'var(--sim-text)',
             cursor: 'grab', border: '2px solid #4ade80', zIndex: 2, userSelect: 'none',
           }}
         >
@@ -138,7 +138,7 @@ export default function SignalStrengthVisualizer() {
           {[1, 2, 3, 4, 5].map(i => (
             <div key={i} style={{
               width: 6, height: 10 + i * 4, borderRadius: '0 0 3px 3px',
-              background: i <= bars ? sColor : '#334155', transition: 'background 0.2s',
+              background: i <= bars ? sColor : 'var(--sim-btn)', transition: 'background 0.2s',
             }} />
           ))}
           <span style={{ fontSize: 12, marginLeft: 6 }}>{bars}/5</span>
@@ -147,7 +147,7 @@ export default function SignalStrengthVisualizer() {
       </div>
       <div style={{ textAlign: 'center', marginTop: 10 }}>
         <button onClick={reset} style={{
-          background: '#6366f1', color: '#fff', border: 'none', borderRadius: 6,
+          background: 'var(--sim-accent)', color: 'var(--sim-text)', border: 'none', borderRadius: 6,
           padding: '6px 20px', fontSize: 13, cursor: 'pointer',
         }}>
           Reset Positions

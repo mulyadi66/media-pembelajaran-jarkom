@@ -8,14 +8,14 @@ function randXY() {
 }
 
 const containerStyle = {
-  background: '#1e1e2e', color: '#fff', borderRadius: 12, padding: 20,
+  background: 'var(--sim-bg)', color: 'var(--sim-text)', borderRadius: 12, padding: 20,
   fontFamily: 'system-ui, sans-serif', maxWidth: 480,
 };
 
 const canvasWrap = {
   position: 'relative', width: W, height: H, margin: '0 auto',
-  border: '1px solid #334155', borderRadius: 8, overflow: 'hidden',
-  background: '#16162a',
+  border: '1px solid var(--sim-btn)', borderRadius: 8, overflow: 'hidden',
+  background: 'var(--sim-bg)',
 };
 
 const row = { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 12 };
@@ -43,7 +43,7 @@ export default function InterferenceSimulator() {
 
   return (
     <div style={containerStyle}>
-      <h3 style={{ margin: '0 0 8px', textAlign: 'center', color: '#6366f1' }}>
+      <h3 style={{ margin: '0 0 8px', textAlign: 'center', color: 'var(--sim-accent)' }}>
         Interference Simulator
       </h3>
       <div style={canvasWrap}>
@@ -59,14 +59,14 @@ export default function InterferenceSimulator() {
         <div style={{
           position: 'absolute', left: 16, top: 16, width: 24, height: 24,
           borderRadius: '50%', background: '#3b82f6', display: 'flex', alignItems: 'center',
-          justifyContent: 'center', fontSize: 8, fontWeight: 700, color: '#fff',
+          justifyContent: 'center', fontSize: 8, fontWeight: 700, color: 'var(--sim-text)',
           border: '2px solid #60a5fa', zIndex: 2,
         }}>AP</div>
         {/* Client fixed bottom-right */}
         <div style={{
           position: 'absolute', left: W - 40, top: H - 40, width: 24, height: 24,
           borderRadius: '50%', background: '#22c55e', display: 'flex', alignItems: 'center',
-          justifyContent: 'center', fontSize: 7, fontWeight: 700, color: '#fff',
+          justifyContent: 'center', fontSize: 7, fontWeight: 700, color: 'var(--sim-text)',
           border: '2px solid #4ade80', zIndex: 2,
         }}>Client</div>
         {/* Interference sources */}
@@ -75,7 +75,7 @@ export default function InterferenceSimulator() {
             style={{
               position: 'absolute', left: s.x - 12, top: s.y - 12, width: 24, height: 24,
               borderRadius: '50%', background: '#ef4444', display: 'flex', alignItems: 'center',
-              justifyContent: 'center', fontSize: 6, fontWeight: 700, color: '#fff',
+              justifyContent: 'center', fontSize: 6, fontWeight: 700, color: 'var(--sim-text)',
               border: '2px solid #f87171', cursor: 'pointer', zIndex: 3, userSelect: 'none',
             }}
             title="Click to remove"
@@ -95,7 +95,7 @@ export default function InterferenceSimulator() {
       <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 10 }}>
         {SOURCE_TYPES.map(t => (
           <button key={t} onClick={addSource} disabled={sources.length >= 4} style={{
-            background: sources.length >= 4 ? '#334155' : '#6366f1', color: '#fff',
+            background: sources.length >= 4 ? 'var(--sim-btn)' : 'var(--sim-accent)', color: 'var(--sim-text)',
             border: 'none', borderRadius: 6, padding: '5px 12px', fontSize: 12,
             cursor: sources.length >= 4 ? 'not-allowed' : 'pointer', opacity: sources.length >= 4 ? 0.5 : 1,
           }}>
@@ -107,12 +107,12 @@ export default function InterferenceSimulator() {
         <span style={{ fontSize: 13 }}>Interference Sources: <b>{count}/4</b></span>
         <span style={{ fontSize: 13 }}>Signal Quality: <b style={{ color: qColor }}>{quality}%</b></span>
       </div>
-      <div style={{ marginTop: 4, height: 12, background: '#334155', borderRadius: 6, overflow: 'hidden' }}>
+      <div style={{ marginTop: 4, height: 12, background: 'var(--sim-btn)', borderRadius: 6, overflow: 'hidden' }}>
         <div style={{ width: `${quality}%`, height: '100%', background: qColor, borderRadius: 6, transition: 'all 0.3s' }} />
       </div>
       <div style={{ textAlign: 'center', marginTop: 10 }}>
         <button onClick={reset} style={{
-          background: '#6366f1', color: '#fff', border: 'none', borderRadius: 6,
+          background: 'var(--sim-accent)', color: 'var(--sim-text)', border: 'none', borderRadius: 6,
           padding: '6px 20px', fontSize: 13, cursor: 'pointer',
         }}>
           Reset

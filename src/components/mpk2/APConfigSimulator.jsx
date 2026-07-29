@@ -78,20 +78,20 @@ export default function APConfigSimulator() {
   const labelStyle = { fontSize: 13, fontWeight: 600, marginBottom: 4, color: '#a5b4fc' };
   const inputStyle = {
     width: '100%', padding: '8px 10px', borderRadius: 6, border: '1px solid #3d3d5c',
-    background: '#16162a', color: '#fff', fontSize: 13, outline: 'none',
+    background: '#16162a', color: 'var(--sim-text)', fontSize: 13, outline: 'none',
     boxSizing: 'border-box',
   };
   const selStyle = { ...inputStyle, cursor: 'pointer' };
   const cardStyle = {
-    background: '#2d2d44', borderRadius: 10, padding: 16, marginBottom: 12,
+    background: 'var(--sim-btn)', borderRadius: 10, padding: 16, marginBottom: 12,
   };
 
   return (
     <div style={{
-      background: '#1e1e2e', color: '#fff', borderRadius: 12, padding: 20,
+      background: 'var(--sim-bg)', color: 'var(--sim-text)', borderRadius: 12, padding: 20,
       fontFamily: 'system-ui, sans-serif', maxWidth: 500,
     }}>
-      <h3 style={{ margin: '0 0 16px', textAlign: 'center', color: '#6366f1' }}>
+      <h3 style={{ margin: '0 0 16px', textAlign: 'center', color: 'var(--sim-accent)' }}>
         AP Config Simulator
       </h3>
 
@@ -129,13 +129,13 @@ export default function APConfigSimulator() {
         )}
         <div style={{ display: 'flex', gap: 8 }}>
           <button onClick={startSimulation} style={{
-            flex: 1, background: '#6366f1', color: '#fff', border: 'none', borderRadius: 6,
+            flex: 1, background: 'var(--sim-accent)', color: 'var(--sim-text)', border: 'none', borderRadius: 6,
             padding: '10px', fontSize: 14, fontWeight: 600, cursor: 'pointer',
           }}>
             Simulasikan Koneksi
           </button>
           <button onClick={reset} style={{
-            background: '#3d3d5c', color: '#fff', border: 'none', borderRadius: 6,
+            background: '#3d3d5c', color: 'var(--sim-text)', border: 'none', borderRadius: 6,
             padding: '10px 16px', fontSize: 13, cursor: 'pointer',
           }}>
             Reset
@@ -149,7 +149,7 @@ export default function APConfigSimulator() {
           {steps.map((s, i) => (
             <div key={s} style={{
               display: 'flex', alignItems: 'center', gap: 8, padding: '4px 0',
-              opacity: i <= animStep ? 1 : 0.4, color: i <= animStep ? '#fff' : '#666',
+              opacity: i <= animStep ? 1 : 0.4, color: i <= animStep ? 'var(--sim-text)' : '#666',
             }}>
               <div style={{
                 width: 8, height: 8, borderRadius: '50%',
@@ -175,12 +175,12 @@ export default function APConfigSimulator() {
           {connected ? (
             <>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px 16px', fontSize: 13 }}>
-                <span style={{ color: '#94a3b8' }}>SSID:</span><span>{result.ssid}</span>
-                <span style={{ color: '#94a3b8' }}>Band:</span><span>{result.band}</span>
-                <span style={{ color: '#94a3b8' }}>Channel:</span><span>{result.channel}</span>
-                <span style={{ color: '#94a3b8' }}>Security:</span><span>{result.security}</span>
-                <span style={{ color: '#94a3b8' }}>IP Address:</span><span>{result.ip}</span>
-                <span style={{ color: '#94a3b8' }}>Signal:</span>
+                <span style={{ color: 'var(--sim-label)' }}>SSID:</span><span>{result.ssid}</span>
+                <span style={{ color: 'var(--sim-label)' }}>Band:</span><span>{result.band}</span>
+                <span style={{ color: 'var(--sim-label)' }}>Channel:</span><span>{result.channel}</span>
+                <span style={{ color: 'var(--sim-label)' }}>Security:</span><span>{result.security}</span>
+                <span style={{ color: 'var(--sim-label)' }}>IP Address:</span><span>{result.ip}</span>
+                <span style={{ color: 'var(--sim-label)' }}>Signal:</span>
                 <span style={{ color: result.signal >= -55 ? '#22c55e' : result.signal >= -65 ? '#eab308' : '#f97316' }}>
                   {result.signal} dBm
                 </span>
@@ -194,7 +194,7 @@ export default function APConfigSimulator() {
               </div>
             </>
           ) : (
-            <div style={{ fontSize: 13, color: '#94a3b8' }}>{result.reason}</div>
+            <div style={{ fontSize: 13, color: 'var(--sim-label)' }}>{result.reason}</div>
           )}
         </div>
       )}

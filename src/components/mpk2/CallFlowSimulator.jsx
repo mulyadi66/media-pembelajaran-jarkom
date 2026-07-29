@@ -55,8 +55,8 @@ export default function CallFlowSimulator() {
   };
 
   const btnStyle = (disabled) => ({
-    background: disabled ? '#2d2d44' : '#6366f1',
-    color: disabled ? '#666' : '#fff',
+    background: disabled ? 'var(--sim-btn)' : 'var(--sim-accent)',
+    color: disabled ? '#666' : 'var(--sim-text)',
     border: 'none', borderRadius: 6,
     padding: '8px 16px', fontSize: 13, fontWeight: 600,
     cursor: disabled ? 'not-allowed' : 'pointer',
@@ -64,10 +64,10 @@ export default function CallFlowSimulator() {
 
   return (
     <div style={{
-      background: '#1e1e2e', color: '#fff', borderRadius: 12, padding: 20,
+      background: 'var(--sim-bg)', color: 'var(--sim-text)', borderRadius: 12, padding: 20,
       fontFamily: 'system-ui, sans-serif', maxWidth: 500,
     }}>
-      <h3 style={{ margin: '0 0 16px', textAlign: 'center', color: '#6366f1' }}>
+      <h3 style={{ margin: '0 0 16px', textAlign: 'center', color: 'var(--sim-accent)' }}>
         VoIP Call Flow Simulator
       </h3>
 
@@ -85,22 +85,22 @@ export default function CallFlowSimulator() {
               <div style={{
                 position: 'absolute', left: 4,
                 width: 18, height: 18, borderRadius: '50%',
-                background: isCurrent ? '#6366f1' : isDone ? '#22c55e' : '#2d2d44',
+                background: isCurrent ? 'var(--sim-accent)' : isDone ? '#22c55e' : 'var(--sim-btn)',
                 border: `2px solid ${isCurrent ? '#818cf8' : isDone ? '#22c55e' : '#3d3d5c'}`,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: 9, color: '#fff', zIndex: 1,
+                fontSize: 9, color: 'var(--sim-text)', zIndex: 1,
                 transition: 'all 0.3s',
               }}>
                 {isDone ? '✓' : isCurrent ? '▶' : ''}
               </div>
               <div style={{
                 marginLeft: 12, flex: 1, padding: '8px 12px', borderRadius: 8,
-                background: isCurrent ? '#6366f1' : 'transparent',
+                background: isCurrent ? 'var(--sim-accent)' : 'transparent',
                 transition: 'all 0.3s',
               }}>
                 <div style={{
                   fontSize: 13, fontWeight: 600,
-                  color: isCurrent ? '#fff' : isDone ? '#22c55e' : '#94a3b8',
+                  color: isCurrent ? 'var(--sim-text)' : isDone ? '#22c55e' : 'var(--sim-label)',
                 }}>
                   {step.icon} {step.name}
                 </div>
@@ -111,13 +111,13 @@ export default function CallFlowSimulator() {
       </div>
 
       <div style={{
-        background: '#2d2d44', borderRadius: 10, padding: 14, marginBottom: 14,
+        background: 'var(--sim-btn)', borderRadius: 10, padding: 14, marginBottom: 14,
         minHeight: 40,
       }}>
         <div style={{ fontSize: 13, color: '#a5b4fc', marginBottom: 4 }}>
           {callSteps[currentStep].icon} Langkah {currentStep + 1}/{callSteps.length}
         </div>
-        <div style={{ fontSize: 15, fontWeight: 600, color: '#fff' }}>
+        <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--sim-text)' }}>
           {callSteps[currentStep].desc}
         </div>
       </div>
@@ -132,7 +132,7 @@ export default function CallFlowSimulator() {
         <div style={{ flex: 1 }} />
         <button onClick={autoPlaying ? stopAutoPlay : startAutoPlay} style={{
           background: autoPlaying ? '#ef4444' : '#22c55e',
-          color: '#fff', border: 'none', borderRadius: 6,
+          color: 'var(--sim-text)', border: 'none', borderRadius: 6,
           padding: '8px 16px', fontSize: 13, fontWeight: 600, cursor: 'pointer',
         }}>
           {autoPlaying ? '⏹ Stop' : '▶ Auto Play'}

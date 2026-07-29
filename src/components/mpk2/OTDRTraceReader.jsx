@@ -101,7 +101,7 @@ export default function OTDRTraceReader() {
   const detectedEvents = events.filter(e => e.detected);
 
   return (
-    <div style={{ background: '#1e1e2e', borderRadius: 12, padding: 24, color: '#fff' }}>
+    <div style={{ background: 'var(--sim-bg)', borderRadius: 12, padding: 24, color: 'var(--sim-text)' }}>
       <h4 style={{ margin: '0 0 16px', fontSize: 18 }}>OTDR Trace Reader</h4>
 
       <div style={{ display: 'flex', gap: 8, marginBottom: 16, flexWrap: 'wrap' }}>
@@ -112,13 +112,13 @@ export default function OTDRTraceReader() {
           Marker
         </button>
         <button onClick={autoAnalyze} disabled={autoAnalyzed}
-          style={{ ...toolBtn(true), background: autoAnalyzed ? '#3b3b52' : '#6366f1', opacity: autoAnalyzed ? 0.5 : 1 }}>
+          style={{ ...toolBtn(true), background: autoAnalyzed ? 'var(--sim-btn)' : 'var(--sim-accent)', opacity: autoAnalyzed ? 0.5 : 1 }}>
           Auto Analyze
         </button>
         <button onClick={reset} style={toolBtn(false)}>Reset</button>
       </div>
 
-      <div style={{ background: '#2d2d44', borderRadius: 10, padding: 12, marginBottom: 16 }}>
+      <div style={{ background: 'var(--sim-btn)', borderRadius: 10, padding: 12, marginBottom: 16 }}>
         <svg viewBox={`0 0 ${VIEW_W} ${VIEW_H}`} style={{ width: '100%', height: 'auto', cursor: selectedTool === 'marker' ? 'crosshair' : 'default' }}
           onClick={handleSvgClick}>
           <rect x={0} y={0} width={VIEW_W} height={VIEW_H} fill="#1e1e2e" rx={4} />
@@ -178,20 +178,20 @@ export default function OTDRTraceReader() {
         </div>
       </div>
 
-      <div style={{ background: '#2d2d44', borderRadius: 10, padding: 16 }}>
+      <div style={{ background: 'var(--sim-btn)', borderRadius: 10, padding: 16 }}>
         <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 8 }}>Detected Events</div>
         {detectedEvents.length === 0 && (
-          <div style={{ fontSize: 13, color: '#94a3b8' }}>Klik "Auto Analyze" untuk mendeteksi event.</div>
+          <div style={{ fontSize: 13, color: 'var(--sim-label)' }}>Klik "Auto Analyze" untuk mendeteksi event.</div>
         )}
         {detectedEvents.map(ev => (
           <div key={ev.id} style={{
             display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-            padding: '8px 12px', marginBottom: 6, borderRadius: 6, background: '#1e1e2e',
+            padding: '8px 12px', marginBottom: 6, borderRadius: 6, background: 'var(--sim-bg)',
             borderLeft: `3px solid ${ev.color}`,
           }}>
             <div>
               <div style={{ fontSize: 13, fontWeight: 600 }}>{ev.type}</div>
-              <div style={{ fontSize: 11, color: '#94a3b8' }}>Distance: {ev.distance} km</div>
+              <div style={{ fontSize: 11, color: 'var(--sim-label)' }}>Distance: {ev.distance} km</div>
             </div>
             <div style={{ textAlign: 'right' }}>
               <div style={{ fontSize: 13, fontWeight: 600 }}>{ev.loss !== null ? `${ev.loss} dB` : '---'}</div>
@@ -199,7 +199,7 @@ export default function OTDRTraceReader() {
           </div>
         ))}
         {markers.length > 0 && (
-          <div style={{ marginTop: 8, fontSize: 11, color: '#94a3b8' }}>
+          <div style={{ marginTop: 8, fontSize: 11, color: 'var(--sim-label)' }}>
             Markers: {markers.map(m => `${m.dist}km`).join(', ')}
           </div>
         )}
@@ -212,7 +212,7 @@ function toolBtn(active) {
   return {
     display: 'inline-flex', alignItems: 'center', gap: 6,
     padding: '6px 14px', borderRadius: 8, border: 'none', cursor: 'pointer',
-    background: active ? '#6366f1' : '#3b3b52',
-    color: '#fff', fontSize: 13, fontWeight: 600,
+    background: active ? 'var(--sim-accent)' : 'var(--sim-btn)',
+    color: 'var(--sim-text)', fontSize: 13, fontWeight: 600,
   };
 }

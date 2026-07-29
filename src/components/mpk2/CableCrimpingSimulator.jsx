@@ -69,7 +69,7 @@ export default function CableCrimpingSimulator() {
   }
 
   return (
-    <div className="crimping-sim" style={{ background: '#1e1e2e', borderRadius: 12, padding: 24, color: '#fff' }}>
+    <div className="crimping-sim" style={{ background: 'var(--sim-bg)', borderRadius: 12, padding: 24, color: 'var(--sim-text)' }}>
       <h4 style={{ margin: '0 0 16px', fontSize: 18, display: 'flex', alignItems: 'center', gap: 8 }}>
         🔌 Cable Crimping Simulator
       </h4>
@@ -77,15 +77,15 @@ export default function CableCrimpingSimulator() {
       <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
         <button onClick={() => switchStandard('T568B')} style={btnStyle(standard === 'T568B')}>T568B</button>
         <button onClick={() => switchStandard('T568A')} style={btnStyle(standard === 'T568A')}>T568A</button>
-        <button onClick={reset} style={{ ...btnStyle(false), background: '#3b3b52' }}><Shuffle size={14} /> Acak</button>
-        <button onClick={check} style={{ ...btnStyle(false), background: '#2563eb' }}><Check size={14} /> Periksa</button>
-        <button onClick={() => setShowAnswer(a => !a)} style={{ ...btnStyle(false), background: '#6b21a8' }}><RefreshCw size={14} /> {showAnswer ? 'Sembunyi' : 'Lihat'}</button>
+        <button onClick={reset} style={{ ...btnStyle(false), background: 'var(--sim-btn)' }}><Shuffle size={14} /> Acak</button>
+        <button onClick={check} style={{ ...btnStyle(false), background: 'var(--sim-accent)' }}><Check size={14} /> Periksa</button>
+        <button onClick={() => setShowAnswer(a => !a)} style={{ ...btnStyle(false), background: 'var(--sim-accent)' }}><RefreshCw size={14} /> {showAnswer ? 'Sembunyi' : 'Lihat'}</button>
       </div>
 
       <div style={{ display: 'flex', gap: 32, alignItems: 'flex-start', flexWrap: 'wrap' }}>
         <div>
-          <div style={{ fontSize: 13, color: '#94a3b8', marginBottom: 8 }}>Slot RJ45 (Pin 1-8)</div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 4, background: '#2a2a3e', padding: 12, borderRadius: 8, border: '2px solid #4a4a6a', minWidth: 180 }}>
+          <div style={{ fontSize: 13, color: 'var(--sim-label)', marginBottom: 8 }}>Slot RJ45 (Pin 1-8)</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 4, background: 'var(--sim-card)', padding: 12, borderRadius: 8, border: '2px solid var(--sim-border)', minWidth: 180 }}>
             {slots.map((wire, i) => (
               <div
                 key={i}
@@ -95,7 +95,7 @@ export default function CableCrimpingSimulator() {
                 style={{
                   padding: '8px 12px', borderRadius: 6, cursor: 'pointer',
                   background: wire ? WIRE_COLORS[wire] : '#3a3a52',
-                  color: wire ? '#000' : '#666', fontSize: 13, fontWeight: 600,
+                  color: wire ? '#000' : 'var(--sim-label)', fontSize: 13, fontWeight: 600,
                   border: showAnswer && (wire !== correctOrder[i]) ? '2px solid #ef4444' : '2px solid transparent',
                   display: 'flex', justifyContent: 'space-between', alignItems: 'center',
                   opacity: wire ? 1 : 0.5,
@@ -108,9 +108,9 @@ export default function CableCrimpingSimulator() {
         </div>
 
         <div>
-          <div style={{ fontSize: 13, color: '#94a3b8', marginBottom: 8 }}>Kabel Tersedia</div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 4, background: '#2a2a3e', padding: 12, borderRadius: 8, minWidth: 170 }}>
-            {pool.length === 0 && <span style={{ color: '#666', fontSize: 13 }}>Semua terpasang</span>}
+          <div style={{ fontSize: 13, color: 'var(--sim-label)', marginBottom: 8 }}>Kabel Tersedia</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 4, background: 'var(--sim-card)', padding: 12, borderRadius: 8, minWidth: 170 }}>
+            {pool.length === 0 && <span style={{ color: 'var(--sim-label)', fontSize: 13 }}>Semua terpasang</span>}
             {pool.map(wire => (
               <div
                 key={wire}
@@ -128,13 +128,13 @@ export default function CableCrimpingSimulator() {
       </div>
 
       {result !== null && (
-        <div style={{ marginTop: 16, padding: 12, borderRadius: 8, background: result ? '#166534' : '#7f1d1d', fontSize: 14 }}>
+        <div style={{ marginTop: 16, padding: 12, borderRadius: 8, background: result ? 'var(--success)' : 'var(--danger)', fontSize: 14 }}>
           {result ? 'Benar! Urutan kabel sesuai standar ' + standard : 'Salah. Coba lagi atau lihat jawaban.'}
         </div>
       )}
 
       {showAnswer && (
-        <div style={{ marginTop: 12, padding: 12, borderRadius: 8, background: '#2d2d44', fontSize: 13 }}>
+        <div style={{ marginTop: 12, padding: 12, borderRadius: 8, background: 'var(--sim-btn)', fontSize: 13 }}>
           Urutan benar: {correctOrder.map((w, i) => <span key={i} style={{ display: 'inline-block', background: WIRE_COLORS[w], color: '#000', padding: '2px 8px', borderRadius: 4, margin: 2, fontWeight: 600 }}>{w}</span>)}
         </div>
       )}
@@ -146,7 +146,7 @@ function btnStyle(active) {
   return {
     display: 'inline-flex', alignItems: 'center', gap: 6,
     padding: '8px 14px', borderRadius: 8, border: 'none', cursor: 'pointer',
-    background: active ? '#6366f1' : '#2d2d44',
-    color: '#fff', fontSize: 13, fontWeight: 600,
+    background: active ? 'var(--sim-accent)' : 'var(--sim-btn)',
+    color: 'var(--sim-text)', fontSize: 13, fontWeight: 600,
   };
 }

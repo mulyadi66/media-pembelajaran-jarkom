@@ -35,13 +35,13 @@ function polarToCart(cx, cy, r, deg) {
 }
 
 const containerStyle = {
-  background: '#1e1e2e', color: '#fff', borderRadius: 12, padding: 20,
+  background: 'var(--sim-bg)', color: 'var(--sim-text)', borderRadius: 12, padding: 20,
   fontFamily: 'system-ui, sans-serif', maxWidth: 480,
 };
 
 const row = { display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 12, marginTop: 10 };
 
-const labelStyle = { fontSize: 11, color: '#94a3b8', textAlign: 'center' };
+const labelStyle = { fontSize: 11, color: 'var(--sim-label)', textAlign: 'center' };
 
 export default function AntennaAlignment() {
   const [azimuth, setAzimuth] = useState(0);
@@ -56,7 +56,7 @@ export default function AntennaAlignment() {
 
   return (
     <div style={containerStyle}>
-      <h3 style={{ margin: '0 0 8px', textAlign: 'center', color: '#6366f1' }}>
+      <h3 style={{ margin: '0 0 8px', textAlign: 'center', color: 'var(--sim-accent)' }}>
         Antenna Alignment
       </h3>
 
@@ -125,25 +125,25 @@ export default function AntennaAlignment() {
 
       {/* Values */}
       <div style={{ textAlign: 'center', margin: '4px 0 8px' }}>
-        <span style={{ fontSize: 20, fontWeight: 700, color: '#6366f1' }}>{azimuth}°</span>
-        <span style={{ fontSize: 13, color: '#94a3b8', margin: '0 8px' }}>Az</span>
-        <span style={{ fontSize: 20, fontWeight: 700, color: '#6366f1' }}>{elevation}°</span>
-        <span style={{ fontSize: 13, color: '#94a3b8' }}>El</span>
+        <span style={{ fontSize: 20, fontWeight: 700, color: 'var(--sim-accent)' }}>{azimuth}°</span>
+        <span style={{ fontSize: 13, color: 'var(--sim-label)', margin: '0 8px' }}>Az</span>
+        <span style={{ fontSize: 20, fontWeight: 700, color: 'var(--sim-accent)' }}>{elevation}°</span>
+        <span style={{ fontSize: 13, color: 'var(--sim-label)' }}>El</span>
       </div>
 
       {/* Azimuth control */}
       <div style={labelStyle}>Azimuth</div>
       <div style={row}>
         <button onClick={() => setAzimuth(a => ((a - 5) % 360 + 360) % 360)} style={{
-          background: '#6366f1', color: '#fff', border: 'none', borderRadius: 6,
+          background: 'var(--sim-accent)', color: 'var(--sim-text)', border: 'none', borderRadius: 6,
           width: 36, height: 36, fontSize: 18, cursor: 'pointer', display: 'flex',
           alignItems: 'center', justifyContent: 'center',
         }}>◀</button>
         <input type="range" min={0} max={360} value={azimuth}
           onChange={e => setAzimuth(Number(e.target.value))}
-          style={{ width: 200, accentColor: '#6366f1' }} />
+          style={{ width: 200, accentColor: 'var(--sim-accent)' }} />
         <button onClick={() => setAzimuth(a => ((a + 5) % 360 + 360) % 360)} style={{
-          background: '#6366f1', color: '#fff', border: 'none', borderRadius: 6,
+          background: 'var(--sim-accent)', color: 'var(--sim-text)', border: 'none', borderRadius: 6,
           width: 36, height: 36, fontSize: 18, cursor: 'pointer', display: 'flex',
           alignItems: 'center', justifyContent: 'center',
         }}>▶</button>
@@ -152,11 +152,11 @@ export default function AntennaAlignment() {
       {/* Elevation control */}
       <div style={{ ...labelStyle, marginTop: 8 }}>Elevation</div>
       <div style={row}>
-        <span style={{ fontSize: 12, color: '#94a3b8' }}>0°</span>
+        <span style={{ fontSize: 12, color: 'var(--sim-label)' }}>0°</span>
         <input type="range" min={0} max={90} value={elevation}
           onChange={e => setElevation(Number(e.target.value))}
-          style={{ width: 200, accentColor: '#6366f1' }} />
-        <span style={{ fontSize: 12, color: '#94a3b8' }}>90°</span>
+          style={{ width: 200, accentColor: 'var(--sim-accent)' }} />
+        <span style={{ fontSize: 12, color: 'var(--sim-label)' }}>90°</span>
       </div>
 
       {/* Signal meter */}
@@ -165,13 +165,13 @@ export default function AntennaAlignment() {
           <span>Signal: <b style={{ color: sColor }}>{signal.toFixed(0)}%</b></span>
           <span style={{ color: sColor, fontWeight: 700 }}>{sLabel}</span>
         </div>
-        <div style={{ height: 14, background: '#334155', borderRadius: 7, overflow: 'hidden' }}>
+        <div style={{ height: 14, background: 'var(--sim-btn)', borderRadius: 7, overflow: 'hidden' }}>
           <div style={{ width: `${signal}%`, height: '100%', background: sColor, borderRadius: 7, transition: 'width 0.2s' }} />
         </div>
       </div>
 
       {/* Target info */}
-      <div style={{ fontSize: 11, color: '#94a3b8', textAlign: 'center', marginTop: 6 }}>
+      <div style={{ fontSize: 11, color: 'var(--sim-label)', textAlign: 'center', marginTop: 6 }}>
         Target: {TARGET_AZ}° Az, {TARGET_EL}° El
         <label style={{ marginLeft: 8, cursor: 'pointer' }}>
           <input type="checkbox" checked={targetVisible} onChange={e => setTargetVisible(e.target.checked)} /> show
