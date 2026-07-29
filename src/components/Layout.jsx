@@ -71,7 +71,7 @@ export default function Layout() {
         <div className="sidebar-header">
           <div className="logo">
             <Network size={24} />
-            <span>JarkomLab</span>
+            <span>MPK 2</span>
           </div>
           <button className="sidebar-close-mobile" onClick={() => setSidebarOpen(false)} aria-label="Tutup menu navigasi">
             <X size={20} />

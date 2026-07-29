@@ -293,7 +293,7 @@ export default function ModulAjarPage() {
         </Section>
 
         <div className="ma-footer">
-          <p>&copy; 2026 JarkomLab — Modul Ajar Perencanaan & Pengalamatan Jaringan</p>
+          <p>&copy; 2026 TJKT SMKN 2 KUNINGAN</p>
         </div>
       </div>
     </div>

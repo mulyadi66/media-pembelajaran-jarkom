@@ -125,7 +125,7 @@ export default function Dashboard() {
         </section>
       )}
 
-      <footer className="footer"><p>&copy; 2026 JarkomLab — Media Pembelajaran TJKT</p></footer>
+      <footer className="footer"><p>&copy; 2026 TJKT SMKN 2 KUNINGAN</p></footer>
     </>
   );
 }
