@@ -6,7 +6,7 @@ import StreakCounter from './StreakCounter';
 import {
   Home, Server, Projector, CreditCard, Briefcase,
   ClipboardCheck, FileText, BarChart3, Menu, X, Trophy, User, Search,
-  Network, Puzzle, BookOpen, BookA, Zap, FileDown
+  Network, Puzzle, BookOpen, BookA, Zap, FileDown, PanelLeftClose, PanelLeft
 } from 'lucide-react';
 
 const navItems = [
@@ -58,15 +58,16 @@ const pageDescriptions = {
 
 export default function Layout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const { totalScore, streak } = useApp();
   const location = useLocation();
   const path = location.pathname;
 
   return (
-    <div className="app-layout">
+    <div className={`app-layout ${sidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
       {sidebarOpen && <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)} />}
 
-      <nav className={`sidebar ${sidebarOpen ? 'mobile-open' : ''}`} aria-label="Navigasi utama">
+      <nav className={`sidebar ${sidebarOpen ? 'mobile-open' : ''} ${sidebarCollapsed ? 'collapsed' : ''}`} aria-label="Navigasi utama">
         <div className="sidebar-header">
           <div className="logo">
             <Network size={24} />
@@ -80,7 +81,7 @@ export default function Layout() {
           {navItems.map(({ to, icon: Icon, label }) => (
             <li key={to} role="listitem">
               <NavLink to={to} className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
-                onClick={() => setSidebarOpen(false)}>
+                onClick={() => setSidebarOpen(false)} title={sidebarCollapsed ? label : undefined}>
                 <Icon size={18} /><span>{label}</span>
               </NavLink>
             </li>
@@ -93,6 +94,10 @@ export default function Layout() {
           <button className="mobile-menu-btn" onClick={() => setSidebarOpen(true)}
             aria-label="Buka menu navigasi" aria-expanded={sidebarOpen}>
             <Menu size={22} />
+          </button>
+          <button className="sidebar-toggle" onClick={() => setSidebarCollapsed(prev => !prev)}
+            aria-label={sidebarCollapsed ? 'Perluas sidebar' : 'Ciutkan sidebar'} title={sidebarCollapsed ? 'Perluas sidebar' : 'Ciutkan sidebar'}>
+            {sidebarCollapsed ? <PanelLeft size={20} /> : <PanelLeftClose size={20} />}
           </button>
           <div className="search-box" role="search" aria-label="Pencarian">
             <Search size={16} />
