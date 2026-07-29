@@ -11,8 +11,6 @@ export default function Leaderboard({ scores = {} }) {
     { name: 'Post-Test', score: posttest, color: '#10b981' },
   ].filter(e => e.score > 0).sort((a, b) => b.score - a.score);
 
-  const rank = ['Emas', 'Perak', 'Perunggu'];
-
   return (
     <div className="leaderboard">
       <h3><Trophy size={18} /> Leaderboard</h3>

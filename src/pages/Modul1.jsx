@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useApp } from '../context/AppContext';
-import { Server, Wifi, Plug, Monitor, Settings, Cable, Info, AlertTriangle, Star } from 'lucide-react';
+import { Wifi, Plug, Settings, Info, AlertTriangle, Star } from 'lucide-react';
 import VideoEmbed from '../components/VideoEmbed';
 import SectionTracker from '../components/SectionTracker';
 
@@ -13,7 +13,7 @@ const sections = [
 
 export default function Modul1() {
   const { markModuleRead } = useApp();
-  useEffect(() => { markModuleRead('modul1'); }, []);
+  useEffect(() => { markModuleRead('modul1'); }, [markModuleRead]);
 
   return (
     <div className="content-section">

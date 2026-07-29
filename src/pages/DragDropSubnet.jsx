@@ -96,7 +96,6 @@ export default function DragDropSubnet() {
 
   const handleSubmit = () => {
     const res = {};
-    let correct = 0;
     challenge.ips.forEach((ipData, ipIdx) => {
       let placedIn = -1;
       Object.entries(placed).forEach(([sIdx, ips]) => {
@@ -104,7 +103,6 @@ export default function DragDropSubnet() {
       });
       const isCorrect = placedIn === ipData.correct;
       res[ipIdx] = isCorrect;
-      if (isCorrect) correct++;
     });
     setResults(res);
     setSubmitted(true);

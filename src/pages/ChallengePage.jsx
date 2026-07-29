@@ -37,7 +37,7 @@ export default function ChallengePage() {
     if (mode !== 'playing') return;
     timerRef.current = setInterval(() => {
       setTimeLeft(prev => {
-        if (prev <= 1) { finishGame(); return 0; }
+        if (prev <= 1) { finishGameRef.current(); return 0; }
         return prev - 1;
       });
     }, 1000);
@@ -54,19 +54,19 @@ export default function ChallengePage() {
     setResults(prev => [...prev, { question: q.q, userAnswer, correctAnswer: q.answer, isCorrect }]);
     setUserAnswer('');
     if (currentIdx + 1 >= questions.length) {
-      finishGame();
+      finishGameRef.current();
     } else {
       setCurrentIdx(prev => prev + 1);
     }
   };
-
-  const finishGame = () => {
+  finishGameRef.current = () => {
     clearInterval(timerRef.current);
-    // Mark remaining as skipped
-    const remaining = questions.slice(currentIdx + 1).map(q => ({
-      question: q.q, userAnswer: '-', correctAnswer: q.answer, isCorrect: false
-    }));
-    setResults(prev => [...prev, ...remaining]);
+    setResults(prev => {
+      const remaining = questions.slice(currentIdx + 1).map(q => ({
+        question: q.q, userAnswer: '-', correctAnswer: q.answer, isCorrect: false
+      }));
+      return [...prev, ...remaining];
+    });
     setMode('done');
   };
 

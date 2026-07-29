@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { CheckCircle, Circle } from 'lucide-react';
 
 const STORAGE_KEY = 'jarkomlab_sectionProgress';

@@ -1,5 +1,6 @@
 import { useApp } from '../context/AppContext';
-import Badges, { checkBadges } from '../components/Badges';
+import Badges from '../components/Badges';
+import { checkBadges } from '../data/badges';
 import Certificate from '../components/Certificate';
 import Leaderboard from '../components/Leaderboard';
 import { Trash2, Award, TrendingUp } from 'lucide-react';

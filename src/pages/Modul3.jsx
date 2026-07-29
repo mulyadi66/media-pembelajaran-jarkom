@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { Globe, Scissors, Code, Sliders, Calculator, Info, AlertTriangle, Star } from 'lucide-react';
+import { Globe, Scissors, Code, Sliders, Calculator, AlertTriangle, Star } from 'lucide-react';
 import VideoEmbed from '../components/VideoEmbed';
 import SectionTracker from '../components/SectionTracker';
 
@@ -65,7 +65,7 @@ export default function Modul3() {
   const [vlsmHosts, setVlsmHosts] = useState('100, 50, 25, 2');
   const [vlsmResult, setVlsmResult] = useState(null);
 
-  useEffect(() => { markModuleRead('modul3'); }, []);
+  useEffect(() => { markModuleRead('modul3'); }, [markModuleRead]);
 
   const handleCalcSubnet = () => setSubnetResult(calcSubnet(ip, cidr));
   const handleCalcVLSM = () => setVlsmResult(calcVLSM(vlsmIP, vlsmCIDR, vlsmHosts));

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { Projector, Star, Minus, Circle, GitBranch, Network, Info, AlertTriangle, Calculator } from 'lucide-react';
+import { Projector, Star, Minus, Circle, GitBranch, Network, Info, Calculator } from 'lucide-react';
 import VideoEmbed from '../components/VideoEmbed';
 import SectionTracker from '../components/SectionTracker';
 
@@ -114,7 +114,7 @@ export default function Modul2() {
   const { markModuleRead } = useApp();
   const [activeTopo, setActiveTopo] = useState('star');
 
-  useEffect(() => { markModuleRead('modul2'); }, []);
+  useEffect(() => { markModuleRead('modul2'); }, [markModuleRead]);
 
   useEffect(() => {
     const svg = document.getElementById('topoSvg');

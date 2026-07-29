@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
-import { checkBadges } from '../components/Badges';
+import { checkBadges } from '../data/badges';
 import { Server, Projector, CreditCard, Briefcase, ClipboardCheck, FileText, BarChart3, BookOpen, Trophy, Network, Monitor, Puzzle, Award, BookA, Zap, FileDown, ExternalLink } from 'lucide-react';
 
 export default function Dashboard() {
-  const { modulesRead, scores, streak } = useApp();
+  const { modulesRead, scores } = useApp();
   const earnedBadges = checkBadges(scores, modulesRead);
 
   const modules = [

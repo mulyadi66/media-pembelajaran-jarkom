@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { RotateCcw, ChevronLeft, ChevronRight, Shuffle } from 'lucide-react';
+import { RotateCcw, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function Flashcard({ cards }) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -9,13 +9,6 @@ export default function Flashcard({ cards }) {
   const categories = ['Semua', ...new Set(cards.map(c => c.category))];
   const filtered = filter === 'Semua' ? cards : cards.filter(c => c.category === filter);
   const card = filtered[currentIndex];
-
-  const shuffleCards = () => {
-    const arr = [...filtered].sort(() => Math.random() - 0.5);
-    // We just re-index by resetting to 0 for simplicity
-    setCurrentIndex(0);
-    setFlipped(false);
-  };
 
   const goNext = () => {
     setFlipped(false);

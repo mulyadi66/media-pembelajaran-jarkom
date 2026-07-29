@@ -154,9 +154,9 @@ export default function ModulAjarPage() {
           <Table
             headers={['Kode', 'Tujuan Pembelajaran', 'Aspek', 'Indikator']}
             rows={m.tujuanPembelajaran.map(tp => [
-              <strong>{tp.kode}</strong>,
+              <strong key="kode">{tp.kode}</strong>,
               tp.deskripsi,
-              <span className="ma-aspek-tag">{tp.aspek}</span>,
+              <span key="aspek" className="ma-aspek-tag">{tp.aspek}</span>,
               tp.indikator,
             ])}
           />
@@ -239,8 +239,8 @@ export default function ModulAjarPage() {
             <Table
               headers={m.asesmen.sumatif.rubrikProyek[0] ? ['Aspek', 'Skor', 'Deskripsi'] : []}
               rows={m.asesmen.sumatif.rubrikProyek.map(r => [
-                <strong>{r.aspek}</strong>,
-                <span className="ma-aspek-tag">{r.skor}</span>,
+                <strong key="aspek">{r.aspek}</strong>,
+                <span key="skor" className="ma-aspek-tag">{r.skor}</span>,
                 r.deskripsi,
               ])}
             />

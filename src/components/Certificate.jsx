@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { Download, Award } from 'lucide-react';
 
-export default function Certificate({ studentName = 'Siswa', score, module }) {
+export default function Certificate({ studentName = 'Siswa', module }) {
   const certRef = useRef(null);
 
   const handleDownload = async () => {

@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef, useMemo } from 'react';
-import { CheckCircle, XCircle, ChevronLeft, ChevronRight, Clock, Award, RotateCcw, Eye, EyeOff, Shuffle } from 'lucide-react';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { CheckCircle, XCircle, ChevronLeft, ChevronRight, Clock, Award, RotateCcw, Eye } from 'lucide-react';
 
 function shuffleArray(arr) {
   const a = [...arr];
@@ -39,7 +39,7 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
       });
     }, 1000);
     return () => clearInterval(timerRef.current);
-  }, [submitted, timeLimit, mode]);
+  }, [submitted, timeLimit, mode, handleSubmit]);
 
   useEffect(() => {
     localStorage.setItem(`jarkomlab_${storageKey}`, JSON.stringify(answers));
@@ -53,7 +53,7 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(() => {
     clearInterval(timerRef.current);
     localStorage.setItem(`jarkomlab_${storageKey}_submitted`, 'true');
     setSubmitted(true);
@@ -61,7 +61,7 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
     qs.forEach((q, i) => { if (answers[i] === q.answer) correct++; });
     const score = Math.round((correct / total) * 100);
     onScoreSubmit(score);
-  };
+  }, [answers, qs, total, onScoreSubmit, storageKey]);
 
   const handleRetry = () => {
     localStorage.removeItem(`jarkomlab_${storageKey}`);

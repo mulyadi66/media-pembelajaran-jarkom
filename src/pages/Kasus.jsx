@@ -1,5 +1,5 @@
 import { useApp } from '../context/AppContext';
-import { Briefcase, Save, Network, Building2, Gamepad2 } from 'lucide-react';
+import { Network, Building2, Gamepad2 } from 'lucide-react';
 
 const cases = [
   {

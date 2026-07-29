@@ -2,6 +2,9 @@ import { createContext, useContext, useState, useEffect } from 'react';
 
 const AppContext = createContext();
 
+// oxlint-disable-next-line react/only-export-components
+export const useApp = () => useContext(AppContext);
+
 function getToday() { return new Date().toISOString().split('T')[0]; }
 
 export function AppProvider({ children }) {
@@ -61,11 +64,11 @@ export function AppProvider({ children }) {
       const yStr = yesterday.toISOString().split('T')[0];
       if (streak.lastDate === yStr) {
         setStreak(prev => ({ count: prev.count + 1, lastDate: today }));
-      } else if (streak.lastDate !== today) {
+      } else {
         setStreak({ count: 1, lastDate: today });
       }
     }
-  }, []);
+  }, [streak.lastDate]);
 
   const markModuleRead = (moduleId) => setModulesRead(prev => ({ ...prev, [moduleId]: true }));
   const saveQuizScore = (quizKey, score) => setScores(prev => ({ ...prev, [quizKey]: score }));
@@ -98,4 +101,4 @@ export function AppProvider({ children }) {
   );
 }
 
-export const useApp = () => useContext(AppContext);
+
