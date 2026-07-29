@@ -104,7 +104,7 @@ export default function Dashboard() {
         <div className="actions-grid">
           {quickActions.map(({ to, icon: Icon, title, desc, color, external }) => (
             external ? (
-              <a href={to} target="_blank" rel="noopener noreferrer" className="action-card" key={to}>
+              <a href={to} target="_blank" rel="noopener noreferrer" className="action-card external" key={to}>
                 <div className="action-icon" style={{background: `linear-gradient(135deg, ${color[0]}, ${color[1]})`}}>
                   <Icon size={22} color="white" />
                 </div>
