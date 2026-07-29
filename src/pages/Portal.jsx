@@ -17,7 +17,6 @@ const subjects = [
 ];
 
 export default function Portal() {
-  const { } = useApp();
 
   return (
     <div className="portal">
