@@ -208,5 +208,75 @@ export const posttestQuestions = [
     ],
     answer: 1,
     explanation: 'Kabel UTP max 100m (opsi A salah). Wi-Fi tidak mungkin jarak ribuan km. VPN over Internet (MPLS/IPsec) adalah solusi realistis: menggunakan infrastruktur ISP yang sudah ada, biaya lebih rendah dari leased line dedicated, tetapi tetap aman dengan enkripsi VPN tunnel.'
+  },
+  {
+    id: 16,
+    level: 'C5 - Mengevaluasi',
+    question: 'Sebuah warnet memiliki 20 PC dengan 1 server billing. Pemilik ingin fitur: setiap pelanggan hanya bisa login 1 PC, waktu otomatis terpotong, dan admin bisa reset dari kasir. Evaluasi solusi teknologi yang memungkinkan:',
+    options: [
+      'A. Billing software client-server dengan MAC address binding — setiap akun terikat ke satu PC, timer terpusat di server, admin panel di kasir',
+      'B. Catat manual pakai buku',
+      'C. VPN untuk setiap PC',
+      'D. Gunakan software anti-virus',
+      'E. Cloud-based semuanya tanpa server lokal'
+    ],
+    answer: 0,
+    explanation: 'Billing software client-server adalah standar industri warnet: server menyimpan database akun dan timer, client agent di setiap PC mengontrol akses, MAC address binding mencegah login dari PC berbeda. Admin panel kasir bisa mereset, menambah waktu, dan memonitor real-time.'
+  },
+  {
+    id: 17,
+    level: 'C6 - Menciptakan',
+    question: 'Rancang solusi koneksi internet cadangan (failover) untuk kantor yang membutuhkan koneksi 24/7 tanpa downtime. Koneksi utama fiber 100 Mbps:',
+    options: [
+      'A. Langganan dua ISP berbeda, router dengan failover otomatis (active-passive atau load balancing)',
+      'B. Beli UPS yang lebih besar',
+      'C. Langganan satu ISP dengan SLA 99.9%',
+      'D. Backup data ke hard disk eksternal',
+      'E. Pasang WiFi dari ISP berbeda'
+    ],
+    answer: 0,
+    explanation: 'Solusi failover: dua ISP dari provider berbeda (misal: ISP A fiber + ISP B 4G LTE broadband). Router dual-WAN mendeteksi kegagalan ISP A dan otomatis switch ke ISP B dalam hitungan detik. Bisa active-passive (satu aktif) atau load balancing (dua aktif bersamaan).'
+  },
+  {
+    id: 18,
+    level: 'C5 - Mengevaluasi',
+    question: 'Dua IP address: 192.168.10.5/25 dan 192.168.10.130/25. Evaluasi apakah kedua IP ini berada dalam subnet yang sama:',
+    options: [
+      'A. Ya, karena /25 membagi /24 menjadi 2 subnet. 192.168.10.0/25 (1-126) dan 192.168.10.128/25 (129-254). 192.168.10.5 berada di subnet pertama, 192.168.10.130 di subnet kedua — BERBEDA',
+      'B. Ya, sama karena /25 = 128 host, keduanya dalam range /24 yang sama',
+      'C. Tidak, karena /25 tidak membagi /24',
+      'D. Tidak, karena beda satu angka di oktet ke-4',
+      'E. Ya, karena keduanya adalah IP valid'
+    ],
+    answer: 0,
+    explanation: '/25 membagi /24 menjadi 2 subnet masing-masing 128 alamat (126 usable). Subnet 1: 192.168.10.0/25 (range: .1 -.126), Subnet 2: 192.168.10.128/25 (range: .129 -.254). IP .5 di subnet 1, IP .130 di subnet 2 — BERBEDA subnet, tidak bisa komunikasi langsung tanpa router.'
+  },
+  {
+    id: 19,
+    level: 'C6 - Menciptakan',
+    question: 'Buat kebijakan password untuk jaringan sekolah yang terdiri dari 300 siswa dan 30 guru. Kebijakan harus seimbang antara keamanan dan kemudahan penggunaan:',
+    options: [
+      'A. Password siswa: 12345, guru: admin123',
+      'B. Password kompleks 16 karakter random untuk semua — siswa akan kesulitan',
+      'C. Siswa: password 8 karakter (huruf+angka) diganti tiap semester, guru: 12 karakter (huruf+angka+simbol) diganti tiap 3 bulan, SSID berbeda untuk siswa dan guru',
+      'D. Gunakan fingerprint di semua perangkat',
+      'E. Password wajib diganti setiap hari'
+    ],
+    answer: 2,
+    explanation: 'Kebijakan berlapis: SSID terpisah (siswa vs guru) membatasi akses, password siswa 8 karakter cukup aman namun mudah diingat (diganti tiap semester), password guru lebih kuat 12 karakter (diganti 3 bulan). Guru membutuhkan keamanan lebih karena akses ke data sensitif.'
+  },
+  {
+    id: 20,
+    level: 'C4 - Menganalisis',
+    question: 'Analisis perbedaan mendasar antara switch managed dan unmanaged untuk jaringan kantor 50 PC yang memerlukan VLAN dan QoS:',
+    options: [
+      'A. Tidak ada perbedaan, keduanya sama',
+      'B. Switch unmanaged plug-and-play tanpa konfigurasi, switch managed bisa dikonfigurasi: VLAN, QoS, SNMP, port mirroring, STP — wajib untuk jaringan 50 PC yang butuh VLAN',
+      'C. Switch managed hanya untuk perusahaan besar',
+      'D. Unmanaged lebih cepat daripada managed',
+      'E. Managed switch hanya untuk data center'
+    ],
+    answer: 1,
+    explanation: 'Switch unmanaged bekerja otomatis tanpa konfigurasi — cocok untuk jaringan kecil. Switch managed memberikan kontrol: VLAN untuk segmentasi, QoS untuk prioritas bandwidth, SNMP untuk monitoring, port mirroring untuk troubleshooting. Wajib jika butuh VLAN membagi jaringan menjadi beberapa segmen.'
   }
 ];

@@ -89,4 +89,34 @@ export const pretestDKK = [
     options: ['A. Membuat aplikasi website', 'B. Mengelola dan memelihara jaringan komputer perusahaan', 'C. Menjual perangkat jaringan', 'D. Mengajar di sekolah', 'E. Merakit komputer'],
     answer: 1, explanation: 'Network administrator bertanggung jawab mengelola operasional jaringan sehari-hari, termasuk konfigurasi, monitoring, backup, dan troubleshooting.'
   },
+  {
+    id: 16, level: 'C3 - Menerapkan',
+    question: 'Seorang teknisi akan melakukan krimping kabel UTP dengan standar T568B. Urutan warna yang benar dari pin 1 sampai 8 adalah?',
+    options: ['A. Putih-Oranye, Oranye, Putih-Hijau, Biru, Putih-Biru, Hijau, Putih-Coklat, Coklat', 'B. Putih-Hijau, Hijau, Putih-Oranye, Biru, Putih-Biru, Oranye, Putih-Coklat, Coklat', 'C. Oranye, Putih-Oranye, Hijau, Putih-Hijau, Biru, Putih-Biru, Coklat, Putih-Coklat', 'D. Putih-Biru, Biru, Putih-Oranye, Oranye, Putih-Hijau, Hijau, Putih-Coklat, Coklat', 'E. Coklat, Putih-Coklat, Hijau, Putih-Hijau, Biru, Putih-Biru, Oranye, Putih-Oranye'],
+    answer: 0, explanation: 'Standar T568B: Pin 1=Putih-Oranye, 2=Oranye, 3=Putih-Hijau, 4=Biru, 5=Putih-Biru, 6=Hijau, 7=Putih-Coklat, 8=Coklat.'
+  },
+  {
+    id: 17, level: 'C3 - Menerapkan',
+    question: 'Seorang teknisi mendapat tugas memasang access point di langit-langit ruangan. APD yang harus digunakan saat bekerja di ketinggian 3 meter adalah:',
+    options: ['A. Topi saja', 'B. Helm safety, safety harness/body harness, sepatu safety, dan sarung tangan', 'C. Kacamata safety dan masker', 'D. Sarung tangan kain dan sepatu biasa', 'E. Rompi saja'],
+    answer: 1, explanation: 'Bekerja di ketinggian ≥ 1.8 meter membutuhkan: helm safety (jatuhan benda), safety harness (mencegah jatuh fatal), sepatu safety (pijakan stabil), dan sarung tangan (perlindungan tangan).'
+  },
+  {
+    id: 18, level: 'C2 - Memahami',
+    question: 'Apa perbedaan utama antara kabel STP dan UTP?',
+    options: ['A. STP lebih murah dari UTP', 'B. STP memiliki pelindung (shielding) foil atau anyaman tembaga yang mengurangi interferensi elektromagnetik', 'C. UTP lebih cepat dari STP', 'D. STP hanya untuk fiber optik', 'E. Tidak ada perbedaan'],
+    answer: 1, explanation: 'STP (Shielded Twisted Pair) memiliki pelindung logam di sekeliling pasangan kabel yang mengurangi EMI/RFI, cocok untuk lingkungan dengan interferensi tinggi. UTP tidak memiliki pelindung sehingga lebih ringan dan murah.'
+  },
+  {
+    id: 19, level: 'C5 - Mengevaluasi',
+    question: 'Sebuah perusahaan membutuhkan media transmisi untuk backbone antar gedung jarak 2 km dengan kecepatan minimal 10 Gbps. Evaluasi pilihan terbaik:',
+    options: ['A. Kabel UTP Cat6a — 10Gbps maks 100m, tidak bisa untuk 2 km', 'B. Kabel Coaxial — bandwidth rendah', 'C. Fiber optik single-mode — 100Gbps hingga 40km, paling sesuai', 'D. Wi-Fi 6 — jarak terbatas', 'E. Kabel telepon — terlalu lambat'],
+    answer: 2, explanation: 'Fiber optik single-mode adalah satu-satunya yang memenuhi spesifikasi: kecepatan hingga 100Gbps dan jarak hingga 40km. UTP Cat6a terbatas 100m, coaxial dan Wi-Fi tidak mencapai 10Gbps di jarak 2 km.'
+  },
+  {
+    id: 20, level: 'C4 - Menganalisis',
+    question: 'Hasil pengukuran dengan OTDR menunjukkan ada spike reflektif tinggi di jarak 1.5 km pada kabel fiber optik 3 km. Analisis kemungkinan penyebab:',
+    options: ['A. Kabel bagus tidak ada masalah', 'B. Ada konektor atau sambungan (splice) di jarak 1.5 km yang menyebabkan refleksi — perlu diperiksa kebersihan konektor atau kualitas splice', 'C. OTDR rusak', 'D. Kabel putus total', 'E. Daya laser terlalu rendah'],
+    answer: 1, explanation: 'Spike reflektif pada OTDR menandakan adanya perubahan impedansi — biasanya di konektor, splice, atau titik patah. Di jarak 1.5 km, kemungkinan ada sambungan kabel atau konektor yang kotor atau tidak presisi.'
+  }
 ];

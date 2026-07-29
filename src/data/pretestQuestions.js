@@ -208,5 +208,75 @@ export const pretestQuestions = [
     ],
     answer: 1,
     explanation: 'Firewall hardware lebih tepat untuk jaringan 50 PC karena: dedicated processor untuk filtering, throughput lebih tinggi, fitur VPN bawaan, tidak membebani komputer client, serta bisa melakukan deep packet inspection. Firewall software lebih cocok untuk perlindungan individual pada satu PC.'
+  },
+  {
+    id: 16,
+    level: 'C4 - Menganalisis',
+    question: 'Seorang admin jaringan mengamati bahwa jaringan LAN sering mengalami collision domain yang besar meskipun sudah menggunakan switch. Analisis penyebab yang PALING mungkin:',
+    options: [
+      'A. Switch tidak bisa membagi collision domain',
+      'B. Masih ada hub yang terhubung ke switch, membuat hub menjadi collision domain besar',
+      'C. Kabel UTP tidak sesuai standar',
+      'D. Router terlalu lambat memproses paket',
+      'E. IP address konflik antar perangkat'
+    ],
+    answer: 1,
+    explanation: 'Setiap port pada switch adalah collision domain terpisah. Namun jika masih ada hub yang terhubung ke salah satu port switch, hub tetap menjadi collision domain besar karena hub bekerja di Layer 1 (broadcast semua data ke semua port).'
+  },
+  {
+    id: 17,
+    level: 'C5 - Mengevaluasi',
+    question: 'Dua buah router saling terhubung dengan IP 10.0.0.1/30 dan 10.0.0.2/30. Evaluasi apakah konfigurasi ini benar untuk link point-to-point:',
+    options: [
+      'A. Salah, karena /30 hanya memberikan 2 usable host tapi network address 10.0.0.0 dan broadcast 10.0.0.3 menyisakan 10.0.0.1 dan 10.0.0.2 — ini benar!',
+      'B. Salah, harus pakai /29 agar lebih banyak IP',
+      'C. Benar, karena /30 ideal untuk link point-to-point: 2 usable host, tepat untuk masing-masing router',
+      'D. Salah, IP harus dalam subnet yang berbeda',
+      'E. Benar, karena /30 memberikan 6 usable host'
+    ],
+    answer: 2,
+    explanation: '/30 (255.255.255.252) adalah subnet ideal untuk link point-to-point karena hanya memberikan 2 usable host (network address dan broadcast address menggunakan 2 alamat dari total 4). Satu IP untuk masing-masing ujung koneksi.'
+  },
+  {
+    id: 18,
+    level: 'C6 - Menciptakan',
+    question: 'Rancang sistem monitoring jaringan 24/7 untuk kantor 100 PC dengan server utama dan 4 switch. Instrumen dan metrik apa yang HARUS dipantau:',
+    options: [
+      'A. Cek manual setiap pagi semua perangkat menyala',
+      'B. SNMP-based monitoring (Cacti/Zabbix) untuk: uptime perangkat, traffic bandwidth, CPU usage switch, error rate port, dan log server',
+      'C. Cukup ping ke semua perangkat tiap 5 menit',
+      'D. Pasang CCTV di depan semua perangkat',
+      'E. Monitoring hanya perlu saat ada masalah'
+    ],
+    answer: 1,
+    explanation: 'Monitoring 24/7 dengan SNMP (Simple Network Management Protocol) memungkinkan: pemantauan uptime otomatis, bandwidth utilization per port, kesalahan frame/CRC, CPU/memory switch, serta alert real-time via email/notifikasi. Ini proaktif, bukan reaktif.'
+  },
+  {
+    id: 19,
+    level: 'C4 - Menganalisis',
+    question: 'Speedtest menunjukkan bandwidth 50 Mbps, tapi pengguna masih mengeluh loading lambat saat mengakses file server lokal. Analisis akar masalah:',
+    options: [
+      'A. Koneksi internet perlu dinaikkan ke 100 Mbps',
+      'B. Masalah di jaringan lokal (switch, kabel, atau server) — speedtest mengukur kecepatan internet, bukan throughput lokal',
+      'C. PC pengguna terlalu lambat',
+      'D. Browser perlu di-clear cache',
+      'E. Perlu ganti provider internet'
+    ],
+    answer: 1,
+    explanation: 'Speedtest hanya mengukur throughput koneksi internet (ke ISP), bukan performa jaringan lokal. Akses file server lokal yang lambat mengindikasikan masalah di LAN: switch bottleneck, kabel rusak, server overload, atau konfigurasi jaringan lokal yang salah.'
+  },
+  {
+    id: 20,
+    level: 'C6 - Menciptakan',
+    question: 'Buat kebijakan backup untuk data server sekolah (2TB data) dengan RPO 4 jam dan RTO 1 jam. Strategi backup yang paling sesuai:',
+    options: [
+      'A. Backup full setiap hari ke hard disk eksternal',
+      'B. Backup incremental setiap 4 jam ke NAS lokal + backup full harian ke cloud (off-site) — memenuhi RPO 4 jam dan RTO 1 jam',
+      'C. Backup hanya saat ada perubahan data',
+      'D. Copy data ke USB flash drive setiap minggu',
+      'E. Backup hanya file dokumen saja, tidak perlu semua'
+    ],
+    answer: 1,
+    explanation: 'RPO 4 jam = maksimal kehilangan data 4 jam, jadi backup tiap 4 jam (incremental). RTO 1 jam = maksimal downtime 1 jam, restore dari NAS lokal cepat. Backup full harian ke cloud untuk disaster recovery off-site.'
   }
 ];

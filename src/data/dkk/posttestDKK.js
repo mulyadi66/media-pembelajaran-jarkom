@@ -89,4 +89,34 @@ export const posttestDKK = [
     options: ['A. Ditiup dengan mulut', 'B. Lap dengan tisu basah', 'C. Gunakan alcohol wipe khusus fiber optik atau pembersih konektor sekali pakai', 'D. Gosok dengan kain biasa', 'E. Cuci dengan air sabun'],
     answer: 2, explanation: 'Konektor fiber optik sangat sensitif terhadap debu dan goresan. Pembersihan harus menggunakan alcohol wipe khusus fiber optik atau one-click cleaner untuk menghindari kerusakan.'
   },
+  {
+    id: 16, level: 'C5 - Mengevaluasi',
+    question: 'Seorang teknisi diminta memilih antara kabel coaxial RG-6 dan RG-59 untuk instalasi CCTV jarak 100 meter. Evaluasi pilihan terbaik:',
+    options: ['A. RG-59 lebih kecil dan mudah ditarik', 'B. RG-6 memiliki diameter lebih besar, redaman lebih rendah, lebih cocok untuk jarak 100 meter CCTV', 'C. Keduanya sama', 'D. RG-59 lebih mahal', 'E. RG-6 hanya untuk internet'],
+    answer: 1, explanation: 'RG-6 memiliki inti tembaga lebih besar (1.0mm vs 0.6mm) dan redaman lebih rendah dibanding RG-59. Untuk jarak 100m CCTV, RG-6 memberikan kualitas sinyal lebih baik dengan loss minimal.'
+  },
+  {
+    id: 17, level: 'C4 - Menganalisis',
+    question: 'Analisis hasil pengukuran: power meter menunjukkan -25 dBm pada ujung kabel fiber optik yang panjangnya 5 km. Jika redaman kabel 0.3 dB/km, berapa daya yang dikirim dari sumber?',
+    options: ['A. -25 dBm (daya sama)', 'B. -23.5 dBm (redaman total 1.5 dB)', 'C. -10 dBm', 'D. -30 dBm', 'E. Tidak bisa dihitung'],
+    answer: 1, explanation: 'Redaman total = 0.3 dB/km x 5 km = 1.5 dB. Daya terima = Daya kirim - Redaman, jadi Daya kirim = -25 dBm + 1.5 dB = -23.5 dBm.'
+  },
+  {
+    id: 18, level: 'C6 - Menciptakan',
+    question: 'Buat jadwal pemeliharaan preventif untuk perangkat jaringan di kantor yang terdiri dari 3 switch, 2 router, 1 server, dan 20 PC:',
+    options: ['A. Tidak perlu pemeliharaan kecuali ada masalah', 'B. Harian: cek log error. Mingguan: backup konfigurasi. Bulanan: bersihkan debu perangkat. Tahunan: uji UPS dan ganti thermal paste', 'C. Cukup setahun sekali dibersihkan', 'D. Bersihkan saat mati saja', 'E. Ganti perangkat setiap tahun'],
+    answer: 1, explanation: 'Pemeliharaan preventif terjadwal: harian (monitoring log), mingguan (backup konfigurasi), bulanan (pembersihan debu — penyebab utama overheat), tahunan (uji UPS, ganti thermal paste fan). Ini mencegah downtime dan memperpanjang umur perangkat.'
+  },
+  {
+    id: 19, level: 'C5 - Mengevaluasi',
+    question: 'Evaluasi pernyataan: "Multimeter digital lebih baik dari analog untuk semua situasi." Benarkah pernyataan ini?',
+    options: ['A. Benar, digital selalu lebih unggul', 'B. Digital lebih akurat dan mudah dibaca, tapi analog lebih baik untuk melihat fluktuasi sinyal secara real-time', 'C. Analog selalu lebih baik', 'D. Keduanya sama', 'E. Tidak perlu multimeter'],
+    answer: 1, explanation: 'Digital unggul dalam akurasi dan kemudahan pembacaan, tapi analog lebih baik untuk melihat tren/perubahan sinyal secara real-time (jarum bergerak menunjukkan fluktuasi). Masing-masing punya kelebihan.'
+  },
+  {
+    id: 20, level: 'C4 - Menganalisis',
+    question: 'Seorang teknisi mengukur grounding rack server dengan multimeter dan mendapatkan tegangan AC 3V antara ground rack dan ground sebenarnya. Analisis risiko:',
+    options: ['A. Normal, tidak berbahaya', 'B. Ada ground loop atau floating ground, bisa menyebabkan noise pada perangkat dan risiko sengatan listrik', 'C. Tegangan terlalu rendah', 'D. Aman karena di bawah 12V', 'E. Multimeter pasti rusak'],
+    answer: 1, explanation: 'Tegangan antara ground rack dan ground sebenarnya menandakan adanya ground loop (beda potensial ground). Ini berbahaya: noise pada perangkat jaringan, risiko sengatan, dan potensi kerusakan komponen.'
+  }
 ];
