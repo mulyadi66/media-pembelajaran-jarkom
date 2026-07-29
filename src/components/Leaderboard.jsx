@@ -1,6 +1,9 @@
-import { Trophy, Medal } from 'lucide-react';
+import { Trophy, Medal, Download } from 'lucide-react';
+import { useRef, useState } from 'react';
 
 export default function Leaderboard({ scores = {} }) {
+  const ref = useRef(null);
+  const [loading, setLoading] = useState(false);
   const pretest = scores.pretest || 0;
   const posttest = scores.posttest || 0;
   const total = pretest + posttest;
@@ -11,9 +14,33 @@ export default function Leaderboard({ scores = {} }) {
     { name: 'Post-Test', score: posttest, color: '#10b981' },
   ].filter(e => e.score > 0).sort((a, b) => b.score - a.score);
 
+  const exportImage = async () => {
+    setLoading(true);
+    try {
+      const html2canvas = (await import('html2canvas')).default;
+      const el = ref.current;
+      if (!el) return;
+      const canvas = await html2canvas(el, { scale: 2, backgroundColor: '#ffffff' });
+      const link = document.createElement('a');
+      link.download = 'leaderboard-jarkom.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    } catch (err) {
+      console.error('Export failed:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="leaderboard">
-      <h3><Trophy size={18} /> Leaderboard</h3>
+    <div className="leaderboard" ref={ref}>
+      <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:16}}>
+        <h3 style={{margin:0}}><Trophy size={18} /> Leaderboard</h3>
+        <button className="btn btn-secondary" onClick={exportImage} disabled={loading}
+          style={{padding:'6px 12px',fontSize:'0.8rem'}} aria-label="Download leaderboard sebagai gambar">
+          <Download size={14} /> {loading ? '...' : 'Export PNG'}
+        </button>
+      </div>
       <div className="leaderboard-avg">
         <span>Rata-rata Skor</span>
         <strong>{avg}</strong>
