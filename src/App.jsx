@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AppProvider } from './context/AppContext';
 import ErrorBoundary from './components/ErrorBoundary';
 import Layout from './components/Layout';
+import Portal from './pages/Portal';
 import Dashboard from './pages/Dashboard';
 import './App.css';
 
@@ -35,22 +36,23 @@ export default function App() {
             </div>
           }>
             <Routes>
+              <Route path="/" element={<Portal />} />
               <Route element={<Layout />}>
-                <Route path="/" element={<Dashboard />} />
-                <Route path="/modul1" element={<Modul1 />} />
-                <Route path="/modul2" element={<Modul2 />} />
-                <Route path="/modul3" element={<Modul3 />} />
-                <Route path="/flashcard" element={<FlashcardPage />} />
-                <Route path="/simulator" element={<DeviceSimulator />} />
-                <Route path="/dragdrop" element={<DragDropSubnet />} />
-                <Route path="/challenge" element={<ChallengePage />} />
-                <Route path="/kasus" element={<Kasus />} />
-                <Route path="/pretest" element={<PreTest />} />
-                <Route path="/posttest" element={<PostTest />} />
-                <Route path="/worksheet" element={<WorksheetPage />} />
-                <Route path="/modul-ajar" element={<ModulAjarPage />} />
-                <Route path="/glossary" element={<GlossaryPage />} />
-                <Route path="/hasil" element={<Hasil />} />
+                <Route path="/mpk1" element={<Dashboard />} />
+                <Route path="/mpk1/modul1" element={<Modul1 />} />
+                <Route path="/mpk1/modul2" element={<Modul2 />} />
+                <Route path="/mpk1/modul3" element={<Modul3 />} />
+                <Route path="/mpk1/flashcard" element={<FlashcardPage />} />
+                <Route path="/mpk1/simulator" element={<DeviceSimulator />} />
+                <Route path="/mpk1/dragdrop" element={<DragDropSubnet />} />
+                <Route path="/mpk1/challenge" element={<ChallengePage />} />
+                <Route path="/mpk1/kasus" element={<Kasus />} />
+                <Route path="/mpk1/pretest" element={<PreTest />} />
+                <Route path="/mpk1/posttest" element={<PostTest />} />
+                <Route path="/mpk1/worksheet" element={<WorksheetPage />} />
+                <Route path="/mpk1/modul-ajar" element={<ModulAjarPage />} />
+                <Route path="/mpk1/glossary" element={<GlossaryPage />} />
+                <Route path="/mpk1/hasil" element={<Hasil />} />
               </Route>
             </Routes>
           </Suspense>

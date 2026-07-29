@@ -8,22 +8,22 @@ export default function Dashboard() {
   const earnedBadges = checkBadges(scores, modulesRead);
 
   const modules = [
-    { to: '/modul1', icon: Server, title: 'Peralatan Jaringan', desc: 'Kebutuhan teknis, peralatan, dan teknologi', color: ['#667eea', '#764ba2'] },
-    { to: '/modul2', icon: Projector, title: 'Topologi Jaringan', desc: 'Star, bus, ring, mesh + simulasi SVG', color: ['#f093fb', '#f5576c'] },
-    { to: '/modul3', icon: CreditCard, title: 'Pengalamatan Jaringan', desc: 'IP, Subnetting, CIDR, VLSM + kalkulator', color: ['#4facfe', '#00f2fe'] },
+    { to: '/mpk1/modul1', icon: Server, title: 'Peralatan Jaringan', desc: 'Kebutuhan teknis, peralatan, dan teknologi', color: ['#667eea', '#764ba2'] },
+    { to: '/mpk1/modul2', icon: Projector, title: 'Topologi Jaringan', desc: 'Star, bus, ring, mesh + simulasi SVG', color: ['#f093fb', '#f5576c'] },
+    { to: '/mpk1/modul3', icon: CreditCard, title: 'Pengalamatan Jaringan', desc: 'IP, Subnetting, CIDR, VLSM + kalkulator', color: ['#4facfe', '#00f2fe'] },
   ];
 
   const quickActions = [
-    { to: '/flashcard', icon: BookOpen, title: 'Flashcard', desc: 'Hafal istilah jaringan', color: ['#8b5cf6', '#6d28d9'] },
-    { to: '/simulator', icon: Network, title: 'Simulator', desc: 'Bangun jaringan sendiri', color: ['#6366f1', '#818cf8'] },
-    { to: '/dragdrop', icon: Puzzle, title: 'Drag & Drop', desc: 'Latihan interaktif', color: ['#ec4899', '#db2777'] },
-    { to: '/challenge', icon: Zap, title: 'Latihan Cepat', desc: 'Subnetting race', color: ['#f59e0b', '#f97316'] },
-    { to: '/kasus', icon: Briefcase, title: 'Studi Kasus', desc: 'Skenario nyata', color: ['#10b981', '#059669'] },
-    { to: '/pretest', icon: ClipboardCheck, title: 'Pre-Test', desc: 'Uji awal', color: ['#06b6d4', '#0891b2'] },
-    { to: '/posttest', icon: FileText, title: 'Post-Test', desc: 'Evaluasi akhir', color: ['#ef4444', '#dc2626'] },
-    { to: '/worksheet', icon: FileDown, title: 'Lembar Kerja', desc: 'Soal offline', color: ['#7c3aed', '#6d28d9'] },
-    { to: '/glossary', icon: BookA, title: 'Glossarium', desc: 'Istilah jaringan', color: ['#0ea5e9', '#0284c7'] },
-    { to: '/hasil', icon: BarChart3, title: 'Hasil', desc: 'Pencapaian & sertifikat', color: ['#f43f5e', '#e11d48'] },
+    { to: '/mpk1/flashcard', icon: BookOpen, title: 'Flashcard', desc: 'Hafal istilah jaringan', color: ['#8b5cf6', '#6d28d9'] },
+    { to: '/mpk1/simulator', icon: Network, title: 'Simulator', desc: 'Bangun jaringan sendiri', color: ['#6366f1', '#818cf8'] },
+    { to: '/mpk1/dragdrop', icon: Puzzle, title: 'Drag & Drop', desc: 'Latihan interaktif', color: ['#ec4899', '#db2777'] },
+    { to: '/mpk1/challenge', icon: Zap, title: 'Latihan Cepat', desc: 'Subnetting race', color: ['#f59e0b', '#f97316'] },
+    { to: '/mpk1/kasus', icon: Briefcase, title: 'Studi Kasus', desc: 'Skenario nyata', color: ['#10b981', '#059669'] },
+    { to: '/mpk1/pretest', icon: ClipboardCheck, title: 'Pre-Test', desc: 'Uji awal', color: ['#06b6d4', '#0891b2'] },
+    { to: '/mpk1/posttest', icon: FileText, title: 'Post-Test', desc: 'Evaluasi akhir', color: ['#ef4444', '#dc2626'] },
+    { to: '/mpk1/worksheet', icon: FileDown, title: 'Lembar Kerja', desc: 'Soal offline', color: ['#7c3aed', '#6d28d9'] },
+    { to: '/mpk1/glossary', icon: BookA, title: 'Glossarium', desc: 'Istilah jaringan', color: ['#0ea5e9', '#0284c7'] },
+    { to: '/mpk1/hasil', icon: BarChart3, title: 'Hasil', desc: 'Pencapaian & sertifikat', color: ['#f43f5e', '#e11d48'] },
   ];
 
   return (
@@ -82,11 +82,11 @@ export default function Dashboard() {
                 <Icon size={24} color="white" />
               </div>
               <div className="module-info">
-                <span className="module-tag">Modul {to.replace('/modul', '')}</span>
+                <span className="module-tag">Modul {to.split('/modul').pop()}</span>
                 <h3>{title}</h3><p>{desc}</p>
                 <div className="module-progress">
-                  <div className="progress-bar"><div className="progress-fill" style={{width: modulesRead[to.replace('/', '')] ? '100' : '0' + '%'}} /></div>
-                  <span>{modulesRead[to.replace('/', '')] ? '100%' : '0%'}</span>
+                  <div className="progress-bar"><div className="progress-fill" style={{width: modulesRead[to.split('/').pop()] ? '100' : '0' + '%'}} /></div>
+                  <span>{modulesRead[to.split('/').pop()] ? '100%' : '0%'}</span>
                 </div>
               </div>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{color:'var(--text-lighter)', flexShrink:0}}><polyline points="9 18 15 12 9 6"/></svg>
