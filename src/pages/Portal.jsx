@@ -70,7 +70,7 @@ export default function Portal() {
       </main>
 
       <footer className="portal-footer">
-        <a href="https://tjkt.smkn2-kng.sch.id/" target="_blank" rel="noopener noreferrer" className="footer-tjkt-link">
+        <a href="https://tjkt.smkn2-kng.sch.id/" className="footer-tjkt-link">
           <ExternalLink size={16} /> Kembali ke Website TJKT
         </a>
         <p>&copy; 2026 TJKT SMKN 2 KUNINGAN</p>
