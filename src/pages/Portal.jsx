@@ -6,7 +6,7 @@ import {
 } from 'lucide-react';
 
 const subjects = [
-  { id: 'dkk', label: 'DKK', title: 'Dasar Keahlian Komunikasi', icon: Globe, color: '#06b6d4', active: false },
+  { id: 'dkk', label: 'DKK', title: 'Dasar Keahlian Komunikasi', icon: Globe, color: '#06b6d4', active: true, path: '/dkk' },
   { id: 'mpk1', label: 'MPK 1', title: 'Perencanaan & Pengalamatan Jaringan', icon: Network, color: '#6366f1', active: true, path: '/mpk1' },
   { id: 'mpk2', label: 'MPK 2', title: 'Teknologi Jaringan', icon: Wifi, color: '#8b5cf6', active: false },
   { id: 'mpk3', label: 'MPK 3', title: 'Administrasi Jaringan', icon: Server, color: '#f59e0b', active: false },
