@@ -30,6 +30,16 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
   const total = qs.length;
   const letters = ['A', 'B', 'C', 'D', 'E'];
 
+  const handleSubmit = useCallback(() => {
+    clearInterval(timerRef.current);
+    localStorage.setItem(`jarkomlab_${storageKey}_submitted`, 'true');
+    setSubmitted(true);
+    let correct = 0;
+    qs.forEach((q, i) => { if (answers[i] === q.answer) correct++; });
+    const score = Math.round((correct / total) * 100);
+    onScoreSubmit(score);
+  }, [answers, qs, total, onScoreSubmit, storageKey]);
+
   useEffect(() => {
     if (submitted || !timeLimit || mode !== 'exam') return;
     timerRef.current = setInterval(() => {
@@ -52,16 +62,6 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
       setShowExplanation(prev => ({ ...prev, [currentIdx]: true }));
     }
   };
-
-  const handleSubmit = useCallback(() => {
-    clearInterval(timerRef.current);
-    localStorage.setItem(`jarkomlab_${storageKey}_submitted`, 'true');
-    setSubmitted(true);
-    let correct = 0;
-    qs.forEach((q, i) => { if (answers[i] === q.answer) correct++; });
-    const score = Math.round((correct / total) * 100);
-    onScoreSubmit(score);
-  }, [answers, qs, total, onScoreSubmit, storageKey]);
 
   const handleRetry = () => {
     localStorage.removeItem(`jarkomlab_${storageKey}`);

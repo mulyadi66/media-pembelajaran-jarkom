@@ -18,6 +18,9 @@ self.addEventListener('activate', (e) => {
 self.addEventListener('fetch', (e) => {
   if (e.request.method !== 'GET') return;
   if (!e.request.url.startsWith(self.location.origin)) return;
+
+  const isNav = e.request.mode === 'navigate';
+
   e.respondWith(
     fetch(e.request)
       .then(res => {
@@ -27,6 +30,12 @@ self.addEventListener('fetch', (e) => {
         }
         return res;
       })
-      .catch(() => caches.match(e.request))
+      .catch(() => {
+        return caches.match(e.request).then(cached => {
+          if (cached) return cached;
+          if (isNav) return caches.match('/index.html');
+          return new Response('', { status: 503 });
+        });
+      })
   );
 });
