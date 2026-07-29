@@ -7,7 +7,7 @@ import {
   Home, Server, Projector, CreditCard, Briefcase,
   ClipboardCheck, FileText, BarChart3, Menu, X, Trophy, User, Search,
   Network, Puzzle, BookOpen, BookA, Zap, FileDown, PanelLeftClose, PanelLeft,
-  ArrowLeft, Globe, Shield, Radio, Ruler
+  ArrowLeft, Globe, Shield, Radio, Ruler, Wifi, Cable, Phone, Circle
 } from 'lucide-react';
 
 const subjects = {
@@ -112,10 +112,65 @@ const subjects = {
       '/dkk/hasil': 'Ringkasan, pencapaian, dan sertifikat DKK',
     },
   },
+  mpk2: {
+    prefix: '/mpk2',
+    label: 'MPK 2',
+    logo: Wifi,
+    title: 'Teknologi Jaringan Kabel dan Nirkabel',
+    items: [
+      { to: '/mpk2', icon: Home, label: 'Dashboard' },
+      { to: '/mpk2/modul1', icon: Cable, label: 'Modul 1: Instalasi & Perawatan Jaringan' },
+      { to: '/mpk2/modul2', icon: Wifi, label: 'Modul 2: Dasar Jaringan Nirkabel' },
+      { to: '/mpk2/modul3', icon: Radio, label: 'Modul 3: Instalasi Perangkat Nirkabel' },
+      { to: '/mpk2/modul4', icon: Phone, label: 'Modul 4: Voice over IP (VoIP)' },
+      { to: '/mpk2/modul5', icon: Circle, label: 'Modul 5: Jaringan Fiber Optik' },
+      { to: '/mpk2/flashcard', icon: BookOpen, label: 'Flashcard' },
+      { to: '/mpk2/challenge', icon: Zap, label: 'Latihan Cepat' },
+      { to: '/mpk2/kasus', icon: Briefcase, label: 'Studi Kasus' },
+      { to: '/mpk2/pretest', icon: ClipboardCheck, label: 'Pre-Test' },
+      { to: '/mpk2/posttest', icon: FileText, label: 'Post-Test' },
+      { to: '/mpk2/worksheet', icon: FileDown, label: 'Lembar Kerja' },
+      { to: '/mpk2/glossary', icon: BookA, label: 'Glossarium' },
+      { to: '/mpk2/hasil', icon: BarChart3, label: 'Hasil & Sertifikat' },
+    ],
+    titles: {
+      '/mpk2': 'Dashboard MPK 2',
+      '/mpk2/modul1': 'Modul 1: Instalasi, Perawatan & Perbaikan Jaringan',
+      '/mpk2/modul2': 'Modul 2: Dasar & Teknologi Jaringan Nirkabel',
+      '/mpk2/modul3': 'Modul 3: Instalasi & Pengujian Perangkat Nirkabel',
+      '/mpk2/modul4': 'Modul 4: Voice over Internet Protocol (VoIP)',
+      '/mpk2/modul5': 'Modul 5: Jaringan Fiber Optik',
+      '/mpk2/flashcard': 'Flashcard Interaktif MPK 2',
+      '/mpk2/challenge': 'Latihan Cepat MPK 2',
+      '/mpk2/kasus': 'Studi Kasus MPK 2',
+      '/mpk2/pretest': 'Pre-Test MPK 2',
+      '/mpk2/posttest': 'Post-Test MPK 2',
+      '/mpk2/worksheet': 'Lembar Kerja MPK 2',
+      '/mpk2/glossary': 'Glossarium MPK 2',
+      '/mpk2/hasil': 'Hasil & Sertifikat MPK 2',
+    },
+    descs: {
+      '/mpk2': 'Media Pembelajaran Teknologi Jaringan Kabel dan Nirkabel',
+      '/mpk2/modul1': 'Instalasi, perawatan, dan perbaikan jaringan kabel serta nirkabel',
+      '/mpk2/modul2': 'Konsep dasar, standar, dan teknologi jaringan nirkabel',
+      '/mpk2/modul3': 'Instalasi, konfigurasi, dan pengujian perangkat nirkabel',
+      '/mpk2/modul4': 'Konsep VoIP, perangkat, dan konfigurasinya',
+      '/mpk2/modul5': 'Fiber optik: prinsip kerja, jenis, instalasi, dan pengujian',
+      '/mpk2/flashcard': 'Kartu interaktif istilah Teknologi Jaringan Kabel dan Nirkabel',
+      '/mpk2/challenge': 'Latihan cepat MPK 2 melawan waktu',
+      '/mpk2/kasus': 'Terapkan pemahaman MPK 2 dalam permasalahan nyata',
+      '/mpk2/pretest': 'Uji pemahaman awal MPK 2',
+      '/mpk2/posttest': 'Evaluasi pemahaman MPK 2. Target: ≥70',
+      '/mpk2/worksheet': 'Lembar kerja praktik offline MPK 2',
+      '/mpk2/glossary': 'Daftar istilah penting dalam Teknologi Jaringan Kabel dan Nirkabel',
+      '/mpk2/hasil': 'Ringkasan, pencapaian, dan sertifikat MPK 2',
+    },
+  },
 };
 
 function getSubject(path) {
   if (path.startsWith('/dkk')) return subjects.dkk;
+  if (path.startsWith('/mpk2')) return subjects.mpk2;
   return subjects.mpk1;
 }
 

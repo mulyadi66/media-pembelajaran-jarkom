@@ -8,7 +8,7 @@ import {
 const subjects = [
   { id: 'dkk', label: 'DKK', title: 'Dasar Kompetensi Keahlian', icon: Globe, color: '#06b6d4', active: true, path: '/dkk' },
   { id: 'mpk1', label: 'MPK 1', title: 'Perencanaan & Pengalamatan Jaringan', icon: Network, color: '#6366f1', active: true, path: '/mpk1' },
-  { id: 'mpk2', label: 'MPK 2', title: 'Teknologi Jaringan', icon: Wifi, color: '#8b5cf6', active: false },
+  { id: 'mpk2', label: 'MPK 2', title: 'Teknologi Jaringan Kabel dan Nirkabel', icon: Wifi, color: '#8b5cf6', active: true, path: '/mpk2' },
   { id: 'mpk3', label: 'MPK 3', title: 'Administrasi Jaringan', icon: Server, color: '#f59e0b', active: false },
   { id: 'mpk4', label: 'MPK 4', title: 'Keamanan Jaringan', icon: Lock, color: '#ef4444', active: false },
   { id: 'mpk5', label: 'MPK 5', title: 'Pemeliharaan Jaringan', icon: HardDrive, color: '#10b981', active: false },

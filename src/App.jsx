@@ -37,6 +37,21 @@ const ChallengePageDKK = lazy(() => import('./pages/dkk/ChallengePageDKK'));
 const KasusDKK = lazy(() => import('./pages/dkk/KasusDKK'));
 const HasilDKK = lazy(() => import('./pages/dkk/HasilDKK'));
 
+const Modul1MPK2 = lazy(() => import('./pages/mpk2/Modul1MPK2'));
+const Modul2MPK2 = lazy(() => import('./pages/mpk2/Modul2MPK2'));
+const Modul3MPK2 = lazy(() => import('./pages/mpk2/Modul3MPK2'));
+const Modul4MPK2 = lazy(() => import('./pages/mpk2/Modul4MPK2'));
+const Modul5MPK2 = lazy(() => import('./pages/mpk2/Modul5MPK2'));
+const DashboardMPK2 = lazy(() => import('./pages/mpk2/DashboardMPK2'));
+const FlashcardPageMPK2 = lazy(() => import('./pages/mpk2/FlashcardPageMPK2'));
+const GlossaryPageMPK2 = lazy(() => import('./pages/mpk2/GlossaryPageMPK2'));
+const WorksheetPageMPK2 = lazy(() => import('./pages/mpk2/WorksheetPageMPK2'));
+const PreTestMPK2 = lazy(() => import('./pages/mpk2/PreTestMPK2'));
+const PostTestMPK2 = lazy(() => import('./pages/mpk2/PostTestMPK2'));
+const ChallengePageMPK2 = lazy(() => import('./pages/mpk2/ChallengePageMPK2'));
+const KasusMPK2 = lazy(() => import('./pages/mpk2/KasusMPK2'));
+const HasilMPK2 = lazy(() => import('./pages/mpk2/HasilMPK2'));
+
 export default function App() {
   return (
     <ErrorBoundary>
@@ -81,6 +96,20 @@ export default function App() {
                 <Route path="/mpk1/modul-ajar" element={<ModulAjarPage />} />
                 <Route path="/mpk1/glossary" element={<GlossaryPage />} />
                 <Route path="/mpk1/hasil" element={<Hasil />} />
+                <Route path="/mpk2" element={<DashboardMPK2 />} />
+                <Route path="/mpk2/modul1" element={<Modul1MPK2 />} />
+                <Route path="/mpk2/modul2" element={<Modul2MPK2 />} />
+                <Route path="/mpk2/modul3" element={<Modul3MPK2 />} />
+                <Route path="/mpk2/modul4" element={<Modul4MPK2 />} />
+                <Route path="/mpk2/modul5" element={<Modul5MPK2 />} />
+                <Route path="/mpk2/flashcard" element={<FlashcardPageMPK2 />} />
+                <Route path="/mpk2/glossary" element={<GlossaryPageMPK2 />} />
+                <Route path="/mpk2/worksheet" element={<WorksheetPageMPK2 />} />
+                <Route path="/mpk2/pretest" element={<PreTestMPK2 />} />
+                <Route path="/mpk2/posttest" element={<PostTestMPK2 />} />
+                <Route path="/mpk2/challenge" element={<ChallengePageMPK2 />} />
+                <Route path="/mpk2/kasus" element={<KasusMPK2 />} />
+                <Route path="/mpk2/hasil" element={<HasilMPK2 />} />
               </Route>
             </Routes>
           </Suspense>

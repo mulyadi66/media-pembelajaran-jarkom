@@ -1,0 +1,61 @@
+export const challengeMPK2 = [
+  // Tools Jaringan, Crimping, Wiring Standards
+  { q: "Alat untuk memasang konektor RJ-45?", answer: "Crimping tool", accept: ["crimping tool", "crimping", "crimptool", "tang crimping"] },
+  { q: "Alat untuk menguji kabel LAN?", answer: "LAN tester", accept: ["lan tester", "kabel tester", "network tester", "cable tester"] },
+  { q: "Standar kabel paling umum di Indonesia?", answer: "T568B", accept: ["t568b", "568b", "tia/eia 568b"] },
+  { q: "Standar kabel straight T568A vs T568B?", answer: "T568B", accept: ["t568b", "568b"] },
+  { q: "Susunan kabel straight T568B oranye-putih?", answer: "Oranye", accept: ["orange", "oranye", "kuning"] },
+  { q: "Panjang maksimal kabel UTP kategori 5e?", answer: "100 meter", accept: ["100 meter", "100m", "100 m"] },
+  { q: "Konektor yang digunakan pada kabel UTP?", answer: "RJ-45", accept: ["rj45", "rj-45", "rj 45"] },
+  { q: "Alat untuk mengupas kulit kabel UTP?", answer: "Cutter", accept: ["cutter", "pengupas kabel", "wire stripper"] },
+  { q: "Fungsi kabel crossover?", answer: "Menghubungkan perangkat sama", accept: ["menghubungkan perangkat sama", "cross koneksi", "pc to pc", "hub to hub"] },
+  { q: "Alat untuk merapikan kabel di patch panel?", answer: "Panel tester", accept: ["panel tester", "punch down tool", "impact tool"] },
+
+  // Wireless Fundamentals
+  { q: "Frekuensi yang digunakan WiFi 2.4 GHz?", answer: "2,4 GHz", accept: ["2,4 ghz", "2.4 ghz", "2400 mhz"] },
+  { q: "Frekuensi yang digunakan WiFi 5 GHz?", answer: "5 GHz", accept: ["5 ghz", "5000 mhz"] },
+  { q: "Standar WiFi untuk 2.4 GHz?", answer: "802.11b/g/n", accept: ["802.11b/g/n", "802.11 b/g/n", "b/g/n"] },
+  { q: "Standar WiFi 6 dikenal sebagai?", answer: "802.11ax", accept: ["802.11ax", "802.11 ax", "wifi 6", "ax"] },
+  { q: "Jumlah channel non-overlapping 2.4 GHz?", answer: "3", accept: ["3", "tiga"] },
+  { q: "Channel 1, 6, dan 11 termasuk?", answer: "Non-overlapping", accept: ["non-overlapping", "non overlapping", "tidak tumpang tindih"] },
+  { q: "Sinyal WiFi dipengaruhi oleh?", answer: "Interferensi", accept: ["interferensi", "interference", "halangan", "tembok"] },
+  { q: "Mode WiFi client terhubung ke AP?", answer: "Infrastructure mode", accept: ["infrastructure mode", "infrastruktur"] },
+  { q: "Teknik spread spectrum pada WiFi?", answer: "DSSS", accept: ["dsss", "direct sequence spread spectrum"] },
+  { q: "Standar WiFi kecepatan maks 54 Mbps?", answer: "802.11g", accept: ["802.11g", "802.11 g", "g"] },
+
+  // AP Configuration, Site Survey, Bridge
+  { q: "Mode AP untuk memperluas jangkauan?", answer: "Repeater", accept: ["repeater", "extender", "range extender"] },
+  { q: "Alat untuk survey sinyal WiFi?", answer: "Spectrum analyzer", accept: ["spectrum analyzer", "wifi analyzer", "signal meter"] },
+  { q: "IP default untuk konfigurasi AP?", answer: "192.168.1.1", accept: ["192.168.1.1", "192.168.0.1", "19216811"] },
+  { q: "Mode bridge menghubungkan dua?", answer: "Jaringan", accept: ["jaringan", "network", "lan"] },
+  { q: "SSID adalah nama dari?", answer: "Jaringan WiFi", accept: ["jaringan wifi", "wifi network", "access point"] },
+  { q: "Channel bonding di 5 GHz disebut?", answer: "40 MHz", accept: ["40 mhz", "40mhz", "channel bonding"] },
+  { q: "AP menggunakan DHCP untuk membagi?", answer: "IP address", accept: ["ip address", "ip", "alamat ip"] },
+  { q: "Survey sinyal berguna untuk menentukan?", answer: "Posisi AP", accept: ["posisi ap", "lokasi ap", "penempatan ap"] },
+  { q: "Roaming terjadi saat perangkat?", answer: "Pindah AP", accept: ["pindah ap", "ganti ap", "handover"] },
+  { q: "WPA2 menggunakan enkripsi?", answer: "AES", accept: ["aes", "ccmp", "wpa2"] },
+
+  // VoIP
+  { q: "Protokol signaling pada VoIP?", answer: "SIP", accept: ["sip", "session initiation protocol"] },
+  { q: "Codec yang umum digunakan VoIP?", answer: "G.711", accept: ["g.711", "g711", "g.711 a-law", "g.711 u-law"] },
+  { q: "Peralatan untuk VoIP di kantor?", answer: "IP PBX", accept: ["ip pbx", "pbx", "server voip"] },
+  { q: "Codec dengan kompresi tinggi untuk VoIP?", answer: "G.729", accept: ["g.729", "g729"] },
+  { q: "Protokol transport untuk SIP?", answer: "UDP", accept: ["udp", "user datagram protocol"] },
+  { q: "Fungsi IP PBX?", answer: "Routing panggilan VoIP", accept: ["routing panggilan voip", "manajemen panggilan", "pbx voip"] },
+  { q: "Server untuk mendaftarkan client VoIP?", answer: "Registrar", accept: ["registrar", "sip registrar"] },
+  { q: "Panggilan VoIP antar ekstensi tanpa server?", answer: "Peer to peer", accept: ["peer to peer", "p2p", "direct call"] },
+  { q: "Codec dengan kualitas tertinggi?", answer: "G.711", accept: ["g.711", "g711"] },
+  { q: "Software VoIP client disebut?", answer: "Softphone", accept: ["softphone", "voip client", "sip client"] },
+
+  // Fiber Optik
+  { q: "Jenis fiber optik inti kecil?", answer: "Single mode", accept: ["single mode", "sm", "single-mode"] },
+  { q: "Jenis fiber optik inti besar?", answer: "Multi mode", accept: ["multi mode", "mm", "multi-mode"] },
+  { q: "Alat untuk menyambung fiber optik?", answer: "Fusion splicer", accept: ["fusion splicer", "splicer", "splicing tool"] },
+  { q: "Alat untuk mengukur redaman fiber?", answer: "OTDR", accept: ["otdr", "optical time domain reflectometer"] },
+  { q: "Sumber cahaya pada fiber optik?", answer: "LASER", accept: ["laser", "led", "sinar laser"] },
+  { q: "Konektor fiber optik yang umum?", answer: "SC", accept: ["sc", "subscriber connector", "sc connector"] },
+  { q: "Redaman pada sambungan fiber disebut?", answer: "Loss", accept: ["loss", "insertion loss", "redaman"] },
+  { q: "Kabel fiber optik tahan terhadap?", answer: "Interferensi elektromagnetik", accept: ["interferensi elektromagnetik", "emi", "electromagnetic interference"] },
+  { q: "Panjang gelombang single mode?", answer: "1310 nm", accept: ["1310 nm", "1310nm", "1550 nm"] },
+  { q: "Ujung fiber yang sudah dipotong rapi?", answer: "Cleaved", accept: ["cleaved", "cleaver", "potongan rapi"] },
+];
