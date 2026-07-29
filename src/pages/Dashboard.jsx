@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { checkBadges } from '../data/badges';
-import { Server, Projector, CreditCard, BookOpen, Trophy, Network, Monitor, Puzzle, Award, BookA, Zap, FileDown, BarChart3, Briefcase, ClipboardCheck, FileText } from 'lucide-react';
+import { Server, Projector, CreditCard, BookOpen, Trophy, Network, Monitor, Puzzle, Award, BookA, Zap, FileDown, BarChart3, Briefcase, ClipboardCheck, FileText, RotateCcw } from 'lucide-react';
 
 export default function Dashboard() {
-  const { modulesRead, scores } = useApp();
+  const { modulesRead, scores, resetAll } = useApp();
   const earnedBadges = checkBadges(scores, modulesRead);
 
   const modules = [
@@ -124,6 +124,12 @@ export default function Dashboard() {
           </div>
         </section>
       )}
+
+      <section className="section-block" style={{textAlign:'center', marginTop:40}}>
+        <button className="reset-btn" onClick={() => { if (confirm('Yakin ingin mereset semua pengerjaan? Data akan hilang permanen.')) { resetAll(); } }}>
+          <RotateCcw size={16} /> Reset Pengerjaan
+        </button>
+      </section>
 
       <footer className="footer"><p>&copy; 2026 TJKT SMKN 2 KUNINGAN</p></footer>
     </>

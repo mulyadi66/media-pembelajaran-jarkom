@@ -671,6 +671,14 @@ a { text-decoration: none; color: inherit; }
 .result-detail .detail-label { font-size: 0.8rem; color: var(--text-light); margin-top: 4px; }
 
 /* ========== FOOTER ========== */
+.reset-btn {
+  background: transparent; border: 1px solid var(--border);
+  color: var(--text-lighter); padding: 8px 20px; border-radius: 8px;
+  cursor: pointer; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 8px;
+  transition: all 0.2s;
+}
+.reset-btn:hover { border-color: #ef4444; color: #ef4444; background: rgba(239,68,68,0.08); }
+
 .footer {
   text-align: center; padding: 24px 30px;
   color: var(--text-lighter); font-size: 0.85rem; border-top: 1px solid var(--border);
@@ -902,7 +910,7 @@ a { text-decoration: none; color: inherit; }
 /* ========== PRINT STYLES ========== */
 @media print {
   .sidebar, .topbar, .mobile-menu-btn, .sidebar-overlay,
-  .btn, .quiz-nav, .simulator-toolbar, .footer { display: none !important; }
+  .btn, .quiz-nav, .simulator-toolbar, .reset-btn, .footer { display: none !important; }
 
   .app-layout { display: block; }
   .main-content { margin-left: 0 !important; padding: 0; }
