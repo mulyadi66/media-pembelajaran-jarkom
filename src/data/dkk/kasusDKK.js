@@ -5,7 +5,7 @@ export const kasusDKK = [
     id: 'dkk_kasus1',
     icon: Globe,
     tag: 'Kasus 1 - Karir TJKT',
-    title: 'Perencanaan Karir di Bidang TKJT',
+    title: 'Perencanaan Karir di Bidang TJKT',
     desc: 'Seorang lulusan SMK TJKT ingin membangun karir di bidang jaringan komputer dan telekomunikasi.',
     details: [
       'Lulusan baru SMK dengan kompetensi dasar jaringan',

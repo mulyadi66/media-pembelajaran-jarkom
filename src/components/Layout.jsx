@@ -83,7 +83,7 @@ const subjects = {
     ],
     titles: {
       '/dkk': 'Dashboard DKK',
-      '/dkk/elemen1': 'Elemen 1: Wawasan Dunia Kerja TKJT',
+      '/dkk/elemen1': 'Elemen 1: Wawasan Dunia Kerja TJKT',
       '/dkk/elemen2': 'Elemen 2: Kecakapan Kerja Dasar, K3LH & Budaya Kerja',
       '/dkk/elemen3': 'Elemen 3: Media & Jaringan Telekomunikasi',
       '/dkk/elemen4': 'Elemen 4: Pengukuran Alat Telekomunikasi',
@@ -98,7 +98,7 @@ const subjects = {
     },
     descs: {
       '/dkk': 'Media Pembelajaran Dasar Keahlian Komunikasi',
-      '/dkk/elemen1': 'Profesi, sertifikasi, dan peluang karir di bidang TKJT',
+      '/dkk/elemen1': 'Profesi, sertifikasi, dan peluang karir di bidang TJKT',
       '/dkk/elemen2': 'APD, prosedur keselamatan, dan budaya kerja 5S',
       '/dkk/elemen3': 'Media transmisi kabel, nirkabel, dan jaringan telekomunikasi',
       '/dkk/elemen4': 'Multimeter, cable tester, OTDR, dan spectrum analyzer',

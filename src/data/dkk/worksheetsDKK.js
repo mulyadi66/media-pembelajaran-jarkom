@@ -3,10 +3,10 @@ export const worksheetsDKK = {
     title: 'Elemen 1: Wawasan Dunia Kerja TJKT',
     questions: [
       { id: 1, type: 'essay', question: 'Jelaskan 3 profesi di bidang teknik jaringan komputer dan telekomunikasi beserta tugas utamanya masing-masing.', hint: 'Pikirkan: teknisi, administrator, konsultan, helpdesk.' },
-      { id: 2, type: 'essay', question: 'Apa pentingnya sertifikasi kompetensi di bidang TKJT? Sebutkan minimal 3 sertifikasi yang kamu ketahui beserta penjelasan singkat.', hint: 'Contoh: CCNA, MTCNA, BNSP, CompTIA Network+' },
+      { id: 2, type: 'essay', question: 'Apa pentingnya sertifikasi kompetensi di bidang TJKT? Sebutkan minimal 3 sertifikasi yang kamu ketahui beserta penjelasan singkat.', hint: 'Contoh: CCNA, MTCNA, BNSP, CompTIA Network+' },
       { id: 3, type: 'essay', question: 'Buatlah deskripsi pekerjaan (job description) untuk posisi "Teknisi Jaringan" di sebuah ISP. Sertakan kualifikasi, tanggung jawab, dan jenjang karir.', hint: 'Pertimbangkan: instalasi, troubleshooting, pelaporan.' },
       { id: 4, type: 'essay', question: 'Apa perbedaan antara kerja sebagai network engineer di perusahaan kecil vs perusahaan besar? Jelaskan dari segi tanggung jawab dan kompleksitas.', hint: 'Perusahaan kecil: serba bisa. Perusahaan besar: spesifik.' },
-      { id: 5, type: 'essay', question: 'Jelaskan prospek karir bidang TKJT dalam 5 tahun ke depan. Teknologi apa yang paling berpengaruh?', hint: 'Pertimbangkan: IoT, 5G, cloud computing, keamanan.' },
+      { id: 5, type: 'essay', question: 'Jelaskan prospek karir bidang TJKT dalam 5 tahun ke depan. Teknologi apa yang paling berpengaruh?', hint: 'Pertimbangkan: IoT, 5G, cloud computing, keamanan.' },
       { id: 6, type: 'essay', question: 'Seorang lulusan SMK TJKT ingin memulai karir sebagai network engineer. Buatlah rencana pengembangan karir 3 tahun termasuk target sertifikasi.', hint: 'Tahun 1: teknisi, Tahun 2: sertifikasi, Tahun 3: spesialisasi.' },
     ]
   },

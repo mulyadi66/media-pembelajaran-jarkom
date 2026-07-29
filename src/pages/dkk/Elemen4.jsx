@@ -92,7 +92,7 @@ export default function Elemen4() {
 
       <MateriCard icon={Ruler} title="4.4 Spectrum Analyzer">
         <p>Spectrum analyzer menampilkan kekuatan sinyal pada rentang frekuensi tertentu. Sangat berguna untuk troubleshooting Wi-Fi dan RF.</p>
-        <h3>Kegunaan dalam TKJT:</h3>
+        <h3>Kegunaan dalam TJKT:</h3>
         <ul>
           <li><strong>Mendeteksi interferensi</strong> — Menemukan sinyal asing pada frekuensi Wi-Fi (2.4/5 GHz)</li>
           <li><strong>Memilih kanal optimal</strong> — Melihat kanal mana yang paling bersih</li>

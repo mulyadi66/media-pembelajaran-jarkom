@@ -11,7 +11,7 @@ export default function DashboardDKK() {
   const earnedBadges = checkBadges(scores, modulesRead);
 
   const elements = [
-    { to: '/dkk/elemen1', icon: Globe, title: 'Wawasan Dunia Kerja TKJT', desc: 'Profesi, sertifikasi, dan peluang karir', color: ['#06b6d4', '#0891b2'] },
+    { to: '/dkk/elemen1', icon: Globe, title: 'Wawasan Dunia Kerja TJKT', desc: 'Profesi, sertifikasi, dan peluang karir', color: ['#06b6d4', '#0891b2'] },
     { to: '/dkk/elemen2', icon: Shield, title: 'Kecakapan Kerja Dasar & K3LH', desc: 'APD, prosedur keselamatan, budaya 5S', color: ['#10b981', '#059669'] },
     { to: '/dkk/elemen3', icon: Radio, title: 'Media & Jaringan Telekomunikasi', desc: 'UTP, fiber, wireless, broadband', color: ['#f59e0b', '#d97706'] },
     { to: '/dkk/elemen4', icon: Ruler, title: 'Pengukuran Alat Telekomunikasi', desc: 'Multimeter, OTDR, spectrum analyzer', color: ['#ef4444', '#dc2626'] },

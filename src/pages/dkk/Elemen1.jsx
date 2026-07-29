@@ -4,9 +4,9 @@ import { Globe, Briefcase, Star, Target, Award, TrendingUp } from 'lucide-react'
 import SectionTracker from '../../components/SectionTracker';
 
 const sections = [
-  { id: 's1', label: '1.1 Profesi Bidang TKJT' },
+  { id: 's1', label: '1.1 Profesi Bidang TJKT' },
   { id: 's2', label: '1.2 Sertifikasi Kompetensi' },
-  { id: 's3', label: '1.3 Dunia Industri TKJT' },
+  { id: 's3', label: '1.3 Dunia Industri TJKT' },
   { id: 's4', label: '1.4 Prospek Karir' },
 ];
 
@@ -28,12 +28,12 @@ export default function Elemen1() {
       <SectionTracker moduleId="dkk_elemen1" sections={sections} />
 
       <MateriCard icon={Globe} title="1.1 Profesi di Bidang Teknik Jaringan Komputer dan Telekomunikasi">
-        <p>Bidang TKJT menawarkan berbagai peluang karir yang menarik. Seiring dengan pertumbuhan digital, kebutuhan akan tenaga ahli jaringan semakin meningkat.</p>
+        <p>Bidang TJKT menawarkan berbagai peluang karir yang menarik. Seiring dengan pertumbuhan digital, kebutuhan akan tenaga ahli jaringan semakin meningkat.</p>
         <div className="info-box">
           <strong><Star size={14} /> Fakta Penting</strong>
           <p>Indonesia membutuhkan lebih dari 600.000 tenaga kerja digital setiap tahunnya, termasuk teknisi jaringan dan telekomunikasi.</p>
         </div>
-        <h3 style={{marginTop: 20}}>Profesi Utama di Bidang TKJT:</h3>
+        <h3 style={{marginTop: 20}}>Profesi Utama di Bidang TJKT:</h3>
         <ul>
           <li><strong>Teknisi Jaringan (Network Technician)</strong> — Instalasi, konfigurasi, dan troubleshooting perangkat jaringan. Entry-level yang cocok untuk lulusan SMK.</li>
           <li><strong>Network Administrator</strong> — Mengelola operasional jaringan sehari-hari, user management, backup konfigurasi, monitoring performa.</li>
@@ -50,7 +50,7 @@ export default function Elemen1() {
           <table className="materi-table">
             <thead><tr><th>Sertifikasi</th><th>Level</th><th>Penerbit</th><th>Fokus</th></tr></thead>
             <tbody>
-              <tr><td><strong>BNSP TKJT</strong></td><td>Nasional</td><td>BNSP Indonesia</td><td>Kompetensi teknisi jaringan Indonesia</td></tr>
+              <tr><td><strong>BNSP TJKT</strong></td><td>Nasional</td><td>BNSP Indonesia</td><td>Kompetensi teknisi jaringan Indonesia</td></tr>
               <tr><td><strong>CompTIA Network+</strong></td><td>Internasional</td><td>CompTIA (AS)</td><td>Dasar jaringan, troubleshooting</td></tr>
               <tr><td><strong>CCNA</strong></td><td>Internasional</td><td>Cisco Systems</td><td>Routing & switching Cisco</td></tr>
               <tr><td><strong>MTCNA</strong></td><td>Internasional</td><td>MikroTik (Latvia)</td><td>Konfigurasi Router MikroTik</td></tr>
@@ -58,11 +58,11 @@ export default function Elemen1() {
             </tbody>
           </table>
         </div>
-        <p style={{marginTop: 16}}>Untuk lulusan SMK, sertifikasi BNSP TKJT dan MTCNA adalah langkah awal yang baik karena biaya terjangkau dan relevan dengan kebutuhan industri Indonesia.</p>
+        <p style={{marginTop: 16}}>Untuk lulusan SMK, sertifikasi BNSP TJKT dan MTCNA adalah langkah awal yang baik karena biaya terjangkau dan relevan dengan kebutuhan industri Indonesia.</p>
       </MateriCard>
 
-      <MateriCard icon={Briefcase} title="1.3 Dunia Industri TKJT">
-        <p>Lulusan TKJT dapat bekerja di berbagai sektor industri. Berikut adalah tempat kerja potensial:</p>
+      <MateriCard icon={Briefcase} title="1.3 Dunia Industri TJKT">
+        <p>Lulusan TJKT dapat bekerja di berbagai sektor industri. Berikut adalah tempat kerja potensial:</p>
         <h3>A. Internet Service Provider (ISP)</h3>
         <ul>
           <li>IndiHome (Telkom) — Instalasi dan maintenance fiber optik</li>
@@ -88,7 +88,7 @@ export default function Elemen1() {
           <strong><Target size={14} /> Proyeksi Masa Depan</strong>
           <p>Revolusi Industri 4.0 dan transformasi digital mendorong permintaan tinggi untuk tenaga ahli jaringan. IoT, 5G, dan cloud computing akan menciptakan lapangan kerja baru.</p>
         </div>
-        <h3>Jenjang Karir TKJT:</h3>
+        <h3>Jenjang Karir TJKT:</h3>
         <ol>
           <li><strong>Tahun 1:</strong> Teknisi Jaringan Junior / IT Support — belajar dasar instalasi dan troubleshooting</li>
           <li><strong>Tahun 2:</strong> Teknisi Madya — mengambil sertifikasi (MTCNA/BNSP), mulai menangani proyek kecil</li>
