@@ -14,6 +14,7 @@ const subjects = [
   { id: 'mpk5', label: 'MPK 5', title: 'Pemeliharaan Jaringan', icon: HardDrive, color: '#10b981', active: false },
   { id: 'mpp-it', label: 'MPP IT', title: 'MPP IT Essential', icon: Cpu, color: '#ec4899', active: false },
   { id: 'mpp-iot', label: 'MPP IoT', title: 'MPP Internet of Things', icon: Smartphone, color: '#14b8a6', active: false },
+  { id: 'tjkt', label: 'TJKT', title: 'Website TJKT', icon: ExternalLink, color: '#22c55e', active: true, external: 'https://tjkt.smkn2-kng.sch.id/' },
 ];
 
 export default function Portal() {
@@ -42,6 +43,20 @@ export default function Portal() {
         <div className="portal-grid">
           {subjects.map(s => {
             const Icon = s.icon;
+            if (s.external) {
+              return (
+                <a key={s.id} href={s.external} className="portal-card active" style={{'--card-color': s.color}}>
+                  <div className="portal-card-icon" style={{background: `linear-gradient(135deg, ${s.color}, ${s.color}dd)`}}>
+                    <Icon size={28} />
+                  </div>
+                  <div className="portal-card-body">
+                    <span className="portal-card-badge">{s.label}</span>
+                    <h3>{s.title}</h3>
+                  </div>
+                  <ExternalLink size={18} className="portal-card-arrow" />
+                </a>
+              );
+            }
             return s.active ? (
               <Link key={s.id} to={s.path} className="portal-card active" style={{'--card-color': s.color}}>
                 <div className="portal-card-icon" style={{background: `linear-gradient(135deg, ${s.color}, ${s.color}dd)`}}>
@@ -70,9 +85,6 @@ export default function Portal() {
       </main>
 
       <footer className="portal-footer">
-        <a href="https://tjkt.smkn2-kng.sch.id/" className="footer-tjkt-link">
-          <ExternalLink size={16} /> Kembali ke Website TJKT
-        </a>
         <p>&copy; 2026 TJKT SMKN 2 KUNINGAN</p>
       </footer>
     </div>
