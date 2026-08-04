@@ -9,8 +9,6 @@ export default function FiberSplicingSimulator() {
   const [arcOn, setArcOn] = useState(false);
   const [arcDone, setArcDone] = useState(false);
   const [spliceLoss, setSpliceLoss] = useState(0);
-  const [aligned, setAligned] = useState(false);
-  const [spliced, setSpliced] = useState(false);
 
   const diff = Math.abs(fiber1Pos - fiber2Pos);
   const isAligned = diff <= 3;
@@ -22,8 +20,6 @@ export default function FiberSplicingSimulator() {
     setArcOn(false);
     setArcDone(false);
     setSpliceLoss(0);
-    setAligned(false);
-    setSpliced(false);
   }
 
   function startArc() {
@@ -31,16 +27,12 @@ export default function FiberSplicingSimulator() {
     setTimeout(() => {
       setArcOn(false);
       setArcDone(true);
-      setSpliced(true);
       const loss = 0.02 + (diff * 0.005);
       setSpliceLoss(Math.round(loss * 100) / 100);
     }, 2000);
   }
 
   function goToNextStep() {
-    if (step === 1) {
-      setAligned(true);
-    }
     if (step === 2 && arcDone) {
       const loss = 0.02 + (diff * 0.005);
       setSpliceLoss(Math.round(loss * 100) / 100);

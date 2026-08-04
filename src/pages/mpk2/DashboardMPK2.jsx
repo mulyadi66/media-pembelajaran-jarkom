@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useApp } from '../../context/AppContext';
 import { checkBadges } from '../../data/badges';
-import { Wifi, Cable, Radio, Phone, Circle, BookOpen, Trophy, Award, BookA, Zap, FileDown, BarChart3, Briefcase, ClipboardCheck, FileText, RotateCcw, Monitor, Globe } from 'lucide-react';
+import { Wifi, Cable, Radio, Phone, Circle, BookOpen, Trophy, Award, BookA, Zap, FileDown, BarChart3, Briefcase, ClipboardCheck, FileText, RotateCcw, Monitor } from 'lucide-react';
 import ConfirmModal from '../../components/ConfirmModal';
 
 export default function DashboardMPK2() {

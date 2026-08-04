@@ -6,11 +6,11 @@ import Leaderboard from '../components/Leaderboard';
 import { Trash2, Award, TrendingUp } from 'lucide-react';
 
 export default function Hasil() {
-  const { scores, pretestAnswers, posttestAnswers, modulesRead, resetAll, studentName, saveStudentName } = useApp();
+  const { scores, modulesRead, resetAll, studentName, saveStudentName } = useApp();
   const pretestScore = scores.pretest || 0;
   const posttestScore = scores.posttest || 0;
-  const pretestAnswered = Object.keys(pretestAnswers).length;
-  const posttestAnswered = Object.keys(posttestAnswers).length;
+  const pretestAnswered = Object.keys(JSON.parse(localStorage.getItem('jarkomlab_pretestAnswers') || '{}')).length;
+  const posttestAnswered = Object.keys(JSON.parse(localStorage.getItem('jarkomlab_posttestAnswers') || '{}')).length;
   const growth = posttestScore > 0 && pretestScore > 0 ? posttestScore - pretestScore : null;
   const earnedBadges = checkBadges(scores, modulesRead);
   const passed = posttestScore >= 70;

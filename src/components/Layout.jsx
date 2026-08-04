@@ -7,7 +7,7 @@ import {
   Home, Server, Projector, CreditCard, Briefcase,
   ClipboardCheck, FileText, BarChart3, Menu, X, Trophy, User, Search,
   Network, Puzzle, BookOpen, BookA, Zap, FileDown, PanelLeftClose, PanelLeft,
-  ArrowLeft, Globe, Shield, Radio, Ruler, Wifi, Cable, Phone, Circle,
+  ArrowLeft, Globe, Shield, Radio, Ruler, Wifi, Phone, Circle,
   Wrench, Signal, Antenna
 } from 'lucide-react';
 

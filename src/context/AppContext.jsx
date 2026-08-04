@@ -12,14 +12,6 @@ export function AppProvider({ children }) {
     const s = localStorage.getItem('jarkomlab_scores');
     return s ? JSON.parse(s) : {};
   });
-  const [pretestAnswers, setPretestAnswers] = useState(() => {
-    const s = localStorage.getItem('jarkomlab_pretest');
-    return s ? JSON.parse(s) : {};
-  });
-  const [posttestAnswers, setPosttestAnswers] = useState(() => {
-    const s = localStorage.getItem('jarkomlab_posttest');
-    return s ? JSON.parse(s) : {};
-  });
   const [modulesRead, setModulesRead] = useState(() => {
     const s = localStorage.getItem('jarkomlab_modulesRead');
     return s ? JSON.parse(s) : {};
@@ -42,8 +34,6 @@ export function AppProvider({ children }) {
 
   // Persist
   useEffect(() => { localStorage.setItem('jarkomlab_scores', JSON.stringify(scores)); }, [scores]);
-  useEffect(() => { localStorage.setItem('jarkomlab_pretest', JSON.stringify(pretestAnswers)); }, [pretestAnswers]);
-  useEffect(() => { localStorage.setItem('jarkomlab_posttest', JSON.stringify(posttestAnswers)); }, [posttestAnswers]);
   useEffect(() => { localStorage.setItem('jarkomlab_modulesRead', JSON.stringify(modulesRead)); }, [modulesRead]);
   useEffect(() => { localStorage.setItem('jarkomlab_cases', JSON.stringify(caseAnswers)); }, [caseAnswers]);
   useEffect(() => { localStorage.setItem('jarkomlab_dark', JSON.stringify(darkMode)); }, [darkMode]);
@@ -72,10 +62,6 @@ export function AppProvider({ children }) {
 
   const markModuleRead = (moduleId) => setModulesRead(prev => ({ ...prev, [moduleId]: true }));
   const saveQuizScore = (quizKey, score) => setScores(prev => ({ ...prev, [quizKey]: score }));
-  const saveQuizAnswers = (quizKey, answers) => {
-    if (quizKey === 'pretest') setPretestAnswers(answers);
-    else setPosttestAnswers(answers);
-  };
   const saveCaseAnswer = (caseId, text) => setCaseAnswers(prev => ({ ...prev, [caseId]: text }));
   const toggleDarkMode = () => setDarkMode(prev => !prev);
   const saveStudentName = (name) => setStudentName(name);
@@ -84,16 +70,16 @@ export function AppProvider({ children }) {
 
   const resetAll = () => {
     localStorage.clear();
-    setScores({}); setPretestAnswers({}); setPosttestAnswers({});
+    setScores({});
     setModulesRead({}); setCaseAnswers({});
     setStreak({ count: 0, lastDate: null }); setStudentName('');
   };
 
   return (
     <AppContext.Provider value={{
-      scores, pretestAnswers, posttestAnswers, modulesRead, caseAnswers,
+      scores, modulesRead, caseAnswers,
       darkMode, streak, studentName,
-      markModuleRead, saveQuizScore, saveQuizAnswers, saveCaseAnswer,
+      markModuleRead, saveQuizScore, saveCaseAnswer,
       toggleDarkMode, saveStudentName, totalScore, resetAll
     }}>
       {children}

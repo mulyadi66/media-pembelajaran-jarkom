@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useApp } from '../../context/AppContext';
-import { Radio, Map, Settings, Signal, Wifi, Star, AlertTriangle, CheckCircle } from 'lucide-react';
+import { Map, Settings, Signal, Wifi, Star, AlertTriangle, CheckCircle } from 'lucide-react';
 import SectionTracker from '../../components/SectionTracker';
 import AntennaAlignment from '../../components/mpk2/AntennaAlignment';
 import APConfigSimulator from '../../components/mpk2/APConfigSimulator';

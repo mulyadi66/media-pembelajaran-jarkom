@@ -6,7 +6,6 @@ const EVENTS = [
   { id: 3, distance: 15, type: 'Break', loss: null, color: '#ef4444', detected: false },
 ];
 
-const END_FIBER = 18;
 const MAX_DIST = 20;
 const VIEW_W = 500;
 const VIEW_H = 200;
@@ -35,7 +34,6 @@ function generateTracePoints() {
       y = baseY + (dist - 5.5) * slope;
       y = 200 - (95 - (dist - 5.5) * slope);
     } else if (dist < 10.5) {
-      const bumpY = 200 - 80;
       const t = (dist - 9.5) / 1.0;
       y = 200 - (80 - t * 10 * Math.sin(t * Math.PI));
     } else if (dist < 14.5) {
@@ -60,10 +58,6 @@ function generateTracePoints() {
 
 function eventX(dist) {
   return (dist / MAX_DIST) * VIEW_W;
-}
-
-function distFromX(x) {
-  return ((x - 30) / (VIEW_W - 60)) * MAX_DIST;
 }
 
 export default function OTDRTraceReader() {
