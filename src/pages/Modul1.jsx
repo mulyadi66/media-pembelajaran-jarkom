@@ -94,6 +94,22 @@ export default function Modul1() {
           <li><strong>RJ-11</strong> — Konektor untuk kabel telepon</li>
           <li><strong>SC/ST/LC</strong> — Konektor untuk Fiber Optik</li>
         </ul>
+        <h3 style={{marginTop: 20}}>Langkah Crimping Kabel UTP (RJ-45)</h3>
+        <ol>
+          <li><strong>Kupas jaket</strong> kabel UTP sekitar 1,5–2 cm menggunakan cable stripper atau pisau pada tang crimping.</li>
+          <li><strong>Susun kabel</strong> sesuai standar 568B di kedua ujung (straight) atau 568A di satu ujung (crossover).</li>
+          <li><strong>Ratakan ujung kabel</strong> — sisakan sekitar 1,2–1,5 cm dari pangkal jaket.</li>
+          <li><strong>Masukkan kabel</strong> ke konektor RJ-45, pastikan urutan benar, semua kabel mentok, dan jaket ikut masuk ke konektor.</li>
+          <li><strong>Crimping</strong> dengan tang crimping hingga terdengar bunyi "klik".</li>
+          <li><strong>Uji dengan LAN Tester</strong> — lampu harus menyala berurutan 1-1 sampai 8-8 (straight) atau 1-3, 2-6, 3-1, 6-2 (crossover).</li>
+        </ol>
+        <div className="info-box warning">
+          <strong><AlertTriangle size={14} /> Troubleshooting Kabel</strong>
+          <p><strong>Lampu tidak menyala:</strong> urutan warna salah atau kabel tidak mentok.<br/>
+          <strong>Jaket tidak terjepit:</strong> kabel mudah putus saat ditarik.<br/>
+          <strong>Koneksi tidak stabil:</strong> buka pilinan kabel terlalu panjang atau crimping kurang kuat.</p>
+        </div>
+        <VideoEmbed videoId="fPIM95D55h8" title="Praktik Membuat Kabel Crossover (Tutorial RJ-45)" />
       </MateriCard>
 
       <MateriCard icon={Wifi} title="1.4 Teknologi Jaringan">

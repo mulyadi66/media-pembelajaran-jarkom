@@ -106,6 +106,12 @@ export default function Modul3() {
           <strong>Kelas B:</strong> 172.16.0.0 - 172.31.255.255<br/>
           <strong>Kelas C:</strong> 192.168.0.0 - 192.168.255.255</p>
         </div>
+        <div className="info-box success">
+          <strong><Star size={14} /> IP Publik vs Privat</strong>
+          <p><strong>IP Publik:</strong> dapat diakses dari internet dan harus didaftarkan ke penyedia.<br/>
+          <strong>IP Privat:</strong> hanya berlaku di jaringan lokal, di-hide dari internet oleh NAT (Network Address Translation) pada router.</p>
+        </div>
+        <VideoEmbed videoId="ZxgytoBVEaE" title="Pembagian Kelas IP Address (A, B, C) - Bahasa Indonesia" />
       </div>
 
       <div className="materi-card">
@@ -123,6 +129,7 @@ export default function Modul3() {
           <strong><Star size={14} /> Contoh</strong>
           <p>192.168.1.0/24 dibagi 4 subnet → pinjam 2 bit → /26 = 255.255.255.192 → 62 host/subnet</p>
         </div>
+        <VideoEmbed videoId="VVd5xkTnPZ0" title="Praktik IP Address & Subnetting di Cisco Packet Tracer" />
       </div>
 
       <div className="materi-card">
@@ -156,6 +163,14 @@ export default function Modul3() {
           <li>Subnet berikutnya mulai dari IP setelah broadcast subnet sebelumnya</li>
           <li>Ulangi hingga semua kebutuhan terpenuhi</li>
         </ul>
+        <div className="info-box">
+          <strong><Star size={14} /> Contoh Perhitungan VLSM</strong>
+          <p>192.168.1.0/24 dengan kebutuhan 60, 30, dan 10 host:<br/>
+          <strong>60 host</strong> → butuh 62 usable → <strong>/26</strong> → 192.168.1.0 – .63<br/>
+          <strong>30 host</strong> → butuh 30 usable → <strong>/27</strong> → 192.168.1.64 – .95<br/>
+          <strong>10 host</strong> → butuh 14 usable → <strong>/28</strong> → 192.168.1.96 – .111</p>
+        </div>
+        <VideoEmbed videoId="N7BEDtZ7G4g" title="VLSM (Variable Length Subnet Mask) - Solved Problem" />
       </div>
 
       <div className="materi-card">

@@ -159,6 +159,32 @@ export default function Modul2() {
       ))}
 
       <div className="materi-card">
+        <h3><Info size={18} /> Topologi Fisik vs Logis</h3>
+        <p>Jangan tertukar: topologi <strong>fisik</strong> menggambarkan susunan kabel dan perangkat yang sebenarnya, sedangkan topologi <strong>logis</strong> adalah cara data benar-benar mengalir di dalam jaringan.</p>
+        <div className="info-box">
+          <strong>Contoh Jebakan Ujian</strong>
+          <p><strong>Hub:</strong> secara fisik berbentuk <em>star</em> (semua kabel ke hub), tetapi secara logis bertingkah seperti <em>bus</em> karena menyiarkan data ke semua port.<br/>
+          <strong>Token Ring:</strong> kabelnya menuju satu perangkat pusat (MAU) sehingga fisiknya <em>star</em>, tetapi data berputar dari titik ke titik sehingga logisnya <em>ring</em>.</p>
+        </div>
+      </div>
+
+      <div className="materi-card">
+        <h3><Info size={18} /> Kapan Memilih Topologi Apa?</h3>
+        <div className="table-responsive">
+          <table className="materi-table">
+            <thead><tr><th>Kebutuhan</th><th>Topologi</th><th>Alasan</th></tr></thead>
+            <tbody>
+              <tr><td>Kantor / sekolah kecil</td><td><strong>Star</strong></td><td>Mudah dikelola, satu kabel putus tidak mematikan jaringan</td></tr>
+              <tr><td>Biaya sangat terbatas</td><td><strong>Bus</strong></td><td>Paling hemat kabel untuk jaringan kecil sementara</td></tr>
+              <tr><td>Keandalan tinggi (WAN / jaringan kritis)</td><td><strong>Mesh</strong></td><td>Banyak jalur cadangan, tetap hidup saat satu link putus</td></tr>
+              <tr><td>Gedung bertingkat / kampus</td><td><strong>Tree</strong></td><td>Hirarki jelas dan mudah dikembangkan</td></tr>
+              <tr><td>Jaringan besar dengan kebutuhan beragam</td><td><strong>Hybrid</strong></td><td>Gabungan kelebihan beberapa topologi</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div className="materi-card">
         <h3><Info size={18} /> 2.8 Perbandingan Semua Topologi</h3>
         <div className="table-responsive">
           <table className="materi-table">
@@ -195,6 +221,7 @@ export default function Modul2() {
       <div className="materi-card">
         <h3><Projector size={18} /> Video Pembelajaran</h3>
         <VideoEmbed videoId="QGykYWbdf0A" title="Topologi Jaringan - Bus, Ring, Star, Mesh, Tree" />
+        <VideoEmbed videoId="7Ut4u8qVwRU" title="Topologi Jaringan Lengkap (Star, Bus, Ring, Mesh, Wireless) - Bahasa Indonesia" />
       </div>
     </div>
   );

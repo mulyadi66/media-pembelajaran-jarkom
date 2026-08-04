@@ -36,8 +36,13 @@ Media pembelajaran interaktif React untuk siswa SMK TJKT Kelas XI, Fase F — Pe
 ## Video Embeds (sudah diganti ke video yang works)
 | Modul | Video ID | Judul |
 |---|---|---|
+| Modul 1 (1.3) | `fPIM95D55h8` | Praktik Membuat Kabel Crossover (Tutorial RJ-45) |
 | Modul 1 | `LiMdHeaS4zY` | Network Fundamentals - Peralatan Jaringan |
+| Modul 2 | `7Ut4u8qVwRU` | Topologi Jaringan Lengkap (Star, Bus, Ring, Mesh, Wireless) - Bahasa Indonesia |
 | Modul 2 | `QGykYWbdf0A` | Topologi Jaringan - Bus, Ring, Star, Mesh, Tree |
+| Modul 3 (3.1) | `ZxgytoBVEaE` | Pembagian Kelas IP Address (A, B, C) - Bahasa Indonesia |
+| Modul 3 (3.2) | `VVd5xkTnPZ0` | Praktik IP Address & Subnetting di Cisco Packet Tracer |
+| Modul 3 (3.4) | `N7BEDtZ7G4g` | VLSM (Variable Length Subnet Mask) - Solved Problem |
 | Modul 3 | `9GtL8dW8rYY` | IP Subnetting Lengkap - Binary, Class, VLSM & CIDR |
 
 ## Bug Fixes Terakhir
