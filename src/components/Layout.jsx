@@ -133,6 +133,9 @@ const subjects = {
       { to: '/kka/pretest', icon: ClipboardCheck, label: 'Pre-Test' },
       { to: '/kka/posttest', icon: FileText, label: 'Post-Test' },
       { to: '/kka/hasil', icon: BarChart3, label: 'Hasil & Sertifikat' },
+      { to: '/kka/kasus', icon: Briefcase, label: 'Studi Kasus' },
+      { to: '/kka/worksheet', icon: FileDown, label: 'Lembar Kerja' },
+      { to: '/kka/glossary', icon: BookA, label: 'Glossarium' },
     ],
     titles: {
       '/kka': 'Dashboard KKA',
@@ -146,6 +149,9 @@ const subjects = {
       '/kka/pretest': 'Pre-Test KKA',
       '/kka/posttest': 'Post-Test KKA',
       '/kka/hasil': 'Hasil & Sertifikat KKA',
+      '/kka/kasus': 'Studi Kasus KKA',
+      '/kka/worksheet': 'Lembar Kerja KKA',
+      '/kka/glossary': 'Glossarium KKA',
     },
     descs: {
       '/kka': 'Media Pembelajaran Koding dan Kecerdasan Artifisial',
@@ -159,6 +165,9 @@ const subjects = {
       '/kka/pretest': 'Uji pemahaman awal KKA',
       '/kka/posttest': 'Evaluasi pemahaman KKA. Target: ≥70',
       '/kka/hasil': 'Ringkasan, pencapaian, dan sertifikat KKA',
+      '/kka/kasus': 'Terapkan pemahaman KKA dalam permasalahan nyata',
+      '/kka/worksheet': 'Lembar kerja praktik offline KKA',
+      '/kka/glossary': 'Daftar istilah penting dalam KKA',
     },
   },
   mpk2: {
