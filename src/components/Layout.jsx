@@ -128,6 +128,10 @@ const subjects = {
       { to: '/kka/elemen3', icon: Terminal, label: 'Elemen 3: Algoritma Pemrograman' },
       { to: '/kka/elemen4', icon: BarChart3, label: 'Elemen 4: Analisis Data' },
       { to: '/kka/elemen5', icon: Brain, label: 'Elemen 5: Literasi & Etika AI' },
+      { to: '/kka/flashcard', icon: BookOpen, label: 'Flashcard' },
+      { to: '/kka/challenge', icon: Zap, label: 'Latihan Cepat' },
+      { to: '/kka/pretest', icon: ClipboardCheck, label: 'Pre-Test' },
+      { to: '/kka/posttest', icon: FileText, label: 'Post-Test' },
     ],
     titles: {
       '/kka': 'Dashboard KKA',
@@ -136,6 +140,10 @@ const subjects = {
       '/kka/elemen3': 'Elemen 3: Algoritma Pemrograman',
       '/kka/elemen4': 'Elemen 4: Analisis Data',
       '/kka/elemen5': 'Elemen 5: Literasi & Etika Kecerdasan Artifisial',
+      '/kka/flashcard': 'Flashcard Interaktif KKA',
+      '/kka/challenge': 'Latihan Cepat KKA',
+      '/kka/pretest': 'Pre-Test KKA',
+      '/kka/posttest': 'Post-Test KKA',
     },
     descs: {
       '/kka': 'Media Pembelajaran Koding dan Kecerdasan Artifisial',
@@ -144,6 +152,10 @@ const subjects = {
       '/kka/elemen3': 'Flowchart, pseudocode, percabangan, perulangan, dan Python',
       '/kka/elemen4': 'Pengolahan data, statistik dasar, dan visualisasi data',
       '/kka/elemen5': 'Konsep AI, etika penggunaan, dan bias',
+      '/kka/flashcard': 'Kartu interaktif istilah Koding dan Kecerdasan Artifisial',
+      '/kka/challenge': 'Latihan cepat KKA melawan waktu',
+      '/kka/pretest': 'Uji pemahaman awal KKA',
+      '/kka/posttest': 'Evaluasi pemahaman KKA. Target: ≥70',
     },
   },
   mpk2: {

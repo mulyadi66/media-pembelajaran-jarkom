@@ -1,0 +1,73 @@
+const flashcardsKKA = [
+  // ===== Elemen 1: Berpikir Komputasional =====
+  { id: 1, category: 'Elemen 1: Berpikir Komputasional', front: 'Berpikir Komputasional', back: 'Cara berpikir yang terstruktur dan logis untuk merumuskan masalah serta menemukan solusi, sehingga solusi dapat dijalankan oleh manusia maupun komputer.', example: 'Dipopulerkan oleh Jeanette Wing pada 2006' },
+  { id: 2, category: 'Elemen 1: Berpikir Komputasional', front: 'Dekomposisi', back: 'Kemampuan memecah masalah yang besar dan kompleks menjadi bagian-bagian kecil yang lebih mudah dikelola.', example: 'Menyelenggarakan acara → persiapan, logistik, acara, purna acara' },
+  { id: 3, category: 'Elemen 1: Berpikir Komputasional', front: 'Pengenalan Pola', back: 'Kemampuan mengidentifikasi kesamaan, perbedaan, dan keteraturan dari data atau masalah untuk memprediksi dan menggunakan kembali solusi.', example: 'Deret 2, 4, 6, 8 → pola +2, angka berikutnya 10' },
+  { id: 4, category: 'Elemen 1: Berpikir Komputasional', front: 'Abstraksi', back: 'Kemampuan menyaring informasi yang paling penting dan mengabaikan detail yang tidak relevan untuk menyelesaikan masalah.', example: 'Rangkuman bab → ambil poin penting saja' },
+  { id: 5, category: 'Elemen 1: Berpikir Komputasional', front: 'Algoritma', back: 'Urutan langkah-langkah logis, jelas, dan terstruktur untuk menyelesaikan suatu masalah, dengan awal dan akhir yang pasti.', example: 'Algoritma membuat teh manis: siapkan → seduh → aduk' },
+  { id: 6, category: 'Elemen 1: Berpikir Komputasional', front: 'Sequence (Urutan)', back: 'Struktur algoritma yang menjalankan langkah secara berurutan dari atas ke bawah.', example: 'Resep masakan: potong → cuci → tumis → sajikan' },
+  { id: 7, category: 'Elemen 1: Berpikir Komputasional', front: 'Selection (Percabangan)', back: 'Struktur algoritma yang memilih di antara beberapa kemungkinan berdasarkan suatu kondisi.', example: 'Jika hujan, bawa payung; jika tidak, jalan biasa' },
+  { id: 8, category: 'Elemen 1: Berpikir Komputasional', front: 'Iteration (Perulangan)', back: 'Struktur algoritma yang mengulang langkah selama kondisi terpenuhi.', example: 'Menghafal kosakata sampai hafal' },
+  { id: 9, category: 'Elemen 1: Berpikir Komputasional', front: 'Karakteristik Berpikir Komputasional', back: 'Terstruktur, logis, rasional, dapat digeneralisasi, dan berorientasi solusi.', example: 'Keputusan didasarkan pada data, bukan perasaan (rasional)' },
+
+  // ===== Elemen 2: Literasi Digital =====
+  { id: 10, category: 'Elemen 2: Literasi Digital', front: 'Literasi Digital', back: 'Kemampuan memahami dan menggunakan teknologi digital secara etis, aman, dan produktif, termasuk etika, keamanan, dan kolaborasi digital.', example: '4 pilar: budaya, kecakapan, etika, keamanan digital' },
+  { id: 11, category: 'Elemen 2: Literasi Digital', front: 'Netiket (Netiquette)', back: 'Etika berkomunikasi di internet, seperti tidak mengetik dengan huruf kapital semua, membalas dengan sopan, dan membaca ulang pesan sebelum mengirim.', example: 'Mengetik KAPITAL SEMUA dianggap berteriak' },
+  { id: 12, category: 'Elemen 2: Literasi Digital', front: 'Cyberbullying', back: 'Perundungan yang dilakukan melalui media digital, seperti menyebarkan foto memalukan, pesan kasar, atau akun palsu.', example: 'Tindakan: simpan bukti, blokir, laporkan ke platform' },
+  { id: 13, category: 'Elemen 2: Literasi Digital', front: 'Phishing', back: 'Penipuan dengan tautan atau pesan palsu untuk mencuri data pribadi seperti kata sandi dan nomor kartu.', example: 'Email palsu mengaku dari bank meminta kata sandi' },
+  { id: 14, category: 'Elemen 2: Literasi Digital', front: 'Ransomware', back: 'Program jahat yang mengunci data pengguna lalu meminta tebusan. Solusi: backup rutin dan jangan bayar tebusan.', example: 'Data terenkripsi, muncul permintaan bayar dalam Bitcoin' },
+  { id: 15, category: 'Elemen 2: Literasi Digital', front: 'Autentikasi Dua Faktor (2FA)', back: 'Lapisan keamanan tambahan yang memerlukan kata sandi plus kode verifikasi (SMS, aplikasi autentikator) untuk masuk akun.', example: 'Login Google meminta kode 6 digit setelah kata sandi' },
+  { id: 16, category: 'Elemen 2: Literasi Digital', front: 'Komunikasi Sinkron', back: 'Komunikasi yang terjadi secara bersamaan atau real-time.', example: 'Video call, telepon, chat langsung' },
+  { id: 17, category: 'Elemen 2: Literasi Digital', front: 'Komunikasi Asinkron', back: 'Komunikasi yang tidak harus dilakukan pada waktu yang bersamaan.', example: 'Email, forum diskusi, komentar di dokumen bersama' },
+  { id: 18, category: 'Elemen 2: Literasi Digital', front: 'Metode CRAAP', back: 'Kerangka evaluasi kredibilitas sumber: Currency (terbaru), Relevance (sesuai), Authority (ahli), Accuracy (akurat), Purpose (tujuan).', example: 'Cek penulis dan tanggal sebelum memercayai berita' },
+  { id: 19, category: 'Elemen 2: Literasi Digital', front: 'Hoaks', back: 'Informasi palsu yang sengaja disebarkan. Verifikasi dengan membandingkan minimal 3 sumber terpercaya.', example: 'Info lowongan kerja palsu di media sosial' },
+  { id: 20, category: 'Elemen 2: Literasi Digital', front: 'Teknik Pencarian Efektif', back: 'Cara mencari informasi di mesin pencari dengan kata kunci ganda, tanda kutip, minus (-), site:, dan filetype:.', example: 'site:ac.id topologi atau "bahasa pemrograman"' },
+
+  // ===== Elemen 3: Algoritma Pemrograman =====
+  { id: 21, category: 'Elemen 3: Algoritma Pemrograman', front: 'Variabel', back: 'Tempat penyimpanan data di memori yang nilainya bisa berubah. Nama variabel tidak boleh diawali angka, tanpa spasi, dan tidak boleh kata kunci bahasa.', example: 'nama = "Budi", umur = 16' },
+  { id: 22, category: 'Elemen 3: Algoritma Pemrograman', front: 'Integer', back: 'Tipe data bilangan bulat. Di Python disebut int.', example: '16, -5, 100' },
+  { id: 23, category: 'Elemen 3: Algoritma Pemrograman', front: 'Float', back: 'Tipe data bilangan desimal. Di Python disebut float.', example: '3.14, 2.5' },
+  { id: 24, category: 'Elemen 3: Algoritma Pemrograman', front: 'String', back: 'Tipe data teks yang diapit tanda kutip. Di Python disebut str.', example: '"Halo", "SMKN 2"' },
+  { id: 25, category: 'Elemen 3: Algoritma Pemrograman', front: 'Boolean', back: 'Tipe data yang hanya bernilai benar atau salah. Di Python disebut bool.', example: 'True, False' },
+  { id: 26, category: 'Elemen 3: Algoritma Pemrograman', front: 'Operator Aritmatika', back: 'Operator untuk perhitungan matematika: + (tambah), - (kurang), * (kali), / (bagi), % (modulo/sisa bagi).', example: '17 % 5 = 2' },
+  { id: 27, category: 'Elemen 3: Algoritma Pemrograman', front: 'Operator Perbandingan', back: 'Operator untuk membandingkan dua nilai: >, <, >=, <=, == (sama), != (tidak sama). Hasilnya boolean.', example: '5 > 3 → True' },
+  { id: 28, category: 'Elemen 3: Algoritma Pemrograman', front: 'Percabangan IF...ELSE', back: 'Struktur program yang mengambil keputusan berdasarkan kondisi. Multi kondisi menggunakan elif.', example: 'if nilai >= 70: print("LULUS") else: print("TIDAK LULUS")' },
+  { id: 29, category: 'Elemen 3: Algoritma Pemrograman', front: 'Perulangan FOR', back: 'Perulangan yang jumlah pengulangannya sudah diketahui, sering memakai fungsi range().', example: 'for i in range(1, 6): print(i)' },
+  { id: 30, category: 'Elemen 3: Algoritma Pemrograman', front: 'Perulangan WHILE', back: 'Perulangan yang berhenti berdasarkan kondisi. Wajib ada perubahan menuju kondisi berhenti agar tidak infinite loop.', example: 'while angka > 0: print(angka); angka -= 1' },
+  { id: 31, category: 'Elemen 3: Algoritma Pemrograman', front: 'range()', back: 'Fungsi Python yang menghasilkan deret angka. Bisa diberi nilai awal, akhir, dan langkah.', example: 'range(2, 11, 2) → 2, 4, 6, 8, 10' },
+  { id: 32, category: 'Elemen 3: Algoritma Pemrograman', front: 'break dan continue', back: 'break menghentikan perulangan secara paksa; continue melewati satu iterasi lalu lanjut ke iterasi berikutnya.', example: 'break berhenti di i==5; continue melewati i==3' },
+  { id: 33, category: 'Elemen 3: Algoritma Pemrograman', front: 'Debugging', back: 'Proses mencari dan memperbaiki kesalahan (bug) dalam program. Langkah: baca error → temukan baris → cek nilai variabel → perbaiki → uji ulang.', example: 'Error: ZeroDivisionError, NameError, SyntaxError' },
+  { id: 34, category: 'Elemen 3: Algoritma Pemrograman', front: 'Sintaks Error', back: 'Kesalahan penulisan kode sehingga program tidak bisa dijalankan.', example: 'Lupa tanda titik dua setelah if, kurung tidak seimbang' },
+  { id: 35, category: 'Elemen 3: Algoritma Pemrograman', front: 'Logika Error', back: 'Program berjalan tetapi hasilnya salah karena logika yang keliru.', example: 'Menulis + padahal maksudnya -' },
+  { id: 36, category: 'Elemen 3: Algoritma Pemrograman', front: 'Kompiler vs Interpreter', back: 'Kompiler menerjemahkan seluruh kode sekaligus (C, Java); interpreter menerjemahkan baris per baris (Python, JavaScript).', example: 'Python memakai interpreter, lebih mudah dipelajari' },
+  { id: 37, category: 'Elemen 3: Algoritma Pemrograman', front: 'F-string', back: 'Cara Python menyisipkan variabel ke dalam teks menggunakan kurung kurawal di depan huruf f.', example: 'print(f"Nama saya {nama}, umur {umur}")' },
+  { id: 38, category: 'Elemen 3: Algoritma Pemrograman', front: 'Flowchart', back: 'Diagram alir yang menggambarkan algoritma dengan simbol-simbol: oval (mulai/selesai), jajaran genjang (input/output), persegi (proses), belah ketupat (keputusan).', example: 'Belah ketupat untuk keputusan ya/tidak' },
+
+  // ===== Elemen 4: Analisis Data =====
+  { id: 39, category: 'Elemen 4: Analisis Data', front: 'Analisis Data', back: 'Proses mengumpulkan, membersihkan, mengolah, dan menafsirkan data untuk menemukan pola dan mendukung keputusan.', example: 'Alur: kumpulkan → bersihkan → olah → analisis → sajikan' },
+  { id: 40, category: 'Elemen 4: Analisis Data', front: 'Data Kualitatif', back: 'Data deskriptif yang bukan berupa angka.', example: 'Warna favorit, pendapat siswa, jenis kelamin' },
+  { id: 41, category: 'Elemen 4: Analisis Data', front: 'Data Kuantitatif', back: 'Data berupa angka yang bisa dihitung dan diolah statistik.', example: 'Tinggi badan, nilai ujian, jumlah pengunjung' },
+  { id: 42, category: 'Elemen 4: Analisis Data', front: 'Data Primer vs Sekunder', back: 'Data primer dikumpulkan langsung (kuesioner, wawancara, observasi); data sekunder diperoleh dari pihak lain (BPS, laporan sekolah).', example: 'Hasil wawancara = primer; data BPS = sekunder' },
+  { id: 43, category: 'Elemen 4: Analisis Data', front: 'Mean (Rata-rata)', back: 'Jumlah seluruh data dibagi banyaknya data.', example: '(70+85+70+90+75) / 5 = 78' },
+  { id: 44, category: 'Elemen 4: Analisis Data', front: 'Median', back: 'Nilai tengah setelah data diurutkan. Membagi data menjadi dua bagian sama banyak.', example: '70, 70, 75, 85, 90 → median 75' },
+  { id: 45, category: 'Elemen 4: Analisis Data', front: 'Modus', back: 'Nilai yang paling sering muncul dalam data.', example: '70, 85, 70, 90, 75 → modus 70 (muncul 2x)' },
+  { id: 46, category: 'Elemen 4: Analisis Data', front: 'Diagram Batang', back: 'Grafik paling cocok untuk membandingkan antar kategori.', example: 'Nilai rata-rata per kelas' },
+  { id: 47, category: 'Elemen 4: Analisis Data', front: 'Diagram Garis', back: 'Grafik paling cocok untuk menunjukkan tren perubahan seiring waktu.', example: 'Penjualan bulanan' },
+  { id: 48, category: 'Elemen 4: Analisis Data', front: 'Pivot Table', back: 'Fitur spreadsheet untuk merangkum data menjadi ringkasan yang mudah dibaca.', example: 'Ringkasan jumlah siswa per jurusan' },
+
+  // ===== Elemen 5: Literasi & Etika AI =====
+  { id: 49, category: 'Elemen 5: Literasi & Etika AI', front: 'Kecerdasan Artifisial (AI)', back: 'Kemampuan mesin melakukan tugas yang biasanya membutuhkan kecerdasan manusia, seperti belajar, mengenali pola, memahami bahasa, dan mengambil keputusan.', example: 'Tiga elemen penting: data, algoritma, komputasi' },
+  { id: 50, category: 'Elemen 5: Literasi & Etika AI', front: 'Machine Learning (ML)', back: 'Cabang AI di mana mesin belajar dari data tanpa diprogram secara eksplisit. Ada supervised, unsupervised, dan reinforcement learning.', example: 'Mengenali email spam dari ribuan contoh' },
+  { id: 51, category: 'Elemen 5: Literasi & Etika AI', front: 'Deep Learning', back: 'Machine learning yang menggunakan jaringan saraf tiruan (neural network) berlapis.', example: 'Pengenalan wajah dan suara' },
+  { id: 52, category: 'Elemen 5: Literasi & Etika AI', front: 'NLP', back: 'Natural Language Processing — kemampuan AI memahami dan membuat bahasa manusia.', example: 'Asisten virtual, penerjemah otomatis' },
+  { id: 53, category: 'Elemen 5: Literasi & Etika AI', front: 'Computer Vision', back: 'Kemampuan AI mengenali gambar dan video.', example: 'Pengenalan wajah untuk membuka kunci ponsel' },
+  { id: 54, category: 'Elemen 5: Literasi & Etika AI', front: 'AI Generatif', back: 'AI yang membuat konten baru — teks, gambar, suara, hingga kode program — berdasarkan perintah pengguna (prompt).', example: 'ChatGPT, Gemini, pembuat gambar AI' },
+  { id: 55, category: 'Elemen 5: Literasi & Etika AI', front: 'Narrow AI', back: 'AI yang ahli pada satu tugas spesifik. Hampir semua AI saat ini adalah narrow AI.', example: 'Penerjemah bahasa, filter spam, asisten virtual' },
+  { id: 56, category: 'Elemen 5: Literasi & Etika AI', front: 'General AI', back: 'AI yang bisa mengerjakan banyak tugas seperti manusia. Masih dalam tahap penelitian.', example: 'Belum ada implementasi nyata' },
+  { id: 57, category: 'Elemen 5: Literasi & Etika AI', front: 'Deepfake', back: 'Konten video/audio/gambar yang dimanipulasi AI sehingga tampak nyata dan sulit dibedakan dari asli.', example: 'Video wajah seseorang yang dipertukarkan secara palsu' },
+  { id: 58, category: 'Elemen 5: Literasi & Etika AI', front: 'Bias AI', back: 'Hasil AI yang tidak adil atau tidak akurat terhadap kelompok tertentu, biasanya karena data latih tidak seimbang.', example: 'AI rekrutmen menolak kandidat karena data latih didominasi satu kelompok' },
+  { id: 59, category: 'Elemen 5: Literasi & Etika AI', front: 'Turing Test', back: 'Uji yang diajukan Alan Turing (1950): mesin dianggap cerdas jika jawabannya tidak bisa dibedakan dari jawaban manusia.', example: 'Dasar sejarah kecerdasan artifisial' },
+  { id: 60, category: 'Elemen 5: Literasi & Etika AI', front: 'Halusinasi AI', back: 'Kondisi AI menghasilkan informasi yang salah tetapi disampaikan dengan yakin dan meyakinkan.', example: 'AI menulis fakta sejarah yang keliru dengan nada pasti' },
+];
+
+export default flashcardsKKA;

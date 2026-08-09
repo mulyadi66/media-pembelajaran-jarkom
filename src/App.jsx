@@ -57,6 +57,10 @@ const Elemen2KKA = lazy(() => import('./pages/kka/Elemen2'));
 const Elemen3KKA = lazy(() => import('./pages/kka/Elemen3'));
 const Elemen4KKA = lazy(() => import('./pages/kka/Elemen4'));
 const Elemen5KKA = lazy(() => import('./pages/kka/Elemen5'));
+const FlashcardPageKKA = lazy(() => import('./pages/kka/FlashcardPageKKA'));
+const ChallengePageKKA = lazy(() => import('./pages/kka/ChallengePageKKA'));
+const PreTestKKA = lazy(() => import('./pages/kka/PreTestKKA'));
+const PostTestKKA = lazy(() => import('./pages/kka/PostTestKKA'));
 
 export default function App() {
   return (
@@ -94,6 +98,10 @@ export default function App() {
                 <Route path="/kka/elemen3" element={<Elemen3KKA />} />
                 <Route path="/kka/elemen4" element={<Elemen4KKA />} />
                 <Route path="/kka/elemen5" element={<Elemen5KKA />} />
+                <Route path="/kka/flashcard" element={<FlashcardPageKKA />} />
+                <Route path="/kka/challenge" element={<ChallengePageKKA />} />
+                <Route path="/kka/pretest" element={<PreTestKKA />} />
+                <Route path="/kka/posttest" element={<PostTestKKA />} />
                 <Route path="/mpk1/modul1" element={<Modul1 />} />
                 <Route path="/mpk1/modul2" element={<Modul2 />} />
                 <Route path="/mpk1/modul3" element={<Modul3 />} />

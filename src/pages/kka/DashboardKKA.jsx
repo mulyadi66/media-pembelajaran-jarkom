@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Code2, Brain, Terminal, BookOpen, Trophy, Cpu, Lock, Sparkles, GitBranch, Database, MonitorSmartphone, BarChart3 } from 'lucide-react';
+import { Code2, Brain, Terminal, BookOpen, Trophy, Cpu, Zap, ClipboardCheck, FileText, GitBranch, Database, MonitorSmartphone, BarChart3 } from 'lucide-react';
 
 export default function DashboardKKA() {
   const elements = [
@@ -11,10 +11,10 @@ export default function DashboardKKA() {
   ];
 
   const quickActions = [
-    { title: 'Flashcard', desc: 'Segera hadir', icon: BookOpen, color: ['#8b5cf6', '#6d28d9'] },
-    { title: 'Latihan Cepat', desc: 'Segera hadir', icon: Cpu, color: ['#f59e0b', '#f97316'] },
-    { title: 'Pre-Test', desc: 'Segera hadir', icon: Lock, color: ['#06b6d4', '#0891b2'] },
-    { title: 'Post-Test', desc: 'Segera hadir', icon: Sparkles, color: ['#ef4444', '#dc2626'] },
+    { to: '/kka/flashcard', title: 'Flashcard', desc: 'Hafal istilah KKA', icon: BookOpen, color: ['#8b5cf6', '#6d28d9'] },
+    { to: '/kka/challenge', title: 'Latihan Cepat', desc: 'Tes kecepatan', icon: Zap, color: ['#f59e0b', '#f97316'] },
+    { to: '/kka/pretest', title: 'Pre-Test', desc: 'Uji awal', icon: ClipboardCheck, color: ['#06b6d4', '#0891b2'] },
+    { to: '/kka/posttest', title: 'Post-Test', desc: 'Evaluasi akhir', icon: FileText, color: ['#ef4444', '#dc2626'] },
   ];
 
   return (
@@ -86,13 +86,13 @@ export default function DashboardKKA() {
       <section className="section-block">
         <h2><Cpu size={20} /> Akses Cepat</h2>
         <div className="actions-grid">
-          {quickActions.map(({ title, desc, icon: Icon, color }) => (
-            <div className="action-card" key={title} style={{opacity: 0.6, cursor: 'default'}}>
+          {quickActions.map(({ to, title, desc, icon: Icon, color }) => (
+            <Link to={to} className="action-card" key={to}>
               <div className="action-icon" style={{background: `linear-gradient(135deg, ${color[0]}, ${color[1]})`}}>
                 <Icon size={22} color="white" />
               </div>
               <h4>{title}</h4><p>{desc}</p>
-            </div>
+            </Link>
           ))}
         </div>
       </section>
