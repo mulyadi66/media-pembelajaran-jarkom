@@ -39,6 +39,23 @@ export default function Elemen5() {
           </ul>
         </div>
         <p>AI berbeda dengan program biasa: program biasa mengikuti aturan yang ditulis manual, sedangkan AI <strong>belajar dari data</strong> untuk menemukan pola sendiri.</p>
+
+        <h3>Sejarah Singkat AI</h3>
+        <ul>
+          <li><strong>1950</strong> — Alan Turing mengajukan <em>Turing Test</em>: mesin dianggap cerdas jika jawabannya tidak bisa dibedakan dari manusia</li>
+          <li><strong>1956</strong> — istilah "Artificial Intelligence" dipopulerkan di konferensi Dartmouth</li>
+          <li><strong>1997</strong> — Deep Blue (IBM) mengalahkan juara catur dunia Garry Kasparov</li>
+          <li><strong>2016</strong> — AlphaGo mengalahkan juara Go dunia Lee Sedol</li>
+          <li><strong>2022–sekarang</strong> — AI generatif (ChatGPT, Gemini) populer dan dapat diakses semua orang</li>
+        </ul>
+
+        <h3>Bagaimana AI Bekerja (Sederhana)</h3>
+        <ol>
+          <li><strong>Data latih</strong> — AI diberi banyak contoh (misal ribuan foto kucing)</li>
+          <li><strong>Belajar</strong> — AI mencari pola pada contoh tersebut</li>
+          <li><strong>Model</strong> — hasil belajar disimpan sebagai model</li>
+          <li><strong>Prediksi</strong> — model memakai polanya pada data baru (misal mengenali foto kucing baru)</li>
+        </ol>
         <div className="info-box success">
           <strong><CheckSquare size={14} /> Tugas:</strong>
           <ol>
@@ -78,6 +95,22 @@ export default function Elemen5() {
           <li><strong>Natural Language Processing (NLP)</strong> — AI memahami dan membuat bahasa manusia</li>
           <li><strong>Computer Vision</strong> — AI mengenali gambar dan video</li>
         </ul>
+
+        <h3>Machine Learning — Pembelajaran Terawasi vs Tak Terawasi</h3>
+        <div className="table-responsive">
+          <table className="materi-table">
+            <thead><tr><th>Jenis</th><th>Penjelasan</th><th>Contoh</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Supervised</strong></td><td>Belajar dari data yang sudah diberi label</td><td>Mengenali email spam dari ribuan email bertanda</td></tr>
+              <tr><td><strong>Unsupervised</strong></td><td>Belajar menemukan pola dari data tanpa label</td><td>Mengelompokkan pelanggan berdasarkan kebiasaan belanja</td></tr>
+              <tr><td><strong>Reinforcement</strong></td><td>Belajar dari coba-coba dengan hadiah/hukuman</td><td>AI bermain catur yang semakin kuat seiring bermain</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div className="info-box warning">
+          <strong>Kualitas AI = Kualitas Data:</strong>
+          <p>AI yang dilatih dengan data sedikit, salah, atau tidak seimbang akan menghasilkan model yang buruk. Inilah akar munculnya bias (dibahas di sub topik 5.5).</p>
+        </div>
         <div className="info-box success">
           <strong><CheckSquare size={14} /> Tugas:</strong>
           <ol>
@@ -105,6 +138,23 @@ export default function Elemen5() {
           <strong><Star size={14} /> AI Generatif:</strong>
           <p>AI generatif (seperti ChatGPT, Gemini, dan pembuat gambar AI) membuat konten baru — teks, gambar, suara, hingga kode program — berdasarkan perintah pengguna.</p>
         </div>
+
+        <h3>AI di Sekitar Kita Setiap Hari</h3>
+        <ul>
+          <li><strong>Ponsel pintar</strong> — pengenalan wajah untuk membuka kunci, prediksi teks saat mengetik</li>
+          <li><strong>Media sosial</strong> — rekomendasi video dan iklan berdasarkan kebiasaan menonton</li>
+          <li><strong>Maps & navigasi</strong> — memperkirakan kemacetan dan waktu tempuh</li>
+          <li><strong>Email</strong> — filter spam dan saran balasan otomatis</li>
+          <li><strong>Belanja online</strong> — rekomendasi produk "kamu mungkin juga suka"</li>
+        </ul>
+
+        <h3>Contoh Perintah (Prompt) yang Baik untuk AI Generatif</h3>
+        <ul>
+          <li>Jelaskan peranmu: <em>"Kamu adalah guru Bahasa Indonesia"</em></li>
+          <li>Beri konteks: <em>"untuk siswa SMK kelas XI"</em></li>
+          <li>Berikan format: <em>"jawab dalam 3 poin singkat"</em></li>
+          <li>Minta perbaikan: <em>"buat lebih sederhana lagi"</em></li>
+        </ul>
         <div className="info-box success">
           <strong><CheckSquare size={14} /> Tugas:</strong>
           <ol>
@@ -132,6 +182,22 @@ export default function Elemen5() {
           <li><strong>Tanggung jawab</strong> — ada manusia yang bertanggung jawab atas dampak AI</li>
           <li><strong>Privasi</strong> — data pribadi dilindungi dan dipakai dengan izin</li>
         </ul>
+
+        <h3>Deepfake dan Konten Palsu</h3>
+        <p><strong>Deepfake</strong> adalah konten (video/audio/gambar) yang dimanipulasi AI sehingga tampak nyata. Dampaknya antara lain:</p>
+        <ul>
+          <li>Pencemaran nama baik lewat video palsu</li>
+          <li>Penipuan dengan wajah/suara tiruan</li>
+          <li>Penyebaran hoaks yang sulit dibedakan dari asli</li>
+        </ul>
+        <div className="info-box warning">
+          <strong>Cara Menghindari Dampak Deepfake:</strong>
+          <ul>
+            <li>Jangan percaya langsung pada video/audio yang mengejutkan — cek sumber asli</li>
+            <li>Perhatikan detail aneh (gerak bibir tidak sinkron, bayangan janggal)</li>
+            <li>Jangan membuat atau menyebarkan konten manipulatif</li>
+          </ul>
+        </div>
         <div className="info-box success">
           <strong><CheckSquare size={14} /> Tugas:</strong>
           <p>Baca skenario berikut, lalu jawablah:</p>
@@ -153,7 +219,15 @@ export default function Elemen5() {
           <li>Pengenalan wajah kurang akurat pada kelompok tertentu karena data latih kurang beragam</li>
           <li>Asisten AI menjawab berbeda untuk pertanyaan yang sama karena bias stereotip</li>
         </ul>
-        <h3>B. Cara Menggunakan AI yang Bertanggung Jawab</h3>
+        <h3>B. Cara Mengurangi Bias</h3>
+        <ul>
+          <li>Kumpulkan data latih yang beragam dan seimbang</li>
+          <li>Uji AI secara rutin pada berbagai kelompok</li>
+          <li>Libatkan tim yang beragam saat mengembangkan AI</li>
+          <li>Pantau hasil AI dan perbaiki jika ditemukan ketidakadilan</li>
+        </ul>
+
+        <h3>C. Cara Menggunakan AI yang Bertanggung Jawab</h3>
         <ol>
           <li><strong>Gunakan untuk membantu, bukan menggantikan</strong> pemikiranmu</li>
           <li><strong>Selalu verifikasi</strong> jawaban AI dengan sumber terpercaya</li>
@@ -161,6 +235,10 @@ export default function Elemen5() {
           <li><strong>Nyatakan penggunaan AI</strong> jika diminta (misalnya tugas sekolah)</li>
           <li><strong>Laporkan penyalahgunaan</strong> AI yang merugikan orang lain</li>
         </ol>
+        <div className="info-box">
+          <strong><Star size={14} /> AI sebagai Alat, Bukan Pengganti:</strong>
+          <p>AI ibarat kalkulator: membantu menghitung lebih cepat, tetapi kita tetap harus memahami konsepnya. Siswa yang hanya menyalin jawaban AI tanpa memahami akan kesulitan saat bertemu soal yang berbeda.</p>
+        </div>
         <div className="info-box success">
           <strong><CheckSquare size={14} /> Tugas Refleksi:</strong>
           <ol>

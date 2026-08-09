@@ -41,6 +41,25 @@ export default function Elemen4() {
           </ol>
         </div>
         <p>Contoh sederhana: dari daftar nilai ulangan kelas, kita bisa menganalisis berapa siswa yang sudah tuntas dan topik mana yang paling banyak salah.</p>
+
+        <h3>Data vs Informasi</h3>
+        <div className="table-responsive">
+          <table className="materi-table">
+            <thead><tr><th>Istilah</th><th>Penjelasan</th><th>Contoh</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Data</strong></td><td>Fakta mentah yang belum diolah</td><td>Nilai 78, 85, 90, 72</td></tr>
+              <tr><td><strong>Informasi</strong></td><td>Data yang sudah diolah sehingga bermakna</td><td>Rata-rata nilai kelas adalah 81,25</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Jenis Analisis Data</h3>
+        <ul>
+          <li><strong>Analisis deskriptif</strong> — menjawab "apa yang terjadi?" (contoh: jumlah siswa lulus)</li>
+          <li><strong>Analisis diagnostik</strong> — menjawab "mengapa itu terjadi?" (contoh: banyak yang salah di materi subnetting)</li>
+          <li><strong>Analisis prediktif</strong> — memperkirakan "apa yang akan terjadi?" (contoh: memprediksi kelulusan berdasarkan nilai harian)</li>
+          <li><strong>Analisis preskriptif</strong> — menyarankan "apa yang harus dilakukan?" (contoh: tambah jam belajar subnetting)</li>
+        </ul>
         <div className="info-box success">
           <strong><CheckSquare size={14} /> Tugas:</strong>
           <ol>
@@ -68,6 +87,19 @@ export default function Elemen4() {
           <li><strong>Observasi</strong> — mengamati langsung fenomena</li>
           <li><strong>Wawancara</strong> — tanya jawab mendalam</li>
           <li><strong>Studi dokumen</strong> — data dari laporan, arsip, website resmi</li>
+        </ul>
+
+        <h3>C. Sumber Data</h3>
+        <ul>
+          <li><strong>Data primer</strong> — dikumpulkan langsung oleh peneliti (kuesioner, wawancara, observasi)</li>
+          <li><strong>Data sekunder</strong> — diperoleh dari pihak lain (BPS, laporan sekolah, jurnal)</li>
+        </ul>
+
+        <h3>D. Jenis Pertanyaan Kuesioner</h3>
+        <ul>
+          <li><strong>Terbuka</strong> — responden menjawab bebas (mendalam tapi sulit diringkas)</li>
+          <li><strong>Tertutup</strong> — jawaban sudah disediakan (mudah diolah dengan angka)</li>
+          <li><strong>Skala likert</strong> — tingkat kesetujuan 1–5 (sangat tidak setuju s.d. sangat setuju)</li>
         </ul>
         <div className="info-box warning">
           <strong>Hati-hati:</strong> Data harus akurat dan terpercaya. Data yang salah akan menghasilkan kesimpulan yang menyesatkan ("garbage in, garbage out").
@@ -103,6 +135,24 @@ export default function Elemen4() {
             </tbody>
           </table>
         </div>
+
+        <h3>C. Contoh Perhitungan</h3>
+        <p>Data nilai: <code>70, 85, 70, 90, 75</code></p>
+        <ul>
+          <li><strong>Mean:</strong> (70 + 85 + 70 + 90 + 75) ÷ 5 = 390 ÷ 5 = <strong>78</strong></li>
+          <li><strong>Median:</strong> urutkan 70, 70, 75, 85, 90 → nilai tengah = <strong>75</strong></li>
+          <li><strong>Modus:</strong> nilai yang paling sering muncul = <strong>70</strong> (muncul 2 kali)</li>
+          <li><strong>Maksimum / minimum:</strong> <strong>90</strong> dan <strong>70</strong></li>
+        </ul>
+        <div className="info-box">
+          <strong><Star size={14} /> Rumus di Spreadsheet:</strong>
+          <ul>
+            <li><code>=AVERAGE(A1:A10)</code> untuk mean</li>
+            <li><code>=MEDIAN(A1:A10)</code> untuk median</li>
+            <li><code>=MODE(A1:A10)</code> untuk modus</li>
+            <li><code>=MAX(A1:A10)</code> dan <code>=MIN(A1:A10)</code></li>
+          </ul>
+        </div>
         <div className="info-box success">
           <strong><CheckSquare size={14} /> Tugas:</strong>
           <ol>
@@ -116,6 +166,13 @@ export default function Elemen4() {
 
       <MateriCard icon={PieChart} title="4.4 Visualisasi Data">
         <p><strong>Visualisasi data</strong> mengubah angka menjadi grafik agar mudah dipahami. Pemilihan jenis grafik yang tepat sangat penting.</p>
+        <h3>Mengapa Visualisasi Penting?</h3>
+        <ul>
+          <li>Data angka ratusan baris sulit dipahami, grafik memadatkannya jadi pandangan sekali lihat</li>
+          <li>Mempercepat menemukan pola, tren, dan nilai menyimpang (outlier)</li>
+          <li>Memudahkan komunikasi hasil analisis ke orang lain</li>
+        </ul>
+
         <div className="table-responsive">
           <table className="materi-table">
             <thead><tr><th>Jenis Grafik</th><th>Paling Cocok Untuk</th></tr></thead>
@@ -127,12 +184,16 @@ export default function Elemen4() {
             </tbody>
           </table>
         </div>
+        <div className="info-box warning">
+          <strong>Menyesatkan:</strong> Diagram lingkaran sulit dibaca jika terlalu banyak bagian (lebih dari 5-6) atau nilainya hampir sama. Pilih diagram batang sebagai gantinya.
+        </div>
         <div className="info-box">
           <strong><LineChart size={14} /> Tips Visualisasi:</strong>
           <ul>
             <li>Beri judul dan label sumbu yang jelas</li>
             <li>Gunakan warna yang kontras dan konsisten</li>
             <li>Jangan membesar-besarkan skala agar tidak menyesatkan</li>
+            <li>Pilih grafik sesuai tujuan, bukan karena tampilannya bagus</li>
           </ul>
         </div>
         <div className="info-box success">
@@ -154,6 +215,19 @@ export default function Elemen4() {
           <li><strong>Kesimpulan:</strong> pengunjung lebih banyak di akhir pekan</li>
           <li><strong>Keputusan:</strong> siapkan stok lebih banyak hari Jumat, promosikan pada hari sepi</li>
         </ul>
+
+        <h3>Langkah Interpretasi yang Baik</h3>
+        <ol>
+          <li>Lihat kembali tujuan awal analisis — apa pertanyaan yang ingin dijawab?</li>
+          <li>Cari pola atau tren dari data dan grafik</li>
+          <li>Periksa data yang menyimpang dari pola (outlier)</li>
+          <li>Tulis kesimpulan yang didukung data, bukan opini</li>
+          <li>Buat rekomendasi yang bisa ditindaklanjuti</li>
+        </ol>
+
+        <div className="info-box warning">
+          <strong>Hindari:</strong> Korelasi bukan berarti sebab-akibat. Nilai es krim dan kasus tenggelam naik bersamaan di musim panas, tetapi es krim bukan penyebab tenggelam — keduanya dipengaruhi cuaca.
+        </div>
         <div className="info-box success">
           <strong><CheckSquare size={14} /> Tugas:</strong>
           <ol>

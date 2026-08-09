@@ -40,6 +40,29 @@ export default function Elemen2() {
             <li>Melindungi data pribadi menjadi keharusan</li>
           </ul>
         </div>
+
+        <h3>Evolusi dari Generasi Digital:</h3>
+        <div className="table-responsive">
+          <table className="materi-table">
+            <thead><tr><th>Generasi</th><th>Ciri Penggunaan Teknologi</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Digital Immigrant</strong></td><td>Menggunakan teknologi setelah dewasa (generasi orang tua)</td></tr>
+              <tr><td><strong>Digital Native</strong></td><td>Lahir dan besar bersama teknologi (generasi siswa saat ini)</td></tr>
+              <tr><td><strong>Digital Citizen</strong></td><td>Menggunakan teknologi secara bertanggung jawab dan berkontribusi positif</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div className="info-box warning">
+          <strong>Fakta:</strong> Menjadi digital native (bisa pakai gadget) <strong>bukan jaminan</strong> literasi digital yang baik. Banyak pengguna muda yang masih mudah tertipu hoaks dan penipuan online.
+        </div>
+
+        <h3>Empat Kemampuan Dasar Literasi Digital:</h3>
+        <ol>
+          <li><strong>Mencari (access)</strong> — menemukan informasi yang dibutuhkan</li>
+          <li><strong>Mengevaluasi (evaluate)</strong> — menilai kredibilitas dan kebenaran informasi</li>
+          <li><strong>Menggunakan (use)</strong> — memanfaatkan informasi secara etis</li>
+          <li><strong>Membuat (create)</strong> — menghasilkan konten digital yang bermanfaat</li>
+        </ol>
         <div className="info-box success">
           <strong><CheckSquare size={14} /> Tugas:</strong>
           <ol>
@@ -79,6 +102,42 @@ export default function Elemen2() {
             </tbody>
           </table>
         </div>
+
+        <h3>A. Digital Skills — Cakap Menggunakan Teknologi</h3>
+        <ul>
+          <li>Mengoperasikan perangkat keras (komputer, smartphone, printer)</li>
+          <li>Menggunakan aplikasi perkantoran (dokumen, spreadsheet, presentasi)</li>
+          <li>Menavigasi internet dan mesin pencari dengan efektif</li>
+          <li>Memanfaatkan cloud dan penyimpanan daring</li>
+          <li>Menguasai aplikasi pendukung: email, kalender, video conference</li>
+        </ul>
+
+        <h3>B. Digital Culture — Budaya Bermedia yang Sehat</h3>
+        <ul>
+          <li>Berkomunikasi dengan sopan dan menghargai perbedaan</li>
+          <li>Tidak menyebarkan ujaran kebencian, SARA, dan perundungan</li>
+          <li>Menyebarkan konten positif dan bermanfaat</li>
+          <li>Menjaga identitas nasional di tengah budaya global</li>
+          <li>Menghargai karya dan pendapat orang lain</li>
+        </ul>
+
+        <h3>C. Digital Ethics — Etika Bermedia Digital</h3>
+        <ul>
+          <li>Menjaga privasi diri dan orang lain</li>
+          <li>Tidak mencuri atau menyalin karya tanpa izin (hak cipta)</li>
+          <li>Meminta izin sebelum memakai foto atau data orang lain</li>
+          <li>Jujur dan transparan dalam menyebarkan informasi</li>
+          <li>Bertanggung jawab atas setiap unggahan kita</li>
+        </ul>
+
+        <h3>D. Digital Safety — Aman Beraktivitas di Dunia Digital</h3>
+        <ul>
+          <li>Menggunakan kata sandi kuat dan berbeda untuk tiap akun</li>
+          <li>Mengaktifkan autentikasi dua faktor (2FA)</li>
+          <li>Waspada phising, malware, dan penipuan online</li>
+          <li>Menjaga data pribadi seperti KTP, rekening, dan PIN</li>
+          <li>Berhati-hati saat menggunakan Wi-Fi publik</li>
+        </ul>
         <div className="info-box success">
           <strong><CheckSquare size={14} /> Tugas:</strong>
           <p>Lakukan <strong>self-assessment</strong> kemampuan digitalmu pada keempat pilar (Digital Skills, Culture, Ethics, Safety). Beri nilai 1–5 untuk setiap pilar, lalu tuliskan satu langkah nyata untuk meningkatkan pilar yang nilainya paling rendah.</p>
@@ -93,13 +152,49 @@ export default function Elemen2() {
           <li>Hormati hak cipta — beri kredit pada karya orang lain</li>
           <li>Jangan membagikan foto atau data orang lain tanpa izin</li>
         </ul>
-        <h3>B. Keamanan Digital</h3>
+
+        <h3>B. Netiket (Netiquette) — Etika Berkomunikasi di Internet</h3>
+        <ul>
+          <li><strong>Jangan mengetik huruf kapital semua</strong> — dianggap berteriak</li>
+          <li>Balas pesan dengan tepat waktu dan sopan</li>
+          <li>Baca ulang pesan sebelum mengirim agar tidak menyinggung</li>
+          <li>Jangan menyebarkan pesan pribadi tanpa izin</li>
+          <li>Hindari menyebarkan konten yang merugikan atau mempermalukan orang lain</li>
+        </ul>
+
+        <h3>C. Perundungan Siber (Cyberbullying)</h3>
+        <p><strong>Cyberbullying</strong> adalah perundungan yang dilakukan melalui media digital, misalnya menyebarkan foto memalukan, mengirim pesan kasar, atau membuat akun palsu untuk mencemarkan nama baik.</p>
+        <div className="info-box warning">
+          <strong>Yang Harus Dilakukan Jika Menjadi Korban:</strong>
+          <ul>
+            <li>Jangan membalas dengan emosi — simpan bukti (screenshot)</li>
+            <li>Blokir pelaku dan laporkan ke platform</li>
+            <li>Ceritakan kepada orang tua, guru, atau orang terpercaya</li>
+            <li>Lapor ke pihak berwajib jika mengancam keselamatan</li>
+          </ul>
+        </div>
+
+        <h3>D. Keamanan Digital</h3>
         <ul>
           <li>Gunakan kata sandi kuat (minimal 8 karakter, kombinasi huruf, angka, simbol)</li>
           <li>Aktifkan autentikasi dua faktor (2FA) pada akun penting</li>
           <li>Waspada phising — jangan klik tautan mencurigakan</li>
           <li>Perbarui perangkat lunak secara rutin</li>
         </ul>
+
+        <h3>E. Mengenal Jenis Ancaman Digital</h3>
+        <div className="table-responsive">
+          <table className="materi-table">
+            <thead><tr><th>Ancaman</th><th>Penjelasan</th><th>Cara Melindungi Diri</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Virus</strong></td><td>Program jahat yang menyebar lewat file</td><td>Gunakan antivirus, jangan buka file mencurigakan</td></tr>
+              <tr><td><strong>Trojan</strong></td><td>Mencuri data dengan menyamar sebagai program baik</td><td>Unduh aplikasi dari sumber resmi saja</td></tr>
+              <tr><td><strong>Ransomware</strong></td><td>Mengunci data lalu meminta tebusan</td><td>Backup data rutin, jangan bayar tebusan</td></tr>
+              <tr><td><strong>Phising</strong></td><td>Menipu dengan tautan/pesan palsu untuk mencuri data</td><td>Cek alamat situs, jangan klik tautan mencurigakan</td></tr>
+              <tr><td><strong>Spyware</strong></td><td>Mata-mata yang merekam aktivitas pengguna</td><td>Perbarui sistem, periksa izin aplikasi</td></tr>
+            </tbody>
+          </table>
+        </div>
         <div className="info-box warning">
           <strong>Contoh Phising:</strong> Email atau pesan yang berpura-pura dari bank meminta kata sandi. Bank tidak pernah meminta kata sandi lewat pesan.
         </div>
@@ -126,6 +221,35 @@ export default function Elemen2() {
             </tbody>
           </table>
         </div>
+
+        <h3>A. Komunikasi Sinkron vs Asinkron</h3>
+        <div className="table-responsive">
+          <table className="materi-table">
+            <thead><tr><th>Jenis</th><th>Penjelasan</th><th>Contoh</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Sinkron</strong></td><td>Komunikasi terjadi bersamaan (real-time)</td><td>Video call, telepon, chat langsung</td></tr>
+              <tr><td><strong>Asinkron</strong></td><td>Komunikasi tidak harus bersamaan</td><td>Email, forum diskusi, komentar dokumen</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>B. Alur Kolaborasi Digital yang Efektif</h3>
+        <ol>
+          <li><strong>Rencanakan</strong> — tentukan tujuan dan pembagian tugas (Google Docs / Trello)</li>
+          <li><strong>Kerjakan</strong> — setiap anggota mengerjakan bagiannya secara paralel</li>
+          <li><strong>Tinjau</strong> — saling memberi komentar dan masukan (review)</li>
+          <li><strong>Finalkan</strong> — gabungkan hasil dan periksa keseluruhan</li>
+          <li><strong>Bagikan</strong> — unggah ke cloud dan berbagi tautan ke pihak terkait</li>
+        </ol>
+
+        <h3>C. Tips Kolaborasi Digital yang Baik</h3>
+        <ul>
+          <li>Beri izin akses dokumen yang tepat (bisa lihat, komentar, atau edit)</li>
+          <li>Gunakan nama file yang jelas: <em>proyek_bagian_nama_tanggal</em></li>
+          <li>Manfaatkan riwayat versi (version history) untuk melacak perubahan</li>
+          <li>Berikan tenggat waktu yang jelas untuk setiap tugas anggota</li>
+          <li>Komunikasikan kendala segera, jangan menunggu sampai deadline</li>
+        </ul>
         <div className="info-box success">
           <strong><CheckSquare size={14} /> Etika Rapat Virtual:</strong>
           <p>Matikan mikrofon jika tidak berbicara, gunakan kamera bila dimungkinkan, jangan berbicara bersamaan, dan siapkan materi sebelum rapat.</p>
@@ -148,12 +272,45 @@ export default function Elemen2() {
           <li>Bandingkan minimal 3 sumber sebelum mempercayai informasi</li>
           <li>Waspadai judul berlebihan dan akun anonim</li>
         </ul>
-        <h3>B. Produktivitas Digital untuk Siswa</h3>
+
+        <h3>B. Teknik Pencarian Efektif di Mesin Pencari</h3>
+        <div className="table-responsive">
+          <table className="materi-table">
+            <thead><tr><th>Teknik</th><th>Contoh</th><th>Kegunaan</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Kata kunci ganda</strong></td><td><code>sejarah komputer smk</code></td><td>Menyempitkan hasil pencarian</td></tr>
+              <tr><td><strong>Tanda kutip</strong></td><td><code>"bahasa pemrograman"</code></td><td>Mencari frasa persis</td></tr>
+              <tr><td><strong>Minus (-)</strong></td><td><code>kopi -instan</code></td><td>Mengeluarkan kata tertentu</td></tr>
+              <tr><td><strong>Site:</strong></td><td><code>topologi site:ac.id</code></td><td>Mencari di situs tertentu</td></tr>
+              <tr><td><strong>Filetype:</strong></td><td><code>modul jaringan filetype:pdf</code></td><td>Mencari jenis file tertentu</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>C. Mengevaluasi Kredibilitas Sumber — Metode CRAAP</h3>
+        <ul>
+          <li><strong>Currency</strong> — apakah informasi masih terbaru?</li>
+          <li><strong>Relevance</strong> — apakah sesuai dengan kebutuhan kita?</li>
+          <li><strong>Authority</strong> — siapa penulisnya? apakah ahli di bidangnya?</li>
+          <li><strong>Accuracy</strong> — apakah didukung bukti dan sumber lain?</li>
+          <li><strong>Purpose</strong> — apakah tujuannya memberi info, menjual, atau memengaruhi?</li>
+        </ul>
+
+        <h3>D. Produktivitas Digital untuk Siswa</h3>
         <ul>
           <li>Gunakan spreadsheet untuk membuat tabel nilai dan laporan sederhana</li>
           <li>Buat presentasi yang rapi dengan poin ringkas</li>
           <li>Manfaatkan aplikasi pengingat untuk mengatur jadwal belajar</li>
           <li>Simpan file dengan penamaan yang jelas: <em>nama_tugas_tanggal</em></li>
+        </ul>
+
+        <h3>E. Tips Membuat Presentasi yang Efektif</h3>
+        <ul>
+          <li>Satu slide satu ide pokok — jangan menumpuk teks</li>
+          <li>Gunakan poin singkat, detail disampaikan secara lisan</li>
+          <li>Konsisten dalam font dan warna</li>
+          <li>Gunakan gambar/grafik yang relevan, bukan sekadar hiasan</li>
+          <li>Latihan presentasi sebelum tampil di depan kelas</li>
         </ul>
         <div className="info-box">
           <strong><Star size={14} /> Tips Verifikasi Hoaks:</strong>
