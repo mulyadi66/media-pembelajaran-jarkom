@@ -37,7 +37,7 @@ export default function Dashboard() {
           <h1>Perencanaan & Pengalamatan Jaringan</h1>
           <p>Mata Pelajaran Kejuruan Teknik Jaringan Komputer dan Telekomunikasi</p>
           <div className="hero-stats">
-            <div className="stat"><BookOpen size={18} /> <span>3 Modul</span></div>
+            <div className="stat"><BookOpen size={18} /> <span>4 Modul</span></div>
             <div className="stat"><Briefcase size={18} /> <span>Studi Kasus</span></div>
             <div className="stat"><Puzzle size={18} /> <span>Drag & Drop</span></div>
               <div className="stat"><ClipboardCheck size={18} /> <span>Pre & Post Test</span></div>

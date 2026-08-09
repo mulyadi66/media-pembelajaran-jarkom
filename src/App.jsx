@@ -42,6 +42,7 @@ const Modul2MPK2 = lazy(() => import('./pages/mpk2/Modul2MPK2'));
 const Modul3MPK2 = lazy(() => import('./pages/mpk2/Modul3MPK2'));
 const Modul4MPK2 = lazy(() => import('./pages/mpk2/Modul4MPK2'));
 const Modul5MPK2 = lazy(() => import('./pages/mpk2/Modul5MPK2'));
+const TopologiArsitektur = lazy(() => import('./pages/TopologiArsitektur'));
 const DashboardMPK2 = lazy(() => import('./pages/mpk2/DashboardMPK2'));
 const FlashcardPageMPK2 = lazy(() => import('./pages/mpk2/FlashcardPageMPK2'));
 const GlossaryPageMPK2 = lazy(() => import('./pages/mpk2/GlossaryPageMPK2'));
@@ -96,6 +97,7 @@ export default function App() {
                 <Route path="/mpk1/modul-ajar" element={<ModulAjarPage />} />
                 <Route path="/mpk1/glossary" element={<GlossaryPage />} />
                 <Route path="/mpk1/hasil" element={<Hasil />} />
+                <Route path="/mpk1/topologi-arsitektur" element={<TopologiArsitektur />} />
                 <Route path="/mpk2" element={<DashboardMPK2 />} />
                 <Route path="/mpk2/modul1" element={<Modul1MPK2 />} />
                 <Route path="/mpk2/modul2" element={<Modul2MPK2 />} />

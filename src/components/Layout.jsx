@@ -8,7 +8,7 @@ import {
   ClipboardCheck, FileText, BarChart3, Menu, X, Trophy, User, Search,
   Network, Puzzle, BookOpen, BookA, Zap, FileDown, PanelLeftClose, PanelLeft,
   ArrowLeft, Globe, Shield, Radio, Ruler, Wifi, Phone, Circle,
-  Wrench, Signal, Antenna
+  Wrench, Signal, Antenna, Layers
 } from 'lucide-react';
 
 const subjects = {
@@ -22,6 +22,7 @@ const subjects = {
       { to: '/mpk1/modul1', icon: Server, label: 'Modul 1: Peralatan Jaringan' },
       { to: '/mpk1/modul2', icon: Projector, label: 'Modul 2: Topologi Jaringan' },
       { to: '/mpk1/modul3', icon: CreditCard, label: 'Modul 3: Pengalamatan Jaringan' },
+      { to: '/mpk1/topologi-arsitektur', icon: Layers, label: 'Topologi & Arsitektur Jaringan' },
       { to: '/mpk1/modul-ajar', icon: FileText, label: 'Modul Ajar' },
       { to: '/mpk1/flashcard', icon: BookOpen, label: 'Flashcard' },
       { to: '/mpk1/simulator', icon: Network, label: 'Simulator Jaringan' },
@@ -36,7 +37,8 @@ const subjects = {
     ],
     titles: {
       '/mpk1': 'Dashboard', '/mpk1/modul1': 'Modul 1: Peralatan Jaringan',
-      '/mpk1/modul2': 'Modul 2: Topologi Jaringan', '/mpk1/modul3': 'Modul 3: Pengalamatan Jaringan',
+      '/mpk1/modul2': 'Modul 2: Topologi Jaringan',       '/mpk1/modul3': 'Modul 3: Pengalamatan Jaringan',
+      '/mpk1/topologi-arsitektur': 'Topologi & Arsitektur Jaringan',
       '/mpk1/modul-ajar': 'Modul Ajar',
       '/mpk1/flashcard': 'Flashcard Interaktif', '/mpk1/simulator': 'Simulator Jaringan',
       '/mpk1/dragdrop': 'Drag & Drop Subnetting', '/mpk1/challenge': 'Latihan Cepat',
@@ -49,6 +51,7 @@ const subjects = {
       '/mpk1/modul1': 'Kebutuhan teknis pengguna dan peralatan jaringan',
       '/mpk1/modul2': 'Perancangan dan simulasi berbagai topologi jaringan',
       '/mpk1/modul3': 'IP Address, Subnetting, CIDR, dan VLSM',
+      '/mpk1/topologi-arsitektur': 'Topologi, model OSI/TCP-IP, dan arsitektur jaringan',
       '/mpk1/modul-ajar': 'Modul Ajar Perencanaan & Pengalamatan Jaringan — Fase F',
       '/mpk1/flashcard': 'Kartu interaktif istilah jaringan komputer',
       '/mpk1/simulator': 'Simulasi jaringan drag & drop',
@@ -141,6 +144,7 @@ const subjects = {
       '/mpk2/modul3': 'Modul 3: Instalasi & Pengujian Perangkat Nirkabel',
       '/mpk2/modul4': 'Modul 4: Voice over Internet Protocol (VoIP)',
       '/mpk2/modul5': 'Modul 5: Jaringan Fiber Optik',
+      '/mpk2/topologi-arsitektur': 'Topologi & Arsitektur Jaringan',
       '/mpk2/flashcard': 'Flashcard Interaktif MPK 2',
       '/mpk2/challenge': 'Latihan Cepat MPK 2',
       '/mpk2/kasus': 'Studi Kasus MPK 2',
