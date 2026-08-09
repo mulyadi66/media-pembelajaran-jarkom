@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Code2, Brain, Terminal, BookOpen, Trophy, Cpu, Zap, ClipboardCheck, FileText, GitBranch, Database, MonitorSmartphone, BarChart3 } from 'lucide-react';
+import { Code2, Brain, Terminal, BookOpen, Trophy, Cpu, Zap, ClipboardCheck, FileText, BarChart3, GitBranch, Database, MonitorSmartphone } from 'lucide-react';
 
 export default function DashboardKKA() {
   const elements = [
@@ -15,6 +15,7 @@ export default function DashboardKKA() {
     { to: '/kka/challenge', title: 'Latihan Cepat', desc: 'Tes kecepatan', icon: Zap, color: ['#f59e0b', '#f97316'] },
     { to: '/kka/pretest', title: 'Pre-Test', desc: 'Uji awal', icon: ClipboardCheck, color: ['#06b6d4', '#0891b2'] },
     { to: '/kka/posttest', title: 'Post-Test', desc: 'Evaluasi akhir', icon: FileText, color: ['#ef4444', '#dc2626'] },
+    { to: '/kka/hasil', title: 'Hasil & Sertifikat', desc: 'Pencapaian & sertifikat', icon: BarChart3, color: ['#f43f5e', '#e11d48'] },
   ];
 
   return (

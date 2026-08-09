@@ -1,11 +1,11 @@
 import { Trophy, Medal, Download } from 'lucide-react';
 import { useRef, useState } from 'react';
 
-export default function Leaderboard({ scores = {} }) {
+export default function Leaderboard({ scores = {}, pretestKey = 'pretest', posttestKey = 'posttest' }) {
   const ref = useRef(null);
   const [loading, setLoading] = useState(false);
-  const pretest = scores.pretest || 0;
-  const posttest = scores.posttest || 0;
+  const pretest = scores[pretestKey] || 0;
+  const posttest = scores[posttestKey] || 0;
   const total = pretest + posttest;
   const avg = (pretest + posttest) > 0 ? Math.round(total / ((pretest > 0 ? 1 : 0) + (posttest > 0 ? 1 : 0) || 1)) : 0;
 

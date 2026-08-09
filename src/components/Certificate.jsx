@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { Download, Award } from 'lucide-react';
 
-export default function Certificate({ studentName = 'Siswa', module }) {
+export default function Certificate({ studentName = 'Siswa', module, title = 'Perencanaan & Pengalamatan Jaringan' }) {
   const certRef = useRef(null);
 
   const handleDownload = async () => {
@@ -52,7 +52,7 @@ export default function Certificate({ studentName = 'Siswa', module }) {
             Telah berhasil menyelesaikan pembelajaran
           </p>
           <p style={{ fontSize: 18, fontWeight: 700, color: '#4f46e5', marginBottom: 6 }}>
-            Perencanaan & Pengalamatan Jaringan
+            {title}
           </p>
           <p style={{ fontSize: 13, color: '#64748b', marginBottom: 24 }}>
             Mata Pelajaran Kejuruan Teknik Jaringan Komputer dan Telekomunikasi — Kelas XI

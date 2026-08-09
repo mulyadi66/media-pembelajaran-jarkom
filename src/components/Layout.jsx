@@ -132,6 +132,7 @@ const subjects = {
       { to: '/kka/challenge', icon: Zap, label: 'Latihan Cepat' },
       { to: '/kka/pretest', icon: ClipboardCheck, label: 'Pre-Test' },
       { to: '/kka/posttest', icon: FileText, label: 'Post-Test' },
+      { to: '/kka/hasil', icon: BarChart3, label: 'Hasil & Sertifikat' },
     ],
     titles: {
       '/kka': 'Dashboard KKA',
@@ -144,6 +145,7 @@ const subjects = {
       '/kka/challenge': 'Latihan Cepat KKA',
       '/kka/pretest': 'Pre-Test KKA',
       '/kka/posttest': 'Post-Test KKA',
+      '/kka/hasil': 'Hasil & Sertifikat KKA',
     },
     descs: {
       '/kka': 'Media Pembelajaran Koding dan Kecerdasan Artifisial',
@@ -156,6 +158,7 @@ const subjects = {
       '/kka/challenge': 'Latihan cepat KKA melawan waktu',
       '/kka/pretest': 'Uji pemahaman awal KKA',
       '/kka/posttest': 'Evaluasi pemahaman KKA. Target: ≥70',
+      '/kka/hasil': 'Ringkasan, pencapaian, dan sertifikat KKA',
     },
   },
   mpk2: {
