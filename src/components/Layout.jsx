@@ -8,7 +8,7 @@ import {
   ClipboardCheck, FileText, BarChart3, Menu, X, Trophy, User, Search,
   Network, Puzzle, BookOpen, BookA, Zap, FileDown, PanelLeftClose, PanelLeft,
   ArrowLeft, Globe, Shield, Radio, Ruler, Wifi, Phone, Circle,
-  Wrench, Signal, Antenna, Layers
+  Wrench, Signal, Antenna, Layers, Code2
 } from 'lucide-react';
 
 const subjects = {
@@ -116,6 +116,21 @@ const subjects = {
       '/dkk/hasil': 'Ringkasan, pencapaian, dan sertifikat DKK',
     },
   },
+  kka: {
+    prefix: '/kka',
+    label: 'KKA',
+    logo: Code2,
+    title: 'Koding dan Kecerdasan Artifisial',
+    items: [
+      { to: '/kka', icon: Home, label: 'Dashboard' },
+    ],
+    titles: {
+      '/kka': 'Dashboard KKA',
+    },
+    descs: {
+      '/kka': 'Media Pembelajaran Koding dan Kecerdasan Artifisial',
+    },
+  },
   mpk2: {
     prefix: '/mpk2',
     label: 'MPK 2',
@@ -175,6 +190,7 @@ const subjects = {
 
 function getSubject(path) {
   if (path.startsWith('/dkk')) return subjects.dkk;
+  if (path.startsWith('/kka')) return subjects.kka;
   if (path.startsWith('/mpk2')) return subjects.mpk2;
   return subjects.mpk1;
 }

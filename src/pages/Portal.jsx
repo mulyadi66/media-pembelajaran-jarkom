@@ -2,11 +2,12 @@ import { Link } from 'react-router-dom';
 import DarkModeToggle from '../components/DarkModeToggle';
 import {
   Network, Server, Globe, Wifi, Cpu, HardDrive, Lock, Smartphone,
-  ChevronRight, School, ExternalLink
+  ChevronRight, School, ExternalLink, Code2
 } from 'lucide-react';
 
 const subjects = [
   { id: 'dkk', label: 'DKK', title: 'Dasar Kompetensi Keahlian', icon: Globe, color: '#06b6d4', active: true, path: '/dkk' },
+  { id: 'kka', label: 'KKA', title: 'Koding dan Kecerdasan Artifisial', icon: Code2, color: '#22c55e', active: true, path: '/kka' },
   { id: 'mpk1', label: 'MPK 1', title: 'Perencanaan & Pengalamatan Jaringan', icon: Network, color: '#6366f1', active: true, path: '/mpk1' },
   { id: 'mpk2', label: 'MPK 2', title: 'Teknologi Jaringan Kabel dan Nirkabel', icon: Wifi, color: '#8b5cf6', active: true, path: '/mpk2' },
   { id: 'mpk3', label: 'MPK 3', title: 'Administrasi Jaringan', icon: Server, color: '#f59e0b', active: false },

@@ -7,7 +7,6 @@ import Portal from './pages/Portal';
 import Dashboard from './pages/Dashboard';
 import DashboardDKK from './pages/dkk/DashboardDKK';
 import './App.css';
-
 const Modul1 = lazy(() => import('./pages/Modul1'));
 const Modul2 = lazy(() => import('./pages/Modul2'));
 const Modul3 = lazy(() => import('./pages/Modul3'));
@@ -52,6 +51,7 @@ const PostTestMPK2 = lazy(() => import('./pages/mpk2/PostTestMPK2'));
 const ChallengePageMPK2 = lazy(() => import('./pages/mpk2/ChallengePageMPK2'));
 const KasusMPK2 = lazy(() => import('./pages/mpk2/KasusMPK2'));
 const HasilMPK2 = lazy(() => import('./pages/mpk2/HasilMPK2'));
+const DashboardKKA = lazy(() => import('./pages/kka/DashboardKKA'));
 
 export default function App() {
   return (
@@ -83,6 +83,7 @@ export default function App() {
                 <Route path="/dkk/challenge" element={<ChallengePageDKK />} />
                 <Route path="/dkk/kasus" element={<KasusDKK />} />
                 <Route path="/dkk/hasil" element={<HasilDKK />} />
+                <Route path="/kka" element={<DashboardKKA />} />
                 <Route path="/mpk1/modul1" element={<Modul1 />} />
                 <Route path="/mpk1/modul2" element={<Modul2 />} />
                 <Route path="/mpk1/modul3" element={<Modul3 />} />
