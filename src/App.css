@@ -1756,3 +1756,131 @@ a { text-decoration: none; color: inherit; }
   .portal-logo h1 { font-size: 1rem; }
   .portal-logo p { display: none; }
 }
+
+/* ========== CODEBLOCKS PUZZLE ========== */
+.cb-scorebar {
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  flex-wrap: wrap; background: var(--bg); border: 1px solid var(--border);
+  border-radius: 10px; padding: 10px 16px; margin-bottom: 16px;
+  font-size: 0.85rem; color: var(--text-light);
+}
+.cb-scorebar strong { color: var(--primary); font-size: 1rem; }
+
+.cb-missions { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+
+.cb-chip {
+  min-width: 44px; height: 40px; padding: 0 12px; border-radius: 10px;
+  border: 2px solid var(--border); background: var(--bg-card); color: var(--text-light);
+  font-weight: 700; font-size: 0.9rem; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  transition: all 0.2s;
+}
+.cb-chip:hover { border-color: var(--primary); color: var(--primary); }
+.cb-chip.active { border-color: var(--primary); background: var(--primary); color: white; }
+.cb-chip.done { border-color: var(--success); color: var(--success); background: #ecfdf5; }
+[data-theme="dark"] .cb-chip.done { background: #064e3b33; }
+.cb-chip.locked { opacity: 0.45; cursor: not-allowed; }
+.cb-check { font-weight: 900; }
+
+.cb-mission-card {
+  background: var(--bg); border: 1px solid var(--border); border-radius: 14px;
+  padding: 20px; margin-bottom: 16px;
+}
+
+.cb-mission-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 6px; }
+.cb-mission-badge {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white; font-size: 0.8rem; font-weight: 700; padding: 4px 12px; border-radius: 999px;
+}
+.cb-mission-desc { font-size: 0.95rem; color: var(--text-light); margin-bottom: 16px; }
+
+.cb-label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-light); margin: 14px 0 6px; }
+
+.cb-code {
+  background: #0f172a; border-radius: 10px; padding: 14px 16px;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.9rem; line-height: 1.7; min-height: 46px;
+  color: #e2e8f0; overflow-x: auto;
+}
+.cb-code .cb-code-line { white-space: pre; }
+.cb-code .muted { color: #475569; font-style: italic; }
+
+.cb-console {
+  background: #020617; border: 1px solid #1e293b; border-radius: 10px;
+  padding: 12px 16px; font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.85rem; color: #34d399; min-height: 40px;
+}
+.cb-console pre { margin: 0; white-space: pre-wrap; }
+.cb-console .muted { color: #475569; font-style: italic; }
+
+.cb-workspace {
+  min-height: 96px; border: 2px dashed var(--border); border-radius: 12px;
+  padding: 12px; margin-top: 8px; display: flex; flex-direction: column; gap: 8px;
+  background: var(--bg-card);
+}
+.cb-slot { display: flex; align-items: stretch; }
+.cb-slot-add {
+  border: 2px dashed var(--border); border-radius: 10px; color: var(--text-lighter);
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 10px; font-size: 0.8rem; font-weight: 600; cursor: pointer;
+  transition: all 0.2s;
+}
+.cb-slot-add:hover, .cb-slot.drag-over { border-color: var(--primary); color: var(--primary); }
+.cb-empty-hint { color: var(--text-lighter); font-size: 0.82rem; text-align: center; padding: 8px; font-style: italic; }
+
+.cb-block {
+  padding: 8px 14px; border-radius: 8px; font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.85rem; font-weight: 600; cursor: grab; user-select: none;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: transform 0.12s, box-shadow 0.12s;
+  border: 2px solid transparent; background: var(--bg);
+}
+.cb-block:active { cursor: grabbing; }
+.cb-block:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
+
+.cb-statement { border-color: #38bdf8; color: #0284c7; background: #e0f2fe; }
+.cb-loop { border-color: #a78bfa; color: #6d28d9; background: #ede9fe; }
+.cb-condition { border-color: #fb923c; color: #c2410c; background: #fff7ed; }
+[data-theme="dark"] .cb-statement { background: #0c4a6e33; color: #7dd3fc; }
+[data-theme="dark"] .cb-loop { background: #4c1d9533; color: #c4b5fd; }
+[data-theme="dark"] .cb-condition { background: #7c2d1233; color: #fdba74; }
+
+.cb-in-workspace { width: 100%; }
+.cb-remove { color: currentColor; opacity: 0.55; margin-left: auto; flex-shrink: 0; }
+.cb-remove:hover { opacity: 1; }
+
+.cb-palette { display: flex; flex-wrap: wrap; gap: 10px; }
+.cb-palette-empty { color: var(--text-lighter); font-size: 0.85rem; font-style: italic; }
+
+.cb-feedback {
+  margin-top: 14px; border-radius: 10px; padding: 10px 14px; font-size: 0.9rem;
+}
+.cb-feedback.wrong { background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; }
+.cb-feedback.success { background: #ecfdf5; border: 1px solid #a7f3d0; color: #047857; }
+[data-theme="dark"] .cb-feedback.wrong { background: #7f1d1d33; border-color: #7f1d1d; color: #fca5a5; }
+[data-theme="dark"] .cb-feedback.success { background: #064e3b33; border-color: #065f46; color: #6ee7b7; }
+.cb-hint { margin-top: 6px; font-size: 0.85rem; color: var(--text-light); }
+
+.cb-success-banner {
+  margin-top: 12px; background: linear-gradient(135deg, #10b981, #059669); color: white;
+  border-radius: 10px; padding: 12px 16px; font-weight: 700; text-align: center;
+  animation: cb-pop 0.4s ease;
+}
+@keyframes cb-pop {
+  0% { transform: scale(0.9); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.cb-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+
+.cb-legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: 0.8rem; color: var(--text-light); }
+.cb-dot { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 4px; vertical-align: -1px; }
+.cb-dot.cb-statement { background: #38bdf8; }
+.cb-dot.cb-loop { background: #a78bfa; }
+.cb-dot.cb-condition { background: #fb923c; }
+
+.cb-win { text-align: center; padding: 40px 24px; }
+
+@media (max-width: 560px) {
+  .cb-mission-head { flex-direction: column; align-items: flex-start; }
+}

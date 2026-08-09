@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Code2, Brain, Terminal, BookOpen, Trophy, Cpu, Zap, ClipboardCheck, FileText, BarChart3, GitBranch, Database, MonitorSmartphone, Briefcase, FileDown, BookA } from 'lucide-react';
+import { Code2, Brain, Terminal, BookOpen, Trophy, Cpu, Zap, ClipboardCheck, FileText, BarChart3, GitBranch, Database, MonitorSmartphone, Briefcase, FileDown, BookA, Puzzle } from 'lucide-react';
 
 export default function DashboardKKA() {
   const elements = [
@@ -19,6 +19,7 @@ export default function DashboardKKA() {
     { to: '/kka/kasus', title: 'Studi Kasus', desc: 'Terapkan pemahaman', icon: Briefcase, color: ['#14b8a6', '#0d9488'] },
     { to: '/kka/worksheet', title: 'Lembar Kerja', desc: 'Latihan offline', icon: FileDown, color: ['#84cc16', '#65a30d'] },
     { to: '/kka/glossary', title: 'Glossarium', desc: 'Kamus istilah KKA', icon: BookA, color: ['#0ea5e9', '#0284c7'] },
+    { to: '/kka/codeblocks', title: 'CodeBlocks Puzzle', desc: 'Game susun blok kode', icon: Puzzle, color: ['#f59e0b', '#b45309'] },
   ];
 
   return (

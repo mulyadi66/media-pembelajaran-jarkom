@@ -136,6 +136,7 @@ const subjects = {
       { to: '/kka/kasus', icon: Briefcase, label: 'Studi Kasus' },
       { to: '/kka/worksheet', icon: FileDown, label: 'Lembar Kerja' },
       { to: '/kka/glossary', icon: BookA, label: 'Glossarium' },
+      { to: '/kka/codeblocks', icon: Puzzle, label: 'CodeBlocks Puzzle' },
     ],
     titles: {
       '/kka': 'Dashboard KKA',
@@ -152,6 +153,7 @@ const subjects = {
       '/kka/kasus': 'Studi Kasus KKA',
       '/kka/worksheet': 'Lembar Kerja KKA',
       '/kka/glossary': 'Glossarium KKA',
+      '/kka/codeblocks': 'CodeBlocks Puzzle KKA',
     },
     descs: {
       '/kka': 'Media Pembelajaran Koding dan Kecerdasan Artifisial',
@@ -168,6 +170,7 @@ const subjects = {
       '/kka/kasus': 'Terapkan pemahaman KKA dalam permasalahan nyata',
       '/kka/worksheet': 'Lembar kerja praktik offline KKA',
       '/kka/glossary': 'Daftar istilah penting dalam KKA',
+      '/kka/codeblocks': 'Game susun blok kode Python',
     },
   },
   mpk2: {

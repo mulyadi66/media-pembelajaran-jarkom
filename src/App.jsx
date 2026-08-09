@@ -65,6 +65,7 @@ const HasilKKA = lazy(() => import('./pages/kka/HasilKKA'));
 const KasusKKA = lazy(() => import('./pages/kka/KasusKKA'));
 const WorksheetPageKKA = lazy(() => import('./pages/kka/WorksheetPageKKA'));
 const GlossaryPageKKA = lazy(() => import('./pages/kka/GlossaryPageKKA'));
+const CodeBlocksKKA = lazy(() => import('./pages/kka/CodeBlocksKKA'));
 
 export default function App() {
   return (
@@ -110,6 +111,7 @@ export default function App() {
                 <Route path="/kka/kasus" element={<KasusKKA />} />
                 <Route path="/kka/worksheet" element={<WorksheetPageKKA />} />
                 <Route path="/kka/glossary" element={<GlossaryPageKKA />} />
+                <Route path="/kka/codeblocks" element={<CodeBlocksKKA />} />
                 <Route path="/mpk1/modul1" element={<Modul1 />} />
                 <Route path="/mpk1/modul2" element={<Modul2 />} />
                 <Route path="/mpk1/modul3" element={<Modul3 />} />
