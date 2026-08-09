@@ -46,6 +46,14 @@ export default function Elemen3() {
           </ul>
         </div>
         <p>Hubungan keduanya: <strong>Algoritma = resep masakan</strong>, <strong>Pemrograman = memasak mengikuti resep tersebut</strong> menggunakan alat dan bahan (bahasa pemrograman).</p>
+        <div className="info-box success">
+          <strong><CheckSquare size={14} /> Tugas:</strong>
+          <ol>
+            <li>Tuliskan algoritma untuk <strong>"meminjam buku di perpustakaan"</strong> minimal 6 langkah.</li>
+            <li>Berikan tanda (✓) pada setiap ciri algoritma baik yang terpenuhi oleh algoritmamu (logis, jelas, terbatas, efektif).</li>
+            <li>Jelaskan perbedaan algoritma dan pemrograman dengan bahasamu sendiri.</li>
+          </ol>
+        </div>
       </MateriCard>
 
       <MateriCard icon={Workflow} title="3.2 Flowchart & Pseudocode">
@@ -71,8 +79,11 @@ export default function Elemen3() {
   TAMPILKAN rata_rata
 SELESAI`}</CodeBlock>
         <div className="info-box success">
-          <strong><CheckSquare size={14} /> Latihan:</strong>
-          <p>Buatlah pseudocode untuk menghitung luas persegi panjang (panjang × lebar).</p>
+          <strong><CheckSquare size={14} /> Tugas:</strong>
+          <ol>
+            <li>Buatlah pseudocode untuk menghitung luas persegi panjang (panjang × lebar).</li>
+            <li>Gambarlah flowchart-nya menggunakan simbol yang benar (termasuk simbol mulai dan selesai).</li>
+          </ol>
         </div>
       </MateriCard>
 
@@ -98,6 +109,14 @@ SELESAI`}</CodeBlock>
           <li><strong>Logika:</strong> AND, OR, NOT</li>
           <li><strong>Penugasan:</strong> = (simpan nilai ke variabel)</li>
         </ul>
+        <div className="info-box success">
+          <strong><CheckSquare size={14} /> Tugas:</strong>
+          <ol>
+            <li>Buat tabel berisi data <strong>3 siswa</strong> dengan variabel: nama (string), NIS (integer), nilai rata-rata (float), dan status lulus (boolean).</li>
+            <li>Tentukan tipe data yang tepat untuk setiap kolom.</li>
+            <li>Tuliskan satu contoh penggunaan operator perbandingan dan satu contoh operator logika.</li>
+          </ol>
+        </div>
       </MateriCard>
 
       <MateriCard icon={Split} title="3.4 Percabangan (Branching)">
@@ -119,6 +138,14 @@ else:
           <strong><Star size={14} /> Ingat:</strong>
           <p>Pada Python, blok kode di dalam IF harus di-indent (beri jarak/enter). Indentasi menentukan bagian mana yang termasuk dalam kondisi.</p>
         </div>
+        <div className="info-box success">
+          <strong><CheckSquare size={14} /> Tugas:</strong>
+          <ol>
+            <li>Tulis pseudocode dan program Python untuk menentukan apakah sebuah bilangan <strong>genap atau ganjil</strong>.</li>
+            <li>Tulis pseudocode dan program Python untuk menentukan <strong>nilai huruf</strong>: ≥90 = A, ≥80 = B, ≥70 = C, selainnya = D.</li>
+            <li>Uji programmu dengan minimal 3 nilai berbeda dan catat hasilnya.</li>
+          </ol>
+        </div>
       </MateriCard>
 
       <MateriCard icon={RefreshCw} title="3.5 Perulangan (Looping)">
@@ -139,6 +166,14 @@ AKHIR SELAGI`}</CodeBlock>
         <div className="info-box warning">
           <strong>Peringatan:</strong> Pastikan kondisi perulangan WHILE pada akhirnya berhenti (loop berubah menuju kondisi berhenti), jika tidak akan terjadi <em>infinite loop</em> (program berjalan terus tanpa henti).
         </div>
+        <div className="info-box success">
+          <strong><CheckSquare size={14} /> Tugas:</strong>
+          <ol>
+            <li>Tulis pseudocode dan program Python untuk mencetak <strong>bilangan genap dari 2 sampai 20</strong>.</li>
+            <li>Tulis pseudocode dan program Python untuk menjumlahkan <strong>1 + 2 + 3 + ... + N</strong> (N dimasukkan pengguna).</li>
+            <li>Tuliskan satu contoh kondisi yang menyebabkan infinite loop, lalu bagaimana cara memperbaikinya.</li>
+          </ol>
+        </div>
       </MateriCard>
 
       <MateriCard icon={Terminal} title="3.6 Pengenalan Bahasa Python">
@@ -155,8 +190,12 @@ AKHIR SELAGI`}</CodeBlock>
 nama = input("Siapa namamu? ")
 print("Halo,", nama)`}</CodeBlock>
         <div className="info-box success">
-          <strong><CheckSquare size={14} /> Latihan:</strong>
-          <p>Tulis program Python yang menerima dua angka lalu menampilkan hasil penjumlahan dan perkaliannya.</p>
+          <strong><CheckSquare size={14} /> Tugas:</strong>
+          <ol>
+            <li>Tulis program Python yang menerima <strong>nama dan umur</strong>, lalu menampilkan sapaan beserta kategori umur (anak, remaja, dewasa).</li>
+            <li>Tulis program Python yang menghitung <strong>luas lingkaran</strong> (π × r × r, gunakan r = 3.14).</li>
+            <li>Jalankan kedua program dan sertakan tangkapan layar hasilnya.</li>
+          </ol>
         </div>
       </MateriCard>
 
@@ -191,6 +230,20 @@ print("Halo,", nama)`}</CodeBlock>
           <li>Cek nilai variabel pada titik tersebut</li>
           <li>Perbaiki, lalu uji ulang dengan berbagai input</li>
         </ol>
+        <div className="info-box success">
+          <strong><CheckSquare size={14} /> Tugas:</strong>
+          <p>Perhatikan program berikut yang <strong>sengaja mengandung bug</strong>:</p>
+          <CodeBlock>{`nama = input("Masukkan nama: ")
+if nama == "admin"
+    print("Selamat datang, admin!")
+else
+    print("Halo,", nama)`}</CodeBlock>
+          <ol>
+            <li>Temukan dan perbaiki bug pada program di atas.</li>
+            <li>Uji dengan dua input berbeda dan catat hasilnya.</li>
+            <li>Sebutkan jenis kesalahan yang kamu temukan (sintaks, logika, atau runtime).</li>
+          </ol>
+        </div>
       </MateriCard>
     </div>
   );

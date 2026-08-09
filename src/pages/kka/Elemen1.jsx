@@ -85,6 +85,15 @@ export default function Elemen1() {
           <strong><Lightbulb size={14} /> Contoh Berpikir Komputasional dalam Sehari-hari:</strong>
           <p>Bayangkan kamu akan menyebrang jalan raya yang ramai. Tanpa sadar kamu berpikir komputasional: <strong>dekomposisi</strong> (cari tempat menyeberang, perhatikan arus kiri, perhatikan arus kanan, jalan), <strong>pola</strong> (kendaraan biasanya ramai di jam berangkat/pulang sekolah), <strong>abstraksi</strong> (fokus pada kendaraan yang melaju, bukan warna mobil), dan <strong>algoritma</strong> (tunggu sepi → lihat kiri → lihat kanan → menyeberang).</p>
         </div>
+
+        <div className="info-box success">
+          <strong><CheckSquare size={14} /> Tugas:</strong>
+          <ol>
+            <li>Tuliskan satu masalah yang kamu hadapi akhir-akhir ini (misalnya bangun kesiangan, kehabisan uang saku).</li>
+            <li>Jelaskan bagaimana keempat pilar berpikir komputasional (dekomposisi, pola, abstraksi, algoritma) bisa diterapkan untuk menyelesaikannya.</li>
+            <li>Sebutkan satu perbedaan antara berpikir komputasional dan sekadar "bisa menggunakan komputer".</li>
+          </ol>
+        </div>
       </MateriCard>
 
       <MateriCard icon={Puzzle} title="1.2 Dekomposisi (Decomposition)">
@@ -128,7 +137,7 @@ export default function Elemen1() {
         </div>
 
         <div className="info-box success">
-          <strong><CheckSquare size={14} /> Latihan:</strong>
+          <strong><CheckSquare size={14} /> Tugas:</strong>
           <p>Pecahkan masalah <strong>"Membuat Website Kelas"</strong> menjadi minimal 5 bagian kecil. Tuliskan juga urutan pengerjaannya (bagian mana yang dikerjakan pertama kali).</p>
         </div>
       </MateriCard>
@@ -194,7 +203,7 @@ export default function Elemen1() {
         </ol>
 
         <div className="info-box success">
-          <strong><CheckSquare size={14} /> Latihan:</strong>
+          <strong><CheckSquare size={14} /> Tugas:</strong>
           <p>Tentukan pola dan angka/simbol berikutnya:</p>
           <ol>
             <li>3, 6, 9, 12, ...</li>
@@ -236,7 +245,7 @@ export default function Elemen1() {
         </div>
 
         <div className="info-box success">
-          <strong><CheckSquare size={14} /> Latihan:</strong>
+          <strong><CheckSquare size={14} /> Tugas:</strong>
           <p>Buatlah rangkuman materi sub bab ini (1.4) dalam maksimal 3 kalimat. Perhatikan: kalimat mana yang kamu pilih, dan kalimat mana yang kamu buang.</p>
         </div>
       </MateriCard>
@@ -309,7 +318,7 @@ export default function Elemen1() {
         </div>
 
         <div className="info-box success">
-          <strong><CheckSquare size={14} /> Latihan:</strong>
+          <strong><CheckSquare size={14} /> Tugas:</strong>
           <p>Tuliskan algoritma untuk <strong>"Menghidupkan Komputer"</strong> minimal 5 langkah secara urut. Kemudian tambahkan satu <strong>percabangan</strong>: apa yang dilakukan jika komputer tidak menyala saat tombol daya ditekan?</p>
         </div>
       </MateriCard>

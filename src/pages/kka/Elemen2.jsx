@@ -40,6 +40,14 @@ export default function Elemen2() {
             <li>Melindungi data pribadi menjadi keharusan</li>
           </ul>
         </div>
+        <div className="info-box success">
+          <strong><CheckSquare size={14} /> Tugas:</strong>
+          <ol>
+            <li>Daftarkan minimal 3 contoh informasi hoaks yang pernah kamu lihat di media sosial.</li>
+            <li>Untuk setiap hoaks, tuliskan langkah yang kamu lakukan untuk memverifikasi kebenarannya.</li>
+            <li>Tuliskan pendapatmu: mengapa literasi digital penting bagi pelajar SMK?</li>
+          </ol>
+        </div>
       </MateriCard>
 
       <MateriCard icon={Share2} title="2.2 Komponen Literasi Digital">
@@ -71,6 +79,10 @@ export default function Elemen2() {
             </tbody>
           </table>
         </div>
+        <div className="info-box success">
+          <strong><CheckSquare size={14} /> Tugas:</strong>
+          <p>Lakukan <strong>self-assessment</strong> kemampuan digitalmu pada keempat pilar (Digital Skills, Culture, Ethics, Safety). Beri nilai 1–5 untuk setiap pilar, lalu tuliskan satu langkah nyata untuk meningkatkan pilar yang nilainya paling rendah.</p>
+        </div>
       </MateriCard>
 
       <MateriCard icon={Shield} title="2.3 Etika & Keamanan Digital">
@@ -91,6 +103,14 @@ export default function Elemen2() {
         <div className="info-box warning">
           <strong>Contoh Phising:</strong> Email atau pesan yang berpura-pura dari bank meminta kata sandi. Bank tidak pernah meminta kata sandi lewat pesan.
         </div>
+        <div className="info-box success">
+          <strong><CheckSquare size={14} /> Tugas:</strong>
+          <ol>
+            <li>Periksa pengaturan privasi dan keamanan pada satu akun yang kamu gunakan (email, media sosial, atau game).</li>
+            <li>Perbaiki kata sandi menjadi kata sandi kuat bila belum memenuhi kriteria (8+ karakter, kombinasi huruf/angka/simbol).</li>
+            <li>Tuliskan laporan singkat: pengaturan apa yang kamu ubah dan alasannya.</li>
+          </ol>
+        </div>
       </MateriCard>
 
       <MateriCard icon={Users} title="2.4 Komunikasi & Kolaborasi Digital">
@@ -109,6 +129,14 @@ export default function Elemen2() {
         <div className="info-box success">
           <strong><CheckSquare size={14} /> Etika Rapat Virtual:</strong>
           <p>Matikan mikrofon jika tidak berbicara, gunakan kamera bila dimungkinkan, jangan berbicara bersamaan, dan siapkan materi sebelum rapat.</p>
+        </div>
+        <div className="info-box success">
+          <strong><CheckSquare size={14} /> Tugas:</strong>
+          <ol>
+            <li>Bentuk kelompok 3–4 orang lalu buat rencana kerja proyek menggunakan aplikasi kolaborasi (Google Docs, Trello, atau Google Calendar).</li>
+            <li>Bagi tugas masing-masing anggota dan tetapkan tenggat waktu.</li>
+            <li>Sertakan tangkapan layar (screenshot) hasil pekerjaan kelompokmu.</li>
+          </ol>
         </div>
       </MateriCard>
 
@@ -130,6 +158,14 @@ export default function Elemen2() {
         <div className="info-box">
           <strong><Star size={14} /> Tips Verifikasi Hoaks:</strong>
           <p>Gunakan mesin pencari dengan kata kunci "fakta + topik", cek situs resmi, dan gunakan layanan cek fakta (seperti Cek Fakta Liputan6 / TurnBackHoax).</p>
+        </div>
+        <div className="info-box success">
+          <strong><CheckSquare size={14} /> Tugas:</strong>
+          <ol>
+            <li>Pilih satu berita viral di media sosial.</li>
+            <li>Verifikasi kebenarannya dengan metode di atas (bandingkan minimal 3 sumber).</li>
+            <li>Tulis hasil verifikasi: <strong>benar</strong>, <strong>sebagian benar</strong>, atau <strong>hoaks</strong>, beserta bukti dan sumbernya.</li>
+          </ol>
         </div>
       </MateriCard>
     </div>

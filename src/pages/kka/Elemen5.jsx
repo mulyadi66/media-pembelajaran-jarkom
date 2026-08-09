@@ -39,6 +39,13 @@ export default function Elemen5() {
           </ul>
         </div>
         <p>AI berbeda dengan program biasa: program biasa mengikuti aturan yang ditulis manual, sedangkan AI <strong>belajar dari data</strong> untuk menemukan pola sendiri.</p>
+        <div className="info-box success">
+          <strong><CheckSquare size={14} /> Tugas:</strong>
+          <ol>
+            <li>Jelaskan perbedaan <strong>program biasa</strong> dan <strong>AI</strong> dengan memberikan masing-masing 1 contoh.</li>
+            <li>Sebutkan peran data, algoritma, dan komputasi pada contoh AI yang kamu pilih.</li>
+          </ol>
+        </div>
       </MateriCard>
 
       <MateriCard icon={Bot} title="5.2 Jenis-Jenis AI">
@@ -71,6 +78,13 @@ export default function Elemen5() {
           <li><strong>Natural Language Processing (NLP)</strong> — AI memahami dan membuat bahasa manusia</li>
           <li><strong>Computer Vision</strong> — AI mengenali gambar dan video</li>
         </ul>
+        <div className="info-box success">
+          <strong><CheckSquare size={14} /> Tugas:</strong>
+          <ol>
+            <li>Daftarkan <strong>5 aplikasi AI</strong> yang pernah kamu gunakan atau ketahui.</li>
+            <li>Klasifikasikan masing-masing ke jenis AI (narrow, general, super) dan teknologi di baliknya (ML, deep learning, NLP, computer vision).</li>
+          </ol>
+        </div>
       </MateriCard>
 
       <MateriCard icon={Sparkles} title="5.3 Aplikasi AI dalam Kehidupan">
@@ -90,6 +104,13 @@ export default function Elemen5() {
         <div className="info-box">
           <strong><Star size={14} /> AI Generatif:</strong>
           <p>AI generatif (seperti ChatGPT, Gemini, dan pembuat gambar AI) membuat konten baru — teks, gambar, suara, hingga kode program — berdasarkan perintah pengguna.</p>
+        </div>
+        <div className="info-box success">
+          <strong><CheckSquare size={14} /> Tugas:</strong>
+          <ol>
+            <li>Tuliskan <strong>3 contoh AI</strong> yang kamu temui dalam kehidupan sehari-hari (bukan di pelajaran ini).</li>
+            <li>Untuk setiap contoh, sebutkan satu dampak positif dan satu dampak negatifnya.</li>
+          </ol>
         </div>
       </MateriCard>
 
@@ -111,6 +132,17 @@ export default function Elemen5() {
           <li><strong>Tanggung jawab</strong> — ada manusia yang bertanggung jawab atas dampak AI</li>
           <li><strong>Privasi</strong> — data pribadi dilindungi dan dipakai dengan izin</li>
         </ul>
+        <div className="info-box success">
+          <strong><CheckSquare size={14} /> Tugas:</strong>
+          <p>Baca skenario berikut, lalu jawablah:</p>
+          <div className="info-box warning">
+            <strong>Skenario:</strong> Seorang siswa meminta AI menuliskan seluruh laporan PKL-nya tanpa mengubah satu kata pun, lalu mengumpulkannya atas nama dirinya sendiri.
+          </div>
+          <ol>
+            <li>Prinsip etika AI mana saja yang dilanggar dari tindakan tersebut?</li>
+            <li>Bagaimana sebaiknya AI digunakan dalam mengerjakan tugas sekolah secara etis?</li>
+          </ol>
+        </div>
       </MateriCard>
 
       <MateriCard icon={AlertTriangle} title="5.5 Bias & Penggunaan AI yang Bertanggung Jawab">
@@ -131,7 +163,11 @@ export default function Elemen5() {
         </ol>
         <div className="info-box success">
           <strong><CheckSquare size={14} /> Tugas Refleksi:</strong>
-          <p>Tuliskan satu contoh penggunaan AI yang kamu lakukan, lalu jelaskan satu keuntungan dan satu risiko dari penggunaannya.</p>
+          <ol>
+            <li>Tuliskan satu contoh penggunaan AI yang kamu lakukan, lalu jelaskan satu keuntungan dan satu risiko dari penggunaannya.</li>
+            <li>Jelaskan apa itu bias dalam AI dan satu contohnya.</li>
+            <li>Tuliskan 3 cara menggunakan AI secara bertanggung jawab yang akan kamu terapkan.</li>
+          </ol>
         </div>
       </MateriCard>
     </div>

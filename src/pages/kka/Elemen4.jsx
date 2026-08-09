@@ -41,6 +41,14 @@ export default function Elemen4() {
           </ol>
         </div>
         <p>Contoh sederhana: dari daftar nilai ulangan kelas, kita bisa menganalisis berapa siswa yang sudah tuntas dan topik mana yang paling banyak salah.</p>
+        <div className="info-box success">
+          <strong><CheckSquare size={14} /> Tugas:</strong>
+          <ol>
+            <li>Pilih satu kasus nyata (misalnya: menu favorit kantin, tingkat ketidakhadiran siswa, atau penggunaan HP di kelas).</li>
+            <li>Jelaskan bagaimana alur analisis data (kumpulkan → bersihkan → olah → analisis → sajikan) diterapkan pada kasus tersebut.</li>
+            <li>Sebutkan satu contoh keputusan yang bisa diambil dari hasil analisis kasusmu.</li>
+          </ol>
+        </div>
       </MateriCard>
 
       <MateriCard icon={Database} title="4.2 Sumber & Pengumpulan Data">
@@ -63,6 +71,14 @@ export default function Elemen4() {
         </ul>
         <div className="info-box warning">
           <strong>Hati-hati:</strong> Data harus akurat dan terpercaya. Data yang salah akan menghasilkan kesimpulan yang menyesatkan ("garbage in, garbage out").
+        </div>
+        <div className="info-box success">
+          <strong><CheckSquare size={14} /> Tugas:</strong>
+          <ol>
+            <li>Buat kuesioner sederhana berisi <strong>5 pertanyaan</strong> tentang kebiasaan belajar teman sekelas.</li>
+            <li>Kumpulkan data dari <strong>minimal 5 responden</strong>.</li>
+            <li>Klasifikasikan data yang kamu peroleh: mana yang kualitatif dan mana yang kuantitatif.</li>
+          </ol>
         </div>
       </MateriCard>
 
@@ -88,8 +104,13 @@ export default function Elemen4() {
           </table>
         </div>
         <div className="info-box success">
-          <strong><CheckSquare size={14} /> Latihan:</strong>
-          <p>Data nilai: 60, 70, 80, 70, 90. Hitunglah mean, median, dan modusnya.</p>
+          <strong><CheckSquare size={14} /> Tugas:</strong>
+          <ol>
+            <li>Gunakan data hasil kuesionermu (dari tugas 4.2) atau data baru berupa 10 angka.</li>
+            <li>Masukkan data ke Google Sheets / Excel, lalu hitung mean, median, modus, maksimum, dan minimum menggunakan rumus.</li>
+            <li>Terapkan sorting dan filtering pada data tersebut.</li>
+            <li>Sertakan tangkapan layar hasil pengolahannya.</li>
+          </ol>
         </div>
       </MateriCard>
 
@@ -114,6 +135,14 @@ export default function Elemen4() {
             <li>Jangan membesar-besarkan skala agar tidak menyesatkan</li>
           </ul>
         </div>
+        <div className="info-box success">
+          <strong><CheckSquare size={14} /> Tugas:</strong>
+          <ol>
+            <li>Buat <strong>2 jenis grafik yang berbeda</strong> dari data yang sama (misalnya diagram batang dan diagram lingkaran).</li>
+            <li>Beri judul dan label pada setiap grafik.</li>
+            <li>Bandingkan: grafik mana yang lebih mudah dibaca untuk data tersebut, dan mengapa?</li>
+          </ol>
+        </div>
       </MateriCard>
 
       <MateriCard icon={Table2} title="4.5 Interpretasi & Pengambilan Keputusan">
@@ -126,12 +155,13 @@ export default function Elemen4() {
           <li><strong>Keputusan:</strong> siapkan stok lebih banyak hari Jumat, promosikan pada hari sepi</li>
         </ul>
         <div className="info-box success">
-          <strong><CheckSquare size={14} /> Tugas Praktik:</strong>
+          <strong><CheckSquare size={14} /> Tugas:</strong>
           <ol>
             <li>Kumpulkan data nilai ujian 10 temanmu</li>
             <li>Hitung mean, median, dan modus</li>
             <li>Buat diagram batang di Google Sheets</li>
             <li>Tulis kesimpulan dan satu rekomendasi</li>
+            <li>Tuliskan laporan lengkap: latar belakang, data, pengolahan, visualisasi, kesimpulan, dan rekomendasi</li>
           </ol>
         </div>
       </MateriCard>
