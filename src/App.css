@@ -1884,3 +1884,66 @@ a { text-decoration: none; color: inherit; }
 @media (max-width: 560px) {
   .cb-mission-head { flex-direction: column; align-items: flex-start; }
 }
+
+/* ========== AI ATAU MANUSIA GAME ========== */
+.aih-start { text-align: center; padding: 36px 24px; }
+.aih-logo { width: 72px; height: 72px; margin: 0 auto 12px; border-radius: 50%;
+  background: linear-gradient(135deg, #8b5cf6, #6d28d9); display: flex; align-items: center; justify-content: center; }
+.aih-logo svg { filter: drop-shadow(0 0 6px rgba(139, 92, 246, 0.8)); }
+
+.aih-tips { text-align: left; max-width: 540px; margin: 0 auto 20px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; }
+.aih-tips-title { font-weight: 700; display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
+.aih-tips ul { margin: 0; padding-left: 20px; color: var(--text-light); font-size: 0.88rem; line-height: 1.8; }
+
+.aih-topbar { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
+.aih-count { font-weight: 700; color: var(--text); margin-right: 8px; }
+.aih-type { font-size: 0.72rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.5px; }
+.aih-type.teks { background: #ede9fe; color: #6d28d9; }
+.aih-type.kode { background: #e0f2fe; color: #0284c7; }
+[data-theme="dark"] .aih-type.teks { background: #4c1d9533; color: #c4b5fd; }
+[data-theme="dark"] .aih-type.kode { background: #0c4a6e33; color: #7dd3fc; }
+.aih-score { font-weight: 700; color: var(--primary); display: flex; align-items: center; gap: 6px; }
+.aih-streak { min-height: 22px; display: flex; justify-content: flex-end; margin-bottom: 4px; }
+.aih-streak-on { background: linear-gradient(135deg, #f59e0b, #f97316); color: white;
+  font-size: 0.75rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; display: inline-flex; align-items: center; gap: 4px; animation: cb-pop 0.3s ease; }
+
+.aih-content { border-radius: 14px; padding: 20px 22px; margin-bottom: 16px; background: var(--bg); border: 1px solid var(--border); }
+.aih-content.aih-teks p { margin: 0; font-size: 1.02rem; line-height: 1.75; font-style: italic; color: var(--text); }
+.aih-content.aih-code { padding: 0; background: #0f172a; border-color: #1e293b; }
+.aih-codeblock { border: none; border-radius: 14px; margin: 0; background: transparent; }
+
+.aih-question { font-weight: 700; margin-bottom: 14px; }
+
+.aih-choices { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
+.aih-choice { display: flex; align-items: center; justify-content: center; gap: 10px;
+  padding: 18px; border-radius: 14px; font-size: 1rem; cursor: pointer;
+  border: 2px solid var(--border); background: var(--bg-card); color: var(--text);
+  transition: all 0.2s; }
+.aih-choice.ai-choice:hover { border-color: #8b5cf6; background: #f5f3ff; transform: translateY(-2px); }
+.aih-choice.human-choice:hover { border-color: #38bdf8; background: #f0f9ff; transform: translateY(-2px); }
+[data-theme="dark"] .aih-choice.ai-choice:hover { background: #4c1d9533; }
+[data-theme="dark"] .aih-choice.human-choice:hover { background: #0c4a6e33; }
+.aih-choice.correct { border-color: var(--success); background: #ecfdf5; color: #047857; }
+.aih-choice.wrong { border-color: var(--danger); background: #fef2f2; color: #b91c1c; }
+[data-theme="dark"] .aih-choice.correct { background: #064e3b33; color: #6ee7b7; }
+[data-theme="dark"] .aih-choice.wrong { background: #7f1d1d33; color: #fca5a5; }
+.aih-choice:disabled { cursor: default; }
+.aih-choice:disabled:not(.correct):not(.wrong) { opacity: 0.5; }
+
+.aih-result { border-radius: 14px; padding: 16px 20px; animation: cb-pop 0.3s ease; }
+.aih-result.success { background: #ecfdf5; border: 1px solid #a7f3d0; color: #047857; }
+.aih-result.wrong { background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; }
+[data-theme="dark"] .aih-result.success { background: #064e3b33; border-color: #065f46; color: #6ee7b7; }
+[data-theme="dark"] .aih-result.wrong { background: #7f1d1d33; border-color: #7f1d1d; color: #fca5a5; }
+.aih-result-title { font-weight: 800; font-size: 1.02rem; }
+.aih-result-sub { margin: 8px 0 4px; font-size: 0.85rem; color: var(--text-light); }
+.aih-signs { margin: 0; padding-left: 20px; font-size: 0.88rem; line-height: 1.8; }
+
+.aih-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 16px; }
+.aih-end { text-align: center; padding: 36px 24px; }
+.aih-final-score { font-size: 2.2rem; font-weight: 900; color: var(--primary); margin: 4px 0 8px; }
+
+@media (max-width: 560px) {
+  .aih-choices { grid-template-columns: 1fr; }
+}

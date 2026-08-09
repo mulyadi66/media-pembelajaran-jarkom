@@ -8,7 +8,8 @@ import {
   ClipboardCheck, FileText, BarChart3, Menu, X, Trophy, User, Search,
   Network, Puzzle, BookOpen, BookA, Zap, FileDown, PanelLeftClose, PanelLeft,
   ArrowLeft, Globe, Shield, Radio, Ruler, Wifi, Phone, Circle,
-  Wrench, Signal, Antenna, Layers, Code2, Brain, MonitorSmartphone, Terminal
+  Wrench, Signal, Antenna, Layers, Code2, Brain, MonitorSmartphone, Terminal,
+  Bot
 } from 'lucide-react';
 
 const subjects = {
@@ -137,6 +138,7 @@ const subjects = {
       { to: '/kka/worksheet', icon: FileDown, label: 'Lembar Kerja' },
       { to: '/kka/glossary', icon: BookA, label: 'Glossarium' },
       { to: '/kka/codeblocks', icon: Puzzle, label: 'CodeBlocks Puzzle' },
+      { to: '/kka/ai-human', icon: Bot, label: 'AI atau Manusia?' },
     ],
     titles: {
       '/kka': 'Dashboard KKA',
@@ -154,6 +156,7 @@ const subjects = {
       '/kka/worksheet': 'Lembar Kerja KKA',
       '/kka/glossary': 'Glossarium KKA',
       '/kka/codeblocks': 'CodeBlocks Puzzle KKA',
+      '/kka/ai-human': 'Game AI atau Manusia?',
     },
     descs: {
       '/kka': 'Media Pembelajaran Koding dan Kecerdasan Artifisial',
@@ -171,6 +174,7 @@ const subjects = {
       '/kka/worksheet': 'Lembar kerja praktik offline KKA',
       '/kka/glossary': 'Daftar istilah penting dalam KKA',
       '/kka/codeblocks': 'Game susun blok kode Python',
+      '/kka/ai-human': 'Tebak konten buatan AI atau manusia',
     },
   },
   mpk2: {
