@@ -8,7 +8,7 @@ import {
   ClipboardCheck, FileText, BarChart3, Menu, X, Trophy, User, Search,
   Network, Puzzle, BookOpen, BookA, Zap, FileDown, PanelLeftClose, PanelLeft,
   ArrowLeft, Globe, Shield, Radio, Ruler, Wifi, Phone, Circle,
-  Wrench, Signal, Antenna, Layers, Code2
+  Wrench, Signal, Antenna, Layers, Code2, Brain, MonitorSmartphone, Terminal
 } from 'lucide-react';
 
 const subjects = {
@@ -123,12 +123,27 @@ const subjects = {
     title: 'Koding dan Kecerdasan Artifisial',
     items: [
       { to: '/kka', icon: Home, label: 'Dashboard' },
+      { to: '/kka/elemen1', icon: Brain, label: 'Elemen 1: Berpikir Komputasional' },
+      { to: '/kka/elemen2', icon: MonitorSmartphone, label: 'Elemen 2: Literasi Digital' },
+      { to: '/kka/elemen3', icon: Terminal, label: 'Elemen 3: Algoritma Pemrograman' },
+      { to: '/kka/elemen4', icon: BarChart3, label: 'Elemen 4: Analisis Data' },
+      { to: '/kka/elemen5', icon: Brain, label: 'Elemen 5: Literasi & Etika AI' },
     ],
     titles: {
       '/kka': 'Dashboard KKA',
+      '/kka/elemen1': 'Elemen 1: Berpikir Komputasional',
+      '/kka/elemen2': 'Elemen 2: Literasi Digital',
+      '/kka/elemen3': 'Elemen 3: Algoritma Pemrograman',
+      '/kka/elemen4': 'Elemen 4: Analisis Data',
+      '/kka/elemen5': 'Elemen 5: Literasi & Etika Kecerdasan Artifisial',
     },
     descs: {
       '/kka': 'Media Pembelajaran Koding dan Kecerdasan Artifisial',
+      '/kka/elemen1': 'Dekomposisi, pengenalan pola, abstraksi, dan algoritma',
+      '/kka/elemen2': 'Etika, keamanan, dan kolaborasi di dunia digital',
+      '/kka/elemen3': 'Flowchart, pseudocode, percabangan, perulangan, dan Python',
+      '/kka/elemen4': 'Pengolahan data, statistik dasar, dan visualisasi data',
+      '/kka/elemen5': 'Konsep AI, etika penggunaan, dan bias',
     },
   },
   mpk2: {

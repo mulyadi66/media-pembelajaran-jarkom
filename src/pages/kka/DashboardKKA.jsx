@@ -1,11 +1,13 @@
-import { Code2, Brain, Terminal, BookOpen, Trophy, Cpu, Lock, Sparkles, GitBranch, Database } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Code2, Brain, Terminal, BookOpen, Trophy, Cpu, Lock, Sparkles, GitBranch, Database, MonitorSmartphone, BarChart3 } from 'lucide-react';
 
 export default function DashboardKKA() {
   const elements = [
-    { title: 'Elemen 1: Algoritma & Logika Dasar', desc: 'Belum tersedia', icon: GitBranch, color: ['#22c55e', '#16a34a'] },
-    { title: 'Elemen 2: Dasar Pemrograman', desc: 'Belum tersedia', icon: Terminal, color: ['#06b6d4', '#0891b2'] },
-    { title: 'Elemen 3: Pemrograman Berorientasi Objek', desc: 'Belum tersedia', icon: Database, color: ['#f59e0b', '#d97706'] },
-    { title: 'Elemen 4: Dasar Kecerdasan Artifisial', desc: 'Belum tersedia', icon: Brain, color: ['#8b5cf6', '#6d28d9'] },
+    { to: '/kka/elemen1', icon: Brain, title: 'Berpikir Komputasional', desc: 'Dekomposisi, pola, abstraksi & algoritma', color: ['#22c55e', '#16a34a'] },
+    { to: '/kka/elemen2', icon: MonitorSmartphone, title: 'Literasi Digital', desc: 'Etika, keamanan & kolaborasi digital', color: ['#06b6d4', '#0891b2'] },
+    { to: '/kka/elemen3', icon: Terminal, title: 'Algoritma Pemrograman', desc: 'Flowchart, percabangan, perulangan, Python', color: ['#f59e0b', '#d97706'] },
+    { to: '/kka/elemen4', icon: BarChart3, title: 'Analisis Data', desc: 'Statistik dasar, visualisasi & interpretasi', color: ['#ef4444', '#dc2626'] },
+    { to: '/kka/elemen5', icon: Brain, title: 'Literasi & Etika AI', desc: 'Konsep AI, etika & bias', color: ['#8b5cf6', '#6d28d9'] },
   ];
 
   const quickActions = [
@@ -23,7 +25,7 @@ export default function DashboardKKA() {
           <h1>Koding dan Kecerdasan Artifisial (KKA)</h1>
           <p>Mata Pelajaran Kejuruan — Dasar Pemrograman & Kecerdasan Artifisial</p>
           <div className="hero-stats">
-            <div className="stat"><BookOpen size={18} /> <span>4 Elemen</span></div>
+            <div className="stat"><BookOpen size={18} /> <span>5 Elemen</span></div>
             <div className="stat"><Code2 size={18} /> <span>Koding</span></div>
             <div className="stat"><Brain size={18} /> <span>AI</span></div>
           </div>
@@ -49,10 +51,11 @@ export default function DashboardKKA() {
         <h2><Trophy size={20} /> Tujuan Pembelajaran</h2>
         <div className="objectives-grid">
           {[
-            'Memahami algoritma, logika, dan struktur dasar pemrograman',
-            'Menerapkan pemrograman prosedural dan berorientasi objek',
-            'Mengenal konsep dasar kecerdasan artifisial dan aplikasinya',
-            'Membangun solusi sederhana berbasis kode dan AI'
+            'Mampu berpikir komputasional untuk memecahkan masalah',
+            'Cakap digital: etis, aman, dan produktif',
+            'Menguasai dasar algoritma dan pemrograman',
+            'Menganalisis data dan menyajikan hasilnya',
+            'Menggunakan AI secara etis dan bertanggung jawab'
           ].map((text, i) => (
             <div className="objective-card" key={i}>
               <div className="obj-number">{i + 1}</div>
@@ -65,20 +68,18 @@ export default function DashboardKKA() {
       <section className="section-block">
         <h2><BookOpen size={20} /> Elemen Pembelajaran</h2>
         <div className="modules-grid">
-          {elements.map(({ title, desc, icon: Icon, color }) => (
-            <div className="module-card" key={title} style={{opacity: 0.6}}>
+          {elements.map(({ to, icon: Icon, title, desc, color }) => (
+            <Link to={to} className="module-card" key={to}>
               <div className="module-icon" style={{background: `linear-gradient(135deg, ${color[0]}, ${color[1]})`}}>
                 <Icon size={24} color="white" />
               </div>
               <div className="module-info">
-                <span className="module-tag">Segera hadir</span>
+                <span className="module-tag">Elemen {to.split('/kka/elemen').pop()}</span>
                 <h3>{title}</h3><p>{desc}</p>
               </div>
-            </div>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{color:'var(--text-lighter)', flexShrink:0}} aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+            </Link>
           ))}
-        </div>
-        <div className="info-box" style={{marginTop: 20}}>
-          <strong>Catatan:</strong> Struktur elemen di atas masih placeholder. Materi KKA menyusul.
         </div>
       </section>
 

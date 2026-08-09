@@ -52,6 +52,11 @@ const ChallengePageMPK2 = lazy(() => import('./pages/mpk2/ChallengePageMPK2'));
 const KasusMPK2 = lazy(() => import('./pages/mpk2/KasusMPK2'));
 const HasilMPK2 = lazy(() => import('./pages/mpk2/HasilMPK2'));
 const DashboardKKA = lazy(() => import('./pages/kka/DashboardKKA'));
+const Elemen1KKA = lazy(() => import('./pages/kka/Elemen1'));
+const Elemen2KKA = lazy(() => import('./pages/kka/Elemen2'));
+const Elemen3KKA = lazy(() => import('./pages/kka/Elemen3'));
+const Elemen4KKA = lazy(() => import('./pages/kka/Elemen4'));
+const Elemen5KKA = lazy(() => import('./pages/kka/Elemen5'));
 
 export default function App() {
   return (
@@ -84,6 +89,11 @@ export default function App() {
                 <Route path="/dkk/kasus" element={<KasusDKK />} />
                 <Route path="/dkk/hasil" element={<HasilDKK />} />
                 <Route path="/kka" element={<DashboardKKA />} />
+                <Route path="/kka/elemen1" element={<Elemen1KKA />} />
+                <Route path="/kka/elemen2" element={<Elemen2KKA />} />
+                <Route path="/kka/elemen3" element={<Elemen3KKA />} />
+                <Route path="/kka/elemen4" element={<Elemen4KKA />} />
+                <Route path="/kka/elemen5" element={<Elemen5KKA />} />
                 <Route path="/mpk1/modul1" element={<Modul1 />} />
                 <Route path="/mpk1/modul2" element={<Modul2 />} />
                 <Route path="/mpk1/modul3" element={<Modul3 />} />
