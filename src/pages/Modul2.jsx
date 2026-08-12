@@ -13,12 +13,18 @@ const sections = [
 ];
 
 const topologies = [
-  { id: 'star', label: 'Star', icon: Star },
-  { id: 'bus', label: 'Bus', icon: Minus },
-  { id: 'ring', label: 'Ring', icon: Circle },
-  { id: 'mesh', label: 'Mesh', icon: Network },
-  { id: 'tree', label: 'Tree', icon: GitBranch },
-  { id: 'hybrid', label: 'Hybrid', icon: GitBranch },
+  { id: 'star', label: 'Star', icon: Star, desc: 'Semua node terhubung langsung ke perangkat pusat (switch/hub). Setiap node memiliki jalur kabel sendiri menuju pusat sehingga kegagalan satu kabel tidak memengaruhi node lain.',
+    tugas: 'Gambarkan topologi star dengan 6 PC di bukumu, lalu hitung panjang kabel yang dibutuhkan jika tiap PC berjarak 3 meter dari switch!' },
+  { id: 'bus', label: 'Bus', icon: Minus, desc: 'Semua node terhubung pada satu kabel utama (backbone) dengan terminator di kedua ujung. Data menyebar sepanjang kabel dan hanya node dengan alamat yang sesuai yang menerimanya.',
+    tugas: 'Gambarkan topologi bus dengan 5 PC dan 2 terminator, lalu jelaskan apa yang terjadi jika terminator di salah satu ujung dilepas!' },
+  { id: 'ring', label: 'Ring', icon: Circle, desc: 'Setiap node terhubung ke dua node lain membentuk lingkaran tertutup. Data bergerak searah jarum jam dari node ke node hingga sampai tujuan (menggunakan token passing).',
+    tugas: 'Pada topologi ring, mengapa token passing membuat data tidak pernah bertabrakan? Jelaskan dengan bahasamu sendiri!' },
+  { id: 'mesh', label: 'Mesh', icon: Network, desc: 'Setiap node terhubung langsung ke semua node lain (full mesh) atau hanya ke node yang dianggap penting (partial mesh). Menyediakan banyak jalur cadangan.',
+    tugas: 'Hitung jumlah kabel full mesh untuk 6 node dengan rumus n(n−1)/2, lalu bandingkan dengan kebutuhan kabel topologi star untuk 6 node!' },
+  { id: 'tree', label: 'Tree', icon: GitBranch, desc: 'Hierarki topologi star berlapis: satu node root di puncak bercabang ke beberapa switch, lalu tiap switch menghubungkan node-node di bawahnya.',
+    tugas: 'Buat sketsa topologi tree untuk gedung 2 lantai (tiap lantai 1 switch + 4 PC) dan tandai titik single point of failure-nya!' },
+  { id: 'hybrid', label: 'Hybrid', icon: GitBranch, desc: 'Gabungan dua atau lebih topologi berbeda dalam satu jaringan, misalnya star-to-star, star-to-bus, atau ring-to-mesh. Umum dipakai di perusahaan besar.',
+    tugas: 'Desain topologi hybrid untuk sekolah: 2 gedung (masing-masing star) yang dihubungkan dengan backbone bus antar gedung. Gambarkan dan beri label!' },
 ];
 
 function drawTopology(svgEl, type) {
@@ -133,28 +139,44 @@ export default function Modul2() {
           <strong>Dua Jenis Topologi</strong>
           <p><strong>Fisik:</strong> Layout kabel dan perangkat secara fisik.<br/><strong>Logika:</strong> Cara data mengalir dalam jaringan.</p>
         </div>
+        <h3 style={{marginTop: 20}}>Istilah Penting dalam Topologi</h3>
+        <ul>
+          <li><strong>Node / Host</strong> — perangkat yang terhubung (PC, printer, server) dan bisa mengirim/menerima data.</li>
+          <li><strong>Link</strong> — jalur/media penghubung antara dua node (kabel UTP, fiber, atau sinyal Wi-Fi).</li>
+          <li><strong>Backbone</strong> — jalur utama berkapasitas besar yang menampung lalu lintas antar segment.</li>
+          <li><strong>Segment</strong> — bagian jaringan yang terpisah, biasanya dihubungkan oleh perangkat seperti bridge/router.</li>
+          <li><strong>Single Point of Failure (SPOF)</strong> — satu titik yang jika rusak akan memutus seluruh jaringan.</li>
+        </ul>
+        <div className="info-box warning">
+          <strong>Faktor Pemilihan Topologi</strong>
+          <p>Biaya kabel &amp; perangkat, kemudahan instalasi, kemudahan perawatan (troubleshooting), keandalan, dan rencana pengembangan (skalabilitas) menjadi pertimbangan utama.</p>
+        </div>
         <ContohSoal data={[
           { soal: 'Jelaskan perbedaan topologi fisik dan topologi logis, lengkap dengan satu contoh!',
             penyelesaian: 'Topologi fisik menggambarkan susunan kabel dan perangkat yang sebenarnya, sedangkan topologi logis menggambarkan jalur aliran data. Contoh: jaringan yang memakai Hub tersusun fisik seperti bintang (semua kabel menuju hub), tetapi secara logis berperilaku seperti bus karena hub menyiarkan data ke semua port.' },
           { soal: 'Mengapa jaringan yang menggunakan Hub dianggap boros bandwidth?',
             penyelesaian: 'Karena Hub meneruskan setiap data ke SEMUA port (broadcast). Semakin banyak perangkat, semakin besar lalu lintas data yang tidak perlu sehingga tabrakan (collision) makin sering terjadi dan bandwidth terbuang.' },
+          { soal: 'Di topologi bus, jika kabel utama terputus di tengah, apa dampaknya pada semua node? Konsep apa yang berkaitan dengan hal ini?',
+            penyelesaian: 'Semua node kehilangan komunikasi karena hanya ada satu jalur. Ini disebut single point of failure (SPOF): satu kabel backbone menjadi titik tunggal yang jika rusak mematikan seluruh jaringan.' },
         ]} />
         <Tugas data={[
           'Tuliskan pengertian topologi jaringan dengan bahasamu sendiri (1–2 kalimat)!',
           'Berikan contoh jaringan yang topologi fisiknya berbeda dengan topologi logisnya, lalu jelaskan keduanya!',
+          'Buat tabel istilah: node, link, backbone, segment, dan SPOF lengkap dengan contoh masing-masing!',
         ]} />
       </div>
 
       {[
-        { title: '2.2 Topologi Bus', pros: 'Murah, hemat kabel, cocok untuk jaringan kecil', cons: 'Satu kabel putus = seluruh jaringan mati, sulit debugging', use: 'Jaringan kecil sementara', proto: 'CSMA/CD' },
+        { title: '2.2 Topologi Bus', pros: 'Murah, hemat kabel, cocok untuk jaringan kecil', cons: 'Satu kabel putus = seluruh jaringan mati, sulit debugging', use: 'Jaringan kecil sementara', proto: 'CSMA/CD', protoDesc: 'CSMA/CD (Carrier Sense Multiple Access with Collision Detection): setiap node mendengarkan jalur terlebih dahulu sebelum mengirim. Jika dua node mengirim bersamaan, terjadi tabrakan (collision), lalu kedua node berhenti dan mengirim ulang setelah jeda acak. Inilah mengapa semakin banyak node, kinerja bus semakin menurun.' },
         { title: '2.3 Topologi Star', pros: 'Mudah dikelola, satu kabel rusak hanya 1 node, mudah ditambah', cons: 'Switch rusak = semua node terganggu, butuh lebih banyak kabel', use: 'LAN kantor, sekolah, warnet' },
-        { title: '2.4 Topologi Ring', pros: 'Tidak ada tabrakan data (token passing), performa stabil', cons: 'Satu node rusak bisa memutus jaringan, sulit diubah', use: 'Token Ring, FDDI', proto: 'Token Passing' },
+        { title: '2.4 Topologi Ring', pros: 'Tidak ada tabrakan data (token passing), performa stabil', cons: 'Satu node rusak bisa memutus jaringan, sulit diubah', use: 'Token Ring, FDDI', proto: 'Token Passing', protoDesc: 'Token passing menggunakan token (paket data khusus) yang beredar dari node ke node searah lingkaran. Hanya node yang memegang token yang berhak mengirim data, sehingga tidak pernah ada dua node mengirim bersamaan dan tabrakan data tidak mungkin terjadi.' },
         { title: '2.5 Topologi Mesh', pros: 'Sangat handal, redundant path, keamanan tinggi', cons: 'Sangat mahal, banyak kabel, kompleks', use: 'Backbone internet, WAN, jaringan kritis' },
         { title: '2.6 Topologi Tree', pros: 'Mudah berkembang, terstruktur, cocok untuk jaringan besar', cons: 'Root node rusak = seluruh jaringan mati', use: 'Gedung bertingkat, universitas' },
         { title: '2.7 Topologi Hybrid', pros: 'Fleksibel, scalable, menggabungkan kelebihan beberapa topologi', cons: 'Desain kompleks, biaya tinggi', use: 'Internet, WAN, perusahaan besar' },
       ].map((t, i) => (
         <div className="materi-card" key={i}>
           <h3><Projector size={18} /> {t.title}</h3>
+          <p>{t.desc}</p>
           <div className="table-responsive">
             <table className="materi-table">
               <thead><tr><th>Aspek</th><th>Penjelasan</th></tr></thead>
@@ -166,6 +188,13 @@ export default function Modul2() {
               </tbody>
             </table>
           </div>
+          {t.protoDesc && (
+            <div className="info-box" style={{marginTop: 12}}>
+              <strong>Cara Kerja: {t.proto}</strong>
+              <p>{t.protoDesc}</p>
+            </div>
+          )}
+          <Tugas data={[t.tugas]} />
         </div>
       ))}
 
@@ -176,11 +205,14 @@ export default function Modul2() {
           penyelesaian: 'Rumus full mesh: n(n−1)/2 = 5×4/2 = 10 kabel. Inilah mengapa mesh sangat mahal untuk jaringan besar — setiap node terhubung langsung ke semua node lain.' },
         { soal: 'Pada topologi star, kabel dari satu PC ke switch putus. Bagaimana dampaknya terhadap PC lain?',
           penyelesaian: 'Tidak ada dampak. Hanya PC yang kabelnya putus yang kehilangan koneksi; node lain tetap normal karena masing-masing memiliki jalur terpisah ke switch. Inilah keunggulan utama topologi star.' },
+        { soal: 'Sekolah memilih topologi tree untuk LAN-nya. Mengapa kerusakan switch lantai 1 tidak membuat seluruh jaringan mati, tetapi kerusakan switch utama (root) justru mematikannya?',
+          penyelesaian: 'Karena pada tree, switch lantai (switch level bawah) hanya melayani node di segmennya sendiri — kegagalannya hanya memengaruhi lantai tersebut. Sebaliknya switch utama (root) menjadi single point of failure: semua segmen mengandalkannya sebagai jalur tunggal ke server/root, sehingga jika rusak seluruh jaringan terganggu.' },
       ]} />
       <Tugas data={[
         'Hitung jumlah kabel full mesh untuk jaringan 4 node dan 6 node, lalu bandingkan dengan kebutuhan kabel topologi bus!',
         'Buat tabel kelebihan dan kekurangan topologi Star dibandingkan topologi Ring!',
         'Pada topologi ring, apa yang terjadi jika satu node mati? Bagaimana teknologi seperti FDDI (dual ring) mengatasinya?',
+        'Dari semua topologi yang dipelajari, manakah yang paling tahan terhadap kegagalan satu link? Jelaskan kelemahannya!',
       ]} />
 
       <div className="materi-card">
@@ -191,6 +223,9 @@ export default function Modul2() {
           <p><strong>Hub:</strong> secara fisik berbentuk <em>star</em> (semua kabel ke hub), tetapi secara logis bertingkah seperti <em>bus</em> karena menyiarkan data ke semua port.<br/>
           <strong>Token Ring:</strong> kabelnya menuju satu perangkat pusat (MAU) sehingga fisiknya <em>star</em>, tetapi data berputar dari titik ke titik sehingga logisnya <em>ring</em>.</p>
         </div>
+        <Tugas data={[
+          'Berikan contoh jaringan lain (selain hub dan token ring) di mana topologi fisik dan logisnya berbeda, lalu jelaskan keduanya!',
+        ]} />
       </div>
 
       <div className="materi-card">
@@ -207,6 +242,9 @@ export default function Modul2() {
             </tbody>
           </table>
         </div>
+        <Tugas data={[
+          'Perpustakaan sekolah dengan 25 PC di satu ruangan akan membangun LAN dengan dana sangat terbatas. Topologi mana yang kamu pilih? Berikan alasan berdasarkan tabel di atas!',
+        ]} />
       </div>
 
       <div className="materi-card">
@@ -252,6 +290,10 @@ export default function Modul2() {
             <svg id="topoSvg" viewBox="0 0 600 400" />
           </div>
         </div>
+        <Tugas data={[
+          'Jalankan simulasi di atas: pilih setiap topologi (star, bus, ring, mesh, tree, hybrid) dan amati cara node saling terhubung. Catat perbedaan pola kabel yang paling jelas.',
+          'Pada simulasi mesh, hitung jumlah koneksi antar node yang terlihat, lalu cocokkan dengan rumus n(n−1)/2!',
+        ]} />
       </div>
 
       <div className="materi-card">

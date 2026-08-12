@@ -112,6 +112,15 @@ export default function Modul3() {
           <p><strong>IP Publik:</strong> dapat diakses dari internet dan harus didaftarkan ke penyedia.<br/>
           <strong>IP Privat:</strong> hanya berlaku di jaringan lokal, di-hide dari internet oleh NAT (Network Address Translation) pada router.</p>
         </div>
+        <h3 style={{marginTop: 20}}>Konversi Biner</h3>
+        <p>Setiap oktet IPv4 terdiri dari 8 bit (1 atau 0). Nilai desimal dihitung dari pangkat dua: <strong>128 64 32 16 8 4 2 1</strong>. Contoh: <strong>192</strong> = 128+64 = <strong>11000000</strong>, <strong>168</strong> = 128+32+8 = <strong>10101000</strong>.</p>
+        <div className="info-box warning">
+          <strong><AlertTriangle size={14} /> Alamat Khusus yang Perlu Dihafal</strong>
+          <p><strong>127.0.0.1</strong> — loopback (menguji NIC sendiri).<br/>
+          <strong>0.0.0.0</strong> — "semua jaringan" / default route.<br/>
+          <strong>255.255.255.255</strong> — broadcast seluruh jaringan lokal.<br/>
+          <strong>169.254.x.x</strong> — APIPA, dipakai otomatis saat DHCP gagal.</p>
+        </div>
         <VideoEmbed videoId="ZxgytoBVEaE" title="Pembagian Kelas IP Address (A, B, C) - Bahasa Indonesia" />
         <ContohSoal data={[
           { soal: 'Tentukan kelas dari IP address berikut: 10.0.0.5, 172.16.10.1, 192.168.1.100, dan 224.0.0.1!',
@@ -120,11 +129,14 @@ export default function Modul3() {
             penyelesaian: 'IP privat: 10.0.0.1 (privat kelas A), 172.20.0.1 (privat kelas B karena berada di 172.16–172.31), dan 192.168.1.1 (privat kelas C). 8.8.8.8 adalah IP publik milik Google DNS.' },
           { soal: 'Mengapa IP privat tidak bisa langsung diakses dari internet, dan apa solusinya?',
             penyelesaian: 'Karena IP privat tidak dirutekan di internet — IANA menetapkannya khusus untuk jaringan lokal. Solusinya adalah NAT (Network Address Translation) pada router yang menerjemahkan IP privat menjadi IP publik saat data keluar ke internet.' },
+          { soal: 'Ubahlah bilangan biner 11000000.10101000.00000001.00000001 menjadi notasi desimal!',
+            penyelesaian: '11000000 = 128+64 = 192. 10101000 = 128+32+8 = 168. 00000001 = 1. 00000001 = 1. Jadi 11000000.10101000.00000001.00000001 = 192.168.1.1.' },
         ]} />
         <Tugas data={[
           'Tuliskan rentang IP privat kelas A, B, dan C beserta default subnet mask-nya!',
           'Tentukan kelas IP berikut: 126.0.0.1, 129.0.0.1, 192.0.0.1, 239.255.255.1, dan 240.0.0.1!',
           'Jelaskan perbedaan IP publik dan IP privat serta kapan masing-masing digunakan!',
+          'Konversikan ke biner: 10.0.0.1, 172.16.5.2, dan 192.168.1.10. Tuliskan hasilnya dalam bentuk 4 oktet biner!',
         ]} />
       </div>
 
@@ -143,6 +155,24 @@ export default function Modul3() {
           <strong><Star size={14} /> Contoh</strong>
           <p>192.168.1.0/24 dibagi 4 subnet → pinjam 2 bit → /26 = 255.255.255.192 → 62 host/subnet</p>
         </div>
+        <div className="info-box warning">
+          <strong><AlertTriangle size={14} /> Mengapa Dikurangi 2?</strong>
+          <p>Dua alamat per subnet selalu dicadangkan: <strong>network address</strong> (identitas subnet, semua bit host 0) dan <strong>broadcast address</strong> (alamat kirim ke semua host, semua bit host 1). Keduanya tidak boleh dipakai perangkat, sehingga host yang bisa dipakai = 2^h − 2.</p>
+        </div>
+        <h3 style={{marginTop: 20}}>Tabel Ukuran Subnet (/24)</h3>
+        <div className="table-responsive">
+          <table className="materi-table">
+            <thead><tr><th>Prefix</th><th>Mask</th><th>Jumlah Subnet (dari /24)</th><th>Host per Subnet</th><th>Block</th></tr></thead>
+            <tbody>
+              <tr><td>/25</td><td>255.255.255.128</td><td>2</td><td>126</td><td>128</td></tr>
+              <tr><td>/26</td><td>255.255.255.192</td><td>4</td><td>62</td><td>64</td></tr>
+              <tr><td>/27</td><td>255.255.255.224</td><td>8</td><td>30</td><td>32</td></tr>
+              <tr><td>/28</td><td>255.255.255.240</td><td>16</td><td>14</td><td>16</td></tr>
+              <tr><td>/29</td><td>255.255.255.248</td><td>32</td><td>6</td><td>8</td></tr>
+              <tr><td>/30</td><td>255.255.255.252</td><td>64</td><td>2</td><td>4</td></tr>
+            </tbody>
+          </table>
+        </div>
         <VideoEmbed videoId="VVd5xkTnPZ0" title="Praktik IP Address & Subnetting di Cisco Packet Tracer" />
         <ContohSoal data={[
           { soal: 'Bagi jaringan 192.168.1.0/24 menjadi 4 subnet yang sama besar! Tentukan prefix baru, mask, jumlah host per subnet, dan rincian subnet pertama.',
@@ -155,11 +185,14 @@ export default function Modul3() {
             ] },
           { soal: 'Jaringan 172.16.0.0/16 dibagi menjadi 8 subnet. Berapa prefix baru dan host per subnet?',
             penyelesaian: '2^n ≥ 8 → n = 3 bit dipinjam → prefix baru = 16 + 3 = /19 (mask 255.255.255.224 → 255.255.224.0). Host per subnet = 2^(32−19) − 2 = 2^13 − 2 = 8190 host. Block = 256 − 224 = 32, sehingga subnet ke-3 dimulai dari 172.16.64.0.' },
+          { soal: 'Berapa jumlah host usable pada /30 dan mengapa prefix ini populer untuk link antar router (point-to-point)?',
+            penyelesaian: 'Usable host = 2^2 − 2 = 2 host. Link antar router hanya butuh 2 alamat (satu per ujung), jadi /30 tidak boros alamat IP. Beberapa router modern juga mendukung /31 (tanpa network/broadcast) untuk link point-to-point, tetapi /30 lebih umum dan lebih kompatibel.' },
         ]} />
         <Tugas data={[
           'Bagi 192.168.2.0/24 menjadi 8 subnet! Tuliskan prefix baru, mask, host per subnet, serta rincian subnet ke-1 dan ke-5 (network, first, last, broadcast).',
           'Jelaskan 3 manfaat subnetting bagi sebuah jaringan!',
           'Berapa jumlah host usable pada jaringan /30? Mengapa /30 sering digunakan untuk link antar router?',
+          'Dengan tabel ukuran subnet di atas, tentukan prefix yang tepat untuk jaringan yang membutuhkan 100 host, 50 host, dan 5 host!',
         ]} />
       </div>
 
@@ -180,7 +213,11 @@ export default function Modul3() {
         </div>
         <div className="info-box success">
           <strong><Star size={14} /> Rumus Penting</strong>
-          <p><strong>Subnet:</strong> 2^n &nbsp;|&nbsp; <strong>Host:</strong> 2^h - 2 &nbsp;|&nbsp; <strong>Block:</strong> 256 - mask oktet terakhir</p>
+          <p><strong>Subnet:</strong> 2^n &nbsp;|&nbsp; <strong>Host:</strong> 2^h - 2 &nbsp;|&nbsp; <strong>Block:</strong> 256 - mask oktet terakhir &nbsp;|&nbsp; <strong>Wildcard:</strong> 255 - nilai oktet mask</p>
+        </div>
+        <div className="info-box warning">
+          <strong><AlertTriangle size={14} /> Penting</strong>
+          <p>Notasi <strong>/n</strong> menyatakan banyaknya bit 1 pada subnet mask (bit network). Semakin besar /n, semakin kecil jaringannya. CIDR menghapus aturan kaku kelas A/B/C sehingga alamat bisa dibagi sesuai kebutuhan — inilah dasar dari subnetting dan VLSM.</p>
         </div>
         <ContohSoal data={[
           { soal: 'Ubah subnet mask 255.255.255.240 ke dalam notasi CIDR!',
@@ -189,11 +226,14 @@ export default function Modul3() {
             penyelesaian: 'Mask = 255.255.255.192 (bit network dihitung 8+8+8+2 = 26). Wildcard = kebalikan mask = 0.0.0.63. Jumlah host = 2^6 − 2 = 62 host.' },
           { soal: 'Berapa jumlah host usable pada jaringan /22?',
             penyelesaian: '32 − 22 = 10 bit host → 2^10 − 2 = 1022 host usable.' },
+          { soal: 'Tentukan wildcard dari subnet mask 255.255.255.224, lalu jelaskan fungsinya!',
+            penyelesaian: 'Wildcard = kebalikan bit mask (bit 0 menjadi 1): 255.255.255.224 → 0.0.0.31. Wildcard dipakai dalam ACL (Access Control List) router untuk menentukan rentang alamat yang cocok dengan aturan, misalnya wildcard 0.0.0.31 mencakup 32 alamat (blok /27).' },
         ]} />
         <Tugas data={[
           'Buat tabel konversi ke notasi CIDR untuk mask berikut: 255.0.0.0, 255.255.0.0, 255.255.255.0, 255.255.255.128, dan 255.255.255.248!',
           'Hitung jumlah host usable untuk /23, /28, dan /30!',
           'Jelaskan keunggulan CIDR dibandingkan sistem pengalamatan classful (kelas A/B/C)!',
+          'Hitung wildcard untuk mask 255.255.255.240 dan 255.255.0.0, lalu tuliskan fungsinya secara singkat!',
         ]} />
       </div>
 
@@ -225,11 +265,14 @@ export default function Modul3() {
             ] },
           { soal: 'Tentukan prefix yang tepat untuk kebutuhan 100 host, 50 host, dan 2 host dari 192.168.0.0/24!',
             penyelesaian: '100 host → butuh 126 usable → /25 (128 alamat, range 192.168.0.0 – .127). 50 host → butuh 62 usable → /26 (192.168.0.128 – .191). 2 host → butuh 2 usable → /30 (192.168.0.192 – .195).' },
+          { soal: 'Perusahaan butuh 5 subnet dari 192.168.1.0/24: HRD 60 host, IT 30 host, Marketing 15 host, Finance 5 host, dan link antar router 2 host. Mengapa VLSM lebih hemat dibanding membagi rata menjadi 5 subnet /27?',
+            penyelesaian: 'Dengan VLSM: 60 → /26 (64 alamat), 30 → /27 (32), 15 → /28 (16), 5 → /29 (8), 2 → /30 (4) = total 124 alamat. Jika dibagi rata 5×/27 (masing-masing 32) = 160 alamat. VLSM menghemat 36 alamat dan cukup untuk semua kebutuhan — alokasi sesuai kebutuhan nyata tiap departemen.' },
         ]} />
         <Tugas data={[
           'Rancang VLSM untuk 192.168.10.0/24 dengan kebutuhan: Marketing 60 host, HRD 30 host, IT 15 host, dan Finance 5 host. Tuliskan network, first, last, dan broadcast tiap departemen!',
           'Gunakan kalkulator VLSM pada materi 3.6 untuk memeriksa hasil rancanganmu, lalu bandingkan hasilnya!',
           'Jelaskan mengapa VLSM lebih hemat alamat IP dibandingkan subnetting dengan ukuran subnet yang seragam!',
+          'Dari 192.168.1.0/24, hitung jumlah alamat yang dibutuhkan untuk subnet 100 host (/25) + subnet 50 host (/26) + subnet 20 host (/27). Totalnya berapa dan apakah masih tersisa alamat di dalam /24?',
         ]} />
       </div>
 
@@ -277,6 +320,7 @@ export default function Modul3() {
           'Hitung 3 jaringan berikut dengan kalkulator: 172.16.0.0/20, 192.168.1.0/29, dan 10.0.0.0/12. Catat mask, network, first, last, broadcast, dan usable host!',
           'Bandingkan hasil kalkulator dengan perhitungan manual untuk satu jaringan /28. Apakah hasilnya sama?',
           'Apa fungsi network address dan broadcast address? Mengapa keduanya tidak boleh dipakai untuk host?',
+          'Masukkan IP 10.0.0.1 dengan prefix /8 ke kalkulator. Berapa total usable host? Jelaskan mengapa angka tersebut jauh lebih besar daripada jaringan /24!',
         ]} />
       </div>
 
@@ -329,6 +373,7 @@ export default function Modul3() {
           'Gunakan kalkulator VLSM untuk kebutuhan 80, 40, 10, dan 2 host dari 192.168.0.0/24! Tuliskan CIDR dan range tiap subnet.',
           'Mengapa VLSM mengalokasikan subnet untuk kebutuhan host terbesar terlebih dahulu? Jelaskan!',
           'Rancang skema VLSM untuk 3 divisi (120, 60, 20 host) dari 192.168.50.0/24, lalu buktikan dengan kalkulator bahwa total alamat mencukupi!',
+          'Pada hasil VLSM untuk 100, 50, 25, dan 2 host, perhatikan subnet untuk 2 host. Berapa prefix yang dipilih kalkulator dan berapa alamat yang terbuang (jika ada)?',
         ]} />
       </div>
 
