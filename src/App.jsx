@@ -21,6 +21,8 @@ const Kasus = lazy(() => import('./pages/Kasus'));
 const PreTest = lazy(() => import('./pages/PreTest'));
 const PostTest = lazy(() => import('./pages/PostTest'));
 const Hasil = lazy(() => import('./pages/Hasil'));
+const WiringPuzzle = lazy(() => import('./pages/WiringPuzzle'));
+const IPClassifier = lazy(() => import('./pages/IPClassifier'));
 
 // DKK pages
 const Elemen1 = lazy(() => import('./pages/dkk/Elemen1'));
@@ -128,6 +130,8 @@ export default function App() {
                 <Route path="/mpk1/modul-ajar" element={<ModulAjarPage />} />
                 <Route path="/mpk1/glossary" element={<GlossaryPage />} />
                 <Route path="/mpk1/hasil" element={<Hasil />} />
+                <Route path="/mpk1/wiring" element={<WiringPuzzle />} />
+                <Route path="/mpk1/ipclassifier" element={<IPClassifier />} />
                 <Route path="/mpk1/topologi-arsitektur" element={<TopologiArsitektur />} />
                 <Route path="/mpk2" element={<DashboardMPK2 />} />
                 <Route path="/mpk2/modul1" element={<Modul1MPK2 />} />

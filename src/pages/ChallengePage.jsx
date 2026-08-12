@@ -97,7 +97,7 @@ export default function ChallengePage() {
             <div className="calc-input-group">
               <label>Jumlah Soal</label>
               <select value={selectedCount} onChange={e => setSelectedCount(Number(e.target.value))}>
-                {[5, 10, 15, 20, 30].map(n => <option key={n} value={n}>{n} soal</option>)}
+                {[5, 10, 15, 20, 30, 50].map(n => <option key={n} value={n}>{n} soal</option>)}
               </select>
             </div>
             <div className="calc-input-group">

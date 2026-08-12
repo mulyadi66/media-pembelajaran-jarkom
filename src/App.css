@@ -500,6 +500,84 @@ a { text-decoration: none; color: inherit; }
 .materi-table tr:nth-child(even) { background: #f8fafc; }
 .materi-table tr:hover { background: #eef2ff; }
 
+/* ========== CONTOH SOAL & TUGAS ========== */
+.contoh-soal-block, .tugas-block {
+  margin-top: 22px; padding-top: 18px; border-top: 1px dashed var(--border);
+}
+
+.contoh-heading, .tugas-heading {
+  display: flex; align-items: center; gap: 8px; font-size: 1rem; font-weight: 700;
+  margin-bottom: 12px; color: var(--primary-dark);
+}
+
+.contoh-heading svg, .tugas-heading svg { color: var(--primary); }
+
+.contoh-soal {
+  background: var(--bg-hover); border: 1px solid var(--border);
+  border-radius: 10px; padding: 14px 16px; margin-bottom: 12px;
+}
+
+.contoh-soal-head {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px; flex-wrap: wrap; margin-bottom: 8px;
+}
+
+.contoh-no {
+  background: var(--primary); color: #fff; font-size: 0.75rem; font-weight: 700;
+  padding: 3px 10px; border-radius: 999px;
+}
+
+.contoh-toggle {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: transparent; border: 1px solid var(--border); color: var(--primary);
+  font-size: 0.78rem; font-weight: 600; padding: 4px 10px; border-radius: 8px;
+  cursor: pointer; transition: all .15s ease;
+}
+
+.contoh-toggle:hover { background: var(--bg-hover); border-color: var(--primary); }
+
+.contoh-soal-q { font-size: 0.9rem; color: var(--text); line-height: 1.7; margin: 0; }
+
+.contoh-soal-a {
+  margin-top: 10px; padding: 12px 14px; border-radius: 8px;
+  background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+  border-left: 4px solid var(--success);
+}
+
+.contoh-soal-a p { font-size: 0.85rem; color: var(--text); line-height: 1.7; margin: 0 0 6px; }
+.contoh-soal-a p:last-child { margin-bottom: 0; }
+
+.contoh-soal-a-title {
+  display: flex; align-items: center; gap: 6px; font-weight: 700;
+  font-size: 0.82rem !important; color: #047857 !important; margin-bottom: 6px;
+}
+
+.tugas-list { list-style: none; padding: 0 !important; margin: 0; }
+
+.tugas-list li {
+  display: flex; align-items: flex-start; gap: 10px;
+  background: var(--bg-hover); border: 1px solid var(--border);
+  border-radius: 10px; padding: 12px 14px; margin-bottom: 10px;
+  font-size: 0.9rem; color: var(--text-light); line-height: 1.7;
+}
+
+.tugas-check {
+  flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border-radius: 8px; border: 1px solid var(--border);
+  background: var(--bg-card); color: var(--primary); cursor: pointer; margin-top: 1px;
+  transition: all .15s ease;
+}
+
+.tugas-check:hover { border-color: var(--primary); background: var(--bg-hover); }
+
+.tugas-list li.tugas-done { opacity: 0.6; }
+.tugas-list li.tugas-done span { text-decoration: line-through; }
+.tugas-list li.tugas-done .tugas-check { color: var(--success); border-color: var(--success); }
+
+[data-theme="dark"] .contoh-soal-a { background: #064e3b; border-left-color: #10b981; }
+[data-theme="dark"] .contoh-soal-a p { color: #d1fae5; }
+[data-theme="dark"] .contoh-soal-a-title { color: #6ee7b7 !important; }
+
 /* ========== SIMULATOR ========== */
 .simulator-container {
   background: var(--bg-card); border-radius: var(--radius-lg); padding: 24px;
@@ -1947,3 +2025,54 @@ a { text-decoration: none; color: inherit; }
 @media (max-width: 560px) {
   .aih-choices { grid-template-columns: 1fr; }
 }
+
+/* === Wiring Puzzle RJ-45 === */
+.wpl-ref { margin: 12px 0 16px; padding: 14px; border: 1px solid var(--border); border-radius: 12px; background: var(--bg); animation: cb-pop 0.3s ease; }
+.wpl-ref table { margin: 0; }
+.wpl-mini { display: inline-flex; align-items: center; justify-content: center; min-width: 34px; height: 26px; padding: 0 6px; border-radius: 999px; font-size: 0.68rem; font-weight: 800; color: #1e293b; background: var(--wc); border: 2px solid rgba(15, 23, 42, 0.25); }
+
+.wpl-timer { display: inline-flex; align-items: center; gap: 5px; font-weight: 700; color: var(--text); background: #f1f5f9; padding: 3px 10px; border-radius: 999px; font-size: 0.8rem; }
+[data-theme="dark"] .wpl-timer { background: #1e293b; }
+.wpl-timer.low { background: #fee2e2; color: #b91c1c; animation: cb-pop 0.4s ease infinite; }
+
+.wpl-board { border: 2px solid var(--border); border-radius: 14px; padding: 14px 12px 0; background: var(--bg-card); }
+.wpl-board-head { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-light); margin-bottom: 12px; }
+.wpl-connector { background: #334155; color: #cbd5e1; font-size: 0.68rem; padding: 2px 10px; border-radius: 999px; letter-spacing: 1px; }
+.wpl-slots { display: grid; grid-template-columns: repeat(8, 1fr); gap: 6px; margin-top: 8px; border: none; background: transparent; padding: 0; min-height: 0; }
+.wpl-slot { position: relative; min-width: 0; border-radius: 8px; padding: 12px 4px 4px; align-items: stretch; }
+.wpl-slot .wpl-cable { width: 100%; }
+.wpl-slot .wpl-cable-name { font-size: 0.68rem; overflow: hidden; text-overflow: ellipsis; }
+.wpl-pin { position: absolute; top: -8px; left: 50%; transform: translateX(-50%); width: 18px; height: 18px; border-radius: 50%; background: #334155; color: white; font-size: 0.62rem; font-weight: 800; display: flex; align-items: center; justify-content: center; z-index: 1; border: 2px solid var(--bg-card); }
+.wpl-slot-empty { border: 2px dashed var(--border); }
+.wpl-empty { width: 100%; height: 30px; display: flex; align-items: center; justify-content: center; font-size: 0.62rem; color: var(--text-lighter); }
+.wpl-jacket { height: 14px; margin: 10px -12px 0; background: linear-gradient(180deg, #64748b, #334155); border-radius: 4px 4px 0 0; }
+.wpl-pair { display: flex; align-items: center; gap: 6px; margin: 14px 0 0; font-size: 0.85rem; color: var(--text-light); background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 8px 12px; }
+
+.wpl-cable { display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; background: var(--bg-card); border: 2px solid var(--border); padding: 4px 10px 4px 4px; cursor: grab; user-select: none; transition: transform 0.12s, box-shadow 0.12s; }
+.wpl-cable:active { cursor: grabbing; }
+.wpl-cable:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
+.wpl-cable-bar { width: 22px; height: 18px; border-radius: 4px; background: var(--wc); flex-shrink: 0; box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.2); }
+.wpl-cable-name { font-size: 0.78rem; font-weight: 700; color: var(--text); white-space: nowrap; }
+.wpl-cable.filled { border-color: var(--wc); background: color-mix(in srgb, var(--wc) 14%, var(--bg-card)); }
+.wpl-palette-item { cursor: grab; }
+.wpl-palette-item:active { cursor: grabbing; }
+.wpl-dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 4px; vertical-align: -1px; }
+
+@media (max-width: 700px) {
+  .wpl-slots { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* === IP Quick Tap === */
+.ipt-question { display: flex; align-items: flex-start; gap: 10px; padding: 18px 20px; border-radius: 14px; background: var(--bg); border: 1px solid var(--border); margin-bottom: 16px; }
+.ipt-question svg { color: #14b8a6; flex-shrink: 0; margin-top: 2px; }
+.ipt-question h3 { margin: 0; font-size: 1.05rem; line-height: 1.5; }
+.ipt-choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; margin-bottom: 16px; }
+.ipt-choice { padding: 18px 12px; border-radius: 14px; font-size: 1.15rem; font-weight: 800; cursor: pointer; border: 2px solid var(--border); background: var(--bg-card); color: var(--text); transition: all 0.2s; }
+.ipt-choice:hover:not(:disabled) { border-color: #14b8a6; background: #f0fdfa; transform: translateY(-2px); }
+[data-theme="dark"] .ipt-choice:hover:not(:disabled) { background: #134e4a33; }
+.ipt-choice.correct { border-color: var(--success); background: #ecfdf5; color: #047857; }
+.ipt-choice.wrong { border-color: var(--danger); background: #fef2f2; color: #b91c1c; }
+[data-theme="dark"] .ipt-choice.correct { background: #064e3b33; color: #6ee7b7; }
+[data-theme="dark"] .ipt-choice.wrong { background: #7f1d1d33; color: #fca5a5; }
+.ipt-choice:disabled { cursor: default; }
+.ipt-choice:disabled:not(.correct):not(.wrong) { opacity: 0.5; }

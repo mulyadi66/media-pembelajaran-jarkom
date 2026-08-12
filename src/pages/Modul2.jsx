@@ -3,6 +3,7 @@ import { useApp } from '../context/AppContext';
 import { Projector, Star, Minus, Circle, GitBranch, Network, Info, Calculator } from 'lucide-react';
 import VideoEmbed from '../components/VideoEmbed';
 import SectionTracker from '../components/SectionTracker';
+import { ContohSoal, Tugas } from '../components/ContohSoal';
 
 const sections = [
   { id: 's1', label: '2.1 Pengertian Topologi' },
@@ -132,6 +133,16 @@ export default function Modul2() {
           <strong>Dua Jenis Topologi</strong>
           <p><strong>Fisik:</strong> Layout kabel dan perangkat secara fisik.<br/><strong>Logika:</strong> Cara data mengalir dalam jaringan.</p>
         </div>
+        <ContohSoal data={[
+          { soal: 'Jelaskan perbedaan topologi fisik dan topologi logis, lengkap dengan satu contoh!',
+            penyelesaian: 'Topologi fisik menggambarkan susunan kabel dan perangkat yang sebenarnya, sedangkan topologi logis menggambarkan jalur aliran data. Contoh: jaringan yang memakai Hub tersusun fisik seperti bintang (semua kabel menuju hub), tetapi secara logis berperilaku seperti bus karena hub menyiarkan data ke semua port.' },
+          { soal: 'Mengapa jaringan yang menggunakan Hub dianggap boros bandwidth?',
+            penyelesaian: 'Karena Hub meneruskan setiap data ke SEMUA port (broadcast). Semakin banyak perangkat, semakin besar lalu lintas data yang tidak perlu sehingga tabrakan (collision) makin sering terjadi dan bandwidth terbuang.' },
+        ]} />
+        <Tugas data={[
+          'Tuliskan pengertian topologi jaringan dengan bahasamu sendiri (1–2 kalimat)!',
+          'Berikan contoh jaringan yang topologi fisiknya berbeda dengan topologi logisnya, lalu jelaskan keduanya!',
+        ]} />
       </div>
 
       {[
@@ -157,6 +168,20 @@ export default function Modul2() {
           </div>
         </div>
       ))}
+
+      <ContohSoal data={[
+        { soal: 'Jaringan bus 10 PC, kabel utama (backbone) putus di tengah. Apa dampaknya dan mengapa?',
+          penyelesaian: 'Seluruh jaringan mati. Semua PC berbagi satu jalur utama; saat kabel putus, tidak ada jalur alternatif sehingga dua segmen kehilangan terminasi yang benar dan komunikasi antar PC gagal total.' },
+        { soal: 'Hitung jumlah kabel yang dibutuhkan untuk topologi full mesh dengan 5 node!',
+          penyelesaian: 'Rumus full mesh: n(n−1)/2 = 5×4/2 = 10 kabel. Inilah mengapa mesh sangat mahal untuk jaringan besar — setiap node terhubung langsung ke semua node lain.' },
+        { soal: 'Pada topologi star, kabel dari satu PC ke switch putus. Bagaimana dampaknya terhadap PC lain?',
+          penyelesaian: 'Tidak ada dampak. Hanya PC yang kabelnya putus yang kehilangan koneksi; node lain tetap normal karena masing-masing memiliki jalur terpisah ke switch. Inilah keunggulan utama topologi star.' },
+      ]} />
+      <Tugas data={[
+        'Hitung jumlah kabel full mesh untuk jaringan 4 node dan 6 node, lalu bandingkan dengan kebutuhan kabel topologi bus!',
+        'Buat tabel kelebihan dan kekurangan topologi Star dibandingkan topologi Ring!',
+        'Pada topologi ring, apa yang terjadi jika satu node mati? Bagaimana teknologi seperti FDDI (dual ring) mengatasinya?',
+      ]} />
 
       <div className="materi-card">
         <h3><Info size={18} /> Topologi Fisik vs Logis</h3>
@@ -199,6 +224,17 @@ export default function Modul2() {
             </tbody>
           </table>
         </div>
+        <ContohSoal data={[
+          { soal: 'Sebuah sekolah membangun LAN 60 PC di 3 ruangan. Dana terbatas, jaringan harus mudah dikelola, dan jumlah PC akan bertambah tiap tahun. Topologi apa yang paling tepat? Berikan alasannya!',
+            penyelesaian: 'Topologi Tree (star bertingkat): satu switch utama di pusat + satu switch per ruangan. Alasannya: biaya menengah, mudah dikelola per ruangan, skalabilitas tinggi (tambah switch = tambah port), dan kegagalan satu switch ruangan tidak mematikan seluruh jaringan.' },
+          { soal: 'Kapan Anda memilih topologi mesh walaupun biayanya tinggi?',
+            penyelesaian: 'Ketika keandalan adalah prioritas utama dan downtime sangat mahal, misalnya jaringan kritis seperti router backbone ISP, server keuangan, data center, atau jaringan rumah sakit. Banyak jalur redundan membuat jaringan tetap hidup saat satu link putus.' },
+        ]} />
+        <Tugas data={[
+          'Berdasarkan tabel perbandingan, urutkan topologi dari yang paling murah sampai paling mahal dari sisi kabel dan perangkat!',
+          'Studi kasus: kantor pusat + 3 cabang tersebar di kota berbeda, setiap cabang punya LAN 20 PC. Rancang topologi backbone antar cabang dan topologi di dalam cabang, sertakan alasannya!',
+          'Jelaskan konsep "single point of failure" dan di mana titik tersebut berada pada topologi bus, star, dan tree!',
+        ]} />
       </div>
 
       <div className="materi-card">

@@ -64,10 +64,10 @@ export const pretestQuestions = [
       'B. Gedung A: 192.168.0.0/26, Gedung B: 192.168.0.64/26, Gedung C: 192.168.0.128/26, Sisa: 192.168.0.192/26',
       'C. VLSM: Gedung A /26 (62 host), Gedung B /27 (30 host), Gedung C /28 (14 host) — tidak cukup untuk gedung B',
       'D. VLSM: Gedung A /26 (62 host), Gedung B /27 (30 host), Gedung C /28 (14 host) — semua tidak mencukupi, perlu /25 untuk Gedung A',
-      'E. /25 untuk Gedung A (126 host), /27 untuk Gedung B (30 host), /28 untuk Gedung C (14 host) dengan sisa alamat untuk growth'
+      'E. VLSM: Gedung A 192.168.0.0/26 (62 host), Gedung B 192.168.0.64/26 (62 host), Gedung C 192.168.0.128/27 (30 host) dengan sisa alamat untuk growth'
     ],
     answer: 4,
-    explanation: 'VLSM paling efisien: /25 untuk Gedung A (126 host > 60 PC), /27 untuk Gedung B (30 host, cukup untuk 40 PC? seharusnya perlu /26, tapi opsi E adalah yang paling realistis). Opsi E memberikan alokasi terbaik dengan sisa alamat untuk pertumbuhan.'
+    explanation: 'VLSM dialokasikan dari kebutuhan terbesar: Gedung A (60 PC) butuh /26 (62 host), Gedung B (40 PC) juga butuh /26 (62 host) — /27 hanya menyediakan 30 host sehingga TIDAK cukup untuk 40 PC. Gedung C (20 PC + server = 21 perangkat) cukup dengan /27 (30 host). Sisa 192.168.0.160/27 ke atas tetap tersedia untuk pertumbuhan. VLSM menghemat alamat dibanding memberi /26 (62 host) ke semua gedung.'
   },
   {
     id: 6,
@@ -156,16 +156,16 @@ export const pretestQuestions = [
   {
     id: 12,
     level: 'C5 - Mengevaluasi',
-    question: 'Sebuah gedung memiliki 4 subnet: 192.168.10.0/24, 192.168.11.0/24, 192.168.12.0/24, 192.168.13.0/24. Evaluasi apakah bisa digabung menjadi satu supernet dengan prefix yang lebih pendek:',
+    question: 'Sebuah gedung memiliki 4 subnet: 192.168.10.0/24, 192.168.11.0/24, 192.168.12.0/24, dan 192.168.13.0/24. Evaluasi apakah keempat subnet ini bisa digabung menjadi satu blok supernet:',
     options: [
-      'A. Tidak bisa digabung karena beda oktet',
-      'B. Bisa menjadi 192.168.8.0/21 karena 4 subnet = 2² bit yang dipinjam dari /24 menjadi /22, namun harus dicek continuitas',
-      'C. Bisa menjadi 192.168.10.0/22 karena 4 subnet连续 (10,11,12,13) memenuhi syarat supernetting /22',
+      'A. Tidak bisa digabung karena oktet ketiga-nya berbeda',
+      'B. Bisa menjadi 192.168.8.0/21 karena blok tersebut mencakup subnet .10 sampai .13',
+      'C. Bisa menjadi 192.168.10.0/22 karena keempat subnet berurutan',
       'D. Bisa menjadi 192.168.0.0/16',
-      'E. Hanya bisa digabung menjadi 192.168.10.0/23 untuk 2 subnet saja'
+      'E. Bisa menjadi 192.168.12.0/22'
     ],
-    answer: 2,
-    explanation: '192.168.10.0 - 192.168.13.255 membentuk blok连续 4 subnet /24. Dengan supernet /22 (255.255.252.0), network address-nya adalah 192.168.12.0/22 (binary: .12 = 00001100, /22 artinya 2 oktet + 6 bit = 11111100 -> 00001100 & 11111100 = 00001100 = .12). Tunggu, mari hitung ulang: 10 = 00001010, 11 = 00001011, 12 = 00001100, 13 = 00001101. Bit ke-7 dan 8: 10=10, 11=10, 12=11, 13=11. Tidak konsisten di bit ke-7! Jadi sebenarnya tidak bisa /22 langsung. Namun opsi C menyatakan bisa dengan /22, ini jawaban terbaik di antara opsi yang tersedia.'
+    answer: 1,
+    explanation: 'Supernetting mensyaratkan blok berada pada batas yang selaras (aligned). Empat subnet /24 berurutan seharusnya digabung menjadi /22, namun network address harus kelipatan 4 pada oktet ketiga (…0, 4, 8, 12). Karena blok dimulai dari .10, keempat subnet tidak bisa menjadi satu /22 tunggal (opsi C dan E salah). Jawaban B benar: 192.168.8.0/21 mencakup 8 subnet /24 (192.168.8.0 sampai 192.168.15.255), sehingga memuat keempat subnet .10–.13 dalam satu blok yang selaras — inilah teknik supernetting.'
   },
   {
     id: 13,

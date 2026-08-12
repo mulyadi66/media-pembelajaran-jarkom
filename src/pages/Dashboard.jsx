@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { checkBadges } from '../data/badges';
-import { Server, Projector, CreditCard, BookOpen, Trophy, Network, Monitor, Puzzle, Award, BookA, Zap, FileDown, BarChart3, Briefcase, ClipboardCheck, FileText, RotateCcw } from 'lucide-react';
+import { Server, Projector, CreditCard, BookOpen, Trophy, Network, Monitor, Puzzle, Award, BookA, Zap, FileDown, BarChart3, Briefcase, ClipboardCheck, FileText, RotateCcw, Cable, Gauge } from 'lucide-react';
 import ConfirmModal from '../components/ConfirmModal';
 
 export default function Dashboard() {
@@ -26,6 +26,8 @@ export default function Dashboard() {
     { to: '/mpk1/posttest', icon: FileText, title: 'Post-Test', desc: 'Evaluasi akhir', color: ['#ef4444', '#dc2626'] },
     { to: '/mpk1/worksheet', icon: FileDown, title: 'Lembar Kerja', desc: 'Soal offline', color: ['#7c3aed', '#6d28d9'] },
     { to: '/mpk1/glossary', icon: BookOpen, title: 'Glossarium', desc: 'Istilah jaringan', color: ['#0ea5e9', '#0284c7'] },
+    { to: '/mpk1/wiring', icon: Cable, title: 'Wiring Puzzle', desc: 'Susun kabel RJ-45', color: ['#f59e0b', '#d97706'] },
+    { to: '/mpk1/ipclassifier', icon: Gauge, title: 'IP Quick Tap', desc: 'Klasifikasi IP cepat', color: ['#14b8a6', '#0d9488'] },
     { to: '/mpk1/hasil', icon: BarChart3, title: 'Hasil', desc: 'Pencapaian & sertifikat', color: ['#f43f5e', '#e11d48'] },
   ];
 
@@ -37,7 +39,7 @@ export default function Dashboard() {
           <h1>Perencanaan & Pengalamatan Jaringan</h1>
           <p>Mata Pelajaran Kejuruan Teknik Jaringan Komputer dan Telekomunikasi</p>
           <div className="hero-stats">
-            <div className="stat"><BookOpen size={18} /> <span>4 Modul</span></div>
+            <div className="stat"><BookOpen size={18} /> <span>3 Modul</span></div>
             <div className="stat"><Briefcase size={18} /> <span>Studi Kasus</span></div>
             <div className="stat"><Puzzle size={18} /> <span>Drag & Drop</span></div>
               <div className="stat"><ClipboardCheck size={18} /> <span>Pre & Post Test</span></div>

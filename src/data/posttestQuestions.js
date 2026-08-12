@@ -164,8 +164,8 @@ export const posttestQuestions = [
       'D. 4.194.302 host, terlalu besar',
       'E. 254 host, tidak cukup'
     ],
-    answer: 1,
-    explanation: '/12 = 12 network bit, 20 host bit. Total host = 2²⁰ - 2 = 1.048.574 usable host. Namun opsi B menyebutkan 16.777.214 yang sebenarnya adalah /8. Untuk /12 jawaban terdekat adalah opsi B (meskipun angkanya tidak tepat, C lebih tepat). Dalam konteks soal, 1.048.574 host (opsi C) cukup untuk ISP lokal.'
+    answer: 2,
+    explanation: '/12 memiliki 12 bit network dan 20 bit host. Total host = 2²⁰ − 2 = 1.048.574 usable host. Angka 16.777.214 pada opsi B adalah milik /8 (Class A), bukan /12. Dengan lebih dari 1 juta host, blok ini sangat cukup untuk ISP lokal.'
   },
   {
     id: 13,
@@ -186,14 +186,14 @@ export const posttestQuestions = [
     level: 'C6 - Menciptakan',
     question: 'Buat rancang VLAN untuk gedung kantor dengan: VLAN 10 = HR (10 PC), VLAN 20 = Keuangan (15 PC), VLAN 30 = IT (8 PC + 2 server), VLAN 99 = Management. Router layer 3 digunakan sebagai inter-VLAN routing. Pilih konfigurasi IP terbaik dari 192.168.0.0/24:',
     options: [
-      'A. Semua VLAN satu IP: 192.168.0.0/24',
+      'A. Semua VLAN menggunakan satu subnet 192.168.0.0/24',
       'B. VLAN10: 192.168.10.0/28, VLAN20: 192.168.20.0/28, VLAN30: 192.168.30.0/28, VLAN99: 192.168.99.0/28',
-      'C. VLAN10: 192.168.0.0/28, VLAN20: 192.168.0.16/28, VLAN30: 192.168.0.32/28, VLAN99: 192.168.0.48/30',
+      'C. VLAN20: 192.168.0.0/27 (30 host), VLAN10: 192.168.0.32/28 (14 host), VLAN30: 192.168.0.48/28 (14 host), VLAN99: 192.168.0.64/30 (2 host)',
       'D. VLAN10: 192.168.0.0/28, VLAN20: 192.168.0.16/27, VLAN30: 192.168.0.48/29, VLAN99: 192.168.0.56/30',
       'E. VLAN10: 192.168.0.0/24, VLAN20: 192.168.1.0/24, VLAN30: 192.168.2.0/24, VLAN99: 192.168.3.0/24'
     ],
-    answer: 3,
-    explanation: 'VLSM dalam satu /24: VLAN20 (15 PC) = /27 (30 host), VLAN10 (10 PC) = /28 (14 host), VLAN30 (10 device) = /29 (6 host) — tapi /29 hanya 6 host, kurang untuk 10 device. Opsi D: VLAN10=/28(14), VLAN20=/27(30), VLAN30=/29(6 tidak cukup). Opsi C semua /28(14) cukup untuk semua VLAN dan terstruktur rapi dengan sequential allocation.'
+    answer: 2,
+    explanation: 'VLSM dialokasikan dari kebutuhan terbesar: VLAN20 (15 PC) butuh /27 (30 host, mulai 192.168.0.0). VLAN10 (10 PC) cukup /28 (14 host, mulai .32). VLAN30 (10 device) juga /28 (14 host, mulai .48) — /29 hanya 6 host, tidak cukup (menyingkirkan opsi D). VLAN99 untuk management cukup /30 (2 host, mulai .64). Semua alokasi selaras dan tidak saling overlap, sedangkan opsi B memakai /28 (14 host) untuk VLAN20 yang butuh 15 PC dan keluar dari blok /24.'
   },
   {
     id: 15,
