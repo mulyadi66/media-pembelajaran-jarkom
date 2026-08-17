@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useApp } from '../../context/AppContext';
-import { Globe, Layout, Smartphone, Paintbrush, Rocket, GitBranch, Puzzle, Server, Target, Award, Lightbulb, AlertTriangle, ExternalLink } from 'lucide-react';
+import { Globe, Layout, Smartphone, Paintbrush, Rocket, GitBranch, Puzzle, Server, Target, Award, Lightbulb, AlertTriangle, ExternalLink, Wand2, Code2, FileCode, Copy } from 'lucide-react';
 import SectionTracker from '../../components/SectionTracker';
 import { ContohSoal, Tugas } from '../../components/ContohSoal';
 
@@ -19,6 +19,22 @@ function MateriCard({ icon: Icon, title, children }) {
   );
 }
 
+function PromptCard({ title, prompt, hasil }) {
+  return (
+    <div style={{border:'1px solid var(--border)', borderRadius:10, padding:16, margin:'12px 0', background:'var(--bg-card)'}}>
+      <h4 style={{marginTop:0, fontSize:'0.95rem', color:'var(--primary)'}}>{title}</h4>
+      <div style={{background:'#0f172a', color:'#e2e8f0', padding:'12px 16px', borderRadius:8, fontSize:'0.82rem', lineHeight:1.6, whiteSpace:'pre-wrap', fontFamily:'ui-monospace, Consolas, monospace', marginBottom:8}}>
+        {prompt}
+      </div>
+      {hasil && (
+        <div style={{fontSize:'0.85rem', color:'var(--text-light)', lineHeight:1.6}}>
+          <strong>Yang dihasilkan:</strong> {hasil}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function Modul4KKAXI() {
   const { markModuleRead } = useApp();
   useEffect(() => { markModuleRead('kka_xi_modul4'); }, [markModuleRead]);
@@ -33,15 +49,17 @@ export default function Modul4KKAXI() {
       <MateriCard icon={Globe} title="A. Pengembangan Web Responsif & Interaktif">
 
         {/* A.1 HTML5 Semantic */}
-        <h4 style={{marginTop: 0}}>A.1 HTML5 Semantic — Struktur yang Bermakna</h4>
-        <p>HTML5 introduced semantic elements that describe the meaning of content, not just its appearance. Search engines and screen readers can better understand your page structure.</p>
+        <h4 style={{marginTop: 0}}>A.1 HTML5 Semantic - Struktur yang Bermakna</h4>
+        <p>HTML5 menyediakan elemen-elemen semantic yang menjelaskan makna konten, bukan hanya tampilannya. Mesin pencari (Google) dan screen reader (untuk penyandang disabilitas) bisa lebih memahami struktur halaman kamu. Website yang menggunakan semantic HTML lebih mudah dioptimasi untuk SEO (Search Engine Optimization).</p>
+        <h3 style={{marginTop: 12}}>Struktur Dasar HTML5 yang Benar:</h3>
         <pre style={{background:'var(--bg-secondary)', padding:16, borderRadius:8, overflow:'auto', fontSize:'0.85rem'}}>
 {`<!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portofolio Siswa</title>
+  <meta name="description" content="Deskripsi website untuk SEO">
+  <title>Judul Website</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -49,58 +67,68 @@ export default function Modul4KKAXI() {
     <nav>
       <a href="#home">Beranda</a>
       <a href="#about">Tentang</a>
-      <a href="#project">Proyek</a>
+      <a href="#contact">Kontak</a>
     </nav>
   </header>
 
   <main>
     <section id="home">
-      <h1>Halo, Saya Budi</h1>
-      <p>Siswa TJKT yang passionate di web development</p>
+      <h1>Judul Utama Halaman</h1>
+      <p>Paragraf pengantar singkat.</p>
     </section>
 
-    <article id="project">
-      <h2>Proyek Terbaru</h2>
-      <figure>
-        <img src="screenshot.png" alt="Screenshot Aplikasi">
-        <figcaption>Sistem Perpustakaan Digital</figcaption>
-      </figure>
-    </article>
+    <section id="about">
+      <h2>Tentang Kami</h2>
+      <article>
+        <h3>Artikel Pertama</h3>
+        <p>Isi artikel...</p>
+        <time datetime="2026-08-17">17 Agustus 2026</time>
+      </article>
+    </section>
 
     <aside>
-      <h3>Skills</h3>
-      <ul>
-        <li>HTML5 & CSS3</li>
-        <li>JavaScript ES6</li>
-        <li>React Basics</li>
-      </ul>
+      <h3>Informasi Tambahan</h3>
+      <ul><li>Item 1</li><li>Item 2</li></ul>
     </aside>
   </main>
 
   <footer>
-    <p>&copy; 2026 Budi. All rights reserved.</p>
+    <p>&copy; 2026 Nama Kamu</p>
   </footer>
 </body>
 </html>`}
         </pre>
-        <h3 style={{marginTop: 16}}>Semantic Tags Penting:</h3>
+        <h3 style={{marginTop: 16}}>Semantic Tags dan Fungsinya:</h3>
         <ul>
-          <li><code>&lt;header&gt;</code> — Bagian atas halaman (logo, navigasi)</li>
-          <li><code>&lt;nav&gt;</code> — Kontainer navigasi</li>
-          <li><code>&lt;main&gt;</code> — Konten utama halaman (hanya 1 per halaman)</li>
-          <li><code>&lt;section&gt;</code> — Bagian tematik konten</li>
-          <li><code>&lt;article&gt;</code> — Konten mandiri (blog post, berita)</li>
-          <li><code>&lt;aside&gt;</code> — Konten sampingan (sidebar)</li>
-          <li><code>&lt;footer&gt;</code> — Bagian bawah halaman</li>
-          <li><code>&lt;figure&gt;</code> dan <code>&lt;figcaption&gt;</code> — Gambar dengan caption</li>
+          <li><code>&lt;header&gt;</code> - Bagian atas halaman: logo, navigasi, judul. Bisa ada di setiap section, bukan hanya di atas.</li>
+          <li><code>&lt;nav&gt;</code> - Kontainer navigasi khusus. Google mengenali ini sebagai menu navigasi.</li>
+          <li><code>&lt;main&gt;</code> - Konten UTAMA halaman. Hanya boleh ada 1 per halaman. Screen reader bisa langsung lompat ke sini.</li>
+          <li><code>&lt;section&gt;</code> - Bagian tematik konten. Harus punya heading (h2/h3) sendiri. Beda dengan div yang netral.</li>
+          <li><code>&lt;article&gt;</code> - Konten MANDIRI yang bisa berdiri sendiri: blog post, berita, komentar, card.</li>
+          <li><code>&lt;aside&gt;</code> - Konten sampingan: sidebar, widget, iklan. Tidak terkait langsung dengan konten utama.</li>
+          <li><code>&lt;footer&gt;</code> - Bagian bawah: copyright, social media, links.</li>
+          <li><code>&lt;figure&gt;</code> dan <code>&lt;figcaption&gt;</code> - Gambar/video dengan caption deskriptif.</li>
+          <li><code>&lt;time&gt;</code> - Tanggal/waktu dalam format machine-readable. Membantu Google memahami kapan konten dibuat.</li>
         </ul>
+        <div className="info-box">
+          <strong><Lightbulb size={14} /> Kenapa Bukan &lt;div&gt; Saja?</strong>
+          <p>&lt;div&gt; adalah container netral tanpa makna. &lt;section&gt; bilang "ini bagian konten". &lt;article&gt; bilang "ini konten mandiri". Perbedaan ini penting untuk SEO (Google mengerti struktur) dan aksesibilitas (screen reader bisa navigate dengan benar). Gunakan semantic tags saat makna kontennya jelas.</p>
+        </div>
 
-        {/* A.2 CSS Flexbox & Grid */}
-        <h4 style={{marginTop: 24}}>A.2 CSS Flexbox & Grid — Layout Modern</h4>
-        <p><strong>Flexbox</strong> is best for one-dimensional layouts (row OR column). <strong>CSS Grid</strong> is best for two-dimensional layouts (rows AND columns).</p>
-        <h3 style={{marginTop: 12}}>Flexbox Example:</h3>
+        {/* A.2 CSS Flexbox */}
+        <h4 style={{marginTop: 24}}>A.2 CSS Flexbox - Layout Satu Dimensi</h4>
+        <p>Flexbox dirancang untuk layout SATU dimensi:either horizontal (row) ATAU vertical (column). Sangat powerful untuk menyejajarkan, mendistribusikan, dan menyusun elemen dalam satu arah.</p>
+        <h3 style={{marginTop: 12}}>Properti Flexbox Penting:</h3>
+        <ul>
+          <li><strong>display: flex</strong> - Mengaktifkan flexbox pada container</li>
+          <li><strong>flex-direction</strong> - Arah susunan: row (default), column, row-reverse, column-reverse</li>
+          <li><strong>justify-content</strong> - Penyusunan di sumbu utama: flex-start, center, flex-end, space-between, space-around, space-evenly</li>
+          <li><strong>align-items</strong> - Penyusunan di sumbu silang: flex-start, center, flex-end, stretch, baseline</li>
+          <li><strong>flex-wrap</strong> - wrap (elemen pindah baris jika tidak muat), nowrap (default)</li>
+          <li><strong>gap</strong> - Jarak antar elemen flex</li>
+        </ul>
         <pre style={{background:'var(--bg-secondary)', padding:16, borderRadius:8, overflow:'auto', fontSize:'0.85rem'}}>
-{`/* Navigation bar with Flexbox */
+{`/* Navbar - items sejajar, logo kiri, menu kanan */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -110,7 +138,7 @@ export default function Modul4KKAXI() {
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-/* Card container - wrap cards to next row */
+/* Card container - wrap ke baris baru jika tidak muat */
 .card-container {
   display: flex;
   flex-wrap: wrap;
@@ -118,16 +146,33 @@ export default function Modul4KKAXI() {
 }
 
 .card {
-  flex: 1 1 300px; /* grow, shrink, basis */
+  flex: 1 1 300px; /* grow:1, shrink:1, basis:300px */
   padding: 1.5rem;
   border-radius: 12px;
   background: white;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: transform 0.2s;
+}
+.card:hover {
+  transform: translateY(-4px);
+}
+
+/* Hero section - konten di tengah */
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  gap: 3rem;
+  padding: 2rem;
 }`}
         </pre>
-        <h3 style={{marginTop: 16}}>CSS Grid Example:</h3>
+
+        {/* A.3 CSS Grid */}
+        <h4 style={{marginTop: 24}}>A.3 CSS Grid - Layout Dua Dimensi</h4>
+        <p>CSS Grid dirancang untuk layout DUA dimensi: mengontrol baris DAN kolom secara bersamaan. Cocok untuk layout halaman utama, dashboard, gallery, dan portfolio.</p>
         <pre style={{background:'var(--bg-secondary)', padding:16, borderRadius:8, overflow:'auto', fontSize:'0.85rem'}}>
-{`/* Portfolio grid layout */
+{`/* Portfolio grid - otomatis responsif */
 .portfolio {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -135,73 +180,98 @@ export default function Modul4KKAXI() {
   padding: 2rem;
 }
 
-/* Sidebar + main content layout */
+/* Dashboard: sidebar + main content */
 .dashboard {
   display: grid;
   grid-template-columns: 250px 1fr;
   min-height: 100vh;
 }
+.dashboard sidebar { background: #1e293b; color: white; }
+.dashboard main { padding: 2rem; }
 
+/* Grid dengan nama area */
+.layout {
+  display: grid;
+  grid-template-areas:
+    "header  header  header"
+    "sidebar content aside"
+    "footer  footer  footer";
+  grid-template-columns: 200px 1fr 200px;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+}
+.header  { grid-area: header; }
+.sidebar { grid-area: sidebar; }
+.content { grid-area: content; }
+.aside   { grid-area: aside; }
+.footer  { grid-area: footer; }
+
+/* Responsive - mobile first */
 @media (max-width: 768px) {
-  .dashboard {
-    grid-template-columns: 1fr; /* Stack on mobile */
+  .dashboard { grid-template-columns: 1fr; }
+  .layout {
+    grid-template-areas:
+      "header"
+      "content"
+      "sidebar"
+      "aside"
+      "footer";
+    grid-template-columns: 1fr;
   }
 }`}
         </pre>
 
-        {/* A.3 JavaScript ES6+ */}
-        <h4 style={{marginTop: 24}}>A.3 JavaScript ES6+ untuk Web Modern</h4>
-        <p>ES6 (ECMAScript 2015) introduced many features that make JavaScript cleaner and more powerful. These are essential for modern web development.</p>
+        {/* A.4 JavaScript ES6+ */}
+        <h4 style={{marginTop: 24}}>A.4 JavaScript ES6+ untuk Web Modern</h4>
+        <p>ES6 (ECMAScript 2015) membawa banyak fitur baru yang membuat JavaScript lebih bersih, powerful, dan mudah dibaca. Ini adalah standar yang wajib dikuasai untuk web development modern.</p>
         <pre style={{background:'var(--bg-secondary)', padding:16, borderRadius:8, overflow:'auto', fontSize:'0.85rem'}}>
-{`// Arrow functions
+{`// 1. Arrow Functions - lebih ringkas
 const sapa = (nama) => \`Halo, \${nama}!\`;
-const jumlah = (a, b) => a + b;
+const tambah = (a, b) => a + b;
+const kuadrat = x => x * x;
 
-// Destructuring
+// 2. Destructuring - ekstrak nilai dari array/object
 const siswa = { nama: "Budi", kelas: "XI", jurusan: "TJKT" };
-const { nama, kelas } = siswa; // nama="Budi", kelas="XI"
+const { nama, kelas } = siswa;  // nama="Budi", kelas="XI"
 
-// Spread operator
+const angka = [10, 20, 30];
+const [pertama, kedua] = angka;  // pertama=10, kedua=20
+
+// 3. Spread & Rest Operator
 const arr1 = [1, 2, 3];
-const arr2 = [...arr1, 4, 5]; // [1, 2, 3, 4, 5]
+const arr2 = [...arr1, 4, 5];  // [1, 2, 3, 4, 5]
 
-// Async/Await + Fetch
-async function ambilData() {
-  try {
-    const res = await fetch("https://api.example.com/siswa");
-    const data = await res.json();
-    console.log(data);
-  } catch (err) {
-    console.error("Gagal mengambil data:", err);
-  }
-}
+const obj1 = { a: 1, b: 2 };
+const obj2 = { ...obj1, c: 3 };  // { a:1, b:2, c:3 }
 
-// Template literals
-const kartu = \`
-  <div class="card">
-    <h3>\${siswa.nama}</h3>
-    <p>Kelas \${siswa.kelas} - \${siswa.jurusan}</p>
-  </div>
-\`;
+// 4. Template Literals - string dengan variabel
+const umur = 16;
+const msg = \`Saya \${nama}, umur \${umur} tahun\`;
 
-// Optional chaining
-const alamat = siswa?.alamat?.kota ?? "Tidak diketahui";`}
+// 5. Optional Chaining & Nullish Coalescing
+const alamat = siswa?.alamat?.kota ?? "Tidak diketahui";
+
+// 6. Array Methods powerful
+const angka2 = [1, 2, 3, 4, 5, 6];
+const genap = angka2.filter(n => n % 2 === 0);  // [2, 4, 6]
+const kali2 = angka2.map(n => n * 2);           // [2, 4, 6, 8, 10, 12]
+const total = angka2.reduce((acc, n) => acc + n, 0);  // 21`}
         </pre>
 
-        {/* A.4 Fetch API & localStorage */}
-        <h4 style={{marginTop: 24}}>A.4 Fetch API & localStorage</h4>
-        <p>Fetch API allows your website to communicate with servers and external APIs. localStorage enables data persistence in the browser.</p>
+        {/* A.5 Fetch API & localStorage */}
+        <h4 style={{marginTop: 24}}>A.5 Fetch API & localStorage - Komunikasi & Penyimpanan</h4>
+        <p>Fetch API memungkinkan website berkomunikasi dengan server (mengambil/mengirim data). localStorage menyimpan data di browser yang tetap ada meskipun halaman di-refresh.</p>
         <pre style={{background:'var(--bg-secondary)', padding:16, borderRadius:8, overflow:'auto', fontSize:'0.85rem'}}>
-{`// Fetch API - GET request
+{`// === FETCH API ===
+
+// GET - mengambil data dari server
 async function getUsers() {
   const res = await fetch("https://jsonplaceholder.typicode.com/users");
   const users = await res.json();
-  users.forEach(user => {
-    console.log(user.name, user.email);
-  });
+  users.forEach(u => console.log(u.name, u.email));
 }
 
-// Fetch API - POST request
+// POST - mengirim data ke server
 async function createPost(title, body) {
   const res = await fetch("https://jsonplaceholder.typicode.com/posts", {
     method: "POST",
@@ -211,60 +281,213 @@ async function createPost(title, body) {
   return await res.json();
 }
 
-// localStorage - Simpan & ambil data
-localStorage.setItem("username", "budi_tjkt");
-const username = localStorage.getItem("username");
-localStorage.removeItem("username");
+// === LOCALSTORAGE ===
 
-// localStorage dengan JSON
-const todos = ["Belajar HTML", "Kerjakan tugas", "Push GitHub"];
-localStorage.setItem("todos", JSON.stringify(todos));
-const saved = JSON.parse(localStorage.getItem("todos"));`}
+// Simpan data
+localStorage.setItem("username", "budi_tjkt");
+localStorage.setItem("theme", "dark");
+localStorage.setItem("todos", JSON.stringify(["Belajar", "Coding", "Push"]));
+
+// Ambil data
+const username = localStorage.getItem("username");
+const theme = localStorage.getItem("theme");
+const todos = JSON.parse(localStorage.getItem("todos"));
+
+// Hapus data
+localStorage.removeItem("username");
+localStorage.clear(); // hapus semua`}
         </pre>
 
-        {/* A.5 Google AI Studio untuk Web Development */}
-        <h4 style={{marginTop: 24}}>A.5 Google AI Studio — AI Assistant untuk Developer</h4>
-        <p>Google AI Studio (formerly MakerSuite) is a free tool from Google that lets you use Gemini AI models to generate code, debug errors, and accelerate web development. It can help you generate HTML, CSS, JavaScript, and even React components.</p>
-        <h3 style={{marginTop: 12}}>Cara Menggunakan Google AI Studio:</h3>
+        {/* A.6 Google AI Studio */}
+        <h4 style={{marginTop: 24}}>A.6 Google AI Studio - AI Assistant untuk Developer</h4>
+        <p>Google AI Studio (aistudio.google.com) adalah tool gratis dari Google yang memungkinkan kamu menggunakan model AI Gemini untuk generate kode, debug error, dan mempercepat pengembangan web. AI bisa menghasilkan HTML, CSS, JavaScript, dan komponen React dari deskripsi teks (prompt).</p>
+
+        <h3 style={{marginTop: 16}}>Cara Menggunakan Google AI Studio:</h3>
+        <ol>
+          <li><strong>Buka</strong> aistudio.google.com di browser</li>
+          <li><strong>Login</strong> dengan akun Google (Gmail)</li>
+          <li><strong>Pilih model</strong>: Gemini 2.5 Flash (gratis, cepat, cocok untuk kode) atau Gemini 2.5 Pro (lebih detail, lebih lambat)</li>
+          <li><strong>Tulis prompt</strong> di kolom chat. Jelaskan SEPERLUNYA apa yang ingin kamu buat</li>
+          <li><strong>Tekan Enter</strong> dan tunggu AI generate kode</li>
+          <li><strong>Copy kode</strong> hasilnya, paste ke file .html lalu buka di browser</li>
+          <li><strong>Iterasi</strong>: Jika hasilnya kurang tepat, tulis perubahan yang diinginkan di chat yang sama</li>
+        </ol>
+
+        <h3 style={{marginTop: 20}}>Tips Menulis Prompt yang Efektif:</h3>
         <ul>
-          <li><strong>Buka</strong> aistudio.google.com dan login dengan akun Google</li>
-          <li><strong>Pilih model</strong> — Gemini 2.5 Flash (gratis, cepat) atau Gemini 2.5 Pro (lebih powerful)</li>
-          <li><strong>Buat prompt</strong> — Jelaskan apa yang ingin kamu buat secara spesifik</li>
-          <li><strong>Copy hasil</strong> — AI akan menghasilkan kode yang bisa langsung dipakai</li>
+          <li><strong>Spesifik</strong> - Semakin detail prompt, semakin akurat hasilnya. "Buatkan card profil dengan foto, nama, bio, tombol follow" lebih baik dari "Buat card"</li>
+          <li><strong>Sebutkan teknologi</strong> - "Gunakan HTML + CSS Flexbox + JavaScript vanilla" atau "Buat dalam satu file .html"</li>
+          <li><strong>Beri contoh visual</strong> - "Seperti profil Instagram: foto bulat di atas, nama di bawah, tombol Follow biru"</li>
+          <li><strong>Minta penjelasan</strong> - Tambahkan "Jelaskan kode ini setelah generate" agar kamu belajar</li>
+          <li><strong>Iterasi</strong> - Mulai dari versi sederhana, lalu tambah fitur: "Tambahkan dark mode", "Buat responsive"</li>
         </ul>
-        <h3 style={{marginTop: 16}}>Tips Prompt yang Efektif:</h3>
-        <ul>
-          <li><strong>Spesifik</strong> — "Buatkan HTML + CSS card profil dengan flexbox, dark mode, responsive" lebih baik dari "Buatkan card"</li>
-          <li><strong>Beri context</strong> — "Saya sedang membuat portofolio untuk siswa SMK TJKT" membantu AI memahami kebutuhan</li>
-          <li><strong>Minta penjelasan</strong> — Tambahkan "Jelaskan kode ini" agar kamu belajar dari hasil AI</li>
-          <li><strong>Iterasi</strong> — Jika hasilnya kurang tepat, berikan feedback: "Tambahkan animasi hover" atau "Ganti warna jadi biru"</li>
-        </ul>
+
+        <h3 style={{marginTop: 20}}>Contoh Prompt untuk Membuat Website:</h3>
+
+        <PromptCard
+          title="Prompt 1: Landing Page Sederhana"
+          prompt={`Buatkan landing page produk digital bernama "CodeMaster" dalam satu file HTML.
+Yang harus ada:
+1. Hero section dengan judul "Belajar Coding dengan CodeMaster", subjudul, dan tombol "Mulai Gratis" berwarna biru (#3b82f6)
+2. Features section dengan 3 card (Interactive Learning, AI Assistant, Free Forever) dalam layout flexbox
+3. Testimonial section dengan 2 card testimonial
+4. Footer dengan copyright
+
+Gunakan CSS internal (di dalam <style>), warna dominan biru-ungu, modern, responsive. Tambahkan animasi hover di card.`}
+          hasil="HTML + CSS lengkap dengan hero, 3 feature cards, testimonial, footer. Responsive dan ada hover animation."
+        />
+
+        <PromptCard
+          title="Prompt 2: Form Pendaftaran"
+          prompt={`Buatkan halaman form pendaftaran online untuk workshop "AI for Students" dengan:
+- Judul form di tengah
+- Field: Nama Lengkap (text), Email (email), Asal Sekolah (text), Pilihan Workshop (dropdown: AI Basics, Web Dev, Data Science), Checkbox persetujuan
+- Tombol "Daftar Sekarang" dengan gradient biru-ungu
+- Validasi JavaScript: semua field wajib diisi, email harus mengandung @
+- Jika berhasil, tampilkan alert "Pendaftaran berhasil!"
+- Desain modern, card dengan shadow, responsive
+
+Satu file HTML dengan CSS dan JavaScript internal.`}
+          hasil="Form lengkap dengan validasi JS, dropdown, checkbox, gradient button, dan error handling."
+        />
+
+        <PromptCard
+          title="Prompt 3: Portfolio Pribadi"
+          prompt={`Buatkan halaman portfolio pribadi untuk siswa SMK bernama "Budi" jurusan TJKT. Satu file HTML.
+
+Section:
+1. Hero: "Hi, I'm Budi" dengan teks animasi typing effect sederhana
+2. About: bio singkat + foto placeholder (gambar kotak abu-abu)
+3. Skills: grid 6 card skill (HTML, CSS, JavaScript, Python, React, Git) dengan icon emoji dan progress bar
+4. Projects: 3 card proyek dengan gambar placeholder, judul, deskripsi singkat, tombol "Lihat"
+5. Contact: form (nama, email, pesan) + social media links
+6. Footer
+
+CSS: dark mode, color accent #6366f1 (indigo), smooth scroll, responsive. JavaScript: dark mode toggle yang tersimpan di localStorage.`}
+          hasil="Portfolio lengkap dark mode dengan typing effect, progress bars, project cards, contact form, dan dark mode localStorage."
+        />
+
+        <PromptCard
+          title="Prompt 4: Dashboard Sederhana"
+          prompt={`Buatkan dashboard admin sederhana dalam satu file HTML dengan layout:
+- Sidebar kiri (250px): logo, menu (Dashboard, Users, Settings, Logout)
+- Header atas: judul "Admin Dashboard" + tombol notifikasi
+- Main content: 4 statistic cards (Total Users: 1,234, Revenue: Rp 45.6M, Orders: 89, Rating: 4.8) dalam grid
+- Di bawah stats: tabel data users sederhana (5 baris)
+
+Gunakan CSS Grid untuk layout. Warna sidebar #1e293b (gelap), main content background #f8fafc. Responsive: di mobile sidebar jadi hamburger menu. Tambahkan JavaScript untuk toggle sidebar.`}
+          hasil="Dashboard dengan sidebar, 4 stat cards dalam grid, data table, dan JavaScript toggle sidebar."
+        />
+
+        <PromptCard
+          title="Prompt 5: To-Do List App"
+          prompt={`Buatkan aplikasi To-Do List yang fungsional dalam satu file HTML:
+
+Fitur:
+- Input field + tombol "Tambah" untuk menambah tugas baru
+- Daftar tugas dalam list, masing-masing ada checkbox (selesai/belum) dan tombol hapus (X)
+- Tugas yang selesai dicoret (line-through) dan warna abu-abu
+- Counter "X tugas tersisa" di bawah
+- Tombol "Hapus Selesai" untuk menghapus semua tugas yang sudah selesai
+- DATA TERSIMPAN di localStorage (tetap ada saat refresh halaman)
+
+Desain: minimalis, clean, warna putih dengan shadow card, tombol biru. Responsive.`}
+          hasil="Aplikasi to-do list fungsional dengan localStorage persistence, checkbox, delete, dan counter."
+        />
+
+        <PromptCard
+          title="Prompt 6: Landing Page + Dark Mode + Animasi"
+          prompt={`Buatkan landing page untuk aplikasi mobile "FoodTracker" (app pelacak kalori makanan) dalam satu file HTML.
+
+Yang harus ada:
+1. Navbar: logo teks "FoodTracker", menu (Home, Fitur, Download), tombol dark mode toggle (ikon matahari/bulan)
+2. Hero: judul besar "Pantau Makananmu Setiap Hari", subjudul, tombol "Download Gratis" + "Pelajari Lebih Lanjut"
+3. Features: 3 card dengan icon emoji (Kalori Tracker, Water Reminder, Progress Chart)
+4. How It Works: 3 langkah dengan nomor (Download, Input Makanan, Lihat Hasil)
+5. Download section: tombol App Store + Google Play (fake, hanya UI)
+6. Footer
+
+CSS: mobile-first, Flexbox + Grid, smooth scroll, transition dark mode 0.3s. JavaScript: dark mode toggle + localStorage + smooth scroll ke section saat klik menu navbar. Animasi: card hover naik, fade-in saat scroll (gunakan IntersectionObserver).`}
+          hasil="Landing page lengkap dengan navbar, dark mode, smooth scroll, fade-in animation, dan mobile responsive."
+        />
+
+        <PromptCard
+          title="Prompt 7: Debug & Perbaiki Kode"
+          prompt={`Saya punya kode HTML ini tapi ada error:
+
+<pre><code>&lt;div class="card"&gt;
+  &lt;h2&gt;Judul&lt;/h2&gt;
+  &lt;p&gt;Deskripsi&lt;/p&gt;
+  &lt;button onclick="alert('Halo')"&gt;Klik&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;style&gt;
+.card { background: white; padding: 20px; }
+.card h2 { color: blue; }
+&lt;/style&gt;
+</code></pre>
+
+Masalahnya:
+1. Card tidak punya border radius dan shadow
+2. Tombol tidak ada styling (default browser)
+3. Tidak responsive di mobile
+
+Tolong perbaiki dan jelaskan setiap perubahan!`}
+         hasil="Kode yang diperbaiki dengan penjelasan: border-radius, box-shadow, button styling, dan media query responsive."
+        />
+
+        <PromptCard
+          title="Prompt 8: Eksplorasi CSS Flexbox"
+          prompt={`Buatkan halaman demonstrasi CSS Flexbox dalam satu file HTML. Halaman ini untuk belajar Flexbox.
+
+Isi halaman:
+1. Judul "Flexbox Playground"
+2. 6 contoh layout berbeda:
+   - Centering: konten di tengah horizontal + vertical
+   - Space between: 3 box dengan jarak merata
+   - Card wrap: 5 card yang wrap ke baris berikutnya
+   - Holy grail layout: header + sidebar-left + content + sidebar-right + footer
+   - Navbar responsive: logo kiri, menu kanan
+   - Image gallery: grid gambar dengan gap
+
+Setiap contoh ada label nama teknik Flexbox yang digunakan dan kode CSS-nya ditampilkan di bawah contoh. Beri warna berbeda untuk setiap box agar terlihat jelas.`}
+         hasil="Halaman edukasi Flexbox dengan 6 demonstrasi interaktif, setiap contoh ada label + kode CSS."
+        />
+
         <div className="info-box">
-          <strong><Lightbulb size={14} /> Catatan Penting</strong>
-          <p>AI adalah alat bantu, bukan pengganti belajar. Kamu tetap harus memahami dasar HTML, CSS, dan JavaScript agar bisa memperbaiki dan memodifikasi kode yang dihasilkan AI. Gunakan AI untuk mempercepat kerja, tapi jangan lupa belajar fondasinya!</p>
+          <strong><Wand2 size={14} /> Strategi Prompt Bertingkat (Iterative Prompting)</strong>
+          <p>Jangan langsung minta AI buat website kompleks dalam satu prompt. Gunakan pendekatan bertingkat:</p>
+          <ul style={{marginTop: 8}}>
+            <li><strong>Step 1</strong> - Minta versi sederhana dulu: "Buatkan hero section sederhana dengan judul dan tombol"</li>
+            <li><strong>Step 2</strong> - Tambah section: "Tambahkan features section dengan 3 card di bawah hero"</li>
+            <li><strong>Step 3</strong> - Tambah styling: "Buat responsive, tambahkan animasi hover, gunakan warna biru-ungu"</li>
+            <li><strong>Step 4</strong> - Tambah interaktivitas: "Tambahkan dark mode toggle dengan localStorage"</li>
+            <li><strong>Step 5</strong> - Polish: "Perbaiki spacing, tambahkan shadow, sesuaikan font size"</li>
+          </ul>
         </div>
 
         <ContohSoal data={[
-          { soal: 'Buatkan struktur HTML5 semantic untuk halaman blog sederhana yang berisi: header dengan navigasi (Beranda, Artikel, Kontak), section utama dengan 2 article (masing-masing punya judul, tanggal, excerpt), sidebar dengan daftar kategori, dan footer. Jelaskan mengapa kamu memilih tag semantic tertentu!',
+          { soal: 'Kamu ingin membuat website portofolio menggunakan Google AI Studio. Tuliskan 2 prompt berbeda yang bisa kamu gunakan: (a) Prompt pertama untuk membuat hero section portofolio, (b) Prompt kedua untuk menambahkan section skills setelah hero. Jelaskan strategi iterative prompting yang kamu gunakan!',
             penyelesaian: [
-              'Struktur: <header> berisi <nav> dengan 3 anchor links. <main> berisi <section id="articles"> dengan 2 <article>, masing-masing berisi <h2> judul, <time> tanggal, <p> excerpt. <aside> berisi daftar kategori dalam <ul>. <footer> berisi copyright.',
-              'Menggunakan <article> karena setiap blog post adalah konten mandiri. <section> karena semua artikel merupakan satu bagian tematik. <aside> karena sidebar adalah konten sampingan. <time> untuk semantic datetime. <nav> karena itu adalah navigasi.',
-              'CSS layout: .container { display: grid; grid-template-columns: 1fr 300px; } untuk layout sidebar. Artikel: article { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid #eee; }.'
+              '(a) Prompt hero: "Buatkan hero section untuk portofolio siswa SMK bernama Budi. Di kiri: teks Hi, I\'m Budi, subjudul Siswa TJKT yang passionate di web development, tombol Contact Me biru dan Download CV outline. Di kanan: foto placeholder kotak dengan border-radius. Background gradient ungu-biru. Responsive: di mobile teks di tengah, gambar di bawah."',
+              '(b) Prompt skills: "Tambahkan section Skills di bawah hero. 6 card skill dalam grid 3 kolom: HTML, CSS, JavaScript, Python, React, Git. Setiap card ada icon emoji, nama skill, dan progress bar (persentase acak 60-95%). Warna progress bar sesuai skill. Card ada hover effect naik 4px. Responsive: 2 kolom di tablet, 1 kolom di mobile."',
+              'Strategi iterative: Mulai dari hero (komponen paling penting), pastikan hasilnya bagus, baru tambah section berikutnya. Ini lebih mudah di-debug daripada minta semua sekaligus. Setiap prompt fokus di 1 section dengan detail spesifik.'
             ]
           },
-          { soal: 'Seorang siswa ingin menampilkan data dari API ke website. Ia belum pernah menggunakan fetch(). Jelaskan langkah-langkah menggunakan Google AI Studio untuk membantunya, termasuk: (a) Prompt apa yang harus ditulis, (b) Bagaimana cara membaca hasilnya, (c) Debug jika terjadi error.',
+          { soal: 'Seorang siswa menggunakan Google AI Studio dan mendapat kode hasil generate. Kode itu berfungsi tapi ada beberapa masalah: (1) Tidak responsive di mobile, (2) Warna tidak konsisten, (3) Ada elemen yang tumpang tindih. Jelaskan cara memperbaiki setiap masalah menggunakan prompt di Google AI Studio!',
             penyelesaian: [
-              '(a) Prompt yang efektif: "Buatkan kode JavaScript menggunakan async/await dan fetch() untuk mengambil data dari https://jsonplaceholder.typicode.com/users, lalu tampilkan nama dan email setiap user dalam bentuk card HTML. Sertakan error handling dengan try-catch."',
-              '(b) Cara membaca hasil: Baca kode yang dihasilkan baris per baris. Pastikan kamu memahami: async/await untuk menunggu response, res.json() untuk mengubah response ke JavaScript object, forEach atau map untuk iterate data, DOM manipulation untuk menampilkan ke HTML.',
-              '(c) Debug: Jika error CORS, gunakan API yang mendukung CORS. Jika error "Cannot read property", cek apakah data sudah ter-assign dengan benar. Copy-paste error message ke AI Studio dan minta penjelasan. Jika output kosong, tambahkan console.log(data) untuk melihat apa yang dikembalikan API.'
+              '(1) Responsive: Prompt perbaikan: "Buat kode ini responsive. Tambahkan media query untuk max-width: 768px. Di mobile, ubah layout flex-direction column, kurangi font size, dan pastikan semua elemen tidak overflow. Gunakan viewport unit (vw, vh) dan rem untuk sizing."',
+              '(2) Warna konsisten: Prompt: "Standarisasi warna website. Gunakan palette: primary #6366f1 (indigo), secondary #8b5cf6 (violet), background #f8fafc, text #1e293b, border #e2e8f0. Ganti semua warna yang tidak sesuai dengan palette ini. Gunakan CSS variables di :root."',
+              '(3) Elemen tumpang tindih: Prompt: "Perbaiki elemen yang tumpang tindih. Cek z-index, position, dan margin/padding. Pastikan setiap card punya margin-bottom yang cukup (minimal 1rem). Jika ada position absolute, pastikan parent-nya punya position relative."',
+              'Tips: Selalu copy-paste kode hasil AI ke file .html, test di browser dulu, baru identifikasi masalah spesifik untuk prompt perbaikan berikutnya.'
             ]
           },
         ]} />
 
         <Tugas data={[
-          'Buatlah halaman web portofolio pribadi menggunakan HTML5 semantic + CSS Flexbox/Grid. Harus memiliki: header, navigasi, section profil (dengan foto placeholder dan bio), section skills (dengan card), section proyek (grid layout 3 card), dan footer. Website harus responsive (mobile-friendly).',
-          'Gunakan Google AI Studio untuk membuat form pendaftaran online. Prompt yang harus kamu tulis: "Buatkan form pendaftaran siswa baru yang berisi: nama lengkap, NIS, email, pilihan kelas (X/XI/XI), checkbox hobi (coding, desain, jaringan, gaming), dan tombol submit. Beri validasi JavaScript (semua field wajib diisi, email harus valid). Buatkan dalam HTML + CSS + JavaScript dalam satu file." Copy hasilnya, pahami kode, dan jalankan di browser.',
-          'Buatlah halaman web dengan fitur localStorage: To-Do List yang bisa menyimpan tugas. Fitur: input tugas baru, tombol tambah, daftar tugas (bisa dicentang selesai), tombol hapus. Data harus tetap tersimpan saat halaman di-refresh (menggunakan localStorage).',
+          'Gunakan Google AI Studio untuk membuat landing page lengkap. Gunakan strategi iterative prompting (minimal 5 prompt bertahap): (1) Hero section, (2) Features section, (3) Testimonial/About, (4) Contact form, (5) Responsive + dark mode. Copy hasilnya ke file .html, test di browser, dan screenshot hasilnya.',
+          'Buatlah form pendaftaran online menggunakan Google AI Studio. Tuliskan prompt yang kamu gunakan, copy hasilnya, lalu modifikasi manual: (a) Ganti warna tombol, (b) Tambahkan 1 field baru, (c) Perbaiki validasi. Bandingkan hasil AI vs modifikasi manual kamu.',
+          'Buatlah portfolio pribadi dengan Google AI Studio (prompt: "Buatkan portfolio siswa SMK dengan dark mode, hero, skills progress bar, 3 project cards, contact form"). Deploy hasilnya ke Vercel. Kirimkan link Vercel + screenshot prompt yang kamu gunakan.',
         ]} />
 
       </MateriCard>
@@ -274,90 +497,75 @@ const saved = JSON.parse(localStorage.getItem("todos"));`}
       {/* ================================================================ */}
       <MateriCard icon={Rocket} title="B. Deploy Web push GitHub & Vercel">
 
-        {/* B.1 Pengertian Deploy */}
+        {/* B.1 Mengapa Deploy Penting */}
         <h4 style={{marginTop: 0}}>B.1 Mengapa Deploy itu Penting?</h4>
-        <p>Membuat website di komputer lokal (localhost) hanya bisa diakses oleh kamu sendiri. Deploy adalah proses mengunggah website ke server agar bisa diakses oleh siapa saja di seluruh dunia melalui URL publik.</p>
-        <h3 style={{marginTop: 12}}>Alur Deploy Modern:</h3>
+        <p>Membuat website di komputer lokal (localhost) hanya bisa diakses oleh kamu sendiri. Deploy adalah proses mengunggah website ke server agar bisa diakses oleh siapa saja di seluruh dunia melalui URL publik. Tanpa deploy, tidak ada orang yang bisa melihat hasil kerja kamu.</p>
+        <h3 style={{marginTop: 12}}>Alur Deploy Modern (GitHub + Vercel):</h3>
         <ul>
-          <li><strong>1. Kode di Lokal</strong> — Kamu menulis kode di VS Code / editor</li>
-          <li><strong>2. Push ke GitHub</strong> — Kode diunggah ke repository GitHub</li>
-          <li><strong>3. Vercel Detect</strong> — Vercel mendeteksi push baru secara otomatis</li>
-          <li><strong>4. Build & Deploy</strong> — Vercel membangun dan mendeploy website</li>
-          <li><strong>5. Live!</strong> — Website bisa diakses via URL seperti myapp.vercel.app</li>
+          <li><strong>1. Kode di Lokal</strong> - Kamu menulis kode di VS Code / editor</li>
+          <li><strong>2. Git Init</strong> - Inisialisasi version control di folder project</li>
+          <li><strong>3. Push ke GitHub</strong> - Kode diunggah ke repository GitHub</li>
+          <li><strong>4. Vercel Detect</strong> - Vercel mendeteksi push baru secara otomatis</li>
+          <li><strong>5. Build & Deploy</strong> - Vercel membangun dan mendeploy website</li>
+          <li><strong>6. Live!</strong> - Website bisa diakses via URL seperti myapp.vercel.app</li>
         </ul>
         <div className="info-box">
           <strong><Target size={14} /> Mengapa GitHub + Vercel?</strong>
-          <p><strong>GitHub</strong> = version control (riwayat perubahan kode, kolaborasi tim, backup online). <strong>Vercel</strong> = hosting modern (gratis untuk personal, auto-deploy, HTTPS otomatis, edge network global). Keduanya gratis untuk siswa dan sangat populer di industri.</p>
+          <p><strong>GitHub</strong> = version control (riwayat perubahan kode, kolaborasi tim, backup online gratis). <strong>Vercel</strong> = hosting modern (gratis untuk personal, auto-deploy setiap push, HTTPS otomatis, edge network global, analytics built-in). Keduanya gratis dan sangat populer di industri web development.</p>
         </div>
 
-        {/* B.2 Git & GitHub Dasar */}
-        <h4 style={{marginTop: 24}}>B.2 Git & GitHub Dasar</h4>
-        <p>Git adalah version control system yang melacak perubahan kode. GitHub adalah platform hosting Git repository secara online.</p>
+        {/* B.2 Git Dasar */}
+        <h4 style={{marginTop: 24}}>B.2 Git & GitHub Dasar - Version Control</h4>
+        <p>Git adalah version control system yang melacak setiap perubahan kode. Kamu bisa melihat riwayat perubahan, kembali ke versi sebelumnya, dan bekerja sama dengan tim tanpa saling menimpa kode.</p>
         <h3 style={{marginTop: 12}}>Perintah Git Dasar:</h3>
         <pre style={{background:'var(--bg-secondary)', padding:16, borderRadius:8, overflow:'auto', fontSize:'0.85rem'}}>
-{`# Inisialisasi Git repo
-git init
+{`# === SETUP (sekali saja) ===
+git init                    # Inisialisasi repo di folder ini
+git remote add origin URL   # Hubungkan ke GitHub
 
-# Cek status repository
-git status
+# === ALUR KERJA HARIAN ===
+git status                  # Lihat file yang berubah
+git add .                   # Tambah SEMUA file ke staging
+git add file.html           # Tambah 1 file tertentu
+git commit -m "pesan"       # Simpan snapshot
+git push                    # Unggah ke GitHub
+git pull                    # Ambil dari GitHub
 
-# Tambah file ke staging area
-git add filename.ext
-git add .  # tambah semua file
+# === BRANCHING ===
+git checkout -b fitur-baru  # Buat & pindah ke branch baru
+# ... kerja di fitur-baru ...
+git checkout main           # Kembali ke main
+git merge fitur-baru        # Gabungkan fitur ke main
 
-# Commit (simpan snapshot)
-git commit -m "feat: tambah form login"
-
-# Hubungkan ke remote repository
-git remote add origin https://github.com/username/repo.git
-
-# Push ke GitHub
-git push -u origin main
-
-# Pull dari GitHub
-git pull origin main
-
-# Clone repository
-git clone https://github.com/username/repo.git
-
-# Cek history commit
-git log --oneline`}
+# === UTILITAS ===
+git log --oneline           # Lihat history commit
+git diff                    # Lihat perbedaan file
+git stash                   # Simpan perubahan sementara`}
         </pre>
-        <h3 style={{marginTop: 16}}>Branching — Bekerja di Fitur Baru:</h3>
-        <pre style={{background:'var(--bg-secondary)', padding:16, borderRadius:8, overflow:'auto', fontSize:'0.85rem'}}>
-{`# Buat branch baru
-git checkout -b fitur-login
-
-# Kerja di branch fitur-login...
-git add .
-git commit -m "feat: tambah halaman login"
-
-# Push branch baru ke GitHub
-git push -u origin fitur-login
-
-# Kembali ke branch main
-git checkout main
-
-# Gabungkan fitur ke main
-git merge fitur-login
-
-# Hapus branch setelah digabung
-git branch -d fitur-login`}
-        </pre>
+        <h3 style={{marginTop: 16}}>Analogi Git dalam Kehidupan Nyata:</h3>
+        <ul>
+          <li><strong>git init</strong> = Membuat buku catatan baru</li>
+          <li><strong>git add</strong> = Menandai halaman yang ingin difoto</li>
+          <li><strong>git commit</strong> = Mengambil foto halaman + menulis catatan tanggal</li>
+          <li><strong>git push</strong> = Mengunggah foto ke cloud (Google Drive)</li>
+          <li><strong>git pull</strong> = Sync foto terbaru dari cloud ke buku</li>
+          <li><strong>git branch</strong> = Membuat salinan buku untuk mencoba tulisan baru tanpa mengganggu buku asli</li>
+          <li><strong>git merge</strong> = Menyalin tulisan bagus dari salinan ke buku asli</li>
+        </ul>
 
         {/* B.3 Repository GitHub */}
         <h4 style={{marginTop: 24}}>B.3 Membuat Repository GitHub</h4>
-        <p>Langkah-langkah membuat repository baru di GitHub:</p>
         <ul>
-          <li><strong>1.</strong> Buka github.com, klik tombol "+" di pojok kanan atas, pilih "New repository"</li>
-          <li><strong>2.</strong> Isi nama repository (contoh: "portofolio-siswa"), deskripsi, pilih Public/Private</li>
-          <li><strong>3.</strong> Centang "Add a README file" untuk repository baru</li>
-          <li><strong>4.</strong> Pilih .gitignore template (Node, Python, dll sesuai project)</li>
-          <li><strong>5.</strong> Klik "Create repository"</li>
+          <li><strong>1.</strong> Buka github.com, klik "+" di pojok kanan atas, pilih "New repository"</li>
+          <li><strong>2.</strong> Isi nama repository (contoh: "portofolio-siswa"), deskripsi singkat</li>
+          <li><strong>3.</strong> Pilih Public (bisa dilihat semua orang) atau Private (hanya kamu)</li>
+          <li><strong>4.</strong> Centang "Add a README file" sebagai file awal</li>
+          <li><strong>5.</strong> Pilih .gitignore template sesuai project (Node, Python, dll)</li>
+          <li><strong>6.</strong> Klik "Create repository"</li>
         </ul>
-        <h3 style={{marginTop: 16}}>File .gitignore Penting:</h3>
+        <h3 style={{marginTop: 16}}>File .gitignore - File yang Tidak Di-Push:</h3>
         <pre style={{background:'var(--bg-secondary)', padding:16, borderRadius:8, overflow:'auto', fontSize:'0.85rem'}}>
-{`# .gitignore — file yang TIDAK boleh di-push ke GitHub
+{`# .gitignore
 
 # Dependencies
 node_modules/
@@ -366,6 +574,7 @@ __pycache__/
 # Environment variables (RAHASIA!)
 .env
 .env.local
+.env.production
 
 # Build output
 dist/
@@ -375,38 +584,40 @@ build/
 .DS_Store
 Thumbs.db
 
-# IDE
+# IDE / Editor
 .vscode/
-.idea/`}
+.idea/
+*.swp`}
         </pre>
         <div className="info-box">
-          <strong><AlertTriangle size={14} /> Keamanan</strong>
-          <p>Jangan pernah push file .env, API keys, atau password ke GitHub! File .gitignore membantu mencegah file-file rahasia ini terunggah ke publik. Jika tidak sengaja ter-push, kamu harus segera menghapusnya dan mengganti API keys yang bocor.</p>
+          <strong><AlertTriangle size={14} /> Keamanan: Jangan Push File Rahasia!</strong>
+          <p>Jangan pernah push file .env, API keys, password, atau token ke GitHub! File .gitignore membantu mencegah ini. Jika tidak sengaja ter-push, kamu harus: (1) hapus file dari GitHub, (2) generate API keys baru, (3) tambahkan ke .gitignore. Data yang sudah di-push ke public repo bisa sudah dilihat orang lain.</p>
         </div>
 
         {/* B.4 Deploy ke Vercel */}
-        <h4 style={{marginTop: 24}}>B.4 Deploy ke Vercel — Step by Step</h4>
+        <h4 style={{marginTop: 24}}>B.4 Deploy ke Vercel - Step by Step</h4>
         <ul>
-          <li><strong>1. Buat Akun Vercel</strong> — Buka vercel.com, klik "Sign Up", pilih "Continue with GitHub" (otomatis terhubung)</li>
-          <li><strong>2. Import Repository</strong> — Klik "Add New..." &gt; "Project", pilih repository GitHub yang ingin di-deploy</li>
-          <li><strong>3. Konfigurasi</strong> — Vercel otomatis mendeteksi framework (React, Next.js, Vue, atau static HTML). Tidak perlu pengaturan khusus untuk project sederhana.</li>
-          <li><strong>4. Deploy</strong> — Klik "Deploy". Vercel akan build dan deploy dalam 30-60 detik.</li>
-          <li><strong>5. Selesai!</strong> — Website live di nama-project.vercel.app. Bisa diakses oleh siapa saja.</li>
+          <li><strong>1. Buat Akun</strong> - Buka vercel.com, klik "Sign Up", pilih "Continue with GitHub"</li>
+          <li><strong>2. Import Repository</strong> - Klik "Add New..." &gt; "Project" &gt; pilih repo GitHub</li>
+          <li><strong>3. Konfigurasi</strong> - Vercel auto-detect framework. Untuk project static HTML, pilih "Other"</li>
+          <li><strong>4. Build Settings</strong> - Output Directory: "." (root) atau "dist" (untuk Vite/React)</li>
+          <li><strong>5. Deploy</strong> - Klik "Deploy". Tunggu 30-60 detik.</li>
+          <li><strong>6. Live!</strong> - Website bisa diakses di nama-project.vercel.app</li>
         </ul>
-        <h3 style={{marginTop: 16}}>Fitur Vercel yang powerful:</h3>
+        <h3 style={{marginTop: 16}}>Fitur Vercel:</h3>
         <ul>
-          <li><strong>Auto-Deploy</strong> — Setiap push ke branch main otomatis trigger deploy baru</li>
-          <li><strong>Preview Deploy</strong> — Setiap pull request mendapat URL preview gratis</li>
-          <li><strong>HTTPS Otomatis</strong> — SSL certificate gratis untuk semua domain</li>
-          <li><strong>Edge Network</strong> — Website di-cache di server global, akses cepat dari mana saja</li>
-          <li><strong>Analytics</strong> — Statistik pengunjung built-in</li>
+          <li><strong>Auto-Deploy</strong> - Setiap push ke branch main otomatis trigger deploy baru</li>
+          <li><strong>Preview Deploy</strong> - Setiap pull request mendapat URL preview gratis</li>
+          <li><strong>HTTPS Otomatis</strong> - SSL certificate gratis untuk semua domain</li>
+          <li><strong>Edge Network</strong> - Website di-cache di server global, akses cepat dari mana saja</li>
+          <li><strong>Analytics</strong> - Statistik pengunjung built-in (page views, visitors, performance)</li>
         </ul>
 
-        {/* B.5 SPA Routing & vercel.json */}
-        <h4 style={{marginTop: 24}}>B.5 SPA Routing — vercel.json</h4>
-        <p>Jika menggunakan React Router atau framework SPA (Single Page Application), semua rute harus di-rewrite ke index.html. Tanpa ini, refresh halaman di rute selain "/" akan error 404.</p>
+        {/* B.5 SPA Routing */}
+        <h4 style={{marginTop: 24}}>B.5 SPA Routing - vercel.json</h4>
+        <p>Single Page Application (SPA) seperti React/Vue menggunakan client-side routing. Tanpa konfigurasi tambahan, refresh halaman di rute selain "/" akan error 404. Solusinya: vercel.json.</p>
         <pre style={{background:'var(--bg-secondary)', padding:16, borderRadius:8, overflow:'auto', fontSize:'0.85rem'}}>
-{`// vercel.json — letakkan di root project
+{`// vercel.json - letakkan di root project
 {
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
@@ -415,45 +626,44 @@ Thumbs.db
         </pre>
         <div className="info-box">
           <strong><Lightbulb size={14} /> Kapan Butuh vercel.json?</strong>
-          <p>Static HTML (tanpa router) &mdash; tidak perlu. React/Vue/Angular dengan React Router &mdash; wajib. Next.js &mdash; tidak perlu (sudah di-handle). Tanpa vercel.json, hanya URL "/" yang berfungsi. Rute lain seperti "/about" akan 404 saat user refresh halaman.</p>
+          <p>Static HTML biasa (tanpa router) - tidak perlu. React/Vue dengan React Router - wajib. Next.js - tidak perlu (sudah di-handle otomatis). Tanpa vercel.json, hanya URL "/" yang berfungsi. Rute seperti "/about" atau "/contact" akan 404 saat user refresh.</p>
         </div>
 
         {/* B.6 Custom Domain */}
         <h4 style={{marginTop: 24}}>B.6 Custom Domain (Opsional)</h4>
-        <p>Vercel memungkinkan kamu menggunakan domain sendiri (bukan hanya .vercel.app). Langkah-langkahnya:</p>
+        <p>Gunakan domain sendiri (bukan hanya .vercel.app) untuk tampilan lebih profesional:</p>
         <ul>
-          <li><strong>1.</strong> Beli domain dari registrar (Namecheap, Google Domains, Niagahoster, dll)</li>
-          <li><strong>2.</strong> Di Vercel dashboard, buka project &gt; Settings &gt; Domains</li>
-          <li><strong>3.</strong> Masukkan domain yang dibeli, klik Add</li>
-          <li><strong>4.</strong> Vercel akan memberikan 2 DNS records (A record dan CNAME) yang harus ditambahkan di panel registrar domain</li>
-          <li><strong>5.</strong> Tunggu propagasi DNS (5 menit &mdash; 48 jam, biasanya cepat)</li>
-          <li><strong>6.</strong> SSL certificate otomatis di-setup oleh Vercel</li>
+          <li><strong>1.</strong> Beli domain dari registrar: Namecheap, Google Domains, Niagahoster, domainesia</li>
+          <li><strong>2.</strong> Di Vercel: Project &gt; Settings &gt; Domains &gt; masukkan domain &gt; Add</li>
+          <li><strong>3.</strong> Vercel berikan 2 DNS records (A record + CNAME) yang harus ditambahkan di panel registrar</li>
+          <li><strong>4.</strong> Tunggu propagasi DNS (5 menit s/d 48 jam, biasanya 15-30 menit)</li>
+          <li><strong>5.</strong> SSL certificate otomatis di-setup oleh Vercel. Website sudah live di domain sendiri!</li>
         </ul>
 
         <ContohSoal data={[
-          { soal: 'Seorang siswa ingin deploy website portofolionya. Ia sudah punya akun GitHub dan Vercel. Jelaskan langkah-langkah lengkap dari awal sampai website live, termasuk perintah Git yang harus dijalankan di terminal!',
+          { soal: 'Seorang siswa ingin deploy website portofolionya ke Vercel. Ia sudah punya akun GitHub dan Vercel. Tuliskan L LENGKAP dari awal sampai live, termasuk semua perintah Git yang harus dijalankan!',
             penyelesaian: [
-              'Langkah 1 — Setup lokal: Buka terminal di folder project, jalankan: git init, git add ., git commit -m "initial commit: portofolio website"',
-              'Langkah 2 — Buat repo GitHub: Klik "+" di github.com > New repository > nama "portofolio" > Create. Copy URL repository.',
-              'Langkah 3 — Hubungkan local ke GitHub: git remote add origin URL_REPO, git push -u origin main',
-              'Langkah 4 — Deploy Vercel: Buka vercel.com > Sign in with GitHub > Add New > Project > pilih repo "portofolio" > Deploy',
-              'Langkah 5 — Website live: Tunggu 30-60 detik, website sudah bisa diakses di portofolio.vercel.app. Untuk update: cukup git push, Vercel auto-deploy.',
-              'Tips: Jika menggunakan React Router, buat file vercel.json di root project dengan rewrites [{"source": "/(.*)", "destination": "/index.html"}] agar semua rute berfungsi.'
+              'Langkah 1 - Setup lokal:\nBuka terminal di folder project:\ngit init\ngit add .\ngit commit -m "initial commit: portofolio website"',
+              'Langkah 2 - Buat repo GitHub:\nBuka github.com > "+" > New repository > nama "portofolio" > Create repository\nCopy URL repository (https://github.com/username/portofolio.git)',
+              'Langkah 3 - Push ke GitHub:\ngit remote add origin https://github.com/username/portofolio.git\ngit push -u origin main',
+              'Langkah 4 - Deploy Vercel:\nBuka vercel.com > Sign in with GitHub\nAdd New... > Project > pilih repo "portofolio"\nFramework: Other (untuk static HTML)\nOutput Directory: . (titik = root)\nKlik Deploy > tunggu 30-60 detik',
+              'Langkah 5 - Verifikasi:\nBuka URL yang diberikan Vercel (portofolio.vercel.app)\nCek semua section tampil, test responsive, test link\nJika ada error: cek Build Logs di Vercel dashboard',
+              'Update selanjutnya: Cukup git add . > git commit -m "update: ..." > git push. Vercel auto-deploy dalam 30 detik!'
             ]
           },
-          { soal: 'Jelaskan perbedaan antara: (a) git add, git commit, dan git push, (b) git pull dan git clone, (c) main branch dan feature branch. Berikan analogi untuk memahami masing-masing!',
+          { soal: 'Jelaskan perbedaan: (a) git add vs git commit vs git push, (b) git pull vs git clone, (c) main branch vs feature branch. Berikan analogi untuk masing-masing!',
             penyelesaian: [
-              '(a) git add = menandai file yang ingin disimpan (seperti menandai dokumen untuk difotokopi). git commit = menyimpan snapshot ke history lokal (seperti mengambil foto dokumen dan diberi catatan tanggal). git push = mengunggah snapshot ke server GitHub (sepingga mengirim foto ke cloud agar orang lain bisa lihat).',
-              '(b) git pull = mengambil perubahan terbaru dari GitHub ke local (seperti sync email). git clone = membuat salinan lengkap repository dari GitHub ke local untuk pertama kali (seperti download seluruh folder).',
-              '(c) main branch = branch utama yang berisi kode stabil dan production-ready (seperti buku final yang sudah dicetak). feature branch = branch sementara untuk mengembangkan fitur baru tanpa mengganggu main (seperti draft yang masih diedit sebelum final).'
+              '(a) git add = Menandai file yang ingin disimpan (seperti menandai dokumen untuk difotokopi). git commit = Menyimpan snapshot ke history lokal dengan pesan (seperti mengambil foto + menulis catatan). git push = Mengunggah snapshot ke GitHub server (seperti upload foto ke cloud).',
+              '(b) git pull = Mengambil perubahan terbaru dari GitHub ke local (seperti sync email). git clone = Membuat salinan LENGKAP repository dari GitHub untuk pertama kali (seperti download seluruh folder project).',
+              '(c) main branch = Branch utama berisi kode STABIL dan production-ready (seperti buku final yang sudah dicetak). feature branch = Branch sementara untuk mengembangkan fit BARU tanpa ganggu main (seperti draft yang masih diedit sebelum final).'
             ]
           },
         ]} />
 
         <Tugas data={[
-          'Buatlah repository baru di GitHub untuk portofolio pribadi. Tuliskan langkah-langkah: (a) Inisialisasi Git di folder project, (b) Membuat repo di GitHub, (c) Push kode pertama ke GitHub, (d) Deploy ke Vercel, (e) Verifikasi website sudah live. Sertakan screenshot setiap langkah.',
-          'Jelaskan dengan bahasamu sendiri (minimal 10 kalimat): Apa itu Git? Mengapa Git penting untuk developer? Apa yang terjadi jika developer tidak menggunakan version control? Berikan analogi dari kehidupan sehari-hari.',
-          'Buatlah .gitignore yang sesuai untuk project React (Vite). Tuliskan minimal 10 item yang harus ada di .gitignore dan jelaskan mengapa setiap item harus di-ignore.',
+          'Buatlah repository baru di GitHub untuk portofolio pribadi. Tuliskan dokumentasi lengkap (minimal 7 langkah): (a) Inisialisasi Git, (b) Membuat repo di GitHub, (c) Push kode, (d) Deploy ke Vercel, (e) Verifikasi live. Sertakan screenshot setiap langkah.',
+          'Buatlah .gitignore lengkap untuk 3 jenis project: (1) React + Vite, (2) Node.js + Express, (3) Python Flask. Untuk setiap project, tuliskan minimal 8 item yang harus di-ignore dan jelaskan alasannya.',
+          'Jelaskan dengan bahasamu sendiri (minimal 15 kalimat): Apa itu Git? Mengapa Git penting? Apa yang terjadi jika developer TIDAK menggunakan version control? Berikan 2 analogi dari kehidupan nyata.',
         ]} />
 
       </MateriCard>
@@ -464,116 +674,125 @@ Thumbs.db
       <MateriCard icon={Puzzle} title="C. Proyek Mini Website">
 
         {/* C.1 Perencanaan */}
-        <h4 style={{marginTop: 0}}>C.1 Perencanaan — Landing Page Produk Digital</h4>
-        <p>Sebelum menulis kode, kita perlu merencanakan website secara sistematis. Proyek ini: buat landing page untuk produk digital (aplikasi, game, atau layanan) yang responsif, interaktif, dan deployed ke Vercel.</p>
+        <h4 style={{marginTop: 0}}>C.1 Perencanaan - Landing Page Produk Digital</h4>
+        <p>Sebelum menulis kode satu baris pun, seorang developer profesional selalu merencanakan terlebih dahulu. Perencanaan yang baik menghemat waktu debugging dan menghasilkan website yang lebih terstruktur.</p>
         <h3 style={{marginTop: 12}}>Spesifikasi Proyek:</h3>
         <ul>
-          <li><strong>Tujuan</strong> — Landing page yang menarik untuk mempromosikan produk digital</li>
-          <li><strong>Teknologi</strong> — HTML5 semantic + CSS3 (Flexbox/Grid) + JavaScript ES6+</li>
-          <li><strong>Section</strong> — Hero, Fitur Produk, Cara Kerja, Testimonial, CTA (Call to Action), Footer</li>
-          <li><strong>Responsif</strong> — Tampil optimal di mobile, tablet, dan desktop</li>
-          <li><strong>Interaktif</strong> — Animasi hover, dark mode toggle, form email signup dengan localStorage</li>
-          <li><strong>Deploy</strong> — Push ke GitHub, deploy ke Vercel</li>
+          <li><strong>Nama Produk</strong> - "CodeMaster" (platform belajar coding untuk siswa SMK)</li>
+          <li><strong>Tujuan</strong> - Landing page yang menarik untuk menarik calon pengguna mendaftar</li>
+          <li><strong>Teknologi</strong> - HTML5 semantic + CSS3 (Flexbox/Grid) + JavaScript ES6+</li>
+          <li><strong>Section Wajib</strong> - Hero, Fitur, Cara Kerja, Testimonial, CTA (email signup), Footer</li>
+          <li><strong>Responsif</strong> - Tampil optimal di mobile (320px), tablet (768px), desktop (1200px+)</li>
+          <li><strong>Interaktif</strong> - Dark mode toggle, animasi hover, form signup dengan localStorage</li>
+          <li><strong>Deploy</strong> - Push ke GitHub, deploy ke Vercel, website live</li>
         </ul>
 
-        {/* C.2 Wireframe & Struktur */}
+        {/* C.2 Wireframe */}
         <h4 style={{marginTop: 24}}>C.2 Wireframe & Struktur File</h4>
-        <p>Wireframe adalah gambar kasar yang menunjukkan tata letak website tanpa desain visual. Ini membantu sebelum mulai coding.</p>
+        <p>Wireframe adalah gambar kasar tata letak website tanpa warna dan gambar detail. Ini seperti peta sebelum membangun rumah.</p>
         <h3 style={{marginTop: 12}}>Struktur File:</h3>
         <pre style={{background:'var(--bg-secondary)', padding:16, borderRadius:8, overflow:'auto', fontSize:'0.85rem'}}>
 {`landing-page/
-  index.html        ← Halaman utama
-  style.css         ← Semua styling
-  script.js         ← Interaktivitas
+  index.html        <- Halaman utama (struktur konten)
+  style.css         <- Semua styling (warna, layout, responsive)
+  script.js         <- Interaktivitas (dark mode, form, counter)
   assets/
-    logo.svg        ← Logo produk
-    hero.png        ← Gambar hero
-  .gitignore
-  README.md`}
+    logo.svg        <- Logo produk
+    hero.png        <- Gambar hero section
+  .gitignore        <- File yang di-ignore
+  README.md         <- Deskripsi project`}
         </pre>
-        <h3 style={{marginTop: 16}}>Wireframe (Konsep Visual):</h3>
+        <h3 style={{marginTop: 16}}>Wireframe per Section:</h3>
         <ul>
-          <li><strong>Hero Section</strong> — Judul besar, subjudul, tombol CTA, gambar produk. Background gradient atau solid color.</li>
-          <li><strong>Features Section</strong> — 3-4 card fitur utama dalam grid layout. Icon + judul + deskripsi singkat.</li>
-          <li><strong>How It Works</strong> — 3 langkah dengan nomor/ikon. Penjelasan cara menggunakan produk.</li>
-          <li><strong>Testimonial</strong> — 2-3 card testimoni dari pengguna. Nama, foto, rating bintang.</li>
-          <li><strong>CTA Section</strong> — Form email signup + tombol "Get Early Access". Counter jumlah pendaftar dari localStorage.</li>
-          <li><strong>Footer</strong> — Copyright, social media links, links ke halaman lain.</li>
+          <li><strong>Hero</strong> - Layout 2 kolom: kiri teks (judul, subjudul, 2 tombol CTA), kanan gambar produk. Background gradient. Counter "X orang sudah mendaftar".</li>
+          <li><strong>Features</strong> - Grid 3 card: icon + judul + deskripsi. Setiap card ada hover effect. Background putih/abu muda.</li>
+          <li><strong>How It Works</strong> - 3 langkah berurutan dengan nomor/ikon. Penjelasan singkat per langkah. Centered layout.</li>
+          <li><strong>Testimonial</strong> - 2-3 card: foto bulat, nama, jabatan, rating bintang, quote. Background berbeda dari section sebelumnya.</li>
+          <li><strong>CTA/Signup</strong> - Form email + tombol signup. Counter pendaftar. Background gelap/gradient.</li>
+          <li><strong>Footer</strong> - 3 kolom: brand info, quick links, social media. Copyright di bawah.</li>
         </ul>
 
         {/* C.3 Implementasi */}
-        <h4 style={{marginTop: 24}}>C.3 Implementasi — Kode Inti</h4>
-        <p>Berikut contoh kode untuk bagian-bagian utama proyek:</p>
-        <h3 style={{marginTop: 12}}>index.html (bagian hero & features):</h3>
+        <h4 style={{marginTop: 24}}>C.3 Implementasi - Kode Inti</h4>
+        <p>Berikut kode untuk bagian-bagian utama. Kamu bisa langsung copy ke file dan modifikasi sesuai kebutuhan.</p>
+        <h3 style={{marginTop: 12}}>style.css - CSS Variables + Dark Mode:</h3>
         <pre style={{background:'var(--bg-secondary)', padding:16, borderRadius:8, overflow:'auto', fontSize:'0.85rem'}}>
-{`<!-- Hero Section -->
-<section class="hero">
-  <div class="hero-content">
-    <h1>Solusi Cerdas untuk <span class="highlight">Belajar Coding</span></h1>
-    <p>Platform interaktif yang membantu siswa SMK menguasai programming dengan cara yang menyenangkan.</p>
-    <div class="cta-group">
-      <a href="#signup" class="btn-primary">Mulai Gratis</a>
-      <a href="#features" class="btn-secondary">Lihat Fitur</a>
-    </div>
-    <p class="counter" id="counter">0 orang sudah mendaftar</p>
-  </div>
-  <div class="hero-image">
-    <img src="assets/hero.png" alt="Platform CodingKu">
-  </div>
-</section>
+{`:root {
+  --primary: #6366f1;
+  --primary-dark: #4f46e5;
+  --bg: #ffffff;
+  --bg-alt: #f8fafc;
+  --text: #1e293b;
+  --text-light: #64748b;
+  --card-bg: #ffffff;
+  --border: #e2e8f0;
+}
 
-<!-- Features Section -->
-<section class="features" id="features">
-  <h2>Fitur Unggulan</h2>
-  <div class="features-grid">
-    <div class="feature-card">
-      <div class="icon">[Icon]</div>
-      <h3>Interaktif</h3>
-      <p>Langsung praktik coding di browser tanpa install apapun.</p>
-    </div>
-    <div class="feature-card">
-      <div class="icon">[Icon]</div>
-      <h3>AI-Powered</h3>
-      <p>Dibantu AI untuk menjelaskan konsep yang sulit.</p>
-    </div>
-    <div class="feature-card">
-      <div class="icon">[Icon]</div>
-      <h3>Gratis</h3>
-      <p>Semua fitur tersedia gratis untuk siswa SMK.</p>
-    </div>
-  </div>
-</section>`}
-        </pre>
-        <h3 style={{marginTop: 16}}>style.css (hero & responsive):</h3>
-        <pre style={{background:'var(--bg-secondary)', padding:16, borderRadius:8, overflow:'auto', fontSize:'0.85rem'}}>
-{`/* Hero */
+body.dark {
+  --bg: #0f172a;
+  --bg-alt: #1e293b;
+  --text: #f1f5f9;
+  --text-light: #94a3b8;
+  --card-bg: #1e293b;
+  --border: #334155;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.3s, color 0.3s;
+}
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+/* Hero */
 .hero {
   display: flex;
   align-items: center;
   gap: 3rem;
-  padding: 4rem 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
+  padding: 4rem 0;
+  min-height: 80vh;
 }
-
-.hero-content { flex: 1; }
-.hero-content h1 { font-size: 2.5rem; line-height: 1.2; }
-.highlight { color: #6366f1; }
+.hero-text { flex: 1; }
+.hero-text h1 { font-size: 2.8rem; line-height: 1.2; margin-bottom: 1rem; }
+.hero-text .highlight { color: var(--primary); }
+.hero-text p { font-size: 1.1rem; color: var(--text-light); margin-bottom: 2rem; }
+.btn-primary {
+  display: inline-block;
+  padding: 12px 28px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(99,102,241,.3);
+}
 .hero-image { flex: 1; }
 .hero-image img { width: 100%; max-width: 500px; }
 
 /* Features Grid */
+.features {
+  padding: 4rem 0;
+  background: var(--bg-alt);
+}
+.features h2 { text-align: center; font-size: 2rem; margin-bottom: 2rem; }
 .features-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.5rem;
-  padding: 2rem;
 }
-
 .feature-card {
+  background: var(--card-bg);
   padding: 2rem;
   border-radius: 12px;
-  background: var(--bg-card);
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   transition: transform 0.2s, box-shadow 0.2s;
 }
@@ -584,12 +803,12 @@ Thumbs.db
 
 /* Responsive */
 @media (max-width: 768px) {
-  .hero { flex-direction: column; text-align: center; padding: 2rem 1rem; }
-  .hero-content h1 { font-size: 1.8rem; }
-  .cta-group { justify-content: center; }
+  .hero { flex-direction: column; text-align: center; min-height: auto; padding: 2rem 0; }
+  .hero-text h1 { font-size: 1.8rem; }
+  .btn-group { justify-content: center; }
 }`}
         </pre>
-        <h3 style={{marginTop: 16}}>script.js (dark mode & counter):</h3>
+        <h3 style={{marginTop: 16}}>script.js - Dark Mode + Signup Counter:</h3>
         <pre style={{background:'var(--bg-secondary)', padding:16, borderRadius:8, overflow:'auto', fontSize:'0.85rem'}}>
 {`// Dark mode toggle
 const toggle = document.getElementById("dark-toggle");
@@ -597,14 +816,16 @@ toggle.addEventListener("click", () => {
   document.body.classList.toggle("dark");
   const isDark = document.body.classList.contains("dark");
   localStorage.setItem("theme", isDark ? "dark" : "light");
+  toggle.textContent = isDark ? "\u2600" : "\u263E";
 });
 
-// Load saved theme
+// Load saved theme on page load
 if (localStorage.getItem("theme") === "dark") {
   document.body.classList.add("dark");
+  toggle.textContent = "\u2600";
 }
 
-// Signup counter
+// Signup counter with localStorage
 const counter = document.getElementById("counter");
 let count = parseInt(localStorage.getItem("signup_count") || "0");
 counter.textContent = \`\${count} orang sudah mendaftar\`;
@@ -612,60 +833,69 @@ counter.textContent = \`\${count} orang sudah mendaftar\`;
 document.getElementById("signup-form").addEventListener("submit", (e) => {
   e.preventDefault();
   const email = document.getElementById("email").value;
-  if (email) {
+  if (email && email.includes("@")) {
     count++;
     localStorage.setItem("signup_count", count);
     counter.textContent = \`\${count} orang sudah mendaftar\`;
     alert("Terima kasih! Kamu sudah terdaftar.");
     document.getElementById("email").value = "";
+  } else {
+    alert("Masukkan email yang valid!");
   }
 });`}
         </pre>
 
         {/* C.4 Testing & Deployment */}
         <h4 style={{marginTop: 24}}>C.4 Testing & Deployment</h4>
-        <h3 style={{marginTop: 12}}>Checklist Testing:</h3>
+        <h3 style={{marginTop: 12}}>Checklist Testing Lengkap:</h3>
         <ul>
-          <li><strong>Visual</strong> — Cek tampilan di Chrome, Firefox, Safari. Pastikan tidak ada elemen yang pecah.</li>
-          <li><strong>Responsive</strong> — Resize browser dari 320px (mobile) ke 1920px (desktop). Gunakan DevTools (F12) responsive mode.</li>
-          <li><strong>Interaktif</strong> — Klik dark mode toggle. Submit form signup. Cek counter bertambah. Refresh halaman &mdash; data harus tersimpan (localStorage).</li>
-          <li><strong>Performance</strong> — Buka Lighthouse di DevTools. Target: Performance &gt; 90, Accessibility &gt; 80.</li>
-          <li><strong>SEO</strong> — Pastikan ada title, meta description, alt text di gambar, heading hierarchy benar (h1 &gt; h2 &gt; h3).</li>
+          <li><strong>Visual</strong> - Buka di Chrome, Firefox, Safari. Cek semua section tampil, tidak ada elemen pecah/overlap.</li>
+          <li><strong>Responsive</strong> - Resize browser dari 320px ke 1920px. Gunakan DevTools (F12) responsive mode. Cek di iPhone, iPad, Desktop.</li>
+          <li><strong>Interaktif</strong> - Klik dark mode toggle, pastikan berubah dan tersimpan. Submit form signup, cek counter bertambah. Refresh halaman, data harus tetap ada.</li>
+          <li><strong>Performance</strong> - Buka Lighthouse (F12 &gt; tab Lighthouse). Target: Performance &gt; 90, Accessibility &gt; 80.</li>
+          <li><strong>SEO</strong> - Pastikan ada title, meta description, alt text gambar, heading hierarchy benar (h1 cuma 1).</li>
+          <li><strong>Link</strong> - Klik semua link di navbar, pastikan smooth scroll ke section yang benar.</li>
         </ul>
-        <h3 style={{marginTop: 16}}>Deployment Checklist:</h3>
-        <ul>
-          <li>File .gitignore sudah benar (node_modules, .env, dsb tidak ter-push)</li>
-          <li>README.md sudah diisi (deskripsi project, cara menjalankan, screenshots)</li>
-          <li>Push ke GitHub: git add . &amp;&amp; git commit -m "feat: landing page selesai" &amp;&amp; git push</li>
-          <li>Deploy ke Vercel dari GitHub repository</li>
-          <li>Verifikasi: buka URL Vercel, cek semua section tampil, responsive, dan interaktif berfungsi</li>
-        </ul>
+        <h3 style={{marginTop: 16}}>Deployment:</h3>
+        <pre style={{background:'var(--bg-secondary)', padding:16, borderRadius:8, overflow:'auto', fontSize:'0.85rem'}}>
+{`# Terminal - Push ke GitHub
+git init
+git add .
+git commit -m "feat: landing page CodeMaster selesai"
+git remote add origin https://github.com/username/codemaster.git
+git push -u origin main
+
+# Vercel - Auto-deploy
+# Buka vercel.com > Import Project > pilih repo > Deploy
+# Website live di codemaster.vercel.app!`}
+        </pre>
         <div className="info-box">
           <strong><Award size={14} /> Bonus: Lighthouse Audit</strong>
-          <p>Buka Chrome DevTools (F12) &gt; tab Lighthouse &gt; klik "Analyze page load". Lighthouse akan memberikan skor 0-100 untuk Performance, Accessibility, Best Practices, dan SEO. Ini adalah standar industri untuk mengukur kualitas website. Targetkan skor Performance di atas 90!</p>
+          <p>Buka Chrome DevTools (F12) &gt; tab Lighthouse &gt; klik "Analyze page load". Lighthouse memberikan skor 0-100 untuk Performance, Accessibility, Best Practices, dan SEO. Ini standar industri untuk mengukur kualitas website. Jika skor rendah, Lighthouse juga memberikan rekomendasi perbaikan spesifik.</p>
         </div>
 
         <ContohSoal data={[
-          { soal: 'Seorang siswa membuat landing page dan mendapat masalah: (1) Website tampil bagus di desktop tapi pecah di mobile, (2) Dark mode tidak tersimpan setelah refresh, (3) Counter signup tidak bertambah saat submit form.\n\nUntuk setiap masalah, identifikasi penyebab dan berikan solusi!',
+          { soal: 'Seorang siswa membuat landing page dan mendapat 3 masalah:\n(1) Website tampil bagus di desktop tapi pecah di mobile\n(2) Dark mode tidak tersimpan setelah refresh\n(3) Counter signup tidak bertambah\n\nUntuk setiap masalah: identifikasi penyebab dan berikan solusi lengkap!',
             penyelesaian: [
-              '(1) Mobile responsive: Penyebab — Tidak ada media queries atau menggunakan fixed width (px). Solusi: Tambahkan @media (max-width: 768px) dengan flex-direction: column untuk hero section. Gunakan relative units (rem, %) daripada px. Test dengan DevTools responsive mode.',
-              '(2) Dark mode tidak persist: Penyebab — Tidak menggunakan localStorage untuk menyimpan preferensi. Solusi: Saat toggle, jalankan localStorage.setItem("theme", "dark/light"). Saat page load, cek localStorage.getItem("theme") dan terapkan class dark jika tersimpan.',
-              '(3) Counter tidak bertambah: Penyebab — Form melakukan default submit (reload page), atau counter tidak di-update setelah submit. Solusi: Tambahkan e.preventDefault() di event listener form, lalu update counter dan localStorage di dalam handler submit.'
+              '(1) Mobile responsive: Penyebab - Tidak ada media queries atau menggunakan fixed width (px). Solusi: Tambahkan @media (max-width: 768px) { .hero { flex-direction: column; } }. Gunakan relative units (rem, %, vw) daripada px. Test dengan DevTools responsive mode.',
+              '(2) Dark mode tidak persist: Penyebab - Tidak menggunakan localStorage. Solusi: Di event listener toggle, tambahkan localStorage.setItem("theme", "dark/light"). Saat page load, cek: if (localStorage.getItem("theme") === "dark") document.body.classList.add("dark").',
+              '(3) Counter tidak bertambah: Penyebab - Form melakukan default submit (reload page), atau counter tidak di-update. Solusi: Tambahkan e.preventDefault() di handler form submit, lalu update counter + localStorage di dalam handler.'
             ]
           },
-          { soal: 'Jelaskan alur lengkap deployment website dari VS Code sampai live di Vercel. Sertakan: (a) 5 perintah Git yang dibutuhkan, (b) 3 langkah di Vercel dashboard, (c) Cara memverifikasi website sudah benar-benar live.',
+          { soal: 'Tulislah 3 prompt Google AI Studio untuk membantu debugging landing page:\n(a) Prompt untuk memperbaiki layout yang pecah di mobile\n(b) Prompt untuk memperbaiki dark mode\n(c) Prompt untuk optimasi performance\n\nJelaskan apa yang harus kamu lakukan SETELAH mendapat hasil dari AI!',
             penyelesaian: [
-              '(a) 5 perintah Git:\n1. git init — inisialisasi repository\n2. git add . — tambahkan semua file\n3. git commit -m "initial commit" — simpan snapshot\n4. git remote add origin URL — hubungkan ke GitHub\n5. git push -u origin main — unggah ke GitHub',
-              '(b) 3 langkah Vercel:\n1. Buka vercel.com > Sign in with GitHub\n2. Klik "Add New..." > "Project" > pilih repository yang baru di-push\n3. Klik "Deploy" > tunggu 30-60 detik > website live!',
-              '(c) Verifikasi:\n1. Buka URL yang diberikan Vercel (contoh: myapp.vercel.app)\n2. Cek semua section tampil dengan benar\n3. Test responsive (resize browser)\n4. Test interaktif (klik tombol, submit form)\n5. Buka tab Network di DevTools, pastikan tidak ada error merah'
+              '(a) Prompt mobile: "Tolong perbaiki CSS ini agar responsive di mobile. Tambahkan media query untuk max-width: 768px. Di mobile: hero flex-direction column, font size kurangi, padding kurangi, card grid 1 kolom. Berikan kode CSS lengkap."',
+              '(b) Prompt dark mode: "Tolong buatkan fitur dark mode dengan CSS variables dan JavaScript. Gunakan localStorage untuk persist theme. Tambahkan smooth transition 0.3s saat toggle. Berikan kode HTML + CSS + JS lengkap."',
+              '(c) Prompt performance: "Berikut kode HTML saya. Tolong optimasi untuk Lighthouse Performance score > 90. Sarankan: lazy loading images, minify CSS/JS, gunakan font-display: swap, kurangi render-blocking resources."',
+              'Setelah mendapat hasil AI: (1) Copy ke file, test di browser. (2) Baca dan pahami setiap baris kode. (3) Jangan copy-paste mentah, modifikasi sesuai kebutuhan. (4) Test di berbagai ukuran layar. (5) Bandingkan sebelum vs sesudah di Lighthouse.'
             ]
           },
         ]} />
 
         <Tugas data={[
-          'Buatlah landing page produk digital (aplikasi/game/layanan buatanmu sendiri). Minimal harus memiliki: (a) Hero section dengan judul + CTA, (b) Features section dengan 3 card, (c) Footer, (d) Responsive design, (e) Deploy ke Vercel. Kirimkan link Vercel.',
-          'Buatlah dokumentasi proyek (README.md) untuk landing page yang sudah dibuat. Isi minimal: (a) Judul dan deskripsi proyek, (b) Screenshot hasil website, (c) Teknologi yang digunakan, (d) Cara menjalankan di lokal, (e) Link deploy Vercel. Push ke GitHub dan pastikan README tampil di halaman repo.',
-          'Lakukan Lighthouse audit pada website yang sudah di-deploy. Tuliskan hasil skor untuk 4 kategori (Performance, Accessibility, Best Practices, SEO). Jelaskan 3 hal yang perlu diperbaiki berdasarkan rekomendasi Lighthouse, dan implementasikan perbaikannya.',
+          'Buatlah landing page produk digital (aplikasi/game/layanan buatanmu sendiri). Minimal harus punya: (a) Hero section dengan judul + CTA, (b) Features section 3 card dalam grid, (c) Testimonial 2 card, (d) Footer. Responsive, deploy ke Vercel. Kirimkan link Vercel + screenshot Lighthouse.',
+          'Buatlah dokumentasi proyek (README.md) lengkap untuk landing page yang sudah dibuat. Isi minimal: (a) Judul + deskripsi, (b) Screenshot 2 view (desktop + mobile), (c) Tech stack, (d) Cara run di lokal, (e) Link Vercel live, (f) Fitur yang ada. Push ke GitHub.',
+          'Lakukan Lighthouse audit pada website yang sudah di-deploy. Tuliskan: (a) Skor 4 kategori, (b) 3 rekomendasi perbaikan, (c) Implementasikan perbaikannya, (d) Audit ulang dan bandingkan skor sebelum vs sesudah. Sertakan screenshot.',
         ]} />
 
       </MateriCard>
