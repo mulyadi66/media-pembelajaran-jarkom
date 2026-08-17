@@ -2076,3 +2076,27 @@ a { text-decoration: none; color: inherit; }
 [data-theme="dark"] .ipt-choice.wrong { background: #7f1d1d33; color: #fca5a5; }
 .ipt-choice:disabled { cursor: default; }
 .ipt-choice:disabled:not(.correct):not(.wrong) { opacity: 0.5; }
+
+/* PythonRunner */
+.py-runner { border-radius: 12px; border: 1px solid var(--border); overflow: hidden; margin: 14px 0; background: var(--bg-card); }
+.py-runner-header { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--bg-secondary); border-bottom: 1px solid var(--border); }
+.py-runner-badge { font-size: 0.7rem; font-weight: 700; color: #3572a5; background: #3572a518; padding: 2px 8px; border-radius: 6px; letter-spacing: 0.5px; }
+.py-runner-actions { display: flex; gap: 6px; }
+.py-runner-btn { display: inline-flex; align-items: center; gap: 5px; font-size: 0.78rem; font-weight: 600; padding: 5px 14px; border-radius: 8px; border: none; cursor: pointer; transition: all 0.2s; }
+.py-runner-btn.run { background: var(--primary); color: white; }
+.py-runner-btn.run:hover:not(:disabled) { background: var(--primary-dark); transform: translateY(-1px); }
+.py-runner-btn.run:disabled { opacity: 0.6; cursor: wait; }
+.py-runner-btn.clear { background: transparent; color: var(--text-lighter); border: 1px solid var(--border); }
+.py-runner-btn.clear:hover { background: var(--bg-hover); color: var(--text); }
+.py-editor-wrap { position: relative; }
+.py-editor { width: 100%; min-height: 120px; padding: 14px 16px; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.85rem; line-height: 1.6; background: #0f172a; color: #e2e8f0; border: none; resize: vertical; outline: none; tab-size: 4; }
+[data-theme="dark"] .py-editor { background: #020617; }
+.py-output-wrap { border-top: 1px solid var(--border); }
+.py-output-header { font-size: 0.7rem; font-weight: 600; color: var(--text-lighter); text-transform: uppercase; letter-spacing: 0.5px; padding: 6px 14px; background: var(--bg-secondary); border-bottom: 1px solid var(--border); }
+.py-output { margin: 0; padding: 12px 16px; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.83rem; line-height: 1.6; background: #0f172a; color: #a5f3c4; white-space: pre-wrap; word-break: break-word; max-height: 220px; overflow-y: auto; }
+[data-theme="dark"] .py-output { background: #020617; color: #6ee7b7; }
+.py-output.error { color: #fca5a5; }
+.py-error { display: block; color: #f87171; }
+.py-no-output { color: var(--text-lighter); font-style: italic; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.spin { animation: spin 1s linear infinite; }

@@ -3,6 +3,7 @@ import { useApp } from '../../context/AppContext';
 import { Code2, Box, Layers, Palette, Puzzle, Monitor, FileCode, Target, Award, Lightbulb, AlertTriangle } from 'lucide-react';
 import SectionTracker from '../../components/SectionTracker';
 import { ContohSoal, Tugas } from '../../components/ContohSoal';
+import PythonRunner from '../../components/PythonRunner';
 
 const sections = [
   { id: 's1', label: 'A. Dasar-Dasar Pemrograman Berorientasi Objek' },
@@ -92,6 +93,37 @@ print(Siswa.sekolah)       # Output: SMKN 2 Kuningan`}
           <li><strong>Siswa.sekolah</strong> — Atribut class. Dibagikan ke semua objek dari class yang sama.</li>
         </ul>
 
+        <PythonRunner code={`class Siswa:
+    sekolah = "SMKN 2 Kuningan"
+
+    def __init__(self, nama, kelas):
+        self.nama = nama
+        self.kelas = kelas
+        self.nilai = []
+
+    def perkenalan(self):
+        return f"Halo, saya {self.nama} dari kelas {self.kelas}"
+
+    def tambah_nilai(self, n):
+        self.nilai.append(n)
+
+    def rata_rata(self):
+        if not self.nilai:
+            return 0
+        return sum(self.nilai) / len(self.nilai)
+
+# Membuat objek
+siswa1 = Siswa("Budi", "XI TJKT")
+siswa2 = Siswa("Andi", "XI TJKT")
+
+print(siswa1.perkenalan())
+print(siswa2.perkenalan())
+
+siswa1.tambah_nilai(85)
+siswa1.tambah_nilai(90)
+print(f"Rata-rata {siswa1.nama}: {siswa1.rata_rata()}")
+print(f"Sekolah: {Siswa.sekolah}")`} height={220} />
+
         {/* A.3 Encapsulation */}
         <h4 style={{marginTop: 24}}>A.3 Encapsulation — Menyembunyikan Detail</h4>
         <p>Encapsulation adalah prinsip menyembunyikan data internal suatu objek dan hanya meng-expose interface yang diperlukan. Ini melindungi data dari akses dan perubahan yang tidak sah.</p>
@@ -127,6 +159,44 @@ rek.tarik(500000)          # OK - pakai setter
           <strong><AlertTriangle size={14} /> Level Akses di Python</strong>
           <p>Python menggunakan konvensi nama: (1) Public (tanpa underscore) - bisa diakses siapa saja, (2) Protected (satu underscore _nama) - hanya untuk internal class/subclass, (3) Private (dua underscore __nama) - name mangling, sulit diakses dari luar. Python tidak seperti Java/C++ yang ketat access modifier-nya, tapi konvensi ini tetap penting untuk kode yang rapi dan aman.</p>
         </div>
+
+        <PythonRunner code={`class RekeningBank:
+    def __init__(self, pemilik, saldo):
+        self.pemilik = pemilik        # public
+        self._bank = "BCA"            # protected (konvensi)
+        self.__saldo = saldo          # private
+
+    def get_saldo(self):
+        return self.__saldo
+
+    def setor(self, jumlah):
+        if jumlah > 0:
+            self.__saldo += jumlah
+            return True
+        return False
+
+    def tarik(self, jumlah):
+        if 0 < jumlah <= self.__saldo:
+            self.__saldo -= jumlah
+            return True
+        return False
+
+rek = RekeningBank("Budi", 1000000)
+print(f"Pemilik: {rek.pemilik}")
+print(f"Saldo: Rp {rek.get_saldo():,}")
+
+rek.setor(500000)
+print(f"Setelah setor: Rp {rek.get_saldo():,}")
+
+rek.tarik(300000)
+print(f"Setelah tarik: Rp {rek.get_saldo():,}")
+
+# Coba akses private (error!)
+try:
+    print(rek.__saldo)
+except AttributeError as e:
+    print(f"Error: {e}")
+    print("Itu dia! __saldo private, harus pakai get_saldo()")`} height={250} />
 
         {/* A.4 Inheritance */}
         <h4 style={{marginTop: 24}}>A.4 Inheritance — Pewarisan Sifat</h4>
@@ -175,6 +245,41 @@ print(siswa.belajar("Python"))  # Output: Budi sedang belajar Python`}
           <li><strong>Multiple Inheritance</strong> — Child mewarisi dari lebih dari satu parent. (Python mendukung, tapi harus hati-hati dengan Diamond Problem).</li>
         </ul>
 
+        <PythonRunner code={`class Manusia:
+    def __init__(self, nama, umur):
+        self.nama = nama
+        self.umur = umur
+
+    def perkenalan(self):
+        return f"Saya {self.nama}, umur {self.umur} tahun"
+
+class Siswa(Manusia):
+    def __init__(self, nama, umur, kelas):
+        super().__init__(nama, umur)
+        self.kelas = kelas
+
+    def perkenalan(self):  # Override
+        return f"Saya {self.nama}, siswa kelas {self.kelas}"
+
+    def belajar(self, mapel):
+        return f"{self.nama} sedang belajar {mapel}"
+
+class Guru(Manusia):
+    def __init__(self, nama, umur, mata_pelajaran):
+        super().__init__(nama, umur)
+        self.mata_pelajaran = mata_pelajaran
+
+    def mengajar(self):
+        return f"Pak/Bu {self.nama} sedang mengajar {self.mata_pelajaran}"
+
+siswa = Siswa("Budi", 16, "XI TJKT")
+guru = Guru("Pak Andi", 35, "Pemrograman")
+
+print(siswa.perkenalan())  # Override!
+print(guru.perkenalan())   # Dari parent
+print(siswa.belajar("Python"))
+print(guru.mengajar())`} height={220} />
+
         {/* A.5 Polymorphism */}
         <h4 style={{marginTop: 24}}>A.5 Polymorphism — Banyak Bentuk, Satu Interface</h4>
         <p>Polymorphism memungkinkan objek dari class berbeda merespons metode yang sama dengan cara yang berbeda. Ini adalah salah satu kekuatan terbesar OOP.</p>
@@ -202,6 +307,37 @@ for h in hewan:
 # Bebek: Kwek kwek!`}
         </pre>
         <p><strong>Duck Typing di Python:</strong> Python menerapkan polymorphism melalui duck typing — "Jika ia berjalan seperti bebek dan berkicau seperti bebek, maka ia adalah bebek." Python tidak peduli tipe objeknya, yang penting objek tersebut punya metode yang dibutuhkan.</p>
+
+        <PythonRunner code={`class Kucing:
+    def suara(self):
+        return "Meong!"
+
+class Anjing:
+    def suara(self):
+        return "Guk guk!"
+
+class Bebek:
+    def suara(self):
+        return "Kwek kwek!"
+
+# Polymorphism dalam aksi
+hewan = [Kucing(), Anjing(), Bebek()]
+for h in hewan:
+    print(f"{h.__class__.__name__}: {h.suara()}")
+
+# Duck typing - class berbeda, method sama
+class Printer:
+    def suara(self):
+        return "Whirrr..."
+
+class Robot:
+    def suara(self):
+        return "BEEP BOOP!"
+
+semua = hewan + [Printer(), Robot()]
+print()
+for s in semua:
+    print(f"{s.__class__.__name__}: {s.suara()}")`} height={200} />
 
         <ContohSoal data={[
           { soal: 'Buatlah class Mahasiswa dengan atribut: nama, nim, prodi, ipk. Sertakan method: (1) __init__ untuk constructor, (2) method untuk menambahkan IPK, (3) method untuk menentukan kategori mahasiswa (berprestasi jika IPK >= 3.5, baik jika >= 3.0, perlu perbaikan jika < 3.0). Lalu buat 2 objek Mahasiswa dan tampilkan informasinya!',
