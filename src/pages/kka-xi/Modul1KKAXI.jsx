@@ -34,7 +34,7 @@ export default function Modul1KKAXI() {
 
         {/* A.1 Pengertian dan Konteks */}
         <h4 style={{marginTop: 0}}>A.1 Information Overload dan Hoaks</h4>
-        <p>Di era digital saat ini, setiap orang terpapar ratusan甚至 ribuan informasi setiap hari melalui media sosial, messenger, dan portal berita. Fenomena ini disebut <strong>information overload</strong> — kondisi di mana volume informasi yang diterima melebihi kemampuan otak untuk memprosesnya secara efektif. Akibatnya, banyak orang yang menerima informasi tanpa memverifikasinya terlebih dahulu.</p>
+        <p>Di era digital saat ini, setiap orang terpapar ratusan hingga ribuan informasi setiap hari melalui media sosial, messenger, dan portal berita. Fenomena ini disebut <strong>information overload</strong> — kondisi di mana volume informasi yang diterima melebihi kemampuan otak untuk memprosesnya secara efektif. Akibatnya, banyak orang yang menerima informasi tanpa memverifikasinya terlebih dahulu.</p>
         <p>Hoaks sendiri memiliki beberapa definisi dalam terminologi resmi:</p>
         <ul>
           <li><strong>Misinformasi</strong> — Informasi palsu yang disebarkan tanpa niat jahat (misalnya karena ketidaktahuan). Contoh: seseorang membagikan artikel palsu tentang obat herbal karena percaya itu manjur.</li>
