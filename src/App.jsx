@@ -70,6 +70,21 @@ const GlossaryPageKKA = lazy(() => import('./pages/kka/GlossaryPageKKA'));
 const CodeBlocksKKA = lazy(() => import('./pages/kka/CodeBlocksKKA'));
 const AIorHumanKKA = lazy(() => import('./pages/kka/AIorHumanKKA'));
 
+// KKA XI pages
+const DashboardKKAXI = lazy(() => import('./pages/kka-xi/DashboardKKAXI'));
+const Modul1KKAXI = lazy(() => import('./pages/kka-xi/Modul1KKAXI'));
+const Modul2KKAXI = lazy(() => import('./pages/kka-xi/Modul2KKAXI'));
+const Modul3KKAXI = lazy(() => import('./pages/kka-xi/Modul3KKAXI'));
+const Modul4KKAXI = lazy(() => import('./pages/kka-xi/Modul4KKAXI'));
+const FlashcardPageKKAXI = lazy(() => import('./pages/kka-xi/FlashcardPageKKAXI'));
+const GlossaryPageKKAXI = lazy(() => import('./pages/kka-xi/GlossaryPageKKAXI'));
+const ChallengePageKKAXI = lazy(() => import('./pages/kka-xi/ChallengePageKKAXI'));
+const WorksheetPageKKAXI = lazy(() => import('./pages/kka-xi/WorksheetPageKKAXI'));
+const PreTestKKAXI = lazy(() => import('./pages/kka-xi/PreTestKKAXI'));
+const PostTestKKAXI = lazy(() => import('./pages/kka-xi/PostTestKKAXI'));
+const KasusKKAXI = lazy(() => import('./pages/kka-xi/KasusKKAXI'));
+const HasilKKAXI = lazy(() => import('./pages/kka-xi/HasilKKAXI'));
+
 export default function App() {
   return (
     <ErrorBoundary>
@@ -116,6 +131,19 @@ export default function App() {
                 <Route path="/kka/glossary" element={<GlossaryPageKKA />} />
                 <Route path="/kka/codeblocks" element={<CodeBlocksKKA />} />
                 <Route path="/kka/ai-human" element={<AIorHumanKKA />} />
+                <Route path="/kka-xi" element={<DashboardKKAXI />} />
+                <Route path="/kka-xi/modul1" element={<Modul1KKAXI />} />
+                <Route path="/kka-xi/modul2" element={<Modul2KKAXI />} />
+                <Route path="/kka-xi/modul3" element={<Modul3KKAXI />} />
+                <Route path="/kka-xi/modul4" element={<Modul4KKAXI />} />
+                <Route path="/kka-xi/flashcard" element={<FlashcardPageKKAXI />} />
+                <Route path="/kka-xi/glossary" element={<GlossaryPageKKAXI />} />
+                <Route path="/kka-xi/challenge" element={<ChallengePageKKAXI />} />
+                <Route path="/kka-xi/worksheet" element={<WorksheetPageKKAXI />} />
+                <Route path="/kka-xi/pretest" element={<PreTestKKAXI />} />
+                <Route path="/kka-xi/posttest" element={<PostTestKKAXI />} />
+                <Route path="/kka-xi/kasus" element={<KasusKKAXI />} />
+                <Route path="/kka-xi/hasil" element={<HasilKKAXI />} />
                 <Route path="/mpk1/modul1" element={<Modul1 />} />
                 <Route path="/mpk1/modul2" element={<Modul2 />} />
                 <Route path="/mpk1/modul3" element={<Modul3 />} />

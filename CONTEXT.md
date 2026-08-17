@@ -1,6 +1,6 @@
 # Context Save — Media Pembelajaran Jarkom
 
-**Terakhir diupdate:** 29 Juli 2026
+**Terakhir diupdate:** 17 Agustus 2026
 **Branch:** master
 **Status:** Bersih (no uncommitted changes)
 
@@ -55,6 +55,13 @@ Media pembelajaran interaktif React untuk siswa SMK TJKT Kelas XI, Fase F — Pe
 - Flashcard (35 istilah), Glossary (35 istilah + search), Worksheet (24 essay), Challenge mode (30 soal timed)
 - Device Simulator (drag & drop), Certificate generator, Badges, Streak, Leaderboard
 - Dark mode, PWA, Print styles, Error boundary
+
+## KKA XI (Koding & Kecerdasan Artifisial XI)
+- **Kode:** KKA XI, rute `/kka-xi/`
+- **4 Modul:** (1) Literasi Digital, (2) Algoritma & Struktur Data, (3) Algoritma Pemograman, (4) Pengembangan Web Responsif & Interaktif
+- **Fitur:** Dashboard, Modul1-4 (materi + section tracker), Flashcard (35 istilah), Glossary (35 + search), Worksheet (20 essay), PreTest/PostTest (20 HOTS), Challenge (30 soal cepat), Kasus (3 studi kasus), Hasil (ringkasan + reset)
+- **Data:** `src/data/kka-xi/`, halaman: `src/pages/kka-xi/`
+- **State keys:** `kka_xi_pretest`, `kka_xi_posttest`, `kka_xi_pretestAnswers`, `kka_xi_posttestAnswers`
 
 ## Potensi Lanjutan
 - [x] Verifikasi device simulator — touch-action:none + e.preventDefault() untuk mobile drag
