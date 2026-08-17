@@ -814,33 +814,7 @@ Setiap contoh ada label nama teknik Flexbox yang digunakan dan kode CSS-nya dita
           </div>
         </div>
 
-        <h3 style={{marginTop: 24}}>Ringkasan Perintah (Copy-Paste Sekaligus):</h3>
-        <pre style={{background:'var(--bg-secondary)', padding:16, borderRadius:8, overflow:'auto', fontSize:'0.85rem'}}>
-{`# 1. Buka terminal di folder project (yang berisi index.html dari AI Studio)
-# 2. Jalankan perintah berikut (ganti URL dengan URL repo GitHub kamu):
 
-git init
-git add .
-git commit -m "feat: buat landing page dari Google AI Studio"
-git remote add origin https://github.com/username/portofolio-ai.git
-git push -u origin main
-
-# 3. Selesai! Cek di github.com/username/portofolio-ai`}
-        </pre>
-
-        <h3 style={{marginTop: 24}}>Update Kode dari Google AI Studio ke GitHub:</h3>
-        <p>Setiap kali kamu generate kode baru di Google AI Studio dan ingin update ke GitHub, ikuti langkah ini:</p>
-        <pre style={{background:'var(--bg-secondary)', padding:16, borderRadius:8, overflow:'auto', fontSize:'0.85rem'}}>
-{`# 1. Buka Google AI Studio, generate kode baru
-# 2. Copy kode hasil AI, paste ke file di VS Code (timpa yang lama), Save
-# 3. Buka terminal, jalankan:
-
-git add .
-git commit -m "update: tambah feature baru dari AI Studio"
-git push
-
-# 4. GitHub otomatis ter-update!`}
-        </pre>
 
         <div className="info-box">
           <strong><Lightbulb size={14} /> Troubleshooting: Perintah Git Tidak Dikenali?</strong>
