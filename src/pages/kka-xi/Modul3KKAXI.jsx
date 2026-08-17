@@ -94,7 +94,7 @@ print(Siswa.sekolah)       # Output: SMKN 2 Kuningan`}
 
         {/* A.3 Encapsulation */}
         <h4 style={{marginTop: 24}}>A.3 Encapsulation — Menyembunyikan Detail</h4>
-        <p>Encapsulation adalah prinsip menyembunyikan data internal suatu objek dan hanya meng暴露kan interface yang diperlukan. Ini melindungi data dari akses dan perubahan yang tidak sah.</p>
+        <p>Encapsulation adalah prinsip menyembunyikan data internal suatu objek dan hanya meng-expose interface yang diperlukan. Ini melindungi data dari akses dan perubahan yang tidak sah.</p>
         <pre style={{background:'var(--bg-secondary)', padding:16, borderRadius:8, overflow:'auto', fontSize:'0.85rem'}}>
 {`class RekeningBank:
     def __init__(self, pemilik, saldo):
