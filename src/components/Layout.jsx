@@ -239,7 +239,7 @@ const subjects = {
     title: 'Koding & Kecerdasan Artifisial XI',
     items: [
       { to: '/kka-xi', icon: Home, label: 'Dashboard' },
-      { to: '/kka-xi/modul1', icon: Globe, label: 'Modul 1: Literasi Digital' },
+      { to: '/kka-xi/modul1', icon: Globe, label: 'Modul 1: Menyaring Fakta & Identitas Digital' },
       { to: '/kka-xi/modul2', icon: Brain, label: 'Modul 2: Algoritma & Struktur Data' },
       { to: '/kka-xi/modul3', icon: Terminal, label: 'Modul 3: Algoritma Pemograman' },
       { to: '/kka-xi/modul4', icon: Code2, label: 'Modul 4: Pengembangan Web' },
@@ -254,7 +254,7 @@ const subjects = {
     ],
     titles: {
       '/kka-xi': 'Dashboard KKA XI',
-      '/kka-xi/modul1': 'Modul 1: Menggali Kreativitas Kolaboratif dalam Literasi Digital',
+      '/kka-xi/modul1': 'Modul 1: Menyaring Fakta, Identitas Digital & Kolaborasi Konten',
       '/kka-xi/modul2': 'Modul 2: Pengembangan Algoritma dan Struktur Data',
       '/kka-xi/modul3': 'Modul 3: Algoritma Pemograman',
       '/kka-xi/modul4': 'Modul 4: Pengembangan Web yang Responsif dan Interaktif',
@@ -269,7 +269,7 @@ const subjects = {
     },
     descs: {
       '/kka-xi': 'Media Pembelajaran Koding & Kecerdasan Artifisial XI',
-      '/kka-xi/modul1': 'Etika, keamanan, dan kolaborasi di dunia digital',
+      '/kka-xi/modul1': 'Verifikasi hoaks, identitas digital sebagai fondasi reputasi, dan kolaborasi kreasi konten',
       '/kka-xi/modul2': 'Array, linked list, stack, queue, sorting, searching, Big O',
       '/kka-xi/modul3': 'Variabel, percabangan, perulangan, fungsi, debugging',
       '/kka-xi/modul4': 'HTML, CSS, JavaScript, responsive design, DOM manipulation',
