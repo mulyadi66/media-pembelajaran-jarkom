@@ -1,32 +1,37 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { Play, Loader2, Trash2 } from 'lucide-react';
 
 let pyodideInstance = null;
 let pyodideLoading = false;
-let pyodidePromise = null;
+let pyodideLoadPromise = null;
 
-async function loadPyodide() {
-  if (pyodideInstance) return pyodideInstance;
-  if (pyodidePromise) return pyodidePromise;
+function getPyodide() {
+  if (pyodideInstance) return Promise.resolve(pyodideInstance);
+  if (pyodideLoadPromise) return pyodideLoadPromise;
 
-  pyodideLoading = true;
-  pyodidePromise = (async () => {
-    const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js';
-    script.async = true;
-    await new Promise((resolve, reject) => {
-      script.onload = resolve;
-      script.onerror = () => reject(new Error('Gagal memuat Pyodide. Periksa koneksi internet.'));
-      document.head.appendChild(script);
-    });
-    pyodideInstance = await loadPyodide({
-      indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.25.1/full/',
-    });
-    pyodideLoading = false;
-    return pyodideInstance;
-  })();
+  pyodideLoadPromise = new Promise(async (resolve, reject) => {
+    try {
+      if (!window.loadPyodide) {
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js';
+        script.crossOrigin = 'anonymous';
+        await new Promise((res, rej) => {
+          script.onload = res;
+          script.onerror = () => rej(new Error('Gagal memuat Pyodide.js'));
+          document.head.appendChild(script);
+        });
+      }
+      pyodideInstance = await window.loadPyodide({
+        indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.25.1/full/',
+      });
+      resolve(pyodideInstance);
+    } catch (err) {
+      pyodideLoadPromise = null;
+      reject(err);
+    }
+  });
 
-  return pyodidePromise;
+  return pyodideLoadPromise;
 }
 
 const DEFAULT_CODE = `# Tulis kode Python di sini!
@@ -41,32 +46,54 @@ export default function PythonRunner({ code: initialCode, height = 180 }) {
   const [code, setCode] = useState(initialCode || DEFAULT_CODE);
   const [output, setOutput] = useState('');
   const [status, setStatus] = useState('idle');
-  const [errorMsg, setErrorMsg] = useState('');
-  const textareaRef = useRef(null);
+  const [loadingMsg, setLoadingMsg] = useState('');
+  const runnerId = useRef(Math.random().toString(36).slice(2, 8));
 
   const runCode = useCallback(async () => {
     setStatus('loading');
+    setLoadingMsg('Memuat Python runtime...');
     setOutput('');
-    setErrorMsg('');
 
     try {
-      const pyodide = await loadPyodide();
+      const pyodide = await getPyodide();
 
-      pyodide.setStdout({ batched: (text) => setOutput((prev) => prev + text) });
-      pyodide.setStderr({ batched: (text) => setErrorMsg((prev) => prev + text) });
+      setLoadingMsg('Menjalankan kode...');
 
-      await pyodide.runPythonAsync(code);
-      setStatus('done');
+      const stdout = [];
+      const stderr = [];
+
+      pyodide.setStdout({
+        batched: (text) => stdout.push(text),
+      });
+      pyodide.setStderr({
+        batched: (text) => stderr.push(text),
+      });
+
+      let result;
+      try {
+        result = await pyodide.runPythonAsync(code);
+      } catch (runErr) {
+        stderr.push(String(runErr.message || runErr));
+      }
+
+      const outStr = stdout.join('');
+      const errStr = stderr.join('');
+
+      setOutput(outStr);
+      if (errStr) {
+        setOutput(outStr ? outStr + '\n' + errStr : errStr);
+      }
+      setStatus(errStr && !outStr ? 'error' : 'done');
     } catch (err) {
-      setErrorMsg(String(err.message || err));
+      setOutput('Error: ' + String(err.message || err));
       setStatus('error');
     }
   }, [code]);
 
   const clearOutput = () => {
     setOutput('');
-    setErrorMsg('');
     setStatus('idle');
+    setLoadingMsg('');
   };
 
   return (
@@ -83,7 +110,7 @@ export default function PythonRunner({ code: initialCode, height = 180 }) {
             disabled={status === 'loading'}
           >
             {status === 'loading' ? (
-              <><Loader2 size={14} className="spin" /> Memuat...</>
+              <><Loader2 size={14} className="spin" /> {loadingMsg || 'Memuat...'}</>
             ) : (
               <><Play size={14} /> Run</>
             )}
@@ -93,7 +120,6 @@ export default function PythonRunner({ code: initialCode, height = 180 }) {
 
       <div className="py-editor-wrap">
         <textarea
-          ref={textareaRef}
           className="py-editor"
           value={code}
           onChange={(e) => setCode(e.target.value)}
@@ -102,15 +128,13 @@ export default function PythonRunner({ code: initialCode, height = 180 }) {
         />
       </div>
 
-      {(output || errorMsg || status === 'done') && (
+      {status !== 'idle' && (
         <div className="py-output-wrap">
-          <div className="py-output-header">Output</div>
-          <pre className={`py-output ${errorMsg ? 'error' : ''}`}>
-            {output}
-            {errorMsg && <span className="py-error">{errorMsg}</span>}
-            {!output && !errorMsg && status === 'done' && (
-              <span className="py-no-output">(tidak ada output)</span>
-            )}
+          <div className="py-output-header">
+            {status === 'loading' ? 'Menjalankan...' : status === 'error' ? 'Error' : 'Output'}
+          </div>
+          <pre className={`py-output ${status === 'error' ? 'error' : ''}`}>
+            {output || (status === 'loading' ? '...' : '(tidak ada output)')}
           </pre>
         </div>
       )}
