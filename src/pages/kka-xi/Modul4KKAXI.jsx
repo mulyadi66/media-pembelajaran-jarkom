@@ -514,84 +514,277 @@ Setiap contoh ada label nama teknik Flexbox yang digunakan dan kode CSS-nya dita
           <p><strong>GitHub</strong> = version control (riwayat perubahan kode, kolaborasi tim, backup online gratis). <strong>Vercel</strong> = hosting modern (gratis untuk personal, auto-deploy setiap push, HTTPS otomatis, edge network global, analytics built-in). Keduanya gratis dan sangat populer di industri web development.</p>
         </div>
 
-        {/* B.2 Git Dasar */}
-        <h4 style={{marginTop: 24}}>B.2 Git & GitHub Dasar - Version Control</h4>
-        <p>Git adalah version control system yang melacak setiap perubahan kode. Kamu bisa melihat riwayat perubahan, kembali ke versi sebelumnya, dan bekerja sama dengan tim tanpa saling menimpa kode.</p>
-        <h3 style={{marginTop: 12}}>Perintah Git Dasar:</h3>
-        <pre style={{background:'var(--bg-secondary)', padding:16, borderRadius:8, overflow:'auto', fontSize:'0.85rem'}}>
-{`# === SETUP (sekali saja) ===
-git init                    # Inisialisasi repo di folder ini
-git remote add origin URL   # Hubungkan ke GitHub
+        {/* B.2 Membuat Akun GitHub */}
+        <h4 style={{marginTop: 0}}>B.2 Membuat Akun GitHub & Repository Baru</h4>
+        <p>GitHub adalah platform kolaborasi开发 berbasis Git. Semua kode project disimpan di repository (folder online) yang bisa diakses dari mana saja. Ikuti langkah berikut untuk membuat akun dan repository baru.</p>
 
-# === ALUR KERJA HARIAN ===
-git status                  # Lihat file yang berubah
-git add .                   # Tambah SEMUA file ke staging
-git add file.html           # Tambah 1 file tertentu
-git commit -m "pesan"       # Simpan snapshot
-git push                    # Unggah ke GitHub
-git pull                    # Ambil dari GitHub
+        {/* Step 1 */}
+        <div style={{display:'flex', gap:16, alignItems:'flex-start', margin:'20px 0', padding:16, background:'var(--bg-secondary)', borderRadius:10, border:'1px solid var(--border)'}}>
+          <div style={{flexShrink:0, width:48, height:48, borderRadius:'50%', background:'linear-gradient(135deg, #6366f1, #8b5cf6)', color:'white', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'1.2rem', fontWeight:700}}>1</div>
+          <div style={{flex:1}}>
+            <h4 style={{margin:'0 0 8px'}}>Buka GitHub & Klik Sign Up</h4>
+            <p style={{margin:'0 0 8px', fontSize:'0.9rem'}}>Buka browser, ketik <code>github.com</code> di address bar. Di halaman utama GitHub, klik tombol <strong>"Sign up"</strong> di pojok kanan atas.</p>
+            <div style={{background:'#1e293b', padding:12, borderRadius:8, fontSize:'0.82rem', color:'#e2e8f0', fontFamily:'monospace'}}>
+              {'->'} Buka github.com<br/>
+              {'->'} Klik tombol <span style={{color:'#a78bfa'}}>Sign up</span> (pojok kanan atas)<br/>
+              {'->'} Masukkan email, buat password, pilih username unik<br/>
+              {'->'} Selesaikan verifikasi (captcha) lalu klik "Create account"
+            </div>
+            <div style={{marginTop:8, padding:'8px 12px', background:'#f1f5f9', borderRadius:6, fontSize:'0.82rem', color:'#64748b', fontStyle:'italic'}}>
+              📸 <strong>Screenshot:</strong> Halaman utama github.com dengan tombol Sign up yang terlihat jelas
+            </div>
+          </div>
+        </div>
 
-# === BRANCHING ===
-git checkout -b fitur-baru  # Buat & pindah ke branch baru
-# ... kerja di fitur-baru ...
-git checkout main           # Kembali ke main
-git merge fitur-baru        # Gabungkan fitur ke main
+        {/* Step 2 */}
+        <div style={{display:'flex', gap:16, alignItems:'flex-start', margin:'20px 0', padding:16, background:'var(--bg-secondary)', borderRadius:10, border:'1px solid var(--border)'}}>
+          <div style={{flexShrink:0, width:48, height:48, borderRadius:'50%', background:'linear-gradient(135deg, #6366f1, #8b5cf6)', color:'white', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'1.2rem', fontWeight:700}}>2</div>
+          <div style={{flex:1}}>
+            <h4 style={{margin:'0 0 8px'}}>Klik "+" lalu Pilih "New Repository"</h4>
+            <p style={{margin:'0 0 8px', fontSize:'0.9rem'}}>Setelah login, di pojok kanan atas halaman GitHub ada tombol <strong>"+"</strong> (plus). Klik tombol itu, lalu pilih <strong>"New repository"</strong> dari dropdown.</p>
+            <div style={{background:'#1e293b', padding:12, borderRadius:8, fontSize:'0.82rem', color:'#e2e8f0', fontFamily:'monospace'}}>
+              {'->'} Login ke github.com<br/>
+              {'->'} Klik tombol <span style={{color:'#a78bfa'}}>+</span> di pojok kanan atas<br/>
+              {'->'} Pilih <span style={{color:'#a78bfa'}}>New repository</span> dari dropdown menu
+            </div>
+            <div style={{marginTop:8, padding:'8px 12px', background:'#f1f5f9', borderRadius:6, fontSize:'0.82rem', color:'#64748b', fontStyle:'italic'}}>
+              📸 <strong>Screenshot:</strong> Tombol "+" di pojok kanan atas yang sudah diklik, dropdown terbuka dengan opsi "New repository" terlihat
+            </div>
+          </div>
+        </div>
 
-# === UTILITAS ===
-git log --oneline           # Lihat history commit
-git diff                    # Lihat perbedaan file
-git stash                   # Simpan perubahan sementara`}
-        </pre>
-        <h3 style={{marginTop: 16}}>Analogi Git dalam Kehidupan Nyata:</h3>
-        <ul>
-          <li><strong>git init</strong> = Membuat buku catatan baru</li>
-          <li><strong>git add</strong> = Menandai halaman yang ingin difoto</li>
-          <li><strong>git commit</strong> = Mengambil foto halaman + menulis catatan tanggal</li>
-          <li><strong>git push</strong> = Mengunggah foto ke cloud (Google Drive)</li>
-          <li><strong>git pull</strong> = Sync foto terbaru dari cloud ke buku</li>
-          <li><strong>git branch</strong> = Membuat salinan buku untuk mencoba tulisan baru tanpa mengganggu buku asli</li>
-          <li><strong>git merge</strong> = Menyalin tulisan bagus dari salinan ke buku asli</li>
-        </ul>
+        {/* Step 3 */}
+        <div style={{display:'flex', gap:16, alignItems:'flex-start', margin:'20px 0', padding:16, background:'var(--bg-secondary)', borderRadius:10, border:'1px solid var(--border)'}}>
+          <div style={{flexShrink:0, width:48, height:48, borderRadius:'50%', background:'linear-gradient(135deg, #6366f1, #8b5cf6)', color:'white', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'1.2rem', fontWeight:700}}>3</div>
+          <div style={{flex:1}}>
+            <h4 style={{margin:'0 0 8px'}}>Isi Form Repository</h4>
+            <p style={{margin:'0 0 8px', fontSize:'0.9rem'}}>Isi form pembuatan repository dengan informasi project kamu:</p>
+            <div style={{background:'#1e293b', padding:12, borderRadius:8, fontSize:'0.82rem', color:'#e2e8f0', fontFamily:'monospace', lineHeight:1.8}}>
+              <strong style={{color:'#a78bfa'}}>Repository name:</strong> <span style={{color:'#fbbf24'}}>portofolio-siswa</span> (nama bebas, tanpa spasi)<br/>
+              <strong style={{color:'#a78bfa'}}>Description:</strong> Website portofolio pribadi (opsional)<br/>
+              <strong style={{color:'#a78bfa'}}>Visibility:</strong> <span style={{color:'#34d399'}}>Public</span> (gratis, bisa dilihat semua orang) atau <span style={{color:'#fb923c'}}>Private</span> (hanya kamu)<br/>
+              <strong style={{color:'#a78bfa'}}>Initialize:</strong> Centang <span style={{color:'#34d399'}}>"Add a README file"</span> sebagai file awal
+            </div>
+            <div style={{marginTop:8, padding:'8px 12px', background:'#f1f5f9', borderRadius:6, fontSize:'0.82rem', color:'#64748b', fontStyle:'italic'}}>
+              📸 <strong>Screenshot:</strong> Form "Create a new repository" yang sudah terisi (repository name, description, Public dipilih, README dicentang)
+            </div>
+          </div>
+        </div>
 
-        {/* B.3 Repository GitHub */}
-        <h4 style={{marginTop: 24}}>B.3 Membuat Repository GitHub</h4>
-        <ul>
-          <li><strong>1.</strong> Buka github.com, klik "+" di pojok kanan atas, pilih "New repository"</li>
-          <li><strong>2.</strong> Isi nama repository (contoh: "portofolio-siswa"), deskripsi singkat</li>
-          <li><strong>3.</strong> Pilih Public (bisa dilihat semua orang) atau Private (hanya kamu)</li>
-          <li><strong>4.</strong> Centang "Add a README file" sebagai file awal</li>
-          <li><strong>5.</strong> Pilih .gitignore template sesuai project (Node, Python, dll)</li>
-          <li><strong>6.</strong> Klik "Create repository"</li>
-        </ul>
-        <h3 style={{marginTop: 16}}>File .gitignore - File yang Tidak Di-Push:</h3>
-        <pre style={{background:'var(--bg-secondary)', padding:16, borderRadius:8, overflow:'auto', fontSize:'0.85rem'}}>
-{`# .gitignore
+        {/* Step 4 */}
+        <div style={{display:'flex', gap:16, alignItems:'flex-start', margin:'20px 0', padding:16, background:'var(--bg-secondary)', borderRadius:10, border:'1px solid var(--border)'}}>
+          <div style={{flexShrink:0, width:48, height:48, borderRadius:'50%', background:'linear-gradient(135deg, #6366f1, #8b5cf6)', color:'white', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'1.2rem', fontWeight:700}}>4</div>
+          <div style={{flex:1}}>
+            <h4 style={{margin:'0 0 8px'}}>Klik "Create Repository"</h4>
+            <p style={{margin:'0 0 8px', fontSize:'0.9rem'}}>Setelah semua terisi, klik tombol <strong>"Create repository"</strong> di bawah form. GitHub akan membuat repository baru dan kamu akan dibawa ke halaman repository.</p>
+            <div style={{background:'#1e293b', padding:12, borderRadius:8, fontSize:'0.82rem', color:'#e2e8f0', fontFamily:'monospace'}}>
+              {'->'} Klik tombol <span style={{color:'#a78bfa'}}>Create repository</span> (hijau)<br/>
+              {'->'} Tunggu beberapa detik<br/>
+              {'->'} Kamu akan dibawa ke halaman repository baru
+            </div>
+            <div style={{marginTop:8, padding:'8px 12px', background:'#f1f5f9', borderRadius:6, fontSize:'0.82rem', color:'#64748b', fontStyle:'italic'}}>
+              📸 <strong>Screenshot:</strong> Halaman repository baru dengan nama "portofolio-siswa", file README.md terlihat, dan tombol "Code" hijau di pojok kanan
+            </div>
+          </div>
+        </div>
 
-# Dependencies
-node_modules/
-__pycache__/
+        {/* Step 5 */}
+        <div style={{display:'flex', gap:16, alignItems:'flex-start', margin:'20px 0', padding:16, background:'var(--bg-secondary)', borderRadius:10, border:'1px solid var(--border)'}}>
+          <div style={{flexShrink:0, width:48, height:48, borderRadius:'50%', background:'linear-gradient(135deg, #6366f1, #8b5cf6)', color:'white', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'1.2rem', fontWeight:700}}>5</div>
+          <div style={{flex:1}}>
+            <h4 style={{margin:'0 0 8px'}}>Copy URL Repository</h4>
+            <p style={{margin:'0 0 8px', fontSize:'0.9rem'}}>Di halaman repository, klik tombol <strong>"{'<>'} Code"</strong> (hijau) di pojok kanan. Pilih tab <strong>"HTTPS"</strong>, lalu copy URL yang muncul. URL inilah yang akan kamu gunakan untuk menghubungkan project lokal ke GitHub.</p>
+            <div style={{background:'#1e293b', padding:12, borderRadius:8, fontSize:'0.82rem', color:'#e2e8f0', fontFamily:'monospace', lineHeight:1.8}}>
+              <strong style={{color:'#a78bfa'}}>Klik tombol Code {'</>'} (hijau):</strong><br/>
+              {'->'} Pilih tab <span style={{color:'#34d399'}}>HTTPS</span><br/>
+              {'->'} Copy URL: <span style={{color:'#fbbf24'}}>https://github.com/username/portofolio-siswa.git</span><br/>
+              {'->'} Klik ikon 📋 (copy) di sebelah URL
+            </div>
+            <div style={{marginTop:8, padding:'8px 12px', background:'#f1f5f9', borderRadius:6, fontSize:'0.82rem', color:'#64748b', fontStyle:'italic'}}>
+              📸 <strong>Screenshot:</strong> Dropdown Code terbuka, tab HTTPS aktif, URL terlihat dengan ikon copy di sebelahnya
+            </div>
+          </div>
+        </div>
 
-# Environment variables (RAHASIA!)
-.env
-.env.local
-.env.production
-
-# Build output
-dist/
-build/
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# IDE / Editor
-.vscode/
-.idea/
-*.swp`}
-        </pre>
         <div className="info-box">
           <strong><AlertTriangle size={14} /> Keamanan: Jangan Push File Rahasia!</strong>
-          <p>Jangan pernah push file .env, API keys, password, atau token ke GitHub! File .gitignore membantu mencegah ini. Jika tidak sengaja ter-push, kamu harus: (1) hapus file dari GitHub, (2) generate API keys baru, (3) tambahkan ke .gitignore. Data yang sudah di-push ke public repo bisa sudah dilihat orang lain.</p>
+          <p>Jangan pernah push file .env, API keys, password, atau token ke GitHub! Buat file <code>.gitignore</code> di folder project untuk mencegah file rahasia ter-push. Contoh isi .gitignore: <code>.env</code>, <code>node_modules/</code>, <code>__pycache__/</code>, <code>.DS_Store</code>, <code>dist/</code>.</p>
+        </div>
+
+        {/* B.3 Mengkoneksikan Project Lokal ke GitHub */}
+        <h4 style={{marginTop: 24}}>B.3 Mengkoneksikan Project ke GitHub - Step by Step</h4>
+        <p>Sekarang kita akan menghubungkan project yang sudah dibuat (misalnya dari Google AI Studio) ke repository GitHub yang baru saja dibuat. Pastikan <strong>Git</strong> sudah terinstall di komputer kamu (download di <code>git-scm.com</code> jika belum).</p>
+
+        {/* Step A */}
+        <div style={{display:'flex', gap:16, alignItems:'flex-start', margin:'20px 0', padding:16, background:'var(--bg-secondary)', borderRadius:10, border:'1px solid var(--border)'}}>
+          <div style={{flexShrink:0, width:48, height:48, borderRadius:'50%', background:'linear-gradient(135deg, #f59e0b, #f97316)', color:'white', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'1.2rem', fontWeight:700}}>A</div>
+          <div style={{flex:1}}>
+            <h4 style={{margin:'0 0 8px'}}>Buka Terminal di Folder Project</h4>
+            <p style={{margin:'0 0 8px', fontSize:'0.9rem'}}>Buka folder project kamu di VS Code atau File Explorer, lalu buka terminal di dalam folder itu.</p>
+            <div style={{background:'#1e293b', padding:12, borderRadius:8, fontSize:'0.82rem', color:'#e2e8f0', fontFamily:'monospace', lineHeight:1.8}}>
+              <strong style={{color:'#fbbf24'}}>Cara 1 - VS Code:</strong><br/>
+              {'->'} Buka folder project di VS Code<br/>
+              {'->'} Klik menu <span style={{color:'#a78bfa'}}>Terminal {'>'} New Terminal</span> (atau tekan Ctrl + `)<br/>
+              <br/>
+              <strong style={{color:'#fbbf24'}}>Cara 2 - File Explorer:</strong><br/>
+              {'->'} Buka folder project di File Explorer<br/>
+              {'->'} Klik address bar, ketik <span style={{color:'#a78bfa'}}>cmd</span>, tekan Enter<br/>
+              {'->'} Terminal (Command Prompt) akan terbuka di folder project
+            </div>
+            <div style={{marginTop:8, padding:'8px 12px', background:'#f1f5f9', borderRadius:6, fontSize:'0.82rem', color:'#64748b', fontStyle:'italic'}}>
+              📸 <strong>Screenshot:</strong> VS Code terbuka dengan folder project, terminal terbuka di bagian bawah dengan path folder project terlihat
+            </div>
+          </div>
+        </div>
+
+        {/* Step B */}
+        <div style={{display:'flex', gap:16, alignItems:'flex-start', margin:'20px 0', padding:16, background:'var(--bg-secondary)', borderRadius:10, border:'1px solid var(--border)'}}>
+          <div style={{flexShrink:0, width:48, height:48, borderRadius:'50%', background:'linear-gradient(135deg, #f59e0b, #f97316)', color:'white', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'1.2rem', fontWeight:700}}>B</div>
+          <div style={{flex:1}}>
+            <h4 style={{margin:'0 0 8px'}}>Inisialisasi Git (git init)</h4>
+            <p style={{margin:'0 0 8px', fontSize:'0.9rem'}}>Jalankan perintah <code>git init</code> untuk mengubah folder project menjadi Git repository lokal. Ini hanya perlu dilakukan SEKALI.</p>
+            <div style={{background:'#0f172a', color:'#e2e8f0', padding:12, borderRadius:8, fontSize:'0.82rem', fontFamily:'monospace', lineHeight:1.8}}>
+              <span style={{color:'#64748b'}}>$</span> <span style={{color:'#34d399'}}>git init</span><br/>
+              <span style={{color:'#94a3b8'}}>Initialized empty Git repository in C:/Users/.../portofolio-siswa/.git/</span>
+            </div>
+            <div style={{marginTop:8, padding:'8px 12px', background:'#f1f5f9', borderRadius:6, fontSize:'0.82rem', color:'#64748b', fontStyle:'italic'}}>
+              📸 <strong>Screenshot:</strong> Terminal dengan perintah <code>git init</code> dan pesan "Initialized empty Git repository" terlihat
+            </div>
+          </div>
+        </div>
+
+        {/* Step C */}
+        <div style={{display:'flex', gap:16, alignItems:'flex-start', margin:'20px 0', padding:16, background:'var(--bg-secondary)', borderRadius:10, border:'1px solid var(--border)'}}>
+          <div style={{flexShrink:0, width:48, height:48, borderRadius:'50%', background:'linear-gradient(135deg, #f59e0b, #f97316)', color:'white', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'1.2rem', fontWeight:700}}>C</div>
+          <div style={{flex:1}}>
+            <h4 style={{margin:'0 0 8px'}}>Lihat Status File (git status)</h4>
+            <p style={{margin:'0 0 8px', fontSize:'0.9rem'}}>Jalankan <code>git status</code> untuk melihat file mana yang belum ter-tracked. File yang berwarna merah artinya belum di-add ke staging area.</p>
+            <div style={{background:'#0f172a', color:'#e2e8f0', padding:12, borderRadius:8, fontSize:'0.82rem', fontFamily:'monospace', lineHeight:1.8}}>
+              <span style={{color:'#64748b'}}>$</span> <span style={{color:'#34d399'}}>git status</span><br/>
+              <span style={{color:'#94a3b8'}}>On branch main</span><br/>
+              <span style={{color:'#f87171'}}>Untracked files:</span><br/>
+              <span style={{color:'#f87171'}}>  index.html</span><br/>
+              <span style={{color:'#f87171'}}>  style.css</span><br/>
+              <span style={{color:'#f87171'}}>  script.js</span>
+            </div>
+            <div style={{marginTop:8, padding:'8px 12px', background:'#f1f5f9', borderRadius:6, fontSize:'0.82rem', color:'#64748b', fontStyle:'italic'}}>
+              📸 <strong>Screenshot:</strong> Terminal dengan output <code>git status</code> yang menunjukkan file untracked berwarna merah
+            </div>
+          </div>
+        </div>
+
+        {/* Step D */}
+        <div style={{display:'flex', gap:16, alignItems:'flex-start', margin:'20px 0', padding:16, background:'var(--bg-secondary)', borderRadius:10, border:'1px solid var(--border)'}}>
+          <div style={{flexShrink:0, width:48, height:48, borderRadius:'50%', background:'linear-gradient(135deg, #f59e0b, #f97316)', color:'white', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'1.2rem', fontWeight:700}}>D</div>
+          <div style={{flex:1}}>
+            <h4 style={{margin:'0 0 8px'}}>Tambahkan File ke Staging (git add)</h4>
+            <p style={{margin:'0 0 8px', fontSize:'0.9rem'}}>Jalankan <code>git add .</code> untuk menambahkan SEMUA file ke staging area (siap di-commit). Titik (.) berarti semua file di folder ini.</p>
+            <div style={{background:'#0f172a', color:'#e2e8f0', padding:12, borderRadius:8, fontSize:'0.82rem', fontFamily:'monospace', lineHeight:1.8}}>
+              <span style={{color:'#64748b'}}>$</span> <span style={{color:'#34d399'}}>git add .</span><br/>
+              <span style={{color:'#94a3b8'}}>(Tidak ada output = berhasil!)</span>
+            </div>
+            <div style={{marginTop:8, padding:'8px 12px', background:'#f1f5f9', borderRadius:6, fontSize:'0.82rem', color:'#64748b', fontStyle:'italic'}}>
+              📸 <strong>Screenshot:</strong> Terminal dengan perintah <code>git add .</code> yang sudah dijalankan (tidak ada error)
+            </div>
+          </div>
+        </div>
+
+        {/* Step E */}
+        <div style={{display:'flex', gap:16, alignItems:'flex-start', margin:'20px 0', padding:16, background:'var(--bg-secondary)', borderRadius:10, border:'1px solid var(--border)'}}>
+          <div style={{flexShrink:0, width:48, height:48, borderRadius:'50%', background:'linear-gradient(135deg, #f59e0b, #f97316)', color:'white', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'1.2rem', fontWeight:700}}>E</div>
+          <div style={{flex:1}}>
+            <h4 style={{margin:'0 0 8px'}}>Simpan Snapshot (git commit)</h4>
+            <p style={{margin:'0 0 8px', fontSize:'0.9rem'}}>Jalankan <code>git commit</code> dengan pesan deskriptif. Commit adalah "snapshot" kode pada waktu tertentu. Pesan harus jelas menjelaskan apa yang diubah.</p>
+            <div style={{background:'#0f172a', color:'#e2e8f0', padding:12, borderRadius:8, fontSize:'0.82rem', fontFamily:'monospace', lineHeight:1.8}}>
+              <span style={{color:'#64748b'}}>$</span> <span style={{color:'#34d399'}}>git commit -m "feat: buat landing page dari Google AI Studio"</span><br/>
+              <span style={{color:'#94a3b8'}}>[main (root-commit) a1b2c3d] feat: buat landing page dari Google AI Studio</span><br/>
+              <span style={{color:'#94a3b8'}}> 3 files changed, 150 insertions(+)</span>
+            </div>
+            <div style={{marginTop:8, padding:'8px 12px', background:'#f1f5f9', borderRadius:6, fontSize:'0.82rem', color:'#64748b', fontStyle:'italic'}}>
+              📸 <strong>Screenshot:</strong> Terminal dengan perintah commit dan pesan sukses "3 files changed"
+            </div>
+          </div>
+        </div>
+
+        {/* Step F */}
+        <div style={{display:'flex', gap:16, alignItems:'flex-start', margin:'20px 0', padding:16, background:'var(--bg-secondary)', borderRadius:10, border:'1px solid var(--border)'}}>
+          <div style={{flexShrink:0, width:48, height:48, borderRadius:'50%', background:'linear-gradient(135deg, #f59e0b, #f97316)', color:'white', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'1.2rem', fontWeight:700}}>F</div>
+          <div style={{flex:1}}>
+            <h4 style={{margin:'0 0 8px'}}>Hubungkan ke GitHub (git remote add)</h4>
+            <p style={{margin:'0 0 8px', fontSize:'0.9rem'}}>Jalankan <code>git remote add origin</code> diikuti URL repository yang sudah kamu copy tadi di GitHub. Ini menghubungkan repo lokal ke repo online.</p>
+            <div style={{background:'#0f172a', color:'#e2e8f0', padding:12, borderRadius:8, fontSize:'0.82rem', fontFamily:'monospace', lineHeight:1.8}}>
+              <span style={{color:'#64748b'}}>$</span> <span style={{color:'#34d399'}}>git remote add origin https://github.com/username/portofolio-siswa.git</span><br/>
+              <span style={{color:'#94a3b8'}}>(Tidak ada output = berhasil!)</span>
+            </div>
+            <div style={{marginTop:8, padding:'8px 12px', background:'#f1f5f9', borderRadius:6, fontSize:'0.82rem', color:'#64748b', fontStyle:'italic'}}>
+              📸 <strong>Screenshot:</strong> Terminal dengan perintah <code>git remote add origin</code> yang sudah dijalankan
+            </div>
+          </div>
+        </div>
+
+        {/* Step G */}
+        <div style={{display:'flex', gap:16, alignItems:'flex-start', margin:'20px 0', padding:16, background:'var(--bg-secondary)', borderRadius:10, border:'1px solid var(--border)'}}>
+          <div style={{flexShrink:0, width:48, height:48, borderRadius:'50%', background:'linear-gradient(135deg, #f59e0b, #f97316)', color:'white', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'1.2rem', fontWeight:700}}>G</div>
+          <div style={{flex:1}}>
+            <h4 style={{margin:'0 0 8px'}}>Unggah ke GitHub (git push)</h4>
+            <p style={{margin:'0 0 8px', fontSize:'0.9rem'}}>Jalankan <code>git push -u origin main</code> untuk mengunggah semua kode ke GitHub. Flag <code>-u</code> hanya perlu sekali saja agar Git mengingat branch.</p>
+            <div style={{background:'#0f172a', color:'#e2e8f0', padding:12, borderRadius:8, fontSize:'0.82rem', fontFamily:'monospace', lineHeight:1.8}}>
+              <span style={{color:'#64748b'}}>$</span> <span style={{color:'#34d399'}}>git push -u origin main</span><br/>
+              <span style={{color:'#94a3b8'}}>Enumerating objects: 5, done.</span><br/>
+              <span style={{color:'#94a3b8'}}>Counting objects: 100% (5/5), done.</span><br/>
+              <span style={{color:'#94a3b8'}}>To https://github.com/username/portofolio-siswa.git</span><br/>
+              <span style={{color:'#34d399'}}> * [new branch]      main {'->'} main</span><br/>
+              <span style={{color:'#34d399'}}>branch 'main' set up to track 'origin/main'.</span>
+            </div>
+            <div style={{marginTop:8, padding:'8px 12px', background:'#f1f5f9', borderRadius:6, fontSize:'0.82rem', color:'#64748b', fontStyle:'italic'}}>
+              📸 <strong>Screenshot:</strong> Terminal dengan output push yang menunjukkan "main {'->'} main" dan "branch 'main' set up to track"
+            </div>
+          </div>
+        </div>
+
+        {/* Step H */}
+        <div style={{display:'flex', gap:16, alignItems:'flex-start', margin:'20px 0', padding:16, background:'var(--bg-secondary)', borderRadius:10, border:'1px solid var(--border)'}}>
+          <div style={{flexShrink:0, width:48, height:48, borderRadius:'50%', background:'linear-gradient(135deg, #22c55e, #16a34a)', color:'white', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'1.2rem', fontWeight:700}}>✓</div>
+          <div style={{flex:1}}>
+            <h4 style={{margin:'0 0 8px'}}>Verifikasi di GitHub</h4>
+            <p style={{margin:'0 0 8px', fontSize:'0.9rem'}}>Buka halaman repository kamu di GitHub. Refresh halaman. Semua file project (index.html, style.css, script.js) seharusnya sudah terlihat di repository online!</p>
+            <div style={{background:'#1e293b', padding:12, borderRadius:8, fontSize:'0.82rem', color:'#e2e8f0', fontFamily:'monospace', lineHeight:1.8}}>
+              {'->'} Buka <span style={{color:'#a78bfa'}}>github.com/username/portofolio-siswa</span><br/>
+              {'->'} Refresh halaman (F5)<br/>
+              {'->'} Semua file sudah terlihat! <span style={{color:'#34d399'}}>✓</span><br/>
+              {'->'} Klik file untuk melihat isinya
+            </div>
+            <div style={{marginTop:8, padding:'8px 12px', background:'#f1f5f9', borderRadius:6, fontSize:'0.82rem', color:'#64748b', fontStyle:'italic'}}>
+              📸 <strong>Screenshot:</strong> Halaman GitHub repository yang menunjukkan semua file sudah ter-upload (index.html, style.css, script.js)
+            </div>
+          </div>
+        </div>
+
+        <h3 style={{marginTop: 24}}>Ringkasan Perintah (Copy-Paste Sekaligus):</h3>
+        <pre style={{background:'var(--bg-secondary)', padding:16, borderRadius:8, overflow:'auto', fontSize:'0.85rem'}}>
+{`# Jalankan SEMUA perintah ini di terminal folder project
+# (Ganti URL dengan URL repository kamu sendiri)
+
+git init
+git add .
+git commit -m "feat: landing page dari Google AI Studio"
+git remote add origin https://github.com/username/nama-repo.git
+git push -u origin main
+
+# Selesai! Cek di github.com/nama-repo`}
+        </pre>
+
+        <h3 style={{marginTop: 24}}>Update Setelah Perubahan Kode:</h3>
+        <p>Setiap kali kamu mengubah kode (entah manual atau dari Google AI Studio), jalankan 3 perintah ini untuk push update ke GitHub:</p>
+        <pre style={{background:'var(--bg-secondary)', padding:16, borderRadius:8, overflow:'auto', fontSize:'0.85rem'}}>
+{`git add .
+git commit -m "update: deskripsi perubahan"
+git push`}
+        </pre>
+
+        <div className="info-box">
+          <strong><Lightbulb size={14} /> Troubleshooting: Perintah Git Tidak Dikenali?</strong>
+          <p>Jika terminal menampilkan <code>"git: command not found"</code>, berarti Git belum terinstall. Download dan install dari <strong>git-scm.com</strong>. Pilih versi untuk Windows, lalu install dengan pengaturan default. Setelah install, buka terminal baru (tutup yang lama) dan coba lagi.</p>
         </div>
 
         {/* B.4 Deploy ke Vercel */}
