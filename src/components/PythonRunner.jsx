@@ -1,15 +1,14 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback } from 'react';
 import { Play, Loader2, Trash2 } from 'lucide-react';
 
 let pyodideInstance = null;
-let pyodideLoading = false;
 let pyodideLoadPromise = null;
 
 function getPyodide() {
   if (pyodideInstance) return Promise.resolve(pyodideInstance);
   if (pyodideLoadPromise) return pyodideLoadPromise;
 
-  pyodideLoadPromise = new Promise(async (resolve, reject) => {
+  pyodideLoadPromise = (async () => {
     try {
       if (!window.loadPyodide) {
         const script = document.createElement('script');
@@ -24,12 +23,12 @@ function getPyodide() {
       pyodideInstance = await window.loadPyodide({
         indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.25.1/full/',
       });
-      resolve(pyodideInstance);
+      return pyodideInstance;
     } catch (err) {
       pyodideLoadPromise = null;
-      reject(err);
+      throw err;
     }
-  });
+  })();
 
   return pyodideLoadPromise;
 }
@@ -47,7 +46,6 @@ export default function PythonRunner({ code: initialCode, height = 180 }) {
   const [output, setOutput] = useState('');
   const [status, setStatus] = useState('idle');
   const [loadingMsg, setLoadingMsg] = useState('');
-  const runnerId = useRef(Math.random().toString(36).slice(2, 8));
 
   const runCode = useCallback(async () => {
     setStatus('loading');
@@ -69,9 +67,8 @@ export default function PythonRunner({ code: initialCode, height = 180 }) {
         batched: (text) => stderr.push(text),
       });
 
-      let result;
       try {
-        result = await pyodide.runPythonAsync(code);
+        await pyodide.runPythonAsync(code);
       } catch (runErr) {
         stderr.push(String(runErr.message || runErr));
       }

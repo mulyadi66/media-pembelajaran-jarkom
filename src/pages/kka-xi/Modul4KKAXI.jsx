@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useApp } from '../../context/AppContext';
-import { Globe, Layout, Smartphone, Paintbrush, Rocket, GitBranch, Puzzle, Server, Target, Award, Lightbulb, AlertTriangle, ExternalLink, Wand2, Code2, FileCode, Copy } from 'lucide-react';
+import { Globe, Rocket, Puzzle, Target, Award, Lightbulb, AlertTriangle, Wand2 } from 'lucide-react';
 import SectionTracker from '../../components/SectionTracker';
 import { ContohSoal, Tugas } from '../../components/ContohSoal';
 

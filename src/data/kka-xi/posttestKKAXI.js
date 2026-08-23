@@ -73,7 +73,7 @@ export const posttestKKAXI = [
   },
   {
     id: 13, level: 'C3 - Menerapkan',
-    question: 'Diberikan pseudocode: "INPUT nama; IF nama != \"\" THEN PRINT \"Halo, \" + nama; ELSE PRINT \"Nama kosong\"". Jika input kosong, outputnya adalah?',
+    question: 'Diberikan pseudocode: "INPUT nama; IF nama != "" THEN PRINT "Halo, " + nama; ELSE PRINT "Nama kosong"". Jika input kosong, outputnya adalah?',
     options: ['A. Halo,', 'B. Nama kosong', 'C. Error', 'D. Tidak ada output', 'E. Halo, undefined'],
     answer: 1, explanation: 'Karena input kosong (nama == ""), kondisi IF tidak terpenuhi, sehingga eksekusi ke blok ELSE yang mencetak "Nama kosong".'
   },

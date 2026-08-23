@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useApp } from '../../context/AppContext';
-import { Globe, Shield, Users, Lightbulb, Target, Award, AlertTriangle, Eye, Search, Share2, Fingerprint, Lock, UserCheck, Briefcase, FileText, Link2, Layers } from 'lucide-react';
+import { Globe, Shield, Users, Lightbulb, Target, AlertTriangle, Eye, UserCheck } from 'lucide-react';
 import SectionTracker from '../../components/SectionTracker';
 import { ContohSoal, Tugas } from '../../components/ContohSoal';
 

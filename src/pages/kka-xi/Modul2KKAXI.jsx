@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useApp } from '../../context/AppContext';
-import { GitBranch, Network, Puzzle, ArrowRightLeft, Repeat, Zap, Target, Award, TrendingUp, Lightbulb, AlertTriangle } from 'lucide-react';
+import { GitBranch, Network, Puzzle, ArrowRightLeft, Target, Award, TrendingUp, Lightbulb, AlertTriangle } from 'lucide-react';
 import SectionTracker from '../../components/SectionTracker';
 import { ContohSoal, Tugas } from '../../components/ContohSoal';
 

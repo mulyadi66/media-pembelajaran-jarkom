@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useApp } from '../../context/AppContext';
-import { Code2, Box, Layers, Palette, Puzzle, Monitor, FileCode, Target, Award, Lightbulb, AlertTriangle } from 'lucide-react';
+import { Code2, Palette, Puzzle, Target, Award, Lightbulb, AlertTriangle } from 'lucide-react';
 import SectionTracker from '../../components/SectionTracker';
 import { ContohSoal, Tugas } from '../../components/ContohSoal';
 import PythonRunner from '../../components/PythonRunner';
