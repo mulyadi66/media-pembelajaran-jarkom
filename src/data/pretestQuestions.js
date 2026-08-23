@@ -278,5 +278,75 @@ export const pretestQuestions = [
     ],
     answer: 1,
     explanation: 'RPO 4 jam = maksimal kehilangan data 4 jam, jadi backup tiap 4 jam (incremental). RTO 1 jam = maksimal downtime 1 jam, restore dari NAS lokal cepat. Backup full harian ke cloud untuk disaster recovery off-site.'
+  },
+  {
+    id: 21,
+    level: 'C4 - Menganalisis',
+    question: 'Siswa mengetik alamat website di browser. Proses yang terjadi pada layer OSI secara berurutan saat data "turun" dari aplikasi menuju kabel adalah:',
+    options: [
+      'A. Physical → Data Link → Network → Transport → Application',
+      'B. Application → Presentation → Session → Transport (segment) → Network (packet) → Data Link (frame) → Physical (bit)',
+      'C. Network → Transport → Application → Session → Physical',
+      'D. Semua layer bekerja bersamaan tanpa urutan tertentu',
+      'E. Transport dulu, baru Application, lalu langsung Physical'
+    ],
+    answer: 1,
+    explanation: 'Proses enkapsulasi berjalan turun dari layer atas ke bawah: data dibentuk aplikasi (L7-L5), dibungkus header TCP/UDP menjadi segment (L4), header IP menjadi packet (L3), header MAC + FCS menjadi frame (L2), dan akhirnya dikonversi menjadi bit (L1) untuk ditransmisikan.'
+  },
+  {
+    id: 22,
+    level: 'C4 - Menganalisis',
+    question: 'Sebuah switch menerima frame dan hanya meneruskannya ke satu port saja, sedangkan hub menyiarkannya ke semua port. Analisis perbedaan cara kerja ini berdasarkan model OSI:',
+    options: [
+      'A. Switch membaca alamat IP pada Layer 3, hub membaca MAC address pada Layer 2',
+      'B. Switch membaca MAC address tujuan dari tabel MAC-nya pada Layer 2; hub tidak membaca apa pun karena hanya menguatkan sinyal pada Layer 1',
+      'C. Switch bekerja di Layer 7 sehingga memahami isi aplikasi pengguna',
+      'D. Hub lebih pintar karena menyebarkan data ke semua perangkat sekaligus',
+      'E. Keduanya bekerja identik, hanya berbeda harga'
+    ],
+    answer: 1,
+    explanation: 'Switch adalah perangkat Layer 2 (Data Link): ia mencatat MAC address sumber ke tabel MAC lalu meneruskan frame hanya ke port tujuan. Hub adalah perangkat Layer 1 (Physical) yang tidak memiliki kemampuan membaca header — semua bit disebarkan ke semua port, menyebabkan kolisi.'
+  },
+  {
+    id: 23,
+    level: 'C5 - Mengevaluasi',
+    question: 'Tim developer game online memilih UDP untuk protokol komunikasinya meskipun UDP tidak menjamin data sampai. Evaluasi apakah pilihan ini masuk akal:',
+    options: [
+      'A. Tidak masuk akal, karena TCP selalu lebih baik untuk semua aplikasi',
+      'B. Masuk akal, karena dalam game real-time kecepatan lebih penting daripada kelengkapan data — paket posisi yang telat lebih baik dibuang daripada menunggu retransmisi',
+      'C. Masuk akal, karena UDP mengenkripsi data otomatis',
+      'D. Tidak masuk akal, UDP tidak bisa melewati internet',
+      'E. Masuk akal, karena UDP gratis sedangkan TCP berbayar'
+    ],
+    answer: 1,
+    explanation: 'Game online butuh latensi serendah mungkin. Retransmisi TCP membuat aksi pemain terlambat tampil — fatal untuk gameplay. Paket posisi lawas yang hilang cukup digantikan paket terbaru. Prinsip umum: data real-time (game, VoIP, streaming) cocok UDP; data wajib utuh (web, file, email) cocok TCP.'
+  },
+  {
+    id: 24,
+    level: 'C3 - Menerapkan',
+    question: 'PDU (Protocol Data Unit) untuk Layer 4, Layer 3, dan Layer 2 secara berurutan adalah:',
+    options: [
+      'A. Bit — Frame — Packet',
+      'B. Packet — Segment — Frame',
+      'C. Segment — Packet — Frame',
+      'D. Frame — Bit — Packet',
+      'E. Data — Data — Data untuk semua layer'
+    ],
+    answer: 2,
+    explanation: 'Urutan PDU dari layer 4 turun ke layer 2: Segment (L4 Transport) → Packet (L3 Network) → Frame (L2 Data Link), lalu Bit (L1). Trik hafalan: "Some People Fear Birthdays" = Segment, Packet, Frame, Bit.'
+  },
+  {
+    id: 25,
+    level: 'C6 - Menciptakan',
+    question: 'Kamu diminta merancang prosedur pengecekan untuk siswa yang komputernya "tidak bisa internet". Urutan langkah troubleshooting bottom-up berbasis model OSI yang PALING tepat:',
+    options: [
+      'A. Langsung instal ulang Windows, lalu cek kabel jika masih gagal',
+      'B. Cek DNS dulu dengan nslookup, setelah itu baru lihat lampu link kabel',
+      'C. Cek lampu link/kabel (L1) → cek NIC & status koneksi (L2) → ipconfig & ping gateway lalu ping 8.8.8.8 (L3) → uji port/firewall (L4) → uji DNS/browser (L7)',
+      'D. Ganti komputer dengan yang baru, itu solusi tercepat',
+      'E. Ping langsung ke google.com tanpa melakukan pengecekan lain'
+    ],
+    answer: 2,
+    explanation: 'Metode bottom-up mengecek layer terendah dahulu: fisik (kabel/lampu link), lalu NIC (Layer 2), konfigurasi IP dan gateway (Layer 3), port/firewall (Layer 4), hingga DNS/aplikasi (Layer 7). Cara ini sistematis — ping 8.8.8.8 sukses tapi domain gagal langsung mengarah ke DNS tanpa menebak-nebak.'
   }
 ];

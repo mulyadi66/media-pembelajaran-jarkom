@@ -54,4 +54,16 @@ export const challengeQuestions = [
   { q: '192.168.1.0/24 → total alamat IP?', answer: '256', accept: ['256'] },
   { q: 'Oktet pertama kelas A berkisar 1 sampai?', answer: '126', accept: ['126', '1-126', '1 sampai 126', '1 - 126'] },
   { q: 'IP 8.8.8.8 termasuk IP?', answer: 'Public', accept: ['public', 'publik'] },
+  // === Model OSI ===
+  { q: 'OSI layer untuk protokol HTTP dan DNS?', answer: 'Layer 7', accept: ['layer 7', 'l7', '7', 'application', 'application layer'] },
+  { q: 'TCP dan UDP bekerja di OSI layer?', answer: 'Layer 4', accept: ['layer 4', 'l4', '4', 'transport', 'transport layer'] },
+  { q: 'PDU pada layer 3 (Network)?', answer: 'Packet', accept: ['packet', 'paket'] },
+  { q: 'PDU pada layer 2 (Data Link)?', answer: 'Frame', accept: ['frame'] },
+  { q: 'PDU pada layer 4 (Transport)?', answer: 'Segment', accept: ['segment', 'segmen'] },
+  { q: 'Port HTTPS adalah?', answer: '443', accept: ['443'] },
+  { q: 'Port DNS service?', answer: '53', accept: ['53'] },
+  { q: 'Protokol penerjemah domain ke IP?', answer: 'DNS', accept: ['dns', 'domain name system'] },
+  { q: 'Protokol penerjemah IP ke MAC address?', answer: 'ARP', accept: ['arp', 'address resolution protocol'] },
+  { q: 'Proses membungkus data dengan header tiap layer?', answer: 'Enkapsulasi', accept: ['enkapsulasi', 'encapsulation'] },
+  { q: 'Handshake TCP terdiri dari berapa langkah?', answer: '3', accept: ['3', 'tiga', 'three'] },
 ];

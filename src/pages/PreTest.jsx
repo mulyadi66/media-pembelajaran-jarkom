@@ -11,7 +11,7 @@ export default function PreTest() {
       <Quiz
         questions={pretestQuestions}
         storageKey="pretestAnswers"
-        timeLimit={15}
+        timeLimit={19}
         onScoreSubmit={(score) => saveQuizScore('pretest', score)}
       />
     </div>

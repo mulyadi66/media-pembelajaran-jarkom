@@ -278,5 +278,75 @@ export const posttestQuestions = [
     ],
     answer: 1,
     explanation: 'Switch unmanaged bekerja otomatis tanpa konfigurasi — cocok untuk jaringan kecil. Switch managed memberikan kontrol: VLAN untuk segmentasi, QoS untuk prioritas bandwidth, SNMP untuk monitoring, port mirroring untuk troubleshooting. Wajib jika butuh VLAN membagi jaringan menjadi beberapa segmen.'
+  },
+  {
+    id: 21,
+    level: 'C4 - Menganalisis',
+    question: 'Seorang siswa bisa ping 8.8.8.8 dengan sukses, tetapi gagal membuka google.com di browser. Analisis layer OSI tempat kerusakan berada beserta alasannya:',
+    options: [
+      'A. Layer 1, karena kabel jaringan bermasalah',
+      'B. Layer 3, karena alamat IP salah',
+      'C. Layer 7 (DNS), karena ping menggunakan IP langsung sedangkan browser butuh penerjemahan domain oleh DNS',
+      'D. Layer 2, karena MAC address tidak terdaftar',
+      'E. Layer 4, karena port ditutup'
+    ],
+    answer: 2,
+    explanation: 'Ping 8.8.8.8 sukses membuktikan Layer 1-3 sehat (kabel, NIC, IP routing). Kegagalan hanya pada nama domain menunjukkan masalah di DNS (Layer 7/Aplikasi). Solusi: cek konfigurasi DNS server atau gunakan nslookup untuk diagnosis.'
+  },
+  {
+    id: 22,
+    level: 'C4 - Menganalisis',
+    question: 'Saat transfer file besar via TCP tiba-tiba banyak segment hilang. Jelaskan bagaimana mekanisme TCP menjamin file tetap utuh di penerima dibandingkan jika memakai UDP:',
+    options: [
+      'A. TCP mengirim ulang seluruh file dari awal, UDP melanjutkan dari titik putus',
+      'B. TCP mendeteksi segment hilang lewat nomor urut dan ACK lalu melakukan retransmisi; UDP tidak memiliki mekanisme ini sehingga data hilang benar-benar hilang',
+      'C. TCP mengompres data agar tidak hilang, UDP mengirim tanpa kompresi',
+      'D. Tidak ada perbedaan, keduanya sama-sama andal',
+      'E. UDP otomatis menjadi TCP saat ada packet loss'
+    ],
+    answer: 1,
+    explanation: 'TCP memberi nomor urut pada setiap segment; penerima mengirim ACK untuk segment yang diterima. Segment yang tidak di-ACK akan dikirim ulang (retransmisi) sehingga data utuh. UDP sama sekali tidak punya nomor urut maupun ACK — segment hilang dibiarkan hilang.'
+  },
+  {
+    id: 23,
+    level: 'C5 - Mengevaluasi',
+    question: 'Sebuah aplikasi video conference dirancang memakai UDP meski tidak ada jaminan pengiriman. Evaluasi apakah keputusan ini tepat:',
+    options: [
+      'A. Tidak tepat, semua aplikasi wajib memakai TCP agar data terjamin',
+      'B. Tepat, karena latensi rendah lebih penting daripada kelengkapan data; frame video yang hilang cukup dilewati daripada menunggu retransmisi yang membuat suara/gambar tertunda',
+      'C. Tepat, karena UDP lebih aman dari serangan hacker',
+      'D. Tidak tepat, UDP tidak mendukung internet modern',
+      'E. Bisa dinilai tanpa konteks, keduanya selalu memberi hasil identik'
+    ],
+    answer: 1,
+    explanation: 'Untuk komunikasi real-time, keterlambatan lebih merusak pengalaman daripada kehilangan sebagian frame. Retransmisi TCP justru menyebabkan delay yang membuat panggilan patah-patah. Prinsipnya: data real-time → UDP; data yang harus utuh (file, halaman web, email) → TCP.'
+  },
+  {
+    id: 24,
+    level: 'C3 - Menerapkan',
+    question: 'Seorang teknisi ingin mengetahui MAC address pemilik IP 192.168.1.10 di jaringan lokal sebelum mengirim frame data. Protokol dan langkah yang diterapkan adalah:',
+    options: [
+      'A. ICMP — melakukan ping broadcast ke seluruh jaringan',
+      'B. ARP — menyiarkan pertanyaan "siapa pemilik 192.168.1.10?" lalu pemiliknya membalas dengan MAC address-nya',
+      'C. DHCP — meminta server mencatat MAC address semua perangkat',
+      'D. DNS — menerjemahkan IP address menjadi MAC address',
+      'E. TTL — membaca sisa hop pada paket sebelumnya'
+    ],
+    answer: 1,
+    explanation: 'ARP (Address Resolution Protocol) bekerja di Layer 2: host menyiarkan ARP Request berisi IP yang dicari; perangkat dengan IP tersebut membalas ARP Reply berisi MAC address-nya. DNS menerjemahkan nama domain ke IP, bukan IP ke MAC; DHCP memberi IP otomatis; ICMP adalah protokol ping/tracert.'
+  },
+  {
+    id: 25,
+    level: 'C5 - Mengevaluasi',
+    question: 'Perusahaan mengeluh email tidak terkirim padahal browsing lancar. Teknisi memutuskan masalah ada di port SMTP 25 yang diblokir firewall. Analisis penempatan temuan ini dalam model OSI sudah tepat karena:',
+    options: [
+      'A. Port adalah identitas aplikasi di Layer 4 Transport, sehingga pemblokiran port 25 termasuk masalah Transport meskipun gejalanya terasa di layanan Layer 7',
+      'B. Port berada di Layer 3 sehingga ini murni masalah routing',
+      'C. Email bekerja di Layer 2 sehingga firewall memfilter MAC address',
+      'D. Port tidak memiliki hubungan dengan model OSI sama sekali',
+      'E. Masalah pasti di kabel karena semua email memakai jalur khusus'
+    ],
+    answer: 0,
+    explanation: 'Nomor port dipakai di header TCP/UDP (Layer 4) untuk memilih aplikasi tujuan. Firewall memblokir port 25 = lalu lintas SMTP (layanan L7) tersumbat di L4. Browsing tetap lancar karena port 443 (HTTPS) tidak diblokir — bukti bahwa jalur fisik hingga transport lainnya sehat.'
   }
 ];

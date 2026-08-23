@@ -249,6 +249,71 @@ const flashcardData = [
     back: 'Model referensi jaringan dengan 7 lapisan: 7-Application, 6-Presentation, 5-Session, 4-Transport, 3-Network, 2-Data Link, 1-Physical. Setiap layer punya fungsi spesifik dalam komunikasi data.',
     example: 'HTTP (L7), TCP (L4), IP (L3), Ethernet (L2), Kabel (L1)'
   },
+
+  // === MODEL OSI ===
+  {
+    id: 36,
+    category: 'Model OSI',
+    front: 'Enkapsulasi',
+    back: 'Proses membungkus data dengan header (dan trailer) di setiap layer saat data turun dari layer atas ke layer bawah di komputer pengirim. Setiap header berisi informasi kontrol untuk layer yang sama di penerima.',
+    example: 'Data + header TCP = segment, + header IP = packet, + header MAC = frame'
+  },
+  {
+    id: 37,
+    category: 'Model OSI',
+    front: 'PDU (Protocol Data Unit)',
+    back: 'Sebutan bentuk data pada suatu layer OSI. Layer 5-7 = Data, Layer 4 = Segment, Layer 3 = Packet, Layer 2 = Frame, Layer 1 = Bit. Trik hafalan: "Some People Fear Birthdays".',
+    example: 'Segment TCP di L4, packet IP di L3, frame Ethernet di L2'
+  },
+  {
+    id: 38,
+    category: 'Model OSI',
+    front: 'MAC Address',
+    back: 'Alamat fisik 48-bit yang dibakar permanen di kartu jaringan oleh pabrikan, ditulis heksadesimal. 3 oktet pertama = kode vendor, sisanya nomor unik perangkat. Bekerja di Layer 2 (Data Link).',
+    example: 'A4:5E:60:B2:1C:3D — bisa dilihat dengan perintah ipconfig /all'
+  },
+  {
+    id: 39,
+    category: 'Model OSI',
+    front: 'TCP (Transmission Control Protocol)',
+    back: 'Protokol transport yang andal dan connection-oriented. Memakai three-way handshake, penomoran urut, ACK, dan retransmisi jika data hilang. Dipakai saat data wajib utuh.',
+    example: 'Browsing web (80/443), email (25), transfer file (21)'
+  },
+  {
+    id: 40,
+    category: 'Model OSI',
+    front: 'UDP (User Datagram Protocol)',
+    back: 'Protokol transport yang cepat, ringan, tanpa koneksi dan tanpa jaminan pengiriman (connectionless). Cocok untuk data real-time yang lebih baik kehilangan sedikit daripada menunggu.',
+    example: 'Streaming video, VoIP, game online, DNS query (53)'
+  },
+  {
+    id: 41,
+    category: 'Model OSI',
+    front: 'Nomor Port',
+    back: 'Angka 16-bit pada header TCP/UDP (Layer 4) yang membedakan aplikasi/layanan tujuan di sebuah host. Well-known ports: 0-1023.',
+    example: '80=HTTP, 443=HTTPS, 53=DNS, 25=SMTP, 22=SSH, 21=FTP'
+  },
+  {
+    id: 42,
+    category: 'Model OSI',
+    front: 'Three-Way Handshake',
+    back: 'Proses pembukaan koneksi TCP tiga langkah: (1) klien kirim SYN meminta koneksi, (2) server balas SYN-ACK menyatakan siap, (3) klien kirim ACK — koneksi resmi terbentuk dan data mulai dikirim.',
+    example: 'Terjadi setiap kali browser membuka koneksi ke web server'
+  },
+  {
+    id: 43,
+    category: 'Model OSI',
+    front: 'ARP (Address Resolution Protocol)',
+    back: 'Protokol Layer 2 yang menerjemahkan IP address menjadi MAC address di jaringan lokal. Host menyiarkan "siapa pemilik IP ini?" lalu pemiliknya membalas dengan MAC address-nya.',
+    example: 'Lihat tabel cache ARP dengan perintah arp -a'
+  },
+  {
+    id: 44,
+    category: 'Model OSI',
+    front: 'ICMP (Internet Control Message Protocol)',
+    back: 'Protokol Layer 3 untuk pesan kontrol dan laporan error jaringan. Menjadi dasar perintah ping (uji keterjangkauan host) dan tracert/traceroute (melacak jalur/hop paket).',
+    example: 'ping 8.8.8.8, tracert google.com'
+  },
 ];
 
 export default flashcardData;

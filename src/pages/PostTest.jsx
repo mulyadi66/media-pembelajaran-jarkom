@@ -10,7 +10,7 @@ export default function PostTest() {
       <Quiz
         questions={posttestQuestions}
         storageKey="posttestAnswers"
-        timeLimit={25}
+        timeLimit={30}
         onScoreSubmit={(score) => saveQuizScore('posttest', score)}
       />
     </div>
