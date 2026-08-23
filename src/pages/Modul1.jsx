@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { Wifi, Plug, Settings, Info, AlertTriangle, Star, Cable, Network, ShieldCheck, Layers, Radio, Activity, Cpu } from 'lucide-react';
 import VideoEmbed from '../components/VideoEmbed';
@@ -336,11 +336,38 @@ export default function Modul1() {
   );
 }
 
-function MateriCard({ icon: Icon, title, children }) {
+function MateriCard({ icon: Icon, title, children, defaultOpen = false }) {
+  const [open, setOpen] = useState(defaultOpen);
   return (
-    <div className="materi-card">
-      <h3><Icon size={18} /> {title}</h3>
-      {children}
+    <div className="materi-card" style={{marginBottom: 16}}>
+      <button
+        onClick={() => setOpen(!open)}
+        aria-expanded={open}
+        aria-label={title}
+        style={{
+          display:'flex', alignItems:'center', gap:10, width:'100%',
+          background:'none', border:'none', cursor:'pointer', padding:'12px 0',
+          color:'var(--text)', fontSize:'1.05rem', fontWeight:600, textAlign:'left'
+        }}
+      >
+        <Icon size={18} />
+        <span style={{flex:1}}>{title}</span>
+        <span style={{
+          display:'inline-block', width:0, height:0,
+          borderLeft:'5px solid transparent', borderRight:'5px solid transparent',
+          borderTop:'6px solid var(--text-light)',
+          transition:'transform 0.3s', transform: open ? 'rotate(180deg)' : 'rotate(0deg)'
+        }} aria-hidden="true" />
+      </button>
+      <div style={{
+        maxHeight: open ? '99999px' : '0px',
+        overflow: open ? 'visible' : 'hidden',
+        transition: 'max-height 0.4s ease',
+      }}>
+        <div style={{paddingTop:8, paddingBottom:8}}>
+          {children}
+        </div>
+      </div>
     </div>
   );
 }

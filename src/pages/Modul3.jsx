@@ -75,8 +75,7 @@ export default function Modul3() {
     <div className="content-section">
       <SectionTracker moduleId="modul3" sections={sections} />
 
-      <div className="materi-card">
-        <h3><Globe size={18} /> 3.1 IP Address</h3>
+      <MateriCard icon={Globe} title="3.1 IP Address">
         <p>IP Address adalah alamat numerik yang diberikan kepada setiap perangkat yang terhubung ke jaringan yang menggunakan protokol IP.</p>
         <div className="table-responsive">
           <table className="materi-table">
@@ -138,10 +137,9 @@ export default function Modul3() {
           'Jelaskan perbedaan IP publik dan IP privat serta kapan masing-masing digunakan!',
           'Konversikan ke biner: 10.0.0.1, 172.16.5.2, dan 192.168.1.10. Tuliskan hasilnya dalam bentuk 4 oktet biner!',
         ]} />
-      </div>
+      </MateriCard>
 
-      <div className="materi-card">
-        <h3><Scissors size={18} /> 3.2 Subnetting</h3>
+      <MateriCard icon={Scissors} title="3.2 Subnetting">
         <p>Subnetting adalah proses membagi jaringan besar menjadi sub-jaringan yang lebih kecil untuk efisiensi, keamanan, dan pengelolaan.</p>
         <h3 style={{marginTop: 20}}>Langkah Subnetting:</h3>
         <ul>
@@ -194,10 +192,9 @@ export default function Modul3() {
           'Berapa jumlah host usable pada jaringan /30? Mengapa /30 sering digunakan untuk link antar router?',
           'Dengan tabel ukuran subnet di atas, tentukan prefix yang tepat untuk jaringan yang membutuhkan 100 host, 50 host, dan 5 host!',
         ]} />
-      </div>
+      </MateriCard>
 
-      <div className="materi-card">
-        <h3><Code size={18} /> 3.3 CIDR</h3>
+      <MateriCard icon={Code} title="3.3 CIDR">
         <p>CIDR menggunakan notasi /n untuk menunjukkan jumlah bit network. Lebih fleksibel dari sistem kelas.</p>
         <div className="table-responsive">
           <table className="materi-table">
@@ -235,10 +232,9 @@ export default function Modul3() {
           'Jelaskan keunggulan CIDR dibandingkan sistem pengalamatan classful (kelas A/B/C)!',
           'Hitung wildcard untuk mask 255.255.255.240 dan 255.255.0.0, lalu tuliskan fungsinya secara singkat!',
         ]} />
-      </div>
+      </MateriCard>
 
-      <div className="materi-card">
-        <h3><Sliders size={18} /> 3.4 VLSM</h3>
+      <MateriCard icon={Sliders} title="3.4 VLSM">
         <p>Variable Length Subnet Mask memungkinkan subnet mask berbeda dalam satu jaringan untuk efisiensi alamat IP.</p>
         <h3 style={{marginTop: 20}}>Langkah VLSM:</h3>
         <ul>
@@ -274,10 +270,9 @@ export default function Modul3() {
           'Jelaskan mengapa VLSM lebih hemat alamat IP dibandingkan subnetting dengan ukuran subnet yang seragam!',
           'Dari 192.168.1.0/24, hitung jumlah alamat yang dibutuhkan untuk subnet 100 host (/25) + subnet 50 host (/26) + subnet 20 host (/27). Totalnya berapa dan apakah masih tersisa alamat di dalam /24?',
         ]} />
-      </div>
+      </MateriCard>
 
-      <div className="materi-card">
-        <h3><Calculator size={18} /> 3.5 Kalkulator Subnetting</h3>
+      <MateriCard icon={Calculator} title="3.5 Kalkulator Subnetting">
         <div className="calc-container" style={{marginTop: 16}}>
           <div className="calc-grid">
             <div className="calc-input-group">
@@ -322,10 +317,9 @@ export default function Modul3() {
           'Apa fungsi network address dan broadcast address? Mengapa keduanya tidak boleh dipakai untuk host?',
           'Masukkan IP 10.0.0.1 dengan prefix /8 ke kalkulator. Berapa total usable host? Jelaskan mengapa angka tersebut jauh lebih besar daripada jaringan /24!',
         ]} />
-      </div>
+      </MateriCard>
 
-      <div className="materi-card">
-        <h3><Calculator size={18} /> 3.6 Kalkulator VLSM</h3>
+      <MateriCard icon={Calculator} title="3.6 Kalkulator VLSM">
         <div className="calc-container" style={{marginTop: 16}}>
           <div className="calc-grid">
             <div className="calc-input-group">
@@ -375,11 +369,46 @@ export default function Modul3() {
           'Rancang skema VLSM untuk 3 divisi (120, 60, 20 host) dari 192.168.50.0/24, lalu buktikan dengan kalkulator bahwa total alamat mencukupi!',
           'Pada hasil VLSM untuk 100, 50, 25, dan 2 host, perhatikan subnet untuk 2 host. Berapa prefix yang dipilih kalkulator dan berapa alamat yang terbuang (jika ada)?',
         ]} />
-      </div>
+      </MateriCard>
 
-      <div className="materi-card">
-        <h3><Globe size={18} /> Video Pembelajaran</h3>
+      <MateriCard icon={Globe} title="Video Pembelajaran">
         <VideoEmbed videoId="9GtL8dW8rYY" title="IP Subnetting Lengkap - Binary, Class, VLSM & CIDR" />
+      </MateriCard>
+    </div>
+  );
+}
+
+function MateriCard({ icon: Icon, title, children, defaultOpen = false }) {
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <div className="materi-card" style={{marginBottom: 16}}>
+      <button
+        onClick={() => setOpen(!open)}
+        aria-expanded={open}
+        aria-label={title}
+        style={{
+          display:'flex', alignItems:'center', gap:10, width:'100%',
+          background:'none', border:'none', cursor:'pointer', padding:'12px 0',
+          color:'var(--text)', fontSize:'1.05rem', fontWeight:600, textAlign:'left'
+        }}
+      >
+        <Icon size={18} />
+        <span style={{flex:1}}>{title}</span>
+        <span style={{
+          display:'inline-block', width:0, height:0,
+          borderLeft:'5px solid transparent', borderRight:'5px solid transparent',
+          borderTop:'6px solid var(--text-light)',
+          transition:'transform 0.3s', transform: open ? 'rotate(180deg)' : 'rotate(0deg)'
+        }} aria-hidden="true" />
+      </button>
+      <div style={{
+        maxHeight: open ? '99999px' : '0px',
+        overflow: open ? 'visible' : 'hidden',
+        transition: 'max-height 0.4s ease',
+      }}>
+        <div style={{paddingTop:8, paddingBottom:8}}>
+          {children}
+        </div>
       </div>
     </div>
   );

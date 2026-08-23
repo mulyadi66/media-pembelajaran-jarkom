@@ -132,8 +132,7 @@ export default function Modul2() {
     <div className="content-section">
       <SectionTracker moduleId="modul2" sections={sections} />
 
-      <div className="materi-card">
-        <h3><Info size={18} /> 2.1 Pengertian Topologi Jaringan</h3>
+      <MateriCard icon={Info} title="2.1 Pengertian Topologi Jaringan">
         <p>Topologi jaringan adalah cara atau metode pengaturan dan penghubungan antara satu komputer dengan komputer lainnya dalam sebuah jaringan.</p>
         <div className="info-box">
           <strong>Dua Jenis Topologi</strong>
@@ -164,7 +163,7 @@ export default function Modul2() {
           'Berikan contoh jaringan yang topologi fisiknya berbeda dengan topologi logisnya, lalu jelaskan keduanya!',
           'Buat tabel istilah: node, link, backbone, segment, dan SPOF lengkap dengan contoh masing-masing!',
         ]} />
-      </div>
+      </MateriCard>
 
       {[
         { title: '2.2 Topologi Bus', pros: 'Murah, hemat kabel, cocok untuk jaringan kecil', cons: 'Satu kabel putus = seluruh jaringan mati, sulit debugging', use: 'Jaringan kecil sementara', proto: 'CSMA/CD', protoDesc: 'CSMA/CD (Carrier Sense Multiple Access with Collision Detection): setiap node mendengarkan jalur terlebih dahulu sebelum mengirim. Jika dua node mengirim bersamaan, terjadi tabrakan (collision), lalu kedua node berhenti dan mengirim ulang setelah jeda acak. Inilah mengapa semakin banyak node, kinerja bus semakin menurun.' },
@@ -174,8 +173,7 @@ export default function Modul2() {
         { title: '2.6 Topologi Tree', pros: 'Mudah berkembang, terstruktur, cocok untuk jaringan besar', cons: 'Root node rusak = seluruh jaringan mati', use: 'Gedung bertingkat, universitas' },
         { title: '2.7 Topologi Hybrid', pros: 'Fleksibel, scalable, menggabungkan kelebihan beberapa topologi', cons: 'Desain kompleks, biaya tinggi', use: 'Internet, WAN, perusahaan besar' },
       ].map((t, i) => (
-        <div className="materi-card" key={i}>
-          <h3><Projector size={18} /> {t.title}</h3>
+        <MateriCard key={i} icon={Projector} title={t.title}>
           <p>{t.desc}</p>
           <div className="table-responsive">
             <table className="materi-table">
@@ -195,7 +193,7 @@ export default function Modul2() {
             </div>
           )}
           <Tugas data={[t.tugas]} />
-        </div>
+        </MateriCard>
       ))}
 
       <ContohSoal data={[
@@ -215,8 +213,7 @@ export default function Modul2() {
         'Dari semua topologi yang dipelajari, manakah yang paling tahan terhadap kegagalan satu link? Jelaskan kelemahannya!',
       ]} />
 
-      <div className="materi-card">
-        <h3><Info size={18} /> Topologi Fisik vs Logis</h3>
+      <MateriCard icon={Info} title="Topologi Fisik vs Logis">
         <p>Jangan tertukar: topologi <strong>fisik</strong> menggambarkan susunan kabel dan perangkat yang sebenarnya, sedangkan topologi <strong>logis</strong> adalah cara data benar-benar mengalir di dalam jaringan.</p>
         <div className="info-box">
           <strong>Contoh Jebakan Ujian</strong>
@@ -226,10 +223,9 @@ export default function Modul2() {
         <Tugas data={[
           'Berikan contoh jaringan lain (selain hub dan token ring) di mana topologi fisik dan logisnya berbeda, lalu jelaskan keduanya!',
         ]} />
-      </div>
+      </MateriCard>
 
-      <div className="materi-card">
-        <h3><Info size={18} /> Kapan Memilih Topologi Apa?</h3>
+      <MateriCard icon={Info} title="Kapan Memilih Topologi Apa?">
         <div className="table-responsive">
           <table className="materi-table">
             <thead><tr><th>Kebutuhan</th><th>Topologi</th><th>Alasan</th></tr></thead>
@@ -245,10 +241,9 @@ export default function Modul2() {
         <Tugas data={[
           'Perpustakaan sekolah dengan 25 PC di satu ruangan akan membangun LAN dengan dana sangat terbatas. Topologi mana yang kamu pilih? Berikan alasan berdasarkan tabel di atas!',
         ]} />
-      </div>
+      </MateriCard>
 
-      <div className="materi-card">
-        <h3><Info size={18} /> 2.8 Perbandingan Semua Topologi</h3>
+      <MateriCard icon={Info} title="2.8 Perbandingan Semua Topologi">
         <div className="table-responsive">
           <table className="materi-table">
             <thead><tr><th>Topologi</th><th>Biaya</th><th>Keandalan</th><th>Instalasi</th><th>Skalabilitas</th></tr></thead>
@@ -273,10 +268,9 @@ export default function Modul2() {
           'Studi kasus: kantor pusat + 3 cabang tersebar di kota berbeda, setiap cabang punya LAN 20 PC. Rancang topologi backbone antar cabang dan topologi di dalam cabang, sertakan alasannya!',
           'Jelaskan konsep "single point of failure" dan di mana titik tersebut berada pada topologi bus, star, dan tree!',
         ]} />
-      </div>
+      </MateriCard>
 
-      <div className="materi-card">
-        <h3><Calculator size={18} /> 2.9 Simulasi Topologi Interaktif</h3>
+      <MateriCard icon={Calculator} title="2.9 Simulasi Topologi Interaktif">
         <p>Pilih jenis topologi untuk melihat visualisasinya:</p>
         <div className="simulator-container" style={{marginTop: 16}}>
           <div className="simulator-toolbar">
@@ -294,12 +288,47 @@ export default function Modul2() {
           'Jalankan simulasi di atas: pilih setiap topologi (star, bus, ring, mesh, tree, hybrid) dan amati cara node saling terhubung. Catat perbedaan pola kabel yang paling jelas.',
           'Pada simulasi mesh, hitung jumlah koneksi antar node yang terlihat, lalu cocokkan dengan rumus n(n−1)/2!',
         ]} />
-      </div>
+      </MateriCard>
 
-      <div className="materi-card">
-        <h3><Projector size={18} /> Video Pembelajaran</h3>
+      <MateriCard icon={Projector} title="Video Pembelajaran">
         <VideoEmbed videoId="QGykYWbdf0A" title="Topologi Jaringan - Bus, Ring, Star, Mesh, Tree" />
         <VideoEmbed videoId="7Ut4u8qVwRU" title="Topologi Jaringan Lengkap (Star, Bus, Ring, Mesh, Wireless) - Bahasa Indonesia" />
+      </MateriCard>
+    </div>
+  );
+}
+
+function MateriCard({ icon: Icon, title, children, defaultOpen = false }) {
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <div className="materi-card" style={{marginBottom: 16}}>
+      <button
+        onClick={() => setOpen(!open)}
+        aria-expanded={open}
+        aria-label={title}
+        style={{
+          display:'flex', alignItems:'center', gap:10, width:'100%',
+          background:'none', border:'none', cursor:'pointer', padding:'12px 0',
+          color:'var(--text)', fontSize:'1.05rem', fontWeight:600, textAlign:'left'
+        }}
+      >
+        <Icon size={18} />
+        <span style={{flex:1}}>{title}</span>
+        <span style={{
+          display:'inline-block', width:0, height:0,
+          borderLeft:'5px solid transparent', borderRight:'5px solid transparent',
+          borderTop:'6px solid var(--text-light)',
+          transition:'transform 0.3s', transform: open ? 'rotate(180deg)' : 'rotate(0deg)'
+        }} aria-hidden="true" />
+      </button>
+      <div style={{
+        maxHeight: open ? '99999px' : '0px',
+        overflow: open ? 'visible' : 'hidden',
+        transition: 'max-height 0.4s ease',
+      }}>
+        <div style={{paddingTop:8, paddingBottom:8}}>
+          {children}
+        </div>
       </div>
     </div>
   );
