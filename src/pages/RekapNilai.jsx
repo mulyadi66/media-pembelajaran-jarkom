@@ -8,6 +8,7 @@ import {
   CloudOff,
   CloudCog,
   UserCheck,
+  Trash2,
 } from 'lucide-react';
 import {
   fetchExamResults,
@@ -16,6 +17,8 @@ import {
   MODUL_META,
   getRekapPin,
   isSupabaseConfigured,
+  resetExamResults,
+  clearExamLocal,
 } from '../lib/examLib';
 
 function predikat(avg) {
@@ -162,6 +165,35 @@ export default function RekapNilai() {
   const verified = rows.reduce((a, r) => a + r.count, 0);
   const completed = rows.filter(r => r.count === MODUL_META.length).length;
 
+  const handleReset = async () => {
+    if (!rows.length) { setMessage('Tidak ada data untuk direset.'); return; }
+    const pinInput = window.prompt('Reset akan menghapus SEMUA hasil ujian (server + perangkat ini).\nKetik PIN untuk melanjutkan:');
+    if (pinInput === null) return;
+    if (pinInput.trim() !== getRekapPin()) { setMessage('PIN salah — reset dibatalkan.'); return; }
+    const sure = window.confirm('Hapus semua hasil ujian? Tindakan ini tidak bisa dibatalkan.');
+    if (!sure) return;
+
+    setLoading(true);
+    setMessage('');
+    if (isSupabaseConfigured && source !== 'local') {
+      const res = await resetExamResults(pinInput.trim());
+      if (!res.ok) {
+        setMessage(`Reset server gagal: ${res.error}. Pastikan fungsi reset_exam_results sudah dibuat di Supabase (lihat supabase/schema.sql), lalu coba lagi.`);
+        setLoading(false);
+        return;
+      }
+      clearExamLocal();
+      setMessage(res.deleted > 0
+        ? `Reset selesai — ${res.deleted} baris dihapus dari server. Siswa bisa mengerjakan ulang.`
+        : 'Reset selesai — server sudah kosong. Siswa bisa mengerjakan ulang.');
+    } else {
+      clearExamLocal();
+      setMessage('Reset selesai pada perangkat ini (data lokal dihapus).');
+    }
+    await load();
+    setLoading(false);
+  };
+
   return (
     <div className="section-block" style={{ maxWidth: 920, margin: '0 auto' }}>
       <div className="materi-card">
@@ -173,6 +205,9 @@ export default function RekapNilai() {
             </p>
           </div>
           <div className="rekap-actions no-print">
+            <button className="btn btn-danger" onClick={handleReset} disabled={loading || !rows.length}>
+              <Trash2 size={16} /> Reset
+            </button>
             <button className="btn btn-secondary" onClick={() => exportCSV(rows)} disabled={!rows.length}>
               <Download size={16} /> CSV
             </button>

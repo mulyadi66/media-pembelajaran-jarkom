@@ -131,6 +131,37 @@ export async function fetchExamResults() {
   return { data, error: error?.message };
 }
 
+function clearQuizStorage(key) {
+  localStorage.removeItem(`jarkomlab_${key}`);
+  localStorage.removeItem(`jarkomlab_${key}_mode`);
+  localStorage.removeItem(`jarkomlab_${key}_order`);
+  localStorage.removeItem(`jarkomlab_${key}_submitted`);
+}
+
+/** Hapus semua hasil ujian di perangkat ini (riwayat, kunci retake, antrian, skor). Identitas siswa tetap. */
+export function clearExamLocal() {
+  localStorage.removeItem(K.history);
+  localStorage.removeItem(K.submitted);
+  localStorage.removeItem(K.pending);
+  for (const m of MODUL_META) clearQuizStorage(m.key);
+  try {
+    const scores = JSON.parse(localStorage.getItem('jarkomlab_scores') || '{}');
+    for (const m of MODUL_META) delete scores[m.key];
+    localStorage.setItem('jarkomlab_scores', JSON.stringify(scores));
+  } catch { /* abaikan jika data korup */ }
+}
+
+/**
+ * Hapus seluruh hasil ujian di server. Memvalidasi PIN server-side via fungsi
+ * `reset_exam_results` (lihat supabase/schema.sql). @returns {Promise<{ok:boolean,error?:string,deleted?:number,localOnly?:boolean}>}
+ */
+export async function resetExamResults(pin) {
+  if (!supabase) return { ok: true, localOnly: true, deleted: 0 };
+  const { data, error } = await supabase.rpc('reset_exam_results', { pin: String(pin || '') });
+  if (error) return { ok: false, error: error.message };
+  return { ok: true, deleted: data ?? 0 };
+}
+
 export function getRekapPin() {
   const fromEnv = import.meta.env.VITE_REKAP_PIN;
   return (fromEnv && String(fromEnv).trim()) || '2468';
