@@ -139,6 +139,216 @@ export const modul1PostTest = [
     answer: 2,
     explanation: '1000BASE-T membutuhkan minimal Cat5e untuk mendukung 1 Gbps, meskipun Cat6 juga umum dipakai.'
   },
+  {
+    id: 11,
+    level: 'C2 - Memahami',
+    question: 'Dalam analisis kebutuhan jaringan, faktor yang paling menentukan kapasitas switch dan kebutuhan bandwidth adalah…',
+    options: [
+      'A. Jumlah pengguna dan tipe penggunaan',
+      'B. Merek perangkat jaringan',
+      'C. Warna kabel UTP',
+      'D. Ukuran ruang server',
+      'E. Jumlah monitor di setiap PC'
+    ],
+    answer: 0,
+    explanation: 'Volume pengguna menentukan kapasitas switch (jumlah port) dan tipe penggunaan menentukan besaran bandwidth yang harus disediakan.'
+  },
+  {
+    id: 12,
+    level: 'C4 - Menganalisis',
+    question: 'Di antara aplikasi berikut, yang membutuhkan bandwidth paling besar per pengguna adalah…',
+    options: [
+      'A. Browsing web',
+      'B. Email',
+      'C. Chat teks',
+      'D. Streaming video HD',
+      'E. VoIP telepon'
+    ],
+    answer: 3,
+    explanation: 'Streaming video HD membutuhkan ±5 Mbps per pengguna — jauh lebih besar daripada browsing (±1 Mbps), email/chat, dan VoIP (±0,1–0,5 Mbps).'
+  },
+  {
+    id: 13,
+    level: 'C2 - Memahami',
+    question: 'Membeli switch dan router dengan spesifikasi jauh di atas kebutuhan pengguna disebut over-specification. Dampaknya adalah…',
+    options: [
+      'A. Jaringan berjalan lebih lambat',
+      'B. Pemborosan biaya',
+      'C. Perangkat cepat rusak',
+      'D. Listrik lebih hemat',
+      'E. Tidak ada dampak'
+    ],
+    answer: 1,
+    explanation: 'Over-specification = spesifikasi perangkat melebihi kebutuhan, yang berakibat pemborosan biaya tanpa manfaat nyata. Kebalikannya, under-specification, menyebabkan kinerja buruk.'
+  },
+  {
+    id: 14,
+    level: 'C3 - Menerapkan',
+    question: 'Perangkat yang mengubah sinyal digital dari komputer menjadi sinyal analog/optik agar dapat dikirim melalui jalur ISP (ADSL/fiber) adalah…',
+    options: [
+      'A. Switch',
+      'B. Router',
+      'C. Modem',
+      'D. Repeater',
+      'E. Access Point'
+    ],
+    answer: 2,
+    explanation: 'Modem (modulator-demodulator) mengubah sinyal digital ↔ analog (atau cahaya untuk fiber ONT). Contoh: modem ADSL, ONT fiber.'
+  },
+  {
+    id: 15,
+    level: 'C2 - Memahami',
+    question: 'Perangkat keamanan/layanan yang membagi trafik ke beberapa server agar beban tidak menumpuk di satu server adalah…',
+    options: [
+      'A. Firewall',
+      'B. Proxy Server',
+      'C. VPN Gateway',
+      'D. Load Balancer',
+      'E. UPS'
+    ],
+    answer: 3,
+    explanation: 'Load balancer membagi beban trafik ke beberapa server agar tidak overload sehingga ketersediaan layanan tetap terjaga. Firewall menyaring lalu lintas, proxy memfilter/menyerap konten.'
+  },
+  {
+    id: 16,
+    level: 'C3 - Menerapkan',
+    question: 'Dua segmen LAN di kampus disambungkan melalui sebuah perangkat yang menyaring frame berdasarkan MAC address. Perangkat tersebut adalah…',
+    options: [
+      'A. Hub',
+      'B. Bridge',
+      'C. Router',
+      'D. Repeater',
+      'E. Access Point'
+    ],
+    answer: 1,
+    explanation: 'Bridge bekerja di Layer 2 (data link): menggabungkan dua segmen LAN dan melakukan filtering berdasarkan MAC address.'
+  },
+  {
+    id: 17,
+    level: 'C4 - Menganalisis',
+    question: 'Koneksi point-to-point antar gedung memakai teknologi nirkabel dengan antena searah yang memerlukan line-of-sight tanpa halangan. Teknologi tersebut adalah…',
+    options: [
+      'A. Wi-Fi',
+      'B. Bluetooth',
+      'C. Microwave',
+      'D. Satelit',
+      'E. LTE'
+    ],
+    answer: 2,
+    explanation: 'Microwave memakai frekuensi tinggi untuk point-to-point jarak jauh dan membutuhkan line-of-sight (pandangan lurus tanpa halangan) antara kedua antena.'
+  },
+  {
+    id: 18,
+    level: 'C2 - Memahami',
+    question: 'Konektor yang digunakan pada kabel UTP/STP untuk jaringan Ethernet adalah…',
+    options: [
+      'A. RJ-11',
+      'B. RJ-45',
+      'C. SC',
+      'D. ST',
+      'E. BNC'
+    ],
+    answer: 1,
+    explanation: 'RJ-45 adalah konektor 8 pin standar Ethernet untuk UTP/STP. RJ-11 untuk telepon (6 pin), SC/ST/LC untuk fiber optik, BNC untuk coaxial.'
+  },
+  {
+    id: 19,
+    level: 'C2 - Memahami',
+    question: 'Kabel UTP Category 5e (Cat5e) mendukung kecepatan maksimal hingga…',
+    options: [
+      'A. 10 Mbps',
+      'B. 100 Mbps',
+      'C. 1 Gbps',
+      'D. 10 Gbps',
+      'E. 100 Gbps'
+    ],
+    answer: 2,
+    explanation: 'Cat5e mendukung 1000BASE-T (Gigabit Ethernet) yaitu 1 Gbps. Cat3 = 10 Mbps, Cat5 = 100 Mbps, Cat6a/Cat7 = 10 Gbps.'
+  },
+  {
+    id: 20,
+    level: 'C3 - Menerapkan',
+    question: 'Pada koneksi 100BASE-TX (Fast Ethernet), pasangan kabel yang aktif untuk mengirim dan menerima data adalah…',
+    options: [
+      'A. 1-2 dan 4-5',
+      'B. 1-2 dan 3-6',
+      'C. 3-6 dan 7-8',
+      'D. 4-5 dan 7-8',
+      'E. Semua 4 pasangan'
+    ],
+    answer: 1,
+    explanation: 'Fast Ethernet hanya memakai pasangan pin 1-2 (transmit) dan 3-6 (receive). Gigabit (1000BASE-T) memakai keempat pasangan kabel.'
+  },
+  {
+    id: 21,
+    level: 'C3 - Menerapkan',
+    question: 'Kabel straight-through dibuat dengan kedua ujung sama (mis. T568B–T568B). Fungsinya adalah menghubungkan…',
+    options: [
+      'A. PC ke PC',
+      'B. Switch ke Switch',
+      'C. PC ke Switch',
+      'D. Hub ke Hub',
+      'E. Router ke Router'
+    ],
+    answer: 2,
+    explanation: 'Straight-through dipakai untuk perangkat berbeda jenis (PC ke Switch). Perangkat sejenis (PC ke PC) memakai crossover. Switch/router modern mendukung auto-MDIX.'
+  },
+  {
+    id: 22,
+    level: 'C2 - Memahami',
+    question: 'Standar 802.11ac (Wi-Fi 5) bekerja pada frekuensi…',
+    options: [
+      'A. 2.4 GHz saja',
+      'B. 5 GHz',
+      'C. 900 MHz',
+      'D. 6 GHz',
+      'E. 1.8 GHz'
+    ],
+    answer: 1,
+    explanation: '802.11ac (Wi-Fi 5) menggunakan 5 GHz dengan kecepatan hingga 6,9 Gbps. Band 6 GHz mulai dipakai pada 802.11ax (Wi-Fi 6E).'
+  },
+  {
+    id: 23,
+    level: 'C4 - Menganalisis',
+    question: 'Backbone fiber optik antar kota (WAN) paling tepat menggunakan jenis…',
+    options: [
+      'A. Multi-mode dengan LED',
+      'B. Single-mode dengan laser',
+      'C. Multi-mode 50 µm',
+      'D. Single-mode dengan LED',
+      'E. UTP Cat 6a'
+    ],
+    answer: 1,
+    explanation: 'Single-mode (inti ±9 µm) dengan sumber laser mampu menjangkau puluhan kilometer — cocok untuk backbone antar kota. Multi-mode (±550 m–2 km) untuk LAN gedung/kampus.'
+  },
+  {
+    id: 24,
+    level: 'C4 - Menganalisis',
+    question: 'Untuk jaringan kantor standar dengan 30 PC, teknologi yang paling tepat untuk koneksi kabel antar workstation adalah…',
+    options: [
+      'A. 10BASE-T',
+      'B. Fast Ethernet',
+      'C. Gigabit Ethernet (Cat5e/Cat6)',
+      'D. 10GBASE-T',
+      'E. Dial-up modem'
+    ],
+    answer: 2,
+    explanation: 'Gigabit Ethernet (1000BASE-T) dengan Cat5e/Cat6 adalah standar minimal jaringan kantor saat ini: cepat, murah, dan mendukung hingga 100 m. 10GBASE-T berlebihan untuk workstation.'
+  },
+  {
+    id: 25,
+    level: 'C5 - Mengevaluasi',
+    question: 'Jangkauan Wi-Fi lantai 1 tidak sampai ke lantai 2 di gedung 2 lantai. Solusi perangkat yang paling tepat adalah…',
+    options: [
+      'A. Menambah LAN tester',
+      'B. Memasang Access Point tambahan atau Wi-Fi repeater di lantai 2',
+      'C. Mengganti semua kabel dengan Cat 7',
+      'D. Menambah konektor RJ-45',
+      'E. Memakai kabel crossover antar lantai'
+    ],
+    answer: 1,
+    explanation: 'Access Point tambahan atau repeater memperluas area nirkabel ke lantai 2. LAN tester/crimping tidak menambah sinyal, dan mengganti kabel tidak menyelesaikan masalah jangkauan Wi-Fi.'
+  },
 ];
 
 export const modul2PostTest = [

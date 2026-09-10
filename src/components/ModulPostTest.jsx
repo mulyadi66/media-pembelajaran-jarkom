@@ -175,7 +175,7 @@ export default function ModulPostTest({ questions, storageKey, scoreKey, title }
       <Quiz
         questions={questions}
         storageKey={storageKey}
-        timeLimit={15}
+        timeLimit={Math.max(10, Math.ceil(questions.length * 1.5))}
         examToken={getExamToken()}
         onScoreSubmit={handleScore}
       />
