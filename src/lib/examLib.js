@@ -7,6 +7,7 @@ const K = {
   history: 'jarkomlab_examHistory',
   submitted: 'jarkomlab_examSubmitted',
   pending: 'jarkomlab_pendingSync',
+  roster: 'jarkomlab_roster',
 };
 
 export const MODUL_META = [
@@ -33,7 +34,7 @@ export function getIdentity() {
 }
 
 export function saveIdentity(identity) {
-  saveJSON(K.identity, { nama: identity.nama.trim(), nis: identity.nis.trim() });
+  saveJSON(K.identity, { nama: identity.nama.trim(), nis: identity.nis.trim(), kelas: (identity.kelas || '').trim() });
 }
 
 /** Hapus identitas siswa agar siswa lain bisa mengerjakan (perangkat bersama). */
@@ -66,14 +67,39 @@ export function hasAnySubmission() {
 }
 
 // ============ SYNC KE SUPABASE ============
+/** Insert dengan kolom lengkap; jika tabel belum dimigrasi (kolom belum ada,
+ *  error 42703) → fallback ke kolom dasar agar submit tetap berhasil. */
 async function insertRecord(record) {
   if (!supabase) return { synced: false, rejected: false, reason: 'not-configured' };
+
   const { error } = await supabase
     .from('exam_results')
-    .insert({ nis: record.nis, nama: record.nama, modul: record.modul, nilai: record.nilai });
+    .insert({
+      nis: record.nis,
+      nama: record.nama,
+      modul: record.modul,
+      nilai: record.nilai,
+      kelas: record.kelas || null,
+      started_at: record.startedAt ? new Date(record.startedAt).toISOString() : null,
+      finished_at: record.finishedAt ? new Date(record.finishedAt).toISOString() : null,
+      durasi_detik: record.startedAt && record.finishedAt
+        ? Math.max(0, Math.round((record.finishedAt - record.startedAt) / 1000))
+        : null,
+    });
+
   if (!error) return { synced: true };
   if (error.code === '23505' || /[Dd]uplicate/i.test(error.message || '')) {
     return { synced: false, rejected: true };
+  }
+  if (error.code === '42703') {
+    const { error: err2 } = await supabase
+      .from('exam_results')
+      .insert({ nis: record.nis, nama: record.nama, modul: record.modul, nilai: record.nilai });
+    if (!err2) return { synced: true };
+    if (err2.code === '23505' || /[Dd]uplicate/i.test(err2.message || '')) {
+      return { synced: false, rejected: true };
+    }
+    return { synced: false, rejected: false, reason: err2.message };
   }
   return { synced: false, rejected: false, reason: error.message };
 }
@@ -131,8 +157,16 @@ export async function fetchExamResults() {
   if (!supabase) return { error: 'Supabase belum dikonfigurasi.' };
   const { data, error } = await supabase
     .from('exam_results')
-    .select('nis,nama,modul,nilai,created_at')
+    .select('nis,nama,modul,nilai,kelas,started_at,finished_at,durasi_detik,created_at')
     .order('nis');
+  if (error && error.code === '42703') {
+    // Tabel belum dimigrasi — ambil kolom dasar saja.
+    const { data: d2, error: e2 } = await supabase
+      .from('exam_results')
+      .select('nis,nama,modul,nilai,created_at')
+      .order('nis');
+    return { data: d2, error: e2?.message };
+  }
   return { data, error: error?.message };
 }
 
@@ -152,6 +186,9 @@ function clearQuizStorage(key) {
   localStorage.removeItem(`jarkomlab_${key}_mode`);
   localStorage.removeItem(`jarkomlab_${key}_order`);
   localStorage.removeItem(`jarkomlab_${key}_submitted`);
+  localStorage.removeItem(`jarkomlab_${key}_deadline`);
+  localStorage.removeItem(`jarkomlab_${key}_unlocked`);
+  localStorage.removeItem(`jarkomlab_${key}_startedAt`);
 }
 
 /** Hapus semua hasil ujian di perangkat ini (riwayat, kunci retake, antrian, skor). Identitas siswa tetap. */
@@ -181,6 +218,20 @@ export async function resetExamResults(pin) {
 export function getRekapPin() {
   const fromEnv = import.meta.env.VITE_REKAP_PIN;
   return (fromEnv && String(fromEnv).trim()) || '2468';
+}
+
+// ============ ROSTER SISWA (lokal saja, untuk rekap) ============
+/** Daftar siswa {nis, nama, kelas} — disimpan lokal guru, tidak dikirim ke server. */
+export function getRoster() {
+  return loadJSON(K.roster, []);
+}
+
+export function saveRoster(list) {
+  saveJSON(K.roster, list.filter(s => s && s.nis && s.nama));
+}
+
+export function clearRoster() {
+  localStorage.removeItem(K.roster);
 }
 
 /** Token yang harus dimasukkan siswa agar soal Ujian (Post Test modul) bisa dibuka. */

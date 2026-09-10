@@ -9,9 +9,20 @@ create table if not exists exam_results (
   nama text not null,
   modul text not null,
   nilai integer not null check (nilai between 0 and 100),
+  kelas text,
+  started_at timestamptz,
+  finished_at timestamptz,
+  durasi_detik integer,
   created_at timestamptz not null default now(),
   unique (nis, modul)
 );
+
+-- Migrasi tabel lama (sudah ada di prod): tambahkan kolom tanpa error jika sudah ada.
+-- Jalankan ulang blok ini di SQL Editor setelah menambah kolom baru.
+alter table exam_results add column if not exists kelas text;
+alter table exam_results add column if not exists started_at timestamptz;
+alter table exam_results add column if not exists finished_at timestamptz;
+alter table exam_results add column if not exists durasi_detik integer;
 
 alter table exam_results enable row level security;
 

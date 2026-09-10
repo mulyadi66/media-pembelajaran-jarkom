@@ -28,6 +28,7 @@ import { isSupabaseConfigured } from '../lib/supabase';
 function IdentityForm({ initial, onSubmit, onCancel }) {
   const [nama, setNama] = useState(initial?.nama || '');
   const [nis, setNis] = useState(initial?.nis || '');
+  const [kelas, setKelas] = useState(initial?.kelas || '');
   const [error, setError] = useState(null);
   const [busy, setBusy] = useState(false);
 
@@ -38,7 +39,7 @@ function IdentityForm({ initial, onSubmit, onCancel }) {
     setBusy(true);
     setError(null);
     try {
-      await onSubmit({ nama: nama.trim(), nis: nis.trim() });
+      await onSubmit({ nama: nama.trim(), nis: nis.trim(), kelas: kelas.trim() });
     } catch (e2) {
       setError(e2?.message || 'Gagal menyimpan identitas. Coba lagi.');
     } finally {
@@ -65,6 +66,14 @@ function IdentityForm({ initial, onSubmit, onCancel }) {
           type="text" inputMode="numeric" value={nis}
           onChange={(e) => { setNis(e.target.value.replace(/[^\d]/g, '')); setError(null); }}
           placeholder="contoh: 20241234" maxLength={10}
+        />
+      </label>
+      <label className="identity-field">
+        <span>Kelas (opsional)</span>
+        <input
+          type="text" value={kelas}
+          onChange={(e) => { setKelas(e.target.value); setError(null); }}
+          placeholder="contoh: XI TJKT 1" maxLength={40}
         />
       </label>
       <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
@@ -162,8 +171,16 @@ export default function ModulPostTest({ questions, storageKey, scoreKey, title }
     );
   }
 
-  const handleScore = async (score) => {
-    const res = await addExamResult({ nis: identity.nis, nama: identity.nama, modul: scoreKey, nilai: score });
+  const handleScore = async (score, meta = {}) => {
+    const res = await addExamResult({
+      nis: identity.nis,
+      nama: identity.nama,
+      kelas: identity.kelas || '',
+      modul: scoreKey,
+      nilai: score,
+      startedAt: meta.startedAt || null,
+      finishedAt: meta.finishedAt || null,
+    });
     if (res.status === 'locked') { setLocked(true); setStatus(res); return; }
     saveQuizScore(scoreKey, score);
     setStatus(res);
@@ -185,7 +202,10 @@ export default function ModulPostTest({ questions, storageKey, scoreKey, title }
 
       <div className="identity-chip">
         <UserCircle size={20} />
-        <span><strong>{identity.nama}</strong> <em>— NIS {identity.nis}</em></span>
+        <span>
+          <strong>{identity.nama}</strong> <em>— NIS {identity.nis}</em>
+          {identity.kelas && <em className="identity-kelas"> · {identity.kelas}</em>}
+        </span>
         {!hasAnySubmission() && (
           <button type="button" className="identity-edit" onClick={() => setEditing(true)} aria-label="Ubah identitas">
             <Pencil size={14} /> Ubah

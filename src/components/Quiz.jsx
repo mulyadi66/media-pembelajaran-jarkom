@@ -55,7 +55,10 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
     let correct = 0;
     qs.forEach((q, i) => { if (answers[i] === q.answer) correct++; });
     const score = Math.round((correct / total) * 100);
-    if (onScoreSubmit) onScoreSubmit(score);
+    if (onScoreSubmit) {
+      const startedAt = Number(localStorage.getItem(`jarkomlab_${storageKey}_startedAt`) || 0) || null;
+      onScoreSubmit(score, { startedAt, finishedAt: Date.now() });
+    }
   }, [answers, qs, total, onScoreSubmit, storageKey]);
 
   const submitRef = useRef(handleSubmit);
@@ -111,6 +114,13 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
     };
   }, [submitted, examStarted]);
 
+  // Catat waktu mulai ujian (untuk durasi pengerjaan di Rekap)
+  useEffect(() => {
+    if (submitted || !examStarted) return;
+    const startedKey = `jarkomlab_${storageKey}_startedAt`;
+    if (!localStorage.getItem(startedKey)) localStorage.setItem(startedKey, String(Date.now()));
+  }, [submitted, examStarted, storageKey]);
+
   const selectOption = (idx) => {
     if (submitted) return;
     setAnswers(prev => ({ ...prev, [currentIdx]: idx }));
@@ -121,6 +131,8 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
     localStorage.removeItem(`jarkomlab_${storageKey}_submitted`);
     localStorage.removeItem(`jarkomlab_${storageKey}_order`);
     localStorage.removeItem(`jarkomlab_${storageKey}_deadline`);
+    localStorage.removeItem(`jarkomlab_${storageKey}_startedAt`);
+    setTabWarns(0);
     setAnswers({});
     setCurrentIdx(0);
     setSubmitted(false);

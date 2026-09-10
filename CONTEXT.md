@@ -26,12 +26,15 @@ Media pembelajaran interaktif React untuk siswa SMK TJKT Kelas XI, Fase F — Pe
 - **Alur ujian:** Token ujian (`VITE_EXAM_TOKEN`, default `TKJ235`) → Identitas (Nama + NIS validasi numerik, cek NIS terverifikasi di server) → soal + timer dinamis (±1,5 menit/soal) → submit sekali (retake dikunci server) → review jawaban + penjelasan.
 - **Perangkat bersama:** tombol "Reset Identitas" membersihkan identitas + hasil lokal agar siswa lain bisa mengerjakan.
 - **Anti-contek ringan:** banner peringatan saat pindah tab (≥3× merah) + konfirmasi browser saat menutup/merefresh saat ujian. Tidak memblokir nilai.
-- **Rekap Nilai guru** (`/mpk1/rekap`, PIN = `VITE_REKAP_PIN`, default `2468`): tabel nilai per siswa, filter/pencarian nama-NIS, statistik rata-rata per modul + rerata kelas, export CSV, cetak (print A4), dan tombol Reset (server + lokal; validasi PIN).
+- **Rekap Nilai guru** (`/mpk1/rekap`, PIN = `VITE_REKAP_PIN`, default `2468`): tabel nilai per siswa + kolom **Kelas, Status (Selesai/Sebagian/Belum), Durasi** pengerjaan, filter/pencarian nama-NIS + filter kelas, statistik rata-rata per modul + rerata kelas, export CSV (ikut kolom baru), cetak (print A4), dan tombol Reset (server + lokal; validasi PIN).
+- **Roster siswa**: panel "Daftar Siswa" di Rekap — tempel teks `NIS;Nama;Kelas` per baris → tersimpan lokal (key `jarkomlab_roster`); siswa roster yang belum mengerjakan tampil berstatus **Belum** (row disorot, tidak perlu sudah submit).
+- **Durasi pengerjaan**: waktu mulai dicatat di `jarkomlab_${key}_startedAt` saat ujian mulai; saat submit dikirim `started_at`/`finished_at`, server menghitung `durasi_detik` (kolom baru) → tampil per modul + total di Rekap & CSV.
 - **Supabase:**
   - URL `https://ogrlegwzktrelokhwoyg.supabase.co`; tabel `exam_results` dengan `unique (nis, modul)` → submit kedua ditolak server (HTTP 409).
+  - **Kolom baru:** `kelas`, `started_at`, `finished_at`, `durasi_detik` — jalankan blok `ALTER TABLE ... ADD COLUMN IF NOT EXISTS` di `supabase/schema.sql` (idempotent). Tanpa migrasi pun aplikasi tetap jalan (fallback kolom dasar saat error `42703`), hanya kolom baru yang kosong.
   - Fungsi `reset_exam_results(pin)` (TRUNCATE + SECURITY DEFINER, PostgREST menolak DELETE tanpa WHERE) — definisi di `supabase/schema.sql`; PIN di fungsi (`2468`) harus sama dengan `VITE_REKAP_PIN`.
   - Env di Vercel WAJIB type **Non-sensitive** — VITE_* hanya ter-inline saat build jika non-sensitive.
-- **State keys:** `mpk1_modul1_posttest`, `mpk1_modul2_posttest`, `mpk1_modul3_posttest` (jawaban/order/deadline/submitted/unlocked), `jarkomlab_identity`, `jarkomlab_examHistory`, `jarkomlab_examSubmitted`, `jarkomlab_pendingSync`.
+- **State keys:** `mpk1_modul1_posttest`, `mpk1_modul2_posttest`, `mpk1_modul3_posttest` (jawaban/order/deadline/submitted/unlocked + `_startedAt`), `jarkomlab_identity`, `jarkomlab_examHistory`, `jarkomlab_examSubmitted`, `jarkomlab_pendingSync`, `jarkomlab_roster`.
 - **Env vars (prod):** `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` (lokal di `.env.local` gitignored), `VITE_REKAP_PIN=2468`, `VITE_EXAM_TOKEN=TKJ235`.
 
 ## MPK 2
@@ -66,7 +69,7 @@ Media pembelajaran interaktif React untuk siswa SMK TJKT Kelas XI, Fase F — Pe
 
 ## Fitur Lengkap
 - Dashboard, Modul 1-3 (materi + video + section tracker), Post Test ujian per modul (exam-only: token gate + timer + auto-grade + review + anti-contek)
-- Rekap Nilai guru (PIN, filter/pencarian, statistik per modul, CSV, cetak, reset server+lokal)
+- Rekap Nilai guru (PIN, filter/pencarian, filter kelas, statistik per modul, kolom Kelas/Status/Durasi, roster siswa, CSV, cetak, reset server+lokal)
 - Flashcard (35 istilah), Glossary (35 istilah + search), Worksheet (24 essay), Challenge mode (30 soal timed)
 - Device Simulator (drag & drop), Certificate generator, Badges, Streak, Leaderboard
 - Dark mode, PWA, Print styles, Error boundary
@@ -82,6 +85,9 @@ Media pembelajaran interaktif React untuk siswa SMK TJKT Kelas XI, Fase F — Pe
 - [x] Post Test Modul 1/2/3 → 25 soal sesuai materi masing-masing; timer dinamis (±1,5 menit/soal)
 - [x] Validasi NIS (numerik) + cek NIS terverifikasi di server saat simpan identitas; tombol Reset Identitas untuk perangkat bersama
 - [x] Rekap nilai: filter/pencarian nama-NIS, statistik rata-rata per modul, reset server (RPC TRUNCATE) + reset lokal
+- [x] Kolom Kelas/Grup opsional di identitas → filter kelas + statistik per kelas di Rekap
+- [x] Durasi pengerjaan per siswa per modul (started_at/finished_at/durasi_detik) → kolom Durasi di Rekap + CSV
+- [x] Roster siswa (NIS;Nama;Kelas, tersimpan lokal) → siswa yang belum mengerjakan tampil status Belum
 - [x] Token ujian + peringatan anti-contek (pindah tab, tutup/merefresh tab) saat ujian berlangsung
 - [x] Verifikasi device simulator — touch-action:none + e.preventDefault() untuk mobile drag
 - [x] Modul Ajar filter Modul 1/2/3 via tabs
