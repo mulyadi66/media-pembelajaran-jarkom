@@ -9,6 +9,8 @@ import {
   CloudCog,
   UserCheck,
   Trash2,
+  KeyRound,
+  Copy,
 } from 'lucide-react';
 import {
   fetchExamResults,
@@ -16,6 +18,7 @@ import {
   getExamHistory,
   MODUL_META,
   getRekapPin,
+  getExamToken,
   isSupabaseConfigured,
   resetExamResults,
   clearExamLocal,
@@ -164,6 +167,16 @@ export default function RekapNilai() {
 
   const verified = rows.reduce((a, r) => a + r.count, 0);
   const completed = rows.filter(r => r.count === MODUL_META.length).length;
+  const examToken = getExamToken();
+
+  const copyToken = async () => {
+    try {
+      await navigator.clipboard.writeText(examToken);
+      setMessage('Token ujian disalin ke clipboard.');
+    } catch {
+      setMessage('Gagal menyalin token.');
+    }
+  };
 
   const handleReset = async () => {
     if (!rows.length) { setMessage('Tidak ada data untuk direset.'); return; }
@@ -218,6 +231,18 @@ export default function RekapNilai() {
               <RefreshCw size={16} className={loading ? 'spin' : ''} /> Perbarui
             </button>
           </div>
+        </div>
+
+        <div className="exam-token-card">
+          <KeyRound size={20} />
+          <div className="exam-token-info">
+            <strong>Token Ujian</strong>
+            <span className="exam-token-value">{examToken}</span>
+            <small>Bagikan token ini ke siswa agar mereka bisa membuka Post Test (Ujian) modul. Untuk mengganti, ubah VITE_EXAM_TOKEN di Vercel lalu redeploy.</small>
+          </div>
+          <button className="btn btn-secondary" onClick={copyToken} aria-label="Salin token ujian">
+            <Copy size={16} /> Salin
+          </button>
         </div>
 
         <div className="rekap-stats">

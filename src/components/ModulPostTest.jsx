@@ -16,6 +16,7 @@ import {
   isModulLocked,
   hasAnySubmission,
   addExamResult,
+  getExamToken,
 } from '../lib/examLib';
 import { isSupabaseConfigured } from '../lib/supabase';
 
@@ -153,6 +154,7 @@ export default function ModulPostTest({ questions, storageKey, scoreKey, title }
         questions={questions}
         storageKey={storageKey}
         timeLimit={15}
+        examToken={getExamToken()}
         onScoreSubmit={handleScore}
       />
       {!isSupabaseConfigured && (

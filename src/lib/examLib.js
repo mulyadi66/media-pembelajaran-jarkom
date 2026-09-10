@@ -166,3 +166,9 @@ export function getRekapPin() {
   const fromEnv = import.meta.env.VITE_REKAP_PIN;
   return (fromEnv && String(fromEnv).trim()) || '2468';
 }
+
+/** Token yang harus dimasukkan siswa agar soal Ujian (Post Test modul) bisa dibuka. */
+export function getExamToken() {
+  const fromEnv = import.meta.env.VITE_EXAM_TOKEN;
+  return (fromEnv && String(fromEnv).trim()) || 'TKJ235';
+}

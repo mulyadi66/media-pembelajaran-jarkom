@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { CheckCircle, XCircle, ChevronLeft, ChevronRight, Clock, Award, RotateCcw, Eye } from 'lucide-react';
+import { CheckCircle, XCircle, ChevronLeft, ChevronRight, Clock, Award, RotateCcw, Eye, KeyRound } from 'lucide-react';
 
 function shuffleArray(arr) {
   const a = [...arr];
@@ -10,7 +10,7 @@ function shuffleArray(arr) {
   return a;
 }
 
-export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, mode: initialMode }) {
+export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, mode: initialMode, examToken }) {
   const [mode, setMode] = useState(() => localStorage.getItem(`jarkomlab_${storageKey}_mode`) || initialMode || null);
   const [shuffledQs] = useState(() => {
     if (localStorage.getItem(`jarkomlab_${storageKey}_mode`) === 'exam') {
@@ -34,7 +34,16 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
     return localStorage.getItem(`jarkomlab_${storageKey}_submitted`) === 'true';
   });
   const [showExplanation, setShowExplanation] = useState({});
-  const [secondsLeft, setSecondsLeft] = useState(timeLimit * 60);
+  const [secondsLeft, setSecondsLeft] = useState(() => {
+    const raw = localStorage.getItem(`jarkomlab_${storageKey}_deadline`);
+    const d = raw ? parseInt(raw, 10) : NaN;
+    return Number.isFinite(d) && d > Date.now()
+      ? Math.ceil((d - Date.now()) / 1000)
+      : timeLimit * 60;
+  });
+  const [tokenOk, setTokenOk] = useState(() => localStorage.getItem(`jarkomlab_${storageKey}_unlocked`) === '1');
+  const [token, setToken] = useState('');
+  const [tokenError, setTokenError] = useState(false);
   const timerRef = useRef(null);
 
   const qs = mode === 'exam' ? shuffledQs : questions;
@@ -52,16 +61,29 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
     if (mode === 'exam') onScoreSubmit(score);
   }, [answers, qs, total, onScoreSubmit, storageKey, mode]);
 
+  const submitRef = useRef(handleSubmit);
+  useEffect(() => { submitRef.current = handleSubmit; }, [handleSubmit]);
+
   useEffect(() => {
     if (submitted || !timeLimit || mode !== 'exam') return;
+    const deadlineKey = `jarkomlab_${storageKey}_deadline`;
+    let deadline = parseInt(localStorage.getItem(deadlineKey) || '0', 10);
+    if (!Number.isFinite(deadline) || deadline <= 0) {
+      deadline = Date.now() + timeLimit * 60 * 1000;
+      localStorage.setItem(deadlineKey, String(deadline));
+    }
+    setSecondsLeft(Math.max(0, Math.ceil((deadline - Date.now()) / 1000)));
     timerRef.current = setInterval(() => {
-      setSecondsLeft(prev => {
-        if (prev <= 1) { clearInterval(timerRef.current); handleSubmit(); return 0; }
-        return prev - 1;
-      });
+      const left = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
+      setSecondsLeft(left);
+      if (left <= 0) {
+        clearInterval(timerRef.current);
+        localStorage.removeItem(deadlineKey);
+        submitRef.current();
+      }
     }, 1000);
     return () => clearInterval(timerRef.current);
-  }, [submitted, timeLimit, mode, handleSubmit]);
+  }, [submitted, timeLimit, mode, storageKey]);
 
   useEffect(() => {
     localStorage.setItem(`jarkomlab_${storageKey}`, JSON.stringify(answers));
@@ -90,6 +112,7 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
     localStorage.removeItem(`jarkomlab_${storageKey}_submitted`);
     localStorage.removeItem(`jarkomlab_${storageKey}_mode`);
     localStorage.removeItem(`jarkomlab_${storageKey}_order`);
+    localStorage.removeItem(`jarkomlab_${storageKey}_deadline`);
     setAnswers({});
     setCurrentIdx(0);
     setSubmitted(false);
@@ -118,6 +141,45 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
             <p>Timer {timeLimit} menit, soal diacak, nilai terekam</p>
           </button>
         </div>
+      </div>
+    );
+  }
+
+  // Token ujian (diberikan guru) — wajib sebelum soal ujian terbuka
+  if (mode === 'exam' && examToken && !tokenOk && !submitted) {
+    const tryToken = (e) => {
+      e.preventDefault();
+      if (token.trim() === String(examToken).trim()) {
+        setTokenOk(true);
+        localStorage.setItem(`jarkomlab_${storageKey}_unlocked`, '1');
+      } else {
+        setTokenError(true);
+        setToken('');
+      }
+    };
+    return (
+      <div className="quiz-token-gate">
+        <KeyRound size={38} color="#6366f1" />
+        <h2>Token Ujian</h2>
+        <p className="quiz-token-hint">
+          Masukkan token yang diberikan guru untuk membuka soal ujian.
+        </p>
+        <form onSubmit={tryToken} noValidate>
+          <input
+            type="text" value={token} autoFocus
+            className="calc-input quiz-token-input"
+            placeholder="Token ujian"
+            onChange={(e) => { setToken(e.target.value); setTokenError(false); }}
+            aria-label="Token ujian"
+          />
+          {tokenError && <p className="identity-error">Token salah. Minta token ke guru.</p>}
+          <button className="btn btn-primary" type="submit" style={{ width: '100%', justifyContent: 'center' }}>
+            <KeyRound size={16} /> Buka Soal
+          </button>
+        </form>
+        <button type="button" className="btn btn-secondary" style={{ width: '100%', justifyContent: 'center', marginTop: 8 }} onClick={() => setMode(null)}>
+          Ubah Mode
+        </button>
       </div>
     );
   }
