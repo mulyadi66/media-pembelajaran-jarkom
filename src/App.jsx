@@ -87,9 +87,9 @@ const HasilKKAXI = lazy(() => import('./pages/kka-xi/HasilKKAXI'));
 
 export default function App() {
   return (
-    <ErrorBoundary>
-      <AppProvider>
-        <BrowserRouter>
+    <AppProvider>
+      <BrowserRouter>
+        <ErrorBoundary>
           <Suspense fallback={
             <div style={{display:'flex',justifyContent:'center',alignItems:'center',minHeight:'60vh',color:'var(--text-lighter)'}}>
               <div style={{textAlign:'center'}}>
@@ -179,8 +179,8 @@ export default function App() {
               </Route>
             </Routes>
           </Suspense>
-        </BrowserRouter>
-      </AppProvider>
-    </ErrorBoundary>
+        </ErrorBoundary>
+      </BrowserRouter>
+    </AppProvider>
   );
 }
