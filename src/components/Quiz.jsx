@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { CheckCircle, XCircle, ChevronLeft, ChevronRight, Clock, Award, RotateCcw, KeyRound } from 'lucide-react';
+import { CheckCircle, XCircle, ChevronLeft, ChevronRight, Clock, Award, RotateCcw, KeyRound, AlertTriangle } from 'lucide-react';
 
 function shuffleArray(arr) {
   const a = [...arr];
@@ -40,6 +40,7 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
   const [tokenOk, setTokenOk] = useState(() => localStorage.getItem(`jarkomlab_${storageKey}_unlocked`) === '1');
   const [token, setToken] = useState('');
   const [tokenError, setTokenError] = useState(false);
+  const [tabWarns, setTabWarns] = useState(0);
   const timerRef = useRef(null);
 
   const qs = shuffledQs;
@@ -90,6 +91,25 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
       localStorage.setItem(`jarkomlab_${storageKey}_order`, JSON.stringify(shuffledQs.map(q => questions.indexOf(q))));
     }
   }, [submitted, storageKey, shuffledQs, questions]);
+
+  // Peringatan anti-contek: monitor pindah tab / keluar saat ujian berlangsung
+  const examStarted = Boolean(examToken && tokenOk) || !examToken;
+  useEffect(() => {
+    if (submitted || !examStarted) return;
+    const onVis = () => {
+      if (document.hidden) setTabWarns(w => w + 1);
+    };
+    const onUnload = (e) => {
+      e.preventDefault();
+      e.returnValue = '';
+    };
+    document.addEventListener('visibilitychange', onVis);
+    window.addEventListener('beforeunload', onUnload);
+    return () => {
+      document.removeEventListener('visibilitychange', onVis);
+      window.removeEventListener('beforeunload', onUnload);
+    };
+  }, [submitted, examStarted]);
 
   const selectOption = (idx) => {
     if (submitted) return;
@@ -218,6 +238,11 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
 
   return (
     <div className="quiz-container">
+      {tabWarns > 0 && (
+        <div className={`quiz-tab-warning ${tabWarns >= 3 ? 'critical' : ''}`} role="alert">
+          <AlertTriangle size={15} /> Pindah tab/keluar terdeteksi ({tabWarns}×) — ini dicatat dan bisa dianggap mencurangi ujian.
+        </div>
+      )}
       <div className="quiz-header">
         <span className="quiz-progress-text">Soal {currentIdx + 1} dari {total}</span>
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>

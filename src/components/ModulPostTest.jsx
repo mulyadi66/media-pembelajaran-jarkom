@@ -20,6 +20,8 @@ import {
   getExamToken,
   clearExamLocal,
   clearIdentity,
+  findNisRecords,
+  MODUL_META,
 } from '../lib/examLib';
 import { isSupabaseConfigured } from '../lib/supabase';
 
@@ -27,12 +29,21 @@ function IdentityForm({ initial, onSubmit, onCancel }) {
   const [nama, setNama] = useState(initial?.nama || '');
   const [nis, setNis] = useState(initial?.nis || '');
   const [error, setError] = useState(null);
+  const [busy, setBusy] = useState(false);
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
     const err = getIdentityError({ nama, nis });
     if (err) { setError(err); return; }
-    onSubmit({ nama: nama.trim(), nis: nis.trim() });
+    setBusy(true);
+    setError(null);
+    try {
+      await onSubmit({ nama: nama.trim(), nis: nis.trim() });
+    } catch (e2) {
+      setError(e2?.message || 'Gagal menyimpan identitas. Coba lagi.');
+    } finally {
+      setBusy(false);
+    }
   };
 
   return (
@@ -57,8 +68,8 @@ function IdentityForm({ initial, onSubmit, onCancel }) {
         />
       </label>
       <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
-        <button className="btn btn-primary" type="submit" style={{ marginLeft: 0 }}>
-          <BadgeCheck size={16} /> Simpan Identitas
+        <button className="btn btn-primary" type="submit" style={{ marginLeft: 0 }} disabled={busy}>
+          <BadgeCheck size={16} /> {busy ? 'Memeriksa…' : 'Simpan Identitas'}
         </button>
         {onCancel && (
           <button type="button" className="btn btn-secondary" onClick={onCancel}>Batal</button>
@@ -75,6 +86,27 @@ export default function ModulPostTest({ questions, storageKey, scoreKey, title }
   const [locked, setLocked] = useState(() => isModulLocked(scoreKey));
   const [editing, setEditing] = useState(false);
   const [status, setStatus] = useState(null);
+
+  const handleIdentitySubmit = async (i) => {
+    if (isSupabaseConfigured) {
+      try {
+        const { data, error } = await findNisRecords(i.nis);
+        if (!error && Array.isArray(data) && data.length > 0) {
+          const modulLabel = MODUL_META.find(m => m.key === scoreKey)?.label || scoreKey;
+          throw new Error(
+            `NIS ${i.nis} sudah terverifikasi di server pada ${modulLabel} — tidak bisa mengerjakan ulang. Bila ini perangkat bersama, gunakan tombol "Reset Identitas".`
+          );
+        }
+      } catch (err) {
+        if (err && err.message && err.message.includes('sudah terverifikasi')) throw err;
+        // Kegagalan jaringan → biarkan siswa tetap bisa mengerjakan (menangani offline).
+      }
+    }
+    saveIdentity(i);
+    setIdentity(i);
+    setEditing(false);
+    setStatus(null);
+  };
 
   const handleResetIdentity = () => {
     const sure = window.confirm(
@@ -103,7 +135,7 @@ export default function ModulPostTest({ questions, storageKey, scoreKey, title }
         </div>
         <IdentityForm
           initial={identity}
-          onSubmit={(i) => { saveIdentity(i); setIdentity(i); setEditing(false); setStatus(null); }}
+          onSubmit={handleIdentitySubmit}
           onCancel={identity ? () => setEditing(false) : undefined}
         />
       </div>

@@ -11,6 +11,7 @@ import {
   Trash2,
   KeyRound,
   Copy,
+  Search,
 } from 'lucide-react';
 import {
   fetchExamResults,
@@ -85,6 +86,7 @@ export default function RekapNilai() {
   const [source, setSource] = useState('server');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
+  const [q, setQ] = useState('');
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -169,6 +171,20 @@ export default function RekapNilai() {
   const completed = rows.filter(r => r.count === MODUL_META.length).length;
   const examToken = getExamToken();
 
+  const modulAvgs = MODUL_META.map((m, idx) => {
+    const vals = rows.map(r => r.vals[idx]).filter(v => v != null);
+    return {
+      label: m.label,
+      avg: vals.length ? Math.round(vals.reduce((a, b) => a + b, 0) / vals.length) : null,
+      count: vals.length,
+    };
+  });
+
+  const qNorm = q.trim().toLowerCase();
+  const filtered = qNorm
+    ? rows.filter(r => r.nama.toLowerCase().includes(qNorm) || r.nis.toLowerCase().includes(qNorm))
+    : rows;
+
   const copyToken = async () => {
     try {
       await navigator.clipboard.writeText(examToken);
@@ -221,7 +237,7 @@ export default function RekapNilai() {
             <button className="btn btn-danger" onClick={handleReset} disabled={loading || !rows.length}>
               <Trash2 size={16} /> Reset
             </button>
-            <button className="btn btn-secondary" onClick={() => exportCSV(rows)} disabled={!rows.length}>
+            <button className="btn btn-secondary" onClick={() => exportCSV(filtered.length ? filtered : rows)} disabled={!rows.length}>
               <Download size={16} /> CSV
             </button>
             <button className="btn btn-secondary" onClick={() => window.print()} disabled={!rows.length}>
@@ -252,6 +268,38 @@ export default function RekapNilai() {
           <div className="rekap-stat"><span className="rs-num">{pendCount}</span><span>Menunggu sinkron</span></div>
         </div>
 
+        <div className="rekap-modul-stats">
+          {modulAvgs.map((m, i) => (
+            <div className="rsm-item" key={i}>
+              <span className="rsm-label">{m.label}</span>
+              <span className={`rsm-avg ${m.avg == null ? 'muted' : ''}`}>
+                {m.avg == null ? '—' : m.avg}
+              </span>
+              <span className="rsm-count">{m.count} nilai</span>
+            </div>
+          ))}
+          <div className="rsm-item rsm-total">
+            <span className="rsm-label">Rerata Kelas</span>
+            <span className={`rsm-avg ${rows.length ? '' : 'muted'}`}>
+              {rows.length ? Math.round(rows.reduce((a, r) => a + (r.avg ?? 0), 0) / rows.length) : '—'}
+            </span>
+            <span className="rsm-count">{rows.length} siswa</span>
+          </div>
+        </div>
+
+        <div className="rekap-toolbar no-print">
+          <div className="rekap-search">
+            <Search size={16} />
+            <input
+              type="search" value={q} onChange={(e) => setQ(e.target.value)}
+              placeholder="Cari nama atau NIS…" aria-label="Cari siswa berdasarkan nama atau NIS"
+            />
+          </div>
+          <span className="rekap-search-hint">
+            {qNorm ? `${filtered.length} dari ${rows.length} siswa` : `${rows.length} siswa`}
+          </span>
+        </div>
+
         {source === 'local' && (
           <div className="pause-note no-print">
             <CloudOff size={16} />
@@ -277,7 +325,12 @@ export default function RekapNilai() {
                   Belum ada data. Siswa yang sudah submit Post Test modul akan muncul di sini.
                 </td></tr>
               )}
-              {rows.map((r, i) => (
+              {rows.length > 0 && filtered.length === 0 && (
+                <tr><td colSpan={8} style={{ textAlign: 'center', padding: 30, color: 'var(--text-lighter)' }}>
+                  Tidak ada siswa yang cocok dengan pencarian.
+                </td></tr>
+              )}
+              {filtered.map((r, i) => (
                 <tr key={r.nis}>
                   <td>{i + 1}</td>
                   <td style={{ fontWeight: 600 }}>{r.nama}</td>
@@ -297,11 +350,11 @@ export default function RekapNilai() {
           </table>
         </div>
 
-        {rows.length > 0 && (
+        {filtered.length > 0 && (
           <p className="rekap-foot">
             <UserCheck size={14} style={{ verticalAlign: 'middle' }} />
-            {rows.length} siswa · rerata kelas{' '}
-            <strong>{Math.round(rows.reduce((a, r) => a + (r.avg ?? 0), 0) / rows.length)}</strong>
+            {filtered.length} siswa · rerata kelas{' '}
+            <strong>{Math.round(filtered.reduce((a, r) => a + (r.avg ?? 0), 0) / filtered.length)}</strong>
           </p>
         )}
 

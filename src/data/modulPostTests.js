@@ -492,6 +492,216 @@ export const modul2PostTest = [
     answer: 1,
     explanation: 'Ring bersifat melingkar berurutan — kegagalan satu node dapat memutus lingkaran dan menghentikan aliran data (jaringan ring klasik seperti Token Ring).'
   },
+  {
+    id: 11,
+    level: 'C2 - Memahami',
+    question: 'Jaringan memakai Hub sebagai pusat: kabelnya tersusun seperti bintang, tetapi data disiarkan ke semua port. Yang benar tentang jaringan ini adalah…',
+    options: [
+      'A. Fisiknya bus, logisnya star',
+      'B. Fisiknya star, logisnya bus',
+      'C. Fisik dan logis sama-sama bus',
+      'D. Fisik dan logis sama-sama star',
+      'E. Fisiknya ring, logisnya mesh'
+    ],
+    answer: 1,
+    explanation: 'Hub menyiarkan data ke semua port (perilaku bus) tetapi semua kabel menuju satu pusat (bentuk fisik star). Inilah contoh klasik topologi fisik berbeda dari topologi logis.'
+  },
+  {
+    id: 12,
+    level: 'C2 - Memahami',
+    question: 'Istilah jaringan untuk satu titik yang jika rusak akan memutus seluruh jaringan adalah…',
+    options: [
+      'A. Backbone',
+      'B. Segment',
+      'C. Link',
+      'D. Single Point of Failure (SPOF)',
+      'E. Node'
+    ],
+    answer: 3,
+    explanation: 'SPOF adalah satu titik yang jika gagal membuat seluruh jaringan tidak berfungsi — contoh: kabel utama bus, switch pusat star, dan root pada tree.'
+  },
+  {
+    id: 13,
+    level: 'C2 - Memahami',
+    question: 'Jalur utama berkapasitas besar yang menampung lalu lintas antar segmen dalam jaringan disebut…',
+    options: [
+      'A. Backbone',
+      'B. Segment',
+      'C. Terminator',
+      'D. Node',
+      'E. Collision domain'
+    ],
+    answer: 0,
+    explanation: 'Backbone adalah jalur utama berkapasitas besar yang menghubungkan antar segmen, misalnya kabel utama topologi bus atau link antar switch pada tree.'
+  },
+  {
+    id: 14,
+    level: 'C3 - Menerapkan',
+    question: 'Fungsi terminator yang dipasang di kedua ujung kabel utama topologi bus adalah…',
+    options: [
+      'A. Mempercepat transfer data',
+      'B. Menyerap sinyal agar tidak memantul kembali ke kabel',
+      'C. Menambah jumlah node',
+      'D. Mengubah data menjadi sinyal',
+      'E. Menyimpan cache data'
+    ],
+    answer: 1,
+    explanation: 'Terminator berfungsi menyerap sinyal di ujung kabel sehingga sinyal tidak memantul kembali dan menabrak sinyal lain. Jika terminator dilepas, komunikasi terganggu.'
+  },
+  {
+    id: 15,
+    level: 'C4 - Menganalisis',
+    question: 'Semakin banyak node pada topologi bus, kinerja semakin menurun. Alasan utamanya adalah…',
+    options: [
+      'A. Kabel cepat aus',
+      'B. Sering terjadi tabrakan data (collision) karena semua node berbagi satu jalur',
+      'C. Perangkat keras makin panas',
+      'D. Terminator penuh',
+      'E. Broadcast address berubah'
+    ],
+    answer: 1,
+    explanation: 'Pada bus, semua node berbagi satu medium dan memakai CSMA/CD. Makin banyak node makin sering dua node mengirim bersamaan → collision makin sering → kinerja menurun.'
+  },
+  {
+    id: 16,
+    level: 'C2 - Memahami',
+    question: 'Topologi mesh yang hanya menghubungkan node-node yang dianggap penting disebut…',
+    options: [
+      'A. Full mesh',
+      'B. Partial mesh',
+      'C. Hybrid mesh',
+      'D. Star mesh',
+      'E. Logical mesh'
+    ],
+    answer: 1,
+    explanation: 'Partial mesh hanya menghubungkan node-node penting secara langsung; full mesh menghubungkan setiap node ke semua node lain (rumus n(n−1)/2 kabel).'
+  },
+  {
+    id: 17,
+    level: 'C4 - Menganalisis',
+    question: 'Alasan utama topologi mesh jarang dipakai pada LAN kecil dengan banyak perangkat adalah…',
+    options: [
+      'A. Kecepatannya rendah',
+      'B. Biaya kabel sangat tinggi karena tiap node terhubung ke semua node',
+      'C. Sulit mendapat kabel',
+      'D. Tidak mendukung switch',
+      'E. Hanya untuk jaringan nirkabel'
+    ],
+    answer: 1,
+    explanation: 'Full mesh n node membutuhkan n(n−1)/2 kabel — sangat mahal dan kompleks. Karena itu mesh dicadangkan untuk jaringan kritis/WAN yang membutuhkan keandalan tinggi.'
+  },
+  {
+    id: 18,
+    level: 'C2 - Memahami',
+    question: 'FDDI (Fiber Distributed Data Interface) memakai dua cincin dengan arah berlawanan. Tujuannya adalah…',
+    options: [
+      'A. Menambah kecepatan dua kali lipat',
+      'B. Menyediakan jalur cadangan jika satu cincin putus',
+      'C. Mengganti kabel fiber dengan tembaga',
+      'D. Menghilangkan token passing',
+      'E. Menambah jumlah node'
+    ],
+    answer: 1,
+    explanation: 'Dual ring FDDI memberi redundansi — bila satu cincin putus, cincin kedua bisa mengambil alih sehingga komunikasi tetap berjalan.'
+  },
+  {
+    id: 19,
+    level: 'C5 - Mengevaluasi',
+    question: 'Sekolah membangun LAN 60 PC di 3 ruangan, dana terbatas, mudah dikelola, dan jumlah PC bertambah tiap tahun. Topologi yang paling tepat adalah…',
+    options: [
+      'A. Bus',
+      'B. Full mesh',
+      'C. Ring',
+      'D. Tree (star bertingkat)',
+      'E. Point-to-point'
+    ],
+    answer: 3,
+    explanation: 'Tree (star bertingkat): 1 switch utama + 1 switch per ruangan. Biaya menengah, mudah dikelola per ruangan, skalabilitas tinggi, dan kegagalan switch satu ruangan tidak mematikan seluruh jaringan.'
+  },
+  {
+    id: 20,
+    level: 'C2 - Memahami',
+    question: 'Jaringan yang menggunakan Hub dianggap boros bandwidth karena Hub…',
+    options: [
+      'A. Menyimpan data',
+      'B. Meneruskan setiap data ke SEMUA port (broadcast)',
+      'C. Membatasi kecepatan',
+      'D. Hanya menghubungkan 2 perangkat',
+      'E. Memakai token passing'
+    ],
+    answer: 1,
+    explanation: 'Hub menyiarkan data ke semua port sehingga menimbulkan lalu lintas tak perlu dan tabrakan makin sering — beda dengan switch yang meneruskan hanya ke port tujuan.'
+  },
+  {
+    id: 21,
+    level: 'C4 - Menganalisis',
+    question: 'Bandingkan kebutuhan kabel untuk 5 node: full mesh vs star. Pernyataan yang benar adalah…',
+    options: [
+      'A. Mesh 15 kabel, star 10 kabel',
+      'B. Mesh 10 kabel, star 5 kabel',
+      'C. Mesh 5 kabel, star 10 kabel',
+      'D. Mesh 8 kabel, star 8 kabel',
+      'E. Mesh 20 kabel, star 4 kabel'
+    ],
+    answer: 1,
+    explanation: 'Full mesh 5 node = 5×4/2 = 10 kabel. Star 5 node (tiap node langsung ke pusat) = 5 kabel. Mesh selalu jauh lebih boros kabel.'
+  },
+  {
+    id: 22,
+    level: 'C6 - Menciptakan',
+    question: 'Perpustakaan sekolah dengan 25 PC di satu ruangan ingin jaringan yang murah, mudah dirawat, dan mudah ditambah PC. Rancangan terbaik adalah…',
+    options: [
+      'A. Bus tanpa switch dengan terminator',
+      'B. Star dengan 1 switch 24/48 port',
+      'C. Full mesh antar semua PC',
+      'D. Ring dengan token passing',
+      'E. Koneksi serial berantai'
+    ],
+    answer: 1,
+    explanation: 'Star dengan 1 switch: harga wajar, mudah troubleshooting (satu kabel rusak hanya memengaruhi 1 PC), dan mudah bertambah (tinggal menambah kabel ke switch).'
+  },
+  {
+    id: 23,
+    level: 'C3 - Menerapkan',
+    question: 'Pada topologi ring dengan token passing, node yang berhak mengirim data adalah…',
+    options: [
+      'A. Semua node secara bersamaan',
+      'B. Node yang sedang memegang token',
+      'C. Node tercepat',
+      'D. Node dengan alamat terbesar',
+      'E. Node yang di tengah lingkaran'
+    ],
+    answer: 1,
+    explanation: 'Hanya pemegang token yang boleh mengirim. Karena satu token berputar dari node ke node, tidak pernah ada dua node mengirim bersamaan → tidak ada tabrakan.'
+  },
+  {
+    id: 24,
+    level: 'C2 - Memahami',
+    question: 'Bagian jaringan yang terpisah dan biasanya dihubungkan oleh bridge atau router disebut…',
+    options: [
+      'A. Backbone',
+      'B. Link',
+      'C. Segment',
+      'D. Terminator',
+      'E. Node'
+    ],
+    answer: 2,
+    explanation: 'Segment adalah bagian jaringan yang terpisah; bridge/router (atau switch) menghubungkan antar segmen. Contoh: segment lab A dan segment lab B.'
+  },
+  {
+    id: 25,
+    level: 'C5 - Mengevaluasi',
+    question: 'Kantor pusat + 3 cabang di kota berbeda, setiap cabang punya LAN 20 PC. Topologi backbone antar kota yang paling sesuai untuk keandalan adalah…',
+    options: [
+      'A. Bus satu kabel',
+      'B. Ring',
+      'C. Mesh antar router cabang',
+      'D. Star sederhana tanpa router',
+      'E. Point-to-point tunggal'
+    ],
+    answer: 2,
+    explanation: 'Mesh antar router cabang menyediakan beberapa jalur redundan — bila satu link antar kota putus, komunikasi tetap berjalan lewat jalur lain. Cocok untuk WAN kritis.'
+  },
 ];
 
 export const modul3PostTest = [
@@ -634,5 +844,215 @@ export const modul3PostTest = [
     ],
     answer: 1,
     explanation: '127.0.0.1 adalah loopback untuk menguji NIC sendiri. 0.0.0.0 = semua jaringan, 255.255.255.255 = broadcast lokal, 169.254.x.x = APIPA.'
+  },
+  {
+    id: 11,
+    level: 'C2 - Memahami',
+    question: 'Panjang alamat IPv6 adalah…',
+    options: [
+      'A. 32 bit',
+      'B. 64 bit',
+      'C. 128 bit',
+      'D. 256 bit',
+      'E. 16 bit'
+    ],
+    answer: 2,
+    explanation: 'IPv6 sepanjang 128 bit (contoh: 2001:0db8:...) dengan jumlah alamat ±3,4×10³⁸ — mengatasi keterbatasan IPv4 (32 bit, ±4,3 miliar).'
+  },
+  {
+    id: 12,
+    level: 'C3 - Menerapkan',
+    question: 'Konversi biner 10101000 ke desimal menghasilkan…',
+    options: [
+      'A. 128',
+      'B. 168',
+      'C. 192',
+      'D. 200',
+      'E. 232'
+    ],
+    answer: 1,
+    explanation: '10101000 = 128 + 32 + 8 = 168. Nilai bit: 128 64 32 16 8 4 2 1.'
+  },
+  {
+    id: 13,
+    level: 'C2 - Memahami',
+    question: 'Fungsi utama subnet mask adalah untuk menentukan…',
+    options: [
+      'A. Kecepatan jaringan',
+      'B. Bagian alamat yang menunjukkan network dan bagian yang menunjukkan host',
+      'C. Nama komputer di jaringan',
+      'D. Password router',
+      'E. Jumlah kabel yang dipakai'
+    ],
+    answer: 1,
+    explanation: 'Subnet mask memisahkan bit network dari bit host (bit 1 = network, bit 0 = host). Contoh mask /24 = 255.255.255.0 → 24 bit network, 8 bit host.'
+  },
+  {
+    id: 14,
+    level: 'C4 - Menganalisis',
+    question: 'Jaringan /30 sering dipakai untuk link antar router (point-to-point) karena…',
+    options: [
+      'A. Menyediakan 254 host',
+      'B. Menyediakan tepat 2 host usable yang pas untuk dua ujung link',
+      'C. Tidak memerlukan subnet mask',
+      'D. Berkecepatan paling tinggi',
+      'E. Menggunakan IPv6'
+    ],
+    answer: 1,
+    explanation: '/30 = 2^2 − 2 = 2 host usable — pas untuk satu ujung di tiap sisi link. Tidak boros alamat dibanding /24.'
+  },
+  {
+    id: 15,
+    level: 'C4 - Menganalisis',
+    question: 'Jaringan 172.16.0.0/16 dibagi menjadi 8 subnet. Prefix baru dan host per subnet adalah…',
+    options: [
+      'A. /18 — 16382 host',
+      'B. /19 — 8190 host',
+      'C. /20 — 4094 host',
+      'D. /24 — 254 host',
+      'E. /26 — 62 host'
+    ],
+    answer: 1,
+    explanation: '8 subnet → 2^n ≥ 8 → n = 3 bit dipinjam → prefix 16+3 = /19. Host = 2^(32−19) − 2 = 2^13 − 2 = 8190.'
+  },
+  {
+    id: 16,
+    level: 'C2 - Memahami',
+    question: 'Komputer terlanjur memakai alamat 169.254.x.x ketika gagal mendapat IP dari DHCP. Alamat ini dikenal sebagai…',
+    options: [
+      'A. Loopback',
+      'B. APIPA (Automatic Private IP Addressing)',
+      'C. Broadcast',
+      'D. Multicast',
+      'E. Default gateway'
+    ],
+    answer: 1,
+    explanation: '169.254.x.x adalah APIPA — dipakai otomatis oleh Windows saat DHCP tidak merespons, sehingga komputer tidak benar-benar tersambung internet.'
+  },
+  {
+    id: 17,
+    level: 'C2 - Memahami',
+    question: 'Alamat 224.0.0.1 termasuk kelas D yang digunakan untuk…',
+    options: [
+      'A. Loopback',
+      'B. Multicast',
+      'C. Broadcast terbatas',
+      'D. IP privat',
+      'E. Default route'
+    ],
+    answer: 1,
+    explanation: 'Kelas D (224.0.0.0–239.255.255.255) digunakan untuk multicast — mengirim satu paket ke sekelompok host, misalnya protokol routing OSPF.'
+  },
+  {
+    id: 18,
+    level: 'C3 - Menerapkan',
+    question: 'Pada jaringan /28, besar block (kelipatan) subnet adalah…',
+    options: [
+      'A. 4',
+      'B. 8',
+      'C. 16',
+      'D. 32',
+      'E. 64'
+    ],
+    answer: 2,
+    explanation: 'Block = 256 − mask oktet terakhir. /28 = 255.255.255.240 → block = 256 − 240 = 16, sehingga subnet dimulai dari kelipatan 16 (.0, .16, .32, dst).'
+  },
+  {
+    id: 19,
+    level: 'C4 - Menganalisis',
+    question: 'Wildcard dari subnet mask 255.255.255.224 adalah…',
+    options: [
+      'A. 0.0.0.15',
+      'B. 0.0.0.31',
+      'C. 0.0.0.63',
+      'D. 0.0.0.127',
+      'E. 0.0.0.255'
+    ],
+    answer: 1,
+    explanation: 'Wildcard = kebalikan bit mask (255 − nilai oktet). 224 → 255 − 224 = 31 → 0.0.0.31, dipakai ACL router untuk mencocokkan rentang alamat (blok /27).'
+  },
+  {
+    id: 20,
+    level: 'C6 - Menciptakan',
+    question: 'Rancang VLSM untuk 192.168.0.0/24 dengan kebutuhan 100 host, 50 host, dan 2 host. Alokasi prefix yang benar adalah…',
+    options: [
+      'A. 100→/25, 50→/26, 2→/30',
+      'B. 100→/26, 50→/26, 2→/26',
+      'C. 100→/24, 50→/24, 2→/24',
+      'D. 100→/28, 50→/29, 2→/30',
+      'E. 100→/30, 50→/30, 2→/30'
+    ],
+    answer: 0,
+    explanation: '100 host butuh 126 usable → /25; 50 host butuh 62 usable → /26; 2 host butuh 2 usable → /30. Alokasi dari kebutuhan terbesar.'
+  },
+  {
+    id: 21,
+    level: 'C2 - Memahami',
+    question: 'Perangkat/fungsi pada router yang menerjemahkan IP privat menjadi IP publik untuk akses internet adalah…',
+    options: [
+      'A. DHCP',
+      'B. NAT (Network Address Translation)',
+      'C. DNS',
+      'D. Firewall',
+      'E. Proxy'
+    ],
+    answer: 1,
+    explanation: 'NAT menerjemahkan alamat privat (mis. 192.168.1.10) menjadi IP publik saat data keluar ke internet, sehingga banyak perangkat privat bisa berbagi satu IP publik.'
+  },
+  {
+    id: 22,
+    level: 'C4 - Menganalisis',
+    question: 'Jumlah host usable pada jaringan /25 adalah…',
+    options: [
+      'A. 30',
+      'B. 62',
+      'C. 126',
+      'D. 254',
+      'E. 510'
+    ],
+    answer: 2,
+    explanation: 'Host = 2^(32−25) − 2 = 2^7 − 2 = 128 − 2 = 126 (network + broadcast dicadangkan).'
+  },
+  {
+    id: 23,
+    level: 'C3 - Menerapkan',
+    question: '192.168.1.0/24 ditulis dengan mask baru /26. Alamat network subnet ke-2 adalah…',
+    options: [
+      'A. 192.168.1.16',
+      'B. 192.168.1.32',
+      'C. 192.168.1.64',
+      'D. 192.168.1.128',
+      'E. 192.168.1.192'
+    ],
+    answer: 2,
+    explanation: '/26 → block 64, subnet kelipatan 64: .0 (1), .64 (2), .128 (3), .192 (4). Subnet ke-2 = 192.168.1.64, range .64–.127.'
+  },
+  {
+    id: 24,
+    level: 'C3 - Menerapkan',
+    question: 'Alamat 8.8.8.8 (DNS Google) termasuk…',
+    options: [
+      'A. IP privat',
+      'B. IP publik',
+      'C. Loopback',
+      'D. APIPA',
+      'E. Multicast'
+    ],
+    answer: 1,
+    explanation: '8.8.8.8 adalah IP publik yang dapat diakses dari internet. IP privat seperti 192.168.1.1 dan 10.0.0.1 hanya berlaku di jaringan lokal.'
+  },
+  {
+    id: 25,
+    level: 'C5 - Mengevaluasi',
+    question: 'Mengapa VLSM lebih hemat alamat IP dibanding subnetting dengan ukuran subnet seragam?',
+    options: [
+      'A. VLSM menghapus network dan broadcast',
+      'B. VLSM memberi subnet mask berbeda sesuai kebutuhan nyata tiap subnet',
+      'C. VLSM memakai IPv6',
+      'D. VLSM tidak butuh subnet mask',
+      'E. VLSM menggandakan jumlah host'
+    ],
+    answer: 1,
+    explanation: 'VLSM mengalokasikan prefix sesuai kebutuhan (60→/26, 30→/27, 15→/28, dst) sehingga tidak ada alamat terbuang besar seperti membagi rata 5×/27.'
   },
 ];

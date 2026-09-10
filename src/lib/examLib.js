@@ -136,6 +136,17 @@ export async function fetchExamResults() {
   return { data, error: error?.message };
 }
 
+/** Cek apakah NIS sudah pernah tercatat di server (untuk validasi identitas). */
+export async function findNisRecords(nis) {
+  if (!supabase) return { error: 'not-configured', data: [] };
+  const { data, error } = await supabase
+    .from('exam_results')
+    .select('modul,nilai,created_at')
+    .eq('nis', String(nis).trim())
+    .order('created_at', { ascending: false });
+  return { data, error: error?.message };
+}
+
 function clearQuizStorage(key) {
   localStorage.removeItem(`jarkomlab_${key}`);
   localStorage.removeItem(`jarkomlab_${key}_mode`);
