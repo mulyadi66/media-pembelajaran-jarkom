@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { Wifi, Plug, Settings, Info, AlertTriangle, Star, Cable, Network, ShieldCheck, Layers, Radio, Activity, Cpu } from 'lucide-react';
-import VideoEmbed from '../components/VideoEmbed';
 import SectionTracker from '../components/SectionTracker';
 import ModulPostTest from '../components/ModulPostTest';
 import { modul1PostTest } from '../data/modulPostTests';
@@ -228,7 +227,6 @@ export default function Modul1() {
           <strong>Jaket tidak terjepit:</strong> kabel mudah putus saat ditarik.<br/>
           <strong>Koneksi tidak stabil:</strong> buka pilinan kabel terlalu panjang atau crimping kurang kuat.</p>
         </div>
-        <VideoEmbed videoId="fPIM95D55h8" title="Praktik Membuat Kabel Crossover (Tutorial RJ-45)" />
         <ContohSoal data={[
           { soal: 'Tuliskan urutan warna pin 1–8 kabel UTP untuk standar T568B!',
             penyelesaian: '1 Oranye Putih, 2 Oranye, 3 Hijau Putih, 4 Biru, 5 Biru Putih, 6 Hijau, 7 Coklat Putih, 8 Coklat. Untuk T568A, posisi pasangan oranye dan hijau ditukar (1 Hijau Putih, 2 Hijau, 3 Oranye Putih, 6 Oranye).' },
@@ -329,10 +327,6 @@ export default function Modul1() {
           <li>Kabel straight-through untuk perangkat berbeda, crossover untuk perangkat sejenis.</li>
           <li>Pemilihan teknologi mengikuti kebutuhan: Gigabit Ethernet untuk kantor, Wi-Fi 5/6 untuk mobilitas, Fiber Optik untuk backbone.</li>
         </ul>
-      </MateriCard>
-
-      <MateriCard icon={Wifi} title="Video Pembelajaran">
-        <VideoEmbed videoId="LiMdHeaS4zY" title="Network Fundamentals - Peralatan Jaringan (Router, Switch, Hub)" />
       </MateriCard>
 
       <ModulPostTest

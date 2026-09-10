@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { Projector, Star, Minus, Circle, GitBranch, Network, Info, Calculator } from 'lucide-react';
-import VideoEmbed from '../components/VideoEmbed';
 import SectionTracker from '../components/SectionTracker';
 import ModulPostTest from '../components/ModulPostTest';
 import { modul2PostTest } from '../data/modulPostTests';
@@ -302,11 +301,6 @@ export default function Modul2() {
           'Jalankan simulasi di atas: pilih setiap topologi (star, bus, ring, mesh, tree, hybrid) dan amati cara node saling terhubung. Catat perbedaan pola kabel yang paling jelas.',
           'Pada simulasi mesh, hitung jumlah koneksi antar node yang terlihat, lalu cocokkan dengan rumus n(n−1)/2!',
         ]} />
-      </MateriCard>
-
-      <MateriCard icon={Projector} title="Video Pembelajaran">
-        <VideoEmbed videoId="QGykYWbdf0A" title="Topologi Jaringan - Bus, Ring, Star, Mesh, Tree" />
-        <VideoEmbed videoId="7Ut4u8qVwRU" title="Topologi Jaringan Lengkap (Star, Bus, Ring, Mesh, Wireless) - Bahasa Indonesia" />
       </MateriCard>
 
       <ModulPostTest

@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { Globe, Scissors, Code, Sliders, Calculator, AlertTriangle, Star } from 'lucide-react';
-import VideoEmbed from '../components/VideoEmbed';
 import SectionTracker from '../components/SectionTracker';
 import ModulPostTest from '../components/ModulPostTest';
 import { modul3PostTest } from '../data/modulPostTests';
@@ -122,7 +121,6 @@ export default function Modul3() {
           <strong>255.255.255.255</strong> — broadcast seluruh jaringan lokal.<br/>
           <strong>169.254.x.x</strong> — APIPA, dipakai otomatis saat DHCP gagal.</p>
         </div>
-        <VideoEmbed videoId="ZxgytoBVEaE" title="Pembagian Kelas IP Address (A, B, C) - Bahasa Indonesia" />
         <ContohSoal data={[
           { soal: 'Tentukan kelas dari IP address berikut: 10.0.0.5, 172.16.10.1, 192.168.1.100, dan 224.0.0.1!',
             penyelesaian: '10.0.0.5 → Kelas A (oktet pertama 1–126). 172.16.10.1 → Kelas B (128–191). 192.168.1.100 → Kelas C (192–223). 224.0.0.1 → Kelas D (224–239, khusus multicast).' },
@@ -173,7 +171,6 @@ export default function Modul3() {
             </tbody>
           </table>
         </div>
-        <VideoEmbed videoId="VVd5xkTnPZ0" title="Praktik IP Address & Subnetting di Cisco Packet Tracer" />
         <ContohSoal data={[
           { soal: 'Bagi jaringan 192.168.1.0/24 menjadi 4 subnet yang sama besar! Tentukan prefix baru, mask, jumlah host per subnet, dan rincian subnet pertama.',
             penyelesaian: [
@@ -252,7 +249,6 @@ export default function Modul3() {
           <strong>30 host</strong> → butuh 30 usable → <strong>/27</strong> → 192.168.1.64 – .95<br/>
           <strong>10 host</strong> → butuh 14 usable → <strong>/28</strong> → 192.168.1.96 – .111</p>
         </div>
-        <VideoEmbed videoId="N7BEDtZ7G4g" title="VLSM (Variable Length Subnet Mask) - Solved Problem" />
         <ContohSoal data={[
           { soal: 'Rancang VLSM untuk jaringan 192.168.1.0/24 dengan kebutuhan 60 host, 30 host, dan 10 host!',
             penyelesaian: [
@@ -371,10 +367,6 @@ export default function Modul3() {
           'Rancang skema VLSM untuk 3 divisi (120, 60, 20 host) dari 192.168.50.0/24, lalu buktikan dengan kalkulator bahwa total alamat mencukupi!',
           'Pada hasil VLSM untuk 100, 50, 25, dan 2 host, perhatikan subnet untuk 2 host. Berapa prefix yang dipilih kalkulator dan berapa alamat yang terbuang (jika ada)?',
         ]} />
-      </MateriCard>
-
-      <MateriCard icon={Globe} title="Video Pembelajaran">
-        <VideoEmbed videoId="9GtL8dW8rYY" title="IP Subnetting Lengkap - Binary, Class, VLSM & CIDR" />
       </MateriCard>
 
       <ModulPostTest
