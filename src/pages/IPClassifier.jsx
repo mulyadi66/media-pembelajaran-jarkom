@@ -130,7 +130,7 @@ export default function IPClassifier() {
             Jawaban benar: <strong>{correctCount}</strong> dari {rounds.length} ronde
           </p>
           <p style={{ color: 'var(--text-light)' }}>
-            10 poin per tebakan benar + bonus streak beruntun (2/4/6). Skor maksimal: <strong>220</strong>
+            10 poin per tebakan benar + bonus streak beruntun (2/4/6). Skor maksimal: <strong>{rounds.length * 10 + 2 + 4 + 6 * Math.max(0, rounds.length - 2)}</strong>
           </p>
           <p style={{ color: 'var(--text-light)', fontSize: '0.9rem' }}>
             Skor terbaik: <strong>{best}</strong>

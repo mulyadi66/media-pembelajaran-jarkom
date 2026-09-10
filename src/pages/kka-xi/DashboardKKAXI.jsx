@@ -8,7 +8,11 @@ import ConfirmModal from '../../components/ConfirmModal';
 export default function DashboardKKAXI() {
   const { modulesRead, scores, resetAll } = useApp();
   const [showReset, setShowReset] = useState(false);
-  const earnedBadges = checkBadges(scores, modulesRead);
+  const earnedBadges = checkBadges(scores, modulesRead, {
+    pretestKey: 'kka_xi_pretest',
+    posttestKey: 'kka_xi_posttest',
+    moduleIds: ['kka_xi_modul1', 'kka_xi_modul2', 'kka_xi_modul3', 'kka_xi_modul4'],
+  });
 
   const modules = [
     { to: '/kka-xi/modul1', icon: Globe, title: 'Menyaring Fakta, Identitas Digital & Kolaborasi Konten', desc: 'Verifikasi hoaks, reputasi online, dan kreasi konten digital', color: ['#06b6d4', '#0891b2'] },

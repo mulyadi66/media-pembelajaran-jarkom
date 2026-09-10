@@ -72,7 +72,7 @@ export default function OTDRTraceReader() {
     if (selectedTool !== 'marker') return;
     const rect = e.currentTarget.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * VIEW_W;
-    const dist = ((x - 30) / (VIEW_W - 60)) * MAX_DIST;
+    const dist = (x / VIEW_W) * MAX_DIST;
     if (dist < 0 || dist > MAX_DIST) return;
     setMarkers(m => {
       const existing = m.find(mk => Math.abs(mk.dist - dist) < 0.5);

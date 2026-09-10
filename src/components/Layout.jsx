@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { NavLink, Outlet, useLocation } from 'react-router-dom';
+import { NavLink, Link, Outlet, useLocation } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import DarkModeToggle from './DarkModeToggle';
 import StreakCounter from './StreakCounter';
@@ -205,7 +205,6 @@ const subjects = {
       '/mpk2/modul3': 'Modul 3: Instalasi & Pengujian Perangkat Nirkabel',
       '/mpk2/modul4': 'Modul 4: Voice over Internet Protocol (VoIP)',
       '/mpk2/modul5': 'Modul 5: Jaringan Fiber Optik',
-      '/mpk2/topologi-arsitektur': 'Topologi & Arsitektur Jaringan',
       '/mpk2/flashcard': 'Flashcard Interaktif MPK 2',
       '/mpk2/challenge': 'Latihan Cepat MPK 2',
       '/mpk2/kasus': 'Studi Kasus MPK 2',
@@ -363,9 +362,9 @@ export default function Layout() {
         {isDashboard ? null : (
           <div className="page-header">
             <div className="breadcrumb">
-              <NavLink to="/">Portal</NavLink>
+              <Link to="/">Portal</Link>
               <span className="sep">/</span>
-              <NavLink to={prefix}>{label}</NavLink>
+              <Link to={prefix}>{label}</Link>
               {path !== prefix && (
                 <><span className="sep">/</span><span>{titles[path] || ''}</span></>
               )}

@@ -8,7 +8,11 @@ import ConfirmModal from '../../components/ConfirmModal';
 export default function DashboardDKK() {
   const { modulesRead, scores, resetAll } = useApp();
   const [showReset, setShowReset] = useState(false);
-  const earnedBadges = checkBadges(scores, modulesRead);
+  const earnedBadges = checkBadges(scores, modulesRead, {
+    pretestKey: 'dkk_pretest',
+    posttestKey: 'dkk_posttest',
+    moduleIds: ['dkk_elemen1', 'dkk_elemen2', 'dkk_elemen3', 'dkk_elemen4'],
+  });
 
   const elements = [
     { to: '/dkk/elemen1', icon: Globe, title: 'Wawasan Dunia Kerja TJKT', desc: 'Profesi, sertifikasi, dan peluang karir', color: ['#06b6d4', '#0891b2'] },

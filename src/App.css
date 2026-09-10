@@ -1070,6 +1070,42 @@ a { text-decoration: none; color: inherit; }
 
 .dd-check-btn { margin-top: 16px; }
 
+.drag-drop-ips { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.drag-ip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 16px; border-radius: 8px;
+  font-family: 'Courier New', monospace; font-size: 0.85rem; font-weight: 600;
+  border: 2px dashed var(--primary); border-radius: 8px; background: var(--bg);
+  color: var(--primary); cursor: grab; user-select: none; touch-action: manipulation;
+  transition: all 0.15s;
+}
+
+.drag-ip:hover { background: var(--primary); color: white; border-style: solid; }
+.drag-ip.selected { background: var(--primary); color: white; border-style: solid; transform: scale(1.04); box-shadow: 0 2px 8px rgba(99,102,241,0.35); }
+.drag-ip.correct { border-color: var(--success); color: var(--success); background: var(--bg); }
+.drag-ip.wrong { border-color: var(--danger); color: var(--danger); background: var(--bg); }
+
+.drag-ip.placed { cursor: default; border-style: solid; }
+.drag-ip.placed.correct { background: #ecfdf5; }
+.drag-ip.placed.wrong { background: #fef2f2; }
+[data-theme="dark"] .drag-ip.placed.correct { background: #064e3b33; }
+[data-theme="dark"] .drag-ip.placed.wrong { background: #7f1d1d33; }
+
+.drop-zone {
+  min-height: 88px; padding: 12px; border: 2px dashed var(--border);
+  border-radius: 12px; background: var(--bg); transition: all 0.2s;
+  touch-action: manipulation;
+}
+
+.drop-zone.active { border-color: var(--primary); }
+.drop-zone.over, .drop-zone:hover.active { border-color: var(--primary); background: #eef2ff; }
+.drop-zone.has-item { border-style: solid; }
+[data-theme="dark"] .drop-zone.over, [data-theme="dark"] .drop-zone:hover.active { background: #312e81; }
+
+.drop-zone-header { display: flex; justify-content: space-between; align-items: center; }
+.drop-zone-items { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+
 /* ========== QUIZ MODE SELECT ========== */
 .mode-select { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
 

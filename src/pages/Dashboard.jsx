@@ -8,7 +8,7 @@ import ConfirmModal from '../components/ConfirmModal';
 export default function Dashboard() {
   const { modulesRead, scores, resetAll } = useApp();
   const [showReset, setShowReset] = useState(false);
-  const earnedBadges = checkBadges(scores, modulesRead);
+  const earnedBadges = checkBadges(scores, modulesRead, { moduleIds: ['modul1', 'modul2', 'modul3', 'osi-layer'] });
 
   const modules = [
     { to: '/mpk1/modul1', icon: Server, title: 'Peralatan Jaringan', desc: 'Kebutuhan teknis, peralatan, dan teknologi', color: ['#667eea', '#764ba2'] },

@@ -8,7 +8,11 @@ import ConfirmModal from '../../components/ConfirmModal';
 export default function DashboardMPK2() {
   const { modulesRead, scores, resetAll } = useApp();
   const [showReset, setShowReset] = useState(false);
-  const earnedBadges = checkBadges(scores, modulesRead);
+  const earnedBadges = checkBadges(scores, modulesRead, {
+    pretestKey: 'mpk2_pretest',
+    posttestKey: 'mpk2_posttest',
+    moduleIds: ['mpk2_modul1', 'mpk2_modul2', 'mpk2_modul3', 'mpk2_modul4', 'mpk2_modul5'],
+  });
 
   const moduls = [
     { to: '/mpk2/modul1', icon: Cable, title: 'Instalasi & Perawatan Jaringan', desc: 'Tools, crimping, instalasi nirkabel, troubleshooting', color: ['#06b6d4', '#0891b2'] },

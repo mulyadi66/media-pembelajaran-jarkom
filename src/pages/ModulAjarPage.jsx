@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef } from 'react';
+import { useState, useMemo, useRef, createContext, useContext } from 'react';
 import { Printer, FileDown, ChevronDown, ChevronUp, BookOpen, CheckCircle, Users, Target, Lightbulb, ClipboardList, Award, ArrowRight, Layers } from 'lucide-react';
 import { modulAjar } from '../data/modulAjar';
 
@@ -41,20 +41,24 @@ const MODUL_NAMES = {
 
 const m = modulAjar;
 
+const ExportCtx = createContext(false);
+
 function Section({ id, title, icon: Icon, children, defaultOpen }) {
+  const forceOpen = useContext(ExportCtx);
   const [open, setOpen] = useState(defaultOpen || false);
+  const isOpen = forceOpen || open;
   const bodyId = `ma-body-${id}`;
   return (
     <div className="ma-section" id={`ma-${id}`}>
       <div className="ma-section-header" onClick={() => setOpen(!open)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setOpen(!open); } }}
-        role="button" tabIndex={0} aria-expanded={open} aria-controls={bodyId} aria-label={title}>
+        role="button" tabIndex={0} aria-expanded={isOpen} aria-controls={bodyId} aria-label={title}>
         <div className="ma-section-title">
           <Icon size={18} aria-hidden="true" />
           <span>{title}</span>
         </div>
-        {open ? <ChevronUp size={18} aria-hidden="true" /> : <ChevronDown size={18} aria-hidden="true" />}
+        {isOpen ? <ChevronUp size={18} aria-hidden="true" /> : <ChevronDown size={18} aria-hidden="true" />}
       </div>
-      {open && <div className="ma-section-body" id={bodyId}>{children}</div>}
+      {isOpen && <div className="ma-section-body" id={bodyId}>{children}</div>}
     </div>
   );
 }
@@ -75,10 +79,21 @@ export default function ModulAjarPage() {
   const [modulFilter, setModulFilter] = useState('all');
   const contentRef = useRef(null);
   const [pdfLoading, setPdfLoading] = useState(false);
+  const [exporting, setExporting] = useState(false);
+
+  const handlePrint = () => {
+    setExporting(true);
+    setTimeout(() => {
+      window.print();
+      setExporting(false);
+    }, 100);
+  };
 
   const downloadPDF = async () => {
     setPdfLoading(true);
+    setExporting(true);
     try {
+      await new Promise(r => setTimeout(r, 100));
       const html2canvas = (await import('html2canvas')).default;
       const { jsPDF } = await import('jspdf');
       const el = contentRef.current;
@@ -113,6 +128,7 @@ export default function ModulAjarPage() {
       console.error('PDF generation failed:', err);
     } finally {
       setPdfLoading(false);
+      setExporting(false);
     }
   };
 
@@ -144,7 +160,7 @@ export default function ModulAjarPage() {
             </li>
           ))}
         </ul>
-        <button className="btn btn-secondary ma-print-btn" onClick={() => window.print()}>
+        <button className="btn btn-secondary ma-print-btn" onClick={handlePrint}>
           <Printer size={14} /> Cetak
         </button>
         <button className="btn btn-primary ma-print-btn" onClick={downloadPDF} disabled={pdfLoading}>
@@ -153,6 +169,7 @@ export default function ModulAjarPage() {
       </nav>
 
         {/* Content */}
+      <ExportCtx.Provider value={exporting}>
       <div className="ma-content" ref={contentRef}>
         {/* Modul Filter Tabs */}
         <div className="ma-modul-tabs" role="tablist" aria-label="Filter modul">
@@ -384,6 +401,7 @@ export default function ModulAjarPage() {
           <p>&copy; 2026 TJKT SMKN 2 KUNINGAN</p>
         </div>
       </div>
+      </ExportCtx.Provider>
     </div>
   );
 }

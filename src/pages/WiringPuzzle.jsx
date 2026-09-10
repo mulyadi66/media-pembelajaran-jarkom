@@ -296,8 +296,7 @@ export default function WiringPuzzle() {
           {(status === 'wrong' || status === 'timeout') && (
             <div className="cb-feedback wrong">
               {status === 'timeout' ? (
-                <><AlarmClock size={16} style={{ verticalAlign: 'middle', marginRight: 6 }} /><strong>Waktu habis!</strong> Susun ulang dan coba lagi.</>
-              ) : (
+                <><AlarmClock size={16} style={{ verticalAlign: 'middle', marginRight: 6 }} /><strong>Waktu habis!</strong> Klik "Ulang Misi" untuk mencoba kembali.</>              ) : (
                 <>
                   <Lightbulb size={16} style={{ verticalAlign: 'middle', marginRight: 6 }} />
                   <strong>Belum tepat.</strong> Periksa kembali urutan pin-nya.

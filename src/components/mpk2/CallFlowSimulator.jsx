@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 const callSteps = [
   { name: 'Idle', desc: 'Telepon dalam keadaan diam (on-hook)', icon: '☎️' },
@@ -15,6 +15,8 @@ export default function CallFlowSimulator() {
   const [currentStep, setCurrentStep] = useState(0);
   const [autoPlaying, setAutoPlaying] = useState(false);
   const timerRef = useRef(null);
+
+  useEffect(() => () => clearInterval(timerRef.current), []);
 
   const startAutoPlay = () => {
     setAutoPlaying(true);

@@ -67,9 +67,9 @@ export default function DragDropSubnet() {
   const [results, setResults] = useState({});
 
   const challenge = CHALLENGES[challengeIdx];
-  const availableIPs = challenge.ips.filter((_, i) => !Object.values(placed).flat().includes(i));
+  const placedAll = Object.values(placed).flat();
 
-  const handleDragStart = (ipIdx) => setDraggedIP(ipIdx);
+  const handleDragStart = (ipIdx) => setDraggedIP(prev => prev === ipIdx ? null : ipIdx);
 
   const handleDrop = useCallback((subnetIdx) => {
     if (submitted || draggedIP === null) return;
@@ -145,13 +145,15 @@ export default function DragDropSubnet() {
         <div className="drag-drop-ips">
           <h4 style={{ fontSize: '0.85rem', color: 'var(--text-light)', marginBottom: 8 }}>IP Addresses:</h4>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-            {availableIPs.map((ipData) => {
-              const origIdx = challenge.ips.indexOf(ipData);
+            {challenge.ips.map((ipData, origIdx) => {
+              if (placedAll.includes(origIdx)) return null;
+              const isSelected = draggedIP === origIdx;
               return (
                 <div key={origIdx}
-                  className={`drag-ip ${submitted ? (results[origIdx] ? 'correct' : 'wrong') : ''}`}
+                  className={`drag-ip ${isSelected ? 'selected' : ''} ${submitted ? (results[origIdx] ? 'correct' : 'wrong') : ''}`}
                   draggable={!submitted}
-                  onDragStart={() => handleDragStart(origIdx)}>
+                  onDragStart={() => handleDragStart(origIdx)}
+                  onClick={() => { if (!submitted) handleDragStart(origIdx); }}>
                   <span>{ipData.ip}</span>
                   {submitted && (
                     results[origIdx]
@@ -161,7 +163,7 @@ export default function DragDropSubnet() {
                 </div>
               );
             })}
-            {availableIPs.length === 0 && !submitted && (
+            {placedAll.length === challenge.ips.length && !submitted && (
               <p style={{ color: 'var(--text-lighter)', fontSize: '0.85rem' }}>Semua IP sudah di-drag ke subnet!</p>
             )}
           </div>
@@ -171,10 +173,11 @@ export default function DragDropSubnet() {
         <div className="drag-drop-zones" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 16, marginTop: 16 }}>
           {challenge.subnets.map((subnet, sIdx) => (
             <div key={sIdx}
-              className={`drop-zone ${draggedIP !== null ? 'active' : ''}`}
+              className={`drop-zone ${draggedIP !== null ? 'active' : ''} ${(placed[sIdx] || []).length ? 'has-item' : ''}`}
               onDragOver={e => { e.preventDefault(); e.currentTarget.classList.add('over'); }}
               onDragLeave={e => e.currentTarget.classList.remove('over')}
-              onDrop={e => { e.currentTarget.classList.remove('over'); handleDrop(sIdx); }}>
+              onDrop={e => { e.preventDefault(); e.currentTarget.classList.remove('over'); handleDrop(sIdx); }}
+              onClick={() => { if (draggedIP !== null) handleDrop(sIdx); }}>
               <div className="drop-zone-header">
                 <strong>{subnet.name}</strong>
                 <span style={{ fontSize: '0.75rem', color: 'var(--text-lighter)' }}>{subnet.cidr}</span>
@@ -186,7 +189,7 @@ export default function DragDropSubnet() {
                   return (
                     <div key={ipIdx}
                       className={`drag-ip placed ${submitted ? (results[ipIdx] ? 'correct' : 'wrong') : ''}`}
-                      onClick={() => handleRemove(sIdx, ipIdx)}>
+                      onClick={(e) => { e.stopPropagation(); if (!submitted) handleRemove(sIdx, ipIdx); }}>
                       <span>{ipData.ip}</span>
                       {submitted
                         ? (results[ipIdx] ? <CheckCircle size={14} /> : <XCircle size={14} />)

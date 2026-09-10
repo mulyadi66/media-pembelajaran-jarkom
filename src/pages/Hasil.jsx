@@ -6,14 +6,16 @@ import Leaderboard from '../components/Leaderboard';
 import { Trash2, Award, TrendingUp } from 'lucide-react';
 
 export default function Hasil() {
+  const MODULE_IDS = ['modul1', 'modul2', 'modul3', 'osi-layer'];
   const { scores, modulesRead, resetAll, studentName, saveStudentName } = useApp();
   const pretestScore = scores.pretest || 0;
   const posttestScore = scores.posttest || 0;
   const pretestAnswered = Object.keys(JSON.parse(localStorage.getItem('jarkomlab_pretestAnswers') || '{}')).length;
   const posttestAnswered = Object.keys(JSON.parse(localStorage.getItem('jarkomlab_posttestAnswers') || '{}')).length;
   const growth = posttestScore > 0 && pretestScore > 0 ? posttestScore - pretestScore : null;
-  const earnedBadges = checkBadges(scores, modulesRead);
+  const earnedBadges = checkBadges(scores, modulesRead, { moduleIds: MODULE_IDS });
   const passed = posttestScore >= 70;
+  const readCount = MODULE_IDS.filter(id => modulesRead[id]).length;
 
   return (
     <div className="content-section">
@@ -65,10 +67,10 @@ export default function Hasil() {
         <div style={{marginTop: 16}}>
           <div style={{display:'flex',justifyContent:'space-between',marginBottom:8}}>
             <span style={{fontWeight:600}}>Modul Dibaca</span>
-            <span style={{fontWeight:700,color:'var(--primary)'}}>{Object.values(modulesRead).filter(Boolean).length}/3</span>
+            <span style={{fontWeight:700,color:'var(--primary)'}}>{readCount}/{MODULE_IDS.length}</span>
           </div>
           <div className="progress-bar" style={{height:10}}>
-            <div className="progress-fill" style={{width: (Object.values(modulesRead).filter(Boolean).length / 3 * 100) + '%'}} />
+            <div className="progress-fill" style={{width: (readCount / MODULE_IDS.length * 100) + '%'}} />
           </div>
         </div>
       </div>

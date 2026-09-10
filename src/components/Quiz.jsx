@@ -11,11 +11,23 @@ function shuffleArray(arr) {
 }
 
 export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, mode: initialMode }) {
-  const [mode, setMode] = useState(initialMode || null); // null = not chosen, 'practice', 'exam'
-  const [shuffledQs] = useState(() => shuffleArray(questions));
+  const [mode, setMode] = useState(() => localStorage.getItem(`jarkomlab_${storageKey}_mode`) || initialMode || null);
+  const [shuffledQs] = useState(() => {
+    if (localStorage.getItem(`jarkomlab_${storageKey}_mode`) === 'exam') {
+      const storedOrder = localStorage.getItem(`jarkomlab_${storageKey}_order`);
+      if (storedOrder) {
+        try {
+          const order = JSON.parse(storedOrder);
+          if (Array.isArray(order) && order.length === questions.length) return order.map(i => questions[i]);
+        } catch { /* order korup, acak ulang */ }
+      }
+    }
+    return shuffleArray(questions);
+  });
   const [answers, setAnswers] = useState(() => {
     const saved = localStorage.getItem(`jarkomlab_${storageKey}`);
-    return saved ? JSON.parse(saved) : {};
+    if (!saved) return {};
+    try { return JSON.parse(saved) || {}; } catch { return {}; }
   });
   const [currentIdx, setCurrentIdx] = useState(0);
   const [submitted, setSubmitted] = useState(() => {
@@ -37,8 +49,8 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
     let correct = 0;
     qs.forEach((q, i) => { if (answers[i] === q.answer) correct++; });
     const score = Math.round((correct / total) * 100);
-    onScoreSubmit(score);
-  }, [answers, qs, total, onScoreSubmit, storageKey]);
+    if (mode === 'exam') onScoreSubmit(score);
+  }, [answers, qs, total, onScoreSubmit, storageKey, mode]);
 
   useEffect(() => {
     if (submitted || !timeLimit || mode !== 'exam') return;
@@ -55,6 +67,16 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
     localStorage.setItem(`jarkomlab_${storageKey}`, JSON.stringify(answers));
   }, [answers, storageKey]);
 
+  useEffect(() => {
+    localStorage.setItem(`jarkomlab_${storageKey}_mode`, mode || '');
+  }, [mode, storageKey]);
+
+  useEffect(() => {
+    if (mode === 'exam' && !submitted) {
+      localStorage.setItem(`jarkomlab_${storageKey}_order`, JSON.stringify(shuffledQs.map(q => questions.indexOf(q))));
+    }
+  }, [mode, submitted, storageKey, shuffledQs, questions]);
+
   const selectOption = (idx) => {
     if (submitted) return;
     setAnswers(prev => ({ ...prev, [currentIdx]: idx }));
@@ -66,6 +88,8 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
   const handleRetry = () => {
     localStorage.removeItem(`jarkomlab_${storageKey}`);
     localStorage.removeItem(`jarkomlab_${storageKey}_submitted`);
+    localStorage.removeItem(`jarkomlab_${storageKey}_mode`);
+    localStorage.removeItem(`jarkomlab_${storageKey}_order`);
     setAnswers({});
     setCurrentIdx(0);
     setSubmitted(false);

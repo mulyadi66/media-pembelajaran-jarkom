@@ -24,12 +24,20 @@ export default function DeviceSimulator() {
   const canvasRef = useRef(null);
   const dragRef = useRef(null);
 
+  const nextPcIp = () => {
+    const used = new Set(devices.map(d => Number(d.ip.split('.').pop())));
+    for (let n = 100; n < 255; n++) {
+      if (!used.has(n)) return `${baseNetwork}.${n}`;
+    }
+    return `${baseNetwork}.254`;
+  };
+
   const addDevice = (type) => {
     const dev = DEVICE_TYPES.find(d => d.type === type);
     const ip = type === 'router' ? `${baseNetwork}.1` :
       type === 'ap' ? `${baseNetwork}.2` :
       type === 'server' ? `${baseNetwork}.10` :
-      `${baseNetwork}.${100 + devices.length}`;
+      nextPcIp();
     setDevices(prev => [...prev, {
       id: Date.now(),
       type,

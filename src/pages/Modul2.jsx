@@ -166,12 +166,24 @@ export default function Modul2() {
       </MateriCard>
 
       {[
-        { title: '2.2 Topologi Bus', pros: 'Murah, hemat kabel, cocok untuk jaringan kecil', cons: 'Satu kabel putus = seluruh jaringan mati, sulit debugging', use: 'Jaringan kecil sementara', proto: 'CSMA/CD', protoDesc: 'CSMA/CD (Carrier Sense Multiple Access with Collision Detection): setiap node mendengarkan jalur terlebih dahulu sebelum mengirim. Jika dua node mengirim bersamaan, terjadi tabrakan (collision), lalu kedua node berhenti dan mengirim ulang setelah jeda acak. Inilah mengapa semakin banyak node, kinerja bus semakin menurun.' },
-        { title: '2.3 Topologi Star', pros: 'Mudah dikelola, satu kabel rusak hanya 1 node, mudah ditambah', cons: 'Switch rusak = semua node terganggu, butuh lebih banyak kabel', use: 'LAN kantor, sekolah, warnet' },
-        { title: '2.4 Topologi Ring', pros: 'Tidak ada tabrakan data (token passing), performa stabil', cons: 'Satu node rusak bisa memutus jaringan, sulit diubah', use: 'Token Ring, FDDI', proto: 'Token Passing', protoDesc: 'Token passing menggunakan token (paket data khusus) yang beredar dari node ke node searah lingkaran. Hanya node yang memegang token yang berhak mengirim data, sehingga tidak pernah ada dua node mengirim bersamaan dan tabrakan data tidak mungkin terjadi.' },
-        { title: '2.5 Topologi Mesh', pros: 'Sangat handal, redundant path, keamanan tinggi', cons: 'Sangat mahal, banyak kabel, kompleks', use: 'Backbone internet, WAN, jaringan kritis' },
-        { title: '2.6 Topologi Tree', pros: 'Mudah berkembang, terstruktur, cocok untuk jaringan besar', cons: 'Root node rusak = seluruh jaringan mati', use: 'Gedung bertingkat, universitas' },
-        { title: '2.7 Topologi Hybrid', pros: 'Fleksibel, scalable, menggabungkan kelebihan beberapa topologi', cons: 'Desain kompleks, biaya tinggi', use: 'Internet, WAN, perusahaan besar' },
+        { title: '2.2 Topologi Bus', desc: 'Semua node terhubung pada satu kabel utama (backbone) dengan terminator di kedua ujung. Data menyebar sepanjang kabel dan hanya node dengan alamat yang sesuai yang menerimanya.',
+          pros: 'Murah, hemat kabel, cocok untuk jaringan kecil', cons: 'Satu kabel putus = seluruh jaringan mati, sulit debugging', use: 'Jaringan kecil sementara', proto: 'CSMA/CD', protoDesc: 'CSMA/CD (Carrier Sense Multiple Access with Collision Detection): setiap node mendengarkan jalur terlebih dahulu sebelum mengirim. Jika dua node mengirim bersamaan, terjadi tabrakan (collision), lalu kedua node berhenti dan mengirim ulang setelah jeda acak. Inilah mengapa semakin banyak node, kinerja bus semakin menurun.',
+          tugas: 'Gambarkan topologi bus dengan 5 PC dan 2 terminator, lalu jelaskan apa yang terjadi jika terminator di salah satu ujung dilepas!' },
+        { title: '2.3 Topologi Star', desc: 'Semua node terhubung langsung ke perangkat pusat (switch/hub). Setiap node memiliki jalur kabel sendiri menuju pusat sehingga kegagalan satu kabel tidak memengaruhi node lain.',
+          pros: 'Mudah dikelola, satu kabel rusak hanya 1 node, mudah ditambah', cons: 'Switch rusak = semua node terganggu, butuh lebih banyak kabel', use: 'LAN kantor, sekolah, warnet',
+          tugas: 'Gambarkan topologi star dengan 6 PC di bukumu, lalu hitung panjang kabel yang dibutuhkan jika tiap PC berjarak 3 meter dari switch!' },
+        { title: '2.4 Topologi Ring', desc: 'Setiap node terhubung ke dua node lain membentuk lingkaran tertutup. Data bergerak searah jarum jam dari node ke node hingga sampai tujuan (menggunakan token passing).',
+          pros: 'Tidak ada tabrakan data (token passing), performa stabil', cons: 'Satu node rusak bisa memutus jaringan, sulit diubah', use: 'Token Ring, FDDI', proto: 'Token Passing', protoDesc: 'Token passing menggunakan token (paket data khusus) yang beredar dari node ke node searah lingkaran. Hanya node yang memegang token yang berhak mengirim data, sehingga tidak pernah ada dua node mengirim bersamaan dan tabrakan data tidak mungkin terjadi.',
+          tugas: 'Pada topologi ring, mengapa token passing membuat data tidak pernah bertabrakan? Jelaskan dengan bahasamu sendiri!' },
+        { title: '2.5 Topologi Mesh', desc: 'Setiap node terhubung langsung ke semua node lain (full mesh) atau hanya ke node yang dianggap penting (partial mesh). Menyediakan banyak jalur cadangan.',
+          pros: 'Sangat handal, redundant path, keamanan tinggi', cons: 'Sangat mahal, banyak kabel, kompleks', use: 'Backbone internet, WAN, jaringan kritis',
+          tugas: 'Hitung jumlah kabel full mesh untuk 6 node dengan rumus n(n−1)/2, lalu bandingkan dengan kebutuhan kabel topologi star untuk 6 node!' },
+        { title: '2.6 Topologi Tree', desc: 'Hierarki topologi star berlapis: satu node root di puncak bercabang ke beberapa switch, lalu tiap switch menghubungkan node-node di bawahnya.',
+          pros: 'Mudah berkembang, terstruktur, cocok untuk jaringan besar', cons: 'Root node rusak = seluruh jaringan mati', use: 'Gedung bertingkat, universitas',
+          tugas: 'Buat sketsa topologi tree untuk gedung 2 lantai (tiap lantai 1 switch + 4 PC) dan tandai titik single point of failure-nya!' },
+        { title: '2.7 Topologi Hybrid', desc: 'Gabungan dua atau lebih topologi berbeda dalam satu jaringan, misalnya star-to-star, star-to-bus, atau ring-to-mesh. Umum dipakai di perusahaan besar.',
+          pros: 'Fleksibel, scalable, menggabungkan kelebihan beberapa topologi', cons: 'Desain kompleks, biaya tinggi', use: 'Internet, WAN, perusahaan besar',
+          tugas: 'Desain topologi hybrid untuk sekolah: 2 gedung (masing-masing star) yang dihubungkan dengan backbone bus antar gedung. Gambarkan dan beri label!' },
       ].map((t, i) => (
         <MateriCard key={i} icon={Projector} title={t.title}>
           <p>{t.desc}</p>

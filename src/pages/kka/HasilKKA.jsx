@@ -6,14 +6,20 @@ import Leaderboard from '../../components/Leaderboard';
 import { Trash2, Award, TrendingUp } from 'lucide-react';
 
 export default function HasilKKA() {
+  const MODULE_IDS = ['kka_elemen1', 'kka_elemen2', 'kka_elemen3', 'kka_elemen4', 'kka_elemen5'];
   const { scores, modulesRead, resetAll, studentName, saveStudentName } = useApp();
   const pretestScore = scores.kka_pretest || 0;
   const posttestScore = scores.kka_posttest || 0;
   const pretestAnswered = Object.keys(JSON.parse(localStorage.getItem('jarkomlab_kka_pretestAnswers') || '{}')).length;
   const posttestAnswered = Object.keys(JSON.parse(localStorage.getItem('jarkomlab_kka_posttestAnswers') || '{}')).length;
   const growth = posttestScore > 0 && pretestScore > 0 ? posttestScore - pretestScore : null;
-  const earnedBadges = checkBadges(scores, modulesRead);
+  const earnedBadges = checkBadges(scores, modulesRead, {
+    pretestKey: 'kka_pretest',
+    posttestKey: 'kka_posttest',
+    moduleIds: MODULE_IDS,
+  });
   const passed = posttestScore >= 70;
+  const readCount = MODULE_IDS.filter(id => modulesRead[id]).length;
 
   return (
     <div className="content-section">
@@ -60,10 +66,10 @@ export default function HasilKKA() {
         <div style={{marginTop: 16}}>
           <div style={{display:'flex',justifyContent:'space-between',marginBottom:8}}>
             <span style={{fontWeight:600}}>Elemen Dibaca</span>
-            <span style={{fontWeight:700,color:'var(--primary)'}}>{Object.values(modulesRead).filter(Boolean).length}/5</span>
+            <span style={{fontWeight:700,color:'var(--primary)'}}>{readCount}/{MODULE_IDS.length}</span>
           </div>
           <div className="progress-bar" style={{height:10}}>
-            <div className="progress-fill" style={{width: (Object.values(modulesRead).filter(Boolean).length / 5 * 100) + '%'}} />
+            <div className="progress-fill" style={{width: (readCount / MODULE_IDS.length * 100) + '%'}} />
           </div>
         </div>
       </div>

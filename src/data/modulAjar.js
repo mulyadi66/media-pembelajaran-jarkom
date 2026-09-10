@@ -7,7 +7,7 @@ export const modulAjar = {
     kelas: 'XI TJKT',
     semester: 'Ganjil',
     alokasiWaktu: '24 JP (8 Pertemuan × 3 JP)',
-    tahunPelajaran: '2026/2026',
+    tahunPelajaran: '2026/2027',
     penyusun: 'Guru TJKT',
     institusi: 'SMK Negeri 2 Kuningan',
   },

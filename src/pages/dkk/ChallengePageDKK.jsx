@@ -23,6 +23,7 @@ export default function ChallengePageDKK() {
   const timerRef = useRef(null);
   const inputRef = useRef(null);
   const finishGameRef = useRef(null);
+  const finishGuardRef = useRef(false);
 
   const startGame = () => {
     const qs = shuffle(challengeDKK).slice(0, selectedCount);
@@ -38,7 +39,7 @@ export default function ChallengePageDKK() {
     if (mode !== 'playing') return;
     timerRef.current = setInterval(() => {
       setTimeLeft(prev => {
-        if (prev <= 1) { finishGameRef.current(); return 0; }
+        if (prev <= 1) { finishGameRef.current(true); return 0; }
         return prev - 1;
       });
     }, 1000);
@@ -60,19 +61,21 @@ export default function ChallengePageDKK() {
       setCurrentIdx(prev => prev + 1);
     }
   };
-  finishGameRef.current = () => {
+  finishGameRef.current = (includeCurrent = false) => {
+    if (finishGuardRef.current) return;
+    finishGuardRef.current = true;
     clearInterval(timerRef.current);
-    setResults(prev => {
-      const remaining = questions.slice(currentIdx + 1).map(q => ({
-        question: q.q, userAnswer: '-', correctAnswer: q.answer, isCorrect: false
-      }));
-      return [...prev, ...remaining];
-    });
+    const startIdx = currentIdx + (includeCurrent ? 0 : 1);
+    const remaining = questions.slice(startIdx).map(q => ({
+      question: q.q, userAnswer: '-', correctAnswer: q.answer, isCorrect: false
+    }));
+    setResults(prev => [...prev, ...remaining]);
     setMode('done');
   };
 
   const reset = () => {
     clearInterval(timerRef.current);
+    finishGuardRef.current = false;
     setMode(null);
     setResults([]);
     setCurrentIdx(0);

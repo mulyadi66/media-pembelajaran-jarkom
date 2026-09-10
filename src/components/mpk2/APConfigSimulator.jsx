@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 const steps = ['Scanning', 'Authenticating', 'Associating'];
 const securityModes = ['Open', 'WPA2-PSK', 'WPA3-SAE'];
@@ -27,8 +27,12 @@ export default function APConfigSimulator() {
   const [animStep, setAnimStep] = useState(-1);
   const [connected, setConnected] = useState(null);
   const [result, setResult] = useState(null);
+  const intervalRef = useRef(null);
+
+  useEffect(() => () => clearInterval(intervalRef.current), []);
 
   const startSimulation = () => {
+    clearInterval(intervalRef.current);
     setAnimStep(0);
     setConnected(null);
     setResult(null);
@@ -62,9 +66,11 @@ export default function APConfigSimulator() {
         setAnimStep(i);
       }
     }, 500);
+    intervalRef.current = interval;
   };
 
   const reset = () => {
+    clearInterval(intervalRef.current);
     setSsid('Jaringan-SMK');
     setChannel(6);
     setSecurity('WPA2-PSK');

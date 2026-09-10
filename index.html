@@ -9,6 +9,13 @@
     <meta name="theme-color" content="#6366f1" />
     <link rel="manifest" href="/manifest.json" />
     <title>Media Pembelajaran TJKT</title>
+    <script>
+      try {
+        if (JSON.parse(localStorage.getItem('jarkomlab_dark') || 'false')) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      } catch (e) { /* abaikan */ }
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -1,32 +1,41 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, useRef } from 'react';
 
 const AppContext = createContext();
 
 // oxlint-disable-next-line react/only-export-components
 export const useApp = () => useContext(AppContext);
 
-function getToday() { return new Date().toISOString().split('T')[0]; }
+function safeParse(str, fallback) {
+  try { return str ? JSON.parse(str) : fallback; } catch { return fallback; }
+}
+
+function getLocalDateStr(d = new Date()) {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
 
 export function AppProvider({ children }) {
   const [scores, setScores] = useState(() => {
     const s = localStorage.getItem('jarkomlab_scores');
-    return s ? JSON.parse(s) : {};
+    return safeParse(s, {});
   });
   const [modulesRead, setModulesRead] = useState(() => {
     const s = localStorage.getItem('jarkomlab_modulesRead');
-    return s ? JSON.parse(s) : {};
+    return safeParse(s, {});
   });
   const [caseAnswers, setCaseAnswers] = useState(() => {
     const s = localStorage.getItem('jarkomlab_cases');
-    return s ? JSON.parse(s) : {};
+    return safeParse(s, {});
   });
   const [darkMode, setDarkMode] = useState(() => {
     const s = localStorage.getItem('jarkomlab_dark');
-    return s ? JSON.parse(s) : false;
+    return safeParse(s, false);
   });
   const [streak, setStreak] = useState(() => {
     const s = localStorage.getItem('jarkomlab_streak');
-    return s ? JSON.parse(s) : { count: 0, lastDate: null };
+    return safeParse(s, { count: 0, lastDate: null });
   });
   const [studentName, setStudentName] = useState(() => {
     return localStorage.getItem('jarkomlab_name') || '';
@@ -46,14 +55,17 @@ export function AppProvider({ children }) {
   }, [darkMode]);
 
   // Streak tracking
+  const streakInitRef = useRef(false);
   useEffect(() => {
-    const today = getToday();
+    if (streakInitRef.current) return;
+    streakInitRef.current = true;
+    const today = getLocalDateStr();
     if (streak.lastDate !== today) {
       const yesterday = new Date();
       yesterday.setDate(yesterday.getDate() - 1);
-      const yStr = yesterday.toISOString().split('T')[0];
+      const yStr = getLocalDateStr(yesterday);
       if (streak.lastDate === yStr) {
-        setStreak(prev => ({ count: prev.count + 1, lastDate: today }));
+        setStreak(prev => ({ count: (prev.count || 0) + 1, lastDate: today }));
       } else {
         setStreak({ count: 1, lastDate: today });
       }

@@ -1,7 +1,8 @@
 import { Component } from 'react';
+import { useLocation } from 'react-router-dom';
 import { AlertTriangle, RefreshCcw } from 'lucide-react';
 
-export default class ErrorBoundary extends Component {
+class ErrorBoundaryInner extends Component {
   constructor(props) {
     super(props);
     this.state = { hasError: false, error: null };
@@ -66,4 +67,9 @@ export default class ErrorBoundary extends Component {
 
     return this.props.children;
   }
+}
+
+export default function ErrorBoundary(props) {
+  const { pathname } = useLocation();
+  return <ErrorBoundaryInner key={pathname} {...props} />;
 }

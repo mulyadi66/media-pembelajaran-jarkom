@@ -15,18 +15,26 @@ const WIRE_COLORS = {
 const T568B = ['Putih-Oranye', 'Oranye', 'Putih-Hijau', 'Biru', 'Putih-Biru', 'Hijau', 'Putih-Coklat', 'Coklat'];
 const T568A = ['Putih-Hijau', 'Hijau', 'Putih-Oranye', 'Biru', 'Putih-Biru', 'Oranye', 'Putih-Coklat', 'Coklat'];
 
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
 export default function CableCrimpingSimulator() {
   const [standard, setStandard] = useState('T568B');
   const correctOrder = standard === 'T568B' ? T568B : T568A;
   const [slots, setSlots] = useState(Array(8).fill(null));
-  const [pool, setPool] = useState([...correctOrder].sort(() => Math.random() - 0.5));
+  const [pool, setPool] = useState(() => shuffle(T568B));
   const [result, setResult] = useState(null);
   const [showAnswer, setShowAnswer] = useState(false);
 
   function reset() {
-    const shuffled = [...correctOrder].sort(() => Math.random() - 0.5);
     setSlots(Array(8).fill(null));
-    setPool(shuffled);
+    setPool(shuffle(correctOrder));
     setResult(null);
     setShowAnswer(false);
   }
@@ -35,7 +43,7 @@ export default function CableCrimpingSimulator() {
     setStandard(s);
     const order = s === 'T568B' ? T568B : T568A;
     setSlots(Array(8).fill(null));
-    setPool([...order].sort(() => Math.random() - 0.5));
+    setPool(shuffle(order));
     setResult(null);
     setShowAnswer(false);
   }
