@@ -31,6 +31,8 @@ create policy "select results"
 -- anon TIDAK boleh delete langsung (RLS), jadi hapus lewat fungsi ini.
 -- Fungsi berjalan sebagai pemilik tabel (security definer) sehingga bisa
 -- menghapus semua baris, namun tetap memvalidasi PIN terlebih dahulu.
+-- Catatan: pakai TRUNCATE, karena PostgREST menolak "delete from ..." tanpa
+-- klausa WHERE (error: DELETE requires a WHERE clause).
 --
 -- PENTING: pin di bawah ('2468') HARUS sama dengan VITE_REKAP_PIN di Vercel.
 -- Jika PIN diubah di Vercel, ubah juga nilai di sini lalu jalankan ulang blok ini.
@@ -46,8 +48,8 @@ begin
   if pin is null or pin <> '2468' then
     raise exception 'PIN salah';
   end if;
-  delete from public.exam_results;
-  get diagnostics deleted_rows = row_count;
+  select count(*) into deleted_rows from public.exam_results;
+  truncate table public.exam_results restart identity;
   return deleted_rows;
 end;
 $$;
