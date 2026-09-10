@@ -36,6 +36,11 @@ export function saveIdentity(identity) {
   saveJSON(K.identity, { nama: identity.nama.trim(), nis: identity.nis.trim() });
 }
 
+/** Hapus identitas siswa agar siswa lain bisa mengerjakan (perangkat bersama). */
+export function clearIdentity() {
+  localStorage.removeItem(K.identity);
+}
+
 export function getIdentityError({ nama, nis }) {
   if (!nama || !nama.trim()) return 'Nama wajib diisi.';
   if (!nis || !String(nis).trim()) return 'NIS wajib diisi.';

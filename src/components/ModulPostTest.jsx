@@ -6,6 +6,7 @@ import {
   BadgeCheck,
   UserCircle,
   Pencil,
+  RefreshCw,
   CloudOff,
   CloudCog,
 } from 'lucide-react';
@@ -17,6 +18,8 @@ import {
   hasAnySubmission,
   addExamResult,
   getExamToken,
+  clearExamLocal,
+  clearIdentity,
 } from '../lib/examLib';
 import { isSupabaseConfigured } from '../lib/supabase';
 
@@ -73,6 +76,19 @@ export default function ModulPostTest({ questions, storageKey, scoreKey, title }
   const [editing, setEditing] = useState(false);
   const [status, setStatus] = useState(null);
 
+  const handleResetIdentity = () => {
+    const sure = window.confirm(
+      'Reset identitas akan menghapus identitas & hasil ujian di perangkat ini, supaya siswa lain bisa mengerjakan ulang. Lanjutkan?'
+    );
+    if (!sure) return;
+    clearExamLocal();
+    clearIdentity();
+    setIdentity(null);
+    setEditing(false);
+    setLocked(false);
+    setStatus(null);
+  };
+
   if (!identity || editing) {
     return (
       <div className="materi-card modul-posttest" id={scoreKey}>
@@ -106,6 +122,9 @@ export default function ModulPostTest({ questions, storageKey, scoreKey, title }
               <strong>{identity.nama}</strong> (NIS {identity.nis}). Retake tidak diizinkan.
             </p>
           </div>
+          <button type="button" className="identity-reset" onClick={handleResetIdentity}>
+            <RefreshCw size={14} /> Reset Identitas
+          </button>
         </div>
       </div>
     );
@@ -140,6 +159,9 @@ export default function ModulPostTest({ questions, storageKey, scoreKey, title }
             <Pencil size={14} /> Ubah
           </button>
         )}
+        <button type="button" className="identity-reset" onClick={handleResetIdentity} aria-label="Reset identitas (ganti siswa)">
+          <RefreshCw size={14} /> Reset Identitas
+        </button>
       </div>
 
       {status && (

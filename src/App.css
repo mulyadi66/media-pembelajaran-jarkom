@@ -530,6 +530,17 @@ a { text-decoration: none; color: inherit; }
 
 .identity-edit:hover { background: rgba(99,102,241,0.1); }
 
+.identity-reset {
+  display: inline-flex; align-items: center; gap: 5px;
+  border: none; background: transparent; color: var(--danger);
+  cursor: pointer; font-size: 0.82rem; font-weight: 600; font-family: inherit;
+  padding: 4px 8px; border-radius: 8px;
+}
+
+.identity-reset:hover { background: rgba(220,38,38,0.08); }
+.identity-chip .identity-reset { margin-left: auto; }
+.identity-chip .identity-edit + .identity-reset { margin-left: 0; }
+
 /* ========== STATUS HASIL ========== */
 .exam-status {
   display: flex; align-items: center; gap: 8px;
