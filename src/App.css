@@ -478,6 +478,150 @@ a { text-decoration: none; color: inherit; }
   background: linear-gradient(135deg, #1e293b, #312e81);
 }
 
+/* ========== IDENTITAS SISWA ========== */
+.identity-form {
+  background: var(--sim-card); border: 1px solid var(--border);
+  border-radius: 12px; padding: 22px; max-width: 480px;
+}
+
+.identity-form h3 { color: var(--text); }
+
+.identity-field {
+  display: block; margin-bottom: 14px;
+}
+
+.identity-field span {
+  display: block; font-size: 0.82rem; font-weight: 600;
+  color: var(--text-light); margin-bottom: 6px;
+}
+
+.identity-field input {
+  width: 100%; padding: 10px 14px; border-radius: 10px;
+  border: 1px solid var(--border); background: var(--bg-card);
+  color: var(--text); font-size: 0.95rem; font-family: inherit;
+  transition: border-color 0.2s;
+}
+
+.identity-field input:focus {
+  outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(99,102,241,0.15);
+}
+
+.identity-error {
+  color: var(--danger); font-size: 0.82rem; font-weight: 600; margin-top: 12px;
+}
+
+/* ========== CHIP IDENTITAS ========== */
+.identity-chip {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 10px;
+  padding: 10px 14px; margin-bottom: 16px; font-size: 0.9rem;
+}
+
+.identity-chip svg { color: var(--success); flex-shrink: 0; }
+.identity-chip em { font-style: normal; color: var(--text-light); font-size: 0.85rem; }
+.identity-chip strong { color: var(--text); }
+
+.identity-edit {
+  margin-left: auto; display: inline-flex; align-items: center; gap: 5px;
+  border: none; background: transparent; color: var(--primary);
+  cursor: pointer; font-size: 0.82rem; font-weight: 600; font-family: inherit;
+  padding: 4px 8px; border-radius: 8px;
+}
+
+.identity-edit:hover { background: rgba(99,102,241,0.1); }
+
+/* ========== STATUS HASIL ========== */
+.exam-status {
+  display: flex; align-items: center; gap: 8px;
+  border-radius: 10px; padding: 10px 14px; margin-bottom: 16px;
+  font-size: 0.85rem; font-weight: 600;
+}
+
+.exam-status.saved { background: #ecfdf5; border: 1px solid #a7f3d0; color: #047857; }
+.exam-status.queued { background: #fffbeb; border: 1px solid #fde68a; color: #b45309; }
+.exam-status.locked { background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; }
+.exam-status.info { background: #eef2ff; border: 1px solid #c7d2fe; color: #4338ca; }
+
+.sync-note {
+  display: flex; align-items: center; gap: 6px; margin-top: 12px;
+  font-size: 0.78rem; color: var(--text-lighter);
+}
+
+.modul-posttest.locked { background: #fef2f2; border-top-color: var(--danger); }
+.modul-posttest.locked .mp-test-banner { background: linear-gradient(135deg, #fef2f2, #fee2e2); }
+.modul-posttest.locked .mp-test-banner svg { color: var(--danger); }
+
+/* ========== REKAP NILAI ========== */
+.rekap-pin-card { text-align: center; padding: 34px; }
+.rekap-icon {
+  width: 60px; height: 60px; margin: 0 auto 14px; border-radius: 50%;
+  background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+  display: flex; align-items: center; justify-content: center;
+}
+.rekap-icon svg { color: var(--primary); }
+.rekap-pin-input { text-align: center; letter-spacing: 8px; font-size: 1.3rem; }
+
+.rekap-header {
+  display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;
+  flex-wrap: wrap; margin-bottom: 18px;
+}
+.rekap-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.rekap-stats {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px; margin-bottom: 18px;
+}
+.rekap-stat {
+  background: var(--sim-card); border: 1px solid var(--border); border-radius: 10px;
+  padding: 12px; text-align: center; display: flex; flex-direction: column; gap: 2px;
+}
+.rekap-stat .rs-num { font-size: 1.5rem; font-weight: 800; color: var(--primary); }
+.rekap-stat span:last-child { font-size: 0.75rem; color: var(--text-light); }
+
+.pause-note {
+  display: flex; gap: 8px; align-items: flex-start;
+  background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px;
+  padding: 12px 14px; font-size: 0.85rem; color: #92400e; margin-bottom: 16px;
+}
+.pause-note svg { flex-shrink: 0; margin-top: 2px; }
+
+.rekap-scroll { overflow-x: auto; }
+
+.rekap-table {
+  width: 100%; border-collapse: collapse; font-size: 0.88rem;
+  border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+}
+.rekap-table th {
+  background: var(--sim-card); color: var(--text); font-weight: 700;
+  text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--border);
+  white-space: nowrap;
+}
+.rekap-table td { padding: 9px 12px; border-bottom: 1px solid var(--border); color: var(--text); }
+.rekap-table tbody tr:hover { background: rgba(99,102,241,0.05); }
+.rekap-table .td-muted { color: var(--text-lighter); }
+.rekap-table .td-avg { font-weight: 800; color: var(--primary-dark); }
+.rekap-nis { font-variant-numeric: tabular-nums; color: var(--text-light); }
+
+.predikat-badge { font-size: 0.8rem; font-weight: 600; padding: 3px 10px; border-radius: 999px; white-space: nowrap; }
+.predikat-badge[data-grade="A"] { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+.predikat-badge[data-grade="B"] { background: #eef2ff; color: #4338ca; border: 1px solid #c7d2fe; }
+.predikat-badge[data-grade="C"] { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+.predikat-badge[data-grade="D"] { background: #fff7ed; color: #c2410c; border: 1px solid #fed7aa; }
+.predikat-badge[data-grade="E"] { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+
+.rekap-foot {
+  margin-top: 14px; font-size: 0.85rem; color: var(--text-light);
+  border-top: 1px dashed var(--border); padding-top: 12px;
+}
+
+.spin { animation: rekap-spin 1s linear infinite; }
+@keyframes rekap-spin { to { transform: rotate(360deg); } }
+
+@media print {
+  .no-print { display: none !important; }
+  .rekap-scroll { overflow: visible; }
+}
+
 .info-box {
   background: linear-gradient(135deg, #eef2ff, #e0e7ff);
   border-left: 4px solid var(--primary);

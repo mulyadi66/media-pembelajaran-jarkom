@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { checkBadges } from '../data/badges';
-import { Server, Projector, CreditCard, BookOpen, Trophy, Network, Monitor, Puzzle, Award, BookA, Zap, FileDown, BarChart3, Briefcase, ClipboardCheck, FileText, RotateCcw, Cable, Gauge } from 'lucide-react';
+import { Server, Projector, CreditCard, BookOpen, Trophy, Network, Monitor, Puzzle, Award, BookA, Zap, FileDown, BarChart3, Briefcase, ClipboardCheck, FileText, RotateCcw, Cable, Gauge, ClipboardList } from 'lucide-react';
 import ConfirmModal from '../components/ConfirmModal';
 
 export default function Dashboard() {
@@ -29,6 +29,7 @@ export default function Dashboard() {
     { to: '/mpk1/wiring', icon: Cable, title: 'Wiring Puzzle', desc: 'Susun kabel RJ-45', color: ['#f59e0b', '#d97706'] },
     { to: '/mpk1/ipclassifier', icon: Gauge, title: 'IP Quick Tap', desc: 'Klasifikasi IP cepat', color: ['#14b8a6', '#0d9488'] },
     { to: '/mpk1/hasil', icon: BarChart3, title: 'Hasil', desc: 'Pencapaian & sertifikat', color: ['#f43f5e', '#e11d48'] },
+    { to: '/mpk1/rekap', icon: ClipboardList, title: 'Rekap Nilai', desc: 'Nilai ujian per siswa (guru)', color: ['#0d9488', '#0f766e'] },
   ];
 
   return (

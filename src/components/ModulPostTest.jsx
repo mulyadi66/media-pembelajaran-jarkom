@@ -1,9 +1,123 @@
+import { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import Quiz from './Quiz';
-import { ClipboardCheck } from 'lucide-react';
+import {
+  ClipboardCheck,
+  BadgeCheck,
+  UserCircle,
+  Pencil,
+  CloudOff,
+  CloudCog,
+} from 'lucide-react';
+import {
+  getIdentity,
+  saveIdentity,
+  getIdentityError,
+  isModulLocked,
+  hasAnySubmission,
+  addExamResult,
+} from '../lib/examLib';
+import { isSupabaseConfigured } from '../lib/supabase';
+
+function IdentityForm({ initial, onSubmit, onCancel }) {
+  const [nama, setNama] = useState(initial?.nama || '');
+  const [nis, setNis] = useState(initial?.nis || '');
+  const [error, setError] = useState(null);
+
+  const submit = (e) => {
+    e.preventDefault();
+    const err = getIdentityError({ nama, nis });
+    if (err) { setError(err); return; }
+    onSubmit({ nama: nama.trim(), nis: nis.trim() });
+  };
+
+  return (
+    <form className="identity-form" onSubmit={submit} noValidate>
+      <h3 style={{ marginBottom: 4 }}>Identitas Siswa</h3>
+      <p style={{ color: 'var(--text-light)', fontSize: '0.85rem', marginBottom: 16 }}>
+        Isi sebelum mengerjakan ujian. Nilai akan direkap atas nama ini.
+      </p>
+      <label className="identity-field">
+        <span>Nama Lengkap</span>
+        <input
+          type="text" value={nama} onChange={(e) => { setNama(e.target.value); setError(null); }}
+          placeholder="contoh: Ahmad Fauzi" autoComplete="name" autoFocus
+        />
+      </label>
+      <label className="identity-field">
+        <span>NIS (4–10 digit angka)</span>
+        <input
+          type="text" inputMode="numeric" value={nis}
+          onChange={(e) => { setNis(e.target.value.replace(/[^\d]/g, '')); setError(null); }}
+          placeholder="contoh: 20241234" maxLength={10}
+        />
+      </label>
+      <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
+        <button className="btn btn-primary" type="submit" style={{ marginLeft: 0 }}>
+          <BadgeCheck size={16} /> Simpan Identitas
+        </button>
+        {onCancel && (
+          <button type="button" className="btn btn-secondary" onClick={onCancel}>Batal</button>
+        )}
+      </div>
+      {error && <p className="identity-error">{error}</p>}
+    </form>
+  );
+}
 
 export default function ModulPostTest({ questions, storageKey, scoreKey, title }) {
   const { saveQuizScore } = useApp();
+  const [identity, setIdentity] = useState(() => getIdentity());
+  const [locked, setLocked] = useState(() => isModulLocked(scoreKey));
+  const [editing, setEditing] = useState(false);
+  const [status, setStatus] = useState(null);
+
+  if (!identity || editing) {
+    return (
+      <div className="materi-card modul-posttest" id={scoreKey}>
+        <div className="mp-test-banner">
+          <ClipboardCheck size={20} />
+          <div>
+            <h3 style={{ margin: 0 }}>{title}</h3>
+            <p style={{ margin: '2px 0 0', fontSize: '0.85rem', color: 'var(--text-light)' }}>
+              Kerjakan di akhir modul untuk mengukur pemahamanmu.
+            </p>
+          </div>
+        </div>
+        <IdentityForm
+          initial={identity}
+          onSubmit={(i) => { saveIdentity(i); setIdentity(i); setEditing(false); setStatus(null); }}
+          onCancel={identity ? () => setEditing(false) : undefined}
+        />
+      </div>
+    );
+  }
+
+  if (locked) {
+    return (
+      <div className="materi-card modul-posttest locked" id={scoreKey}>
+        <div className="mp-test-banner">
+          <BadgeCheck size={20} />
+          <div>
+            <h3 style={{ margin: 0 }}>{title}</h3>
+            <p style={{ margin: '4px 0 0', fontSize: '0.85rem', color: 'var(--text-light)' }}>
+              Ujian ini sudah dikerjakan & terverifikasi atas nama{' '}
+              <strong>{identity.nama}</strong> (NIS {identity.nis}). Retake tidak diizinkan.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const handleScore = async (score) => {
+    const res = await addExamResult({ nis: identity.nis, nama: identity.nama, modul: scoreKey, nilai: score });
+    if (res.status === 'locked') { setLocked(true); setStatus(res); return; }
+    saveQuizScore(scoreKey, score);
+    setStatus(res);
+  };
+
+  const today = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
 
   return (
     <div className="materi-card modul-posttest" id={scoreKey}>
@@ -16,12 +130,34 @@ export default function ModulPostTest({ questions, storageKey, scoreKey, title }
           </p>
         </div>
       </div>
+
+      <div className="identity-chip">
+        <UserCircle size={20} />
+        <span><strong>{identity.nama}</strong> <em>— NIS {identity.nis}</em></span>
+        {!hasAnySubmission() && (
+          <button type="button" className="identity-edit" onClick={() => setEditing(true)} aria-label="Ubah identitas">
+            <Pencil size={14} /> Ubah
+          </button>
+        )}
+      </div>
+
+      {status && (
+        <div className={`exam-status ${status.status}`} role="status">
+          {status.status === 'saved' && <><BadgeCheck size={16} /> Nilai terkirim & terverifikasi ({today}).</>}
+          {status.status === 'queued' && <><CloudOff size={16} /> {status.message} Nilai tersimpan ({today}).</>}
+          {status.status === 'locked' && <><BadgeCheck size={16} /> {status.message}</>}
+        </div>
+      )}
+
       <Quiz
         questions={questions}
         storageKey={storageKey}
         timeLimit={15}
-        onScoreSubmit={(score) => saveQuizScore(scoreKey, score)}
+        onScoreSubmit={handleScore}
       />
+      {!isSupabaseConfigured && (
+        <p className="sync-note"><CloudCog size={14} /> Supabase belum dikonfigurasi — hasil tersimpan di perangkat ini dan tetap bisa rekapan lokal.</p>
+      )}
     </div>
   );
 }
