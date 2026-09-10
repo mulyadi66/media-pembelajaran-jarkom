@@ -3,6 +3,8 @@ import { useApp } from '../context/AppContext';
 import { Globe, Scissors, Code, Sliders, Calculator, AlertTriangle, Star } from 'lucide-react';
 import VideoEmbed from '../components/VideoEmbed';
 import SectionTracker from '../components/SectionTracker';
+import ModulPostTest from '../components/ModulPostTest';
+import { modul3PostTest } from '../data/modulPostTests';
 import { ContohSoal, Tugas } from '../components/ContohSoal';
 
 const sections = [
@@ -374,6 +376,13 @@ export default function Modul3() {
       <MateriCard icon={Globe} title="Video Pembelajaran">
         <VideoEmbed videoId="9GtL8dW8rYY" title="IP Subnetting Lengkap - Binary, Class, VLSM & CIDR" />
       </MateriCard>
+
+      <ModulPostTest
+        title="Post Test Modul 3"
+        questions={modul3PostTest}
+        storageKey="mpk1_modul3_posttest"
+        scoreKey="mpk1_modul3_posttest"
+      />
     </div>
   );
 }

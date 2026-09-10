@@ -459,6 +459,25 @@ a { text-decoration: none; color: inherit; }
 .materi-card li { margin-bottom: 8px; }
 .materi-card li strong { color: var(--text); }
 
+/* ========== POST TEST MODUL ========== */
+.modul-posttest {
+  border-top: 4px solid var(--primary);
+  padding: 28px;
+}
+
+.mp-test-banner {
+  display: flex; align-items: center; gap: 14px;
+  background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+  border-radius: 10px; padding: 14px 18px; margin-bottom: 20px;
+}
+
+.mp-test-banner svg { color: var(--primary); flex-shrink: 0; }
+.mp-test-banner h3 { margin: 0; color: var(--primary-dark); }
+
+[data-theme="dark"] .mp-test-banner {
+  background: linear-gradient(135deg, #1e293b, #312e81);
+}
+
 .info-box {
   background: linear-gradient(135deg, #eef2ff, #e0e7ff);
   border-left: 4px solid var(--primary);

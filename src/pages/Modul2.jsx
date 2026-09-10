@@ -3,6 +3,8 @@ import { useApp } from '../context/AppContext';
 import { Projector, Star, Minus, Circle, GitBranch, Network, Info, Calculator } from 'lucide-react';
 import VideoEmbed from '../components/VideoEmbed';
 import SectionTracker from '../components/SectionTracker';
+import ModulPostTest from '../components/ModulPostTest';
+import { modul2PostTest } from '../data/modulPostTests';
 import { ContohSoal, Tugas } from '../components/ContohSoal';
 
 const sections = [
@@ -306,6 +308,13 @@ export default function Modul2() {
         <VideoEmbed videoId="QGykYWbdf0A" title="Topologi Jaringan - Bus, Ring, Star, Mesh, Tree" />
         <VideoEmbed videoId="7Ut4u8qVwRU" title="Topologi Jaringan Lengkap (Star, Bus, Ring, Mesh, Wireless) - Bahasa Indonesia" />
       </MateriCard>
+
+      <ModulPostTest
+        title="Post Test Modul 2"
+        questions={modul2PostTest}
+        storageKey="mpk1_modul2_posttest"
+        scoreKey="mpk1_modul2_posttest"
+      />
     </div>
   );
 }

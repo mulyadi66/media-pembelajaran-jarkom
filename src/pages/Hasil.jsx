@@ -10,6 +10,13 @@ export default function Hasil() {
   const { scores, modulesRead, resetAll, studentName, saveStudentName } = useApp();
   const pretestScore = scores.pretest || 0;
   const posttestScore = scores.posttest || 0;
+  const modulTests = [
+    { key: 'mpk1_modul1_posttest', label: 'Post Test Modul 1' },
+    { key: 'mpk1_modul2_posttest', label: 'Post Test Modul 2' },
+    { key: 'mpk1_modul3_posttest', label: 'Post Test Modul 3' },
+  ];
+  const modulTestScores = modulTests.map(mt => ({ ...mt, score: scores[mt.key] || 0 }));
+  const modulAvg = modulTestScores.reduce((a, m) => a + m.score, 0) / modulTests.length;
   const pretestAnswered = Object.keys(JSON.parse(localStorage.getItem('jarkomlab_pretestAnswers') || '{}')).length;
   const posttestAnswered = Object.keys(JSON.parse(localStorage.getItem('jarkomlab_posttestAnswers') || '{}')).length;
   const growth = posttestScore > 0 && pretestScore > 0 ? posttestScore - pretestScore : null;
@@ -45,6 +52,10 @@ export default function Hasil() {
             </div>
             <div className="detail-label">Pertumbuhan</div>
           </div>
+          <div className="result-detail">
+            <div className="detail-value">{modulAvg ? Math.round(modulAvg) : '-'}</div>
+            <div className="detail-label">Rata-rata Modul</div>
+          </div>
         </div>
       </div>
 
@@ -64,6 +75,10 @@ export default function Hasil() {
         <h3 style={{marginBottom: 20}}>Detail Penilaian</h3>
         <ScoreBar label="Pre-Test" score={pretestScore} answered={pretestAnswered} />
         <ScoreBar label="Post-Test" score={posttestScore} answered={posttestAnswered} />
+        {modulTestScores.map(mt => (
+          <ScoreBar key={mt.key} label={mt.label} score={mt.score}
+            answered={Object.keys(JSON.parse(localStorage.getItem(`jarkomlab_${mt.key}`) || '{}')).length} />
+        ))}
         <div style={{marginTop: 16}}>
           <div style={{display:'flex',justifyContent:'space-between',marginBottom:8}}>
             <span style={{fontWeight:600}}>Modul Dibaca</span>

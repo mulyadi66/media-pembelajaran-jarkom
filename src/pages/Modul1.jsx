@@ -3,6 +3,8 @@ import { useApp } from '../context/AppContext';
 import { Wifi, Plug, Settings, Info, AlertTriangle, Star, Cable, Network, ShieldCheck, Layers, Radio, Activity, Cpu } from 'lucide-react';
 import VideoEmbed from '../components/VideoEmbed';
 import SectionTracker from '../components/SectionTracker';
+import ModulPostTest from '../components/ModulPostTest';
+import { modul1PostTest } from '../data/modulPostTests';
 import { ContohSoal, Tugas } from '../components/ContohSoal';
 
 const sections = [
@@ -332,6 +334,13 @@ export default function Modul1() {
       <MateriCard icon={Wifi} title="Video Pembelajaran">
         <VideoEmbed videoId="LiMdHeaS4zY" title="Network Fundamentals - Peralatan Jaringan (Router, Switch, Hub)" />
       </MateriCard>
+
+      <ModulPostTest
+        title="Post Test Modul 1"
+        questions={modul1PostTest}
+        storageKey="mpk1_modul1_posttest"
+        scoreKey="mpk1_modul1_posttest"
+      />
     </div>
   );
 }
