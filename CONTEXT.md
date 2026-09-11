@@ -66,6 +66,18 @@ Media pembelajaran interaktif React untuk siswa SMK TJKT Kelas XI, Fase F — Pe
 1. `vercel.json` dibuat untuk SPA rewrite — semua rute React Router sekarang jalan di Vercel
 2. Video embed IDs diganti ke YouTube videos yang verified aktif
 3. `.sim-canvas` ditambah `position: relative` — device simulator seharusnya sudah bisa drag & drop
+4. Kolom **Akses** (tombol "Buka Akses") dipindah ke depan (sebelah Kelas) — tadinya di pojok kanan tabel tersembunyi di balik scroll horizontal
+5. `vercel.json` + header `Cache-Control: no-cache` untuk `index.html` — update fitur langsung terlihat tanpa hard refresh (deploy ini perlu dipantau sampai chunk baru live, sebelumnya sempat rollover gagal 404)
+
+## Post Test Terpisah per Modul
+- Post Test Modul 1/2/3 masing-masing di halaman khusus: `/mpk1/posttest-modul1`, `/mpk1/posttest-modul2`, `/mpk1/posttest-modul3` (lazy-route di `App.jsx`, item + titles/descs di `Layout.jsx`, kartu CTA di halaman materi; storage/score keys tetap `mpk1_modul{1,2,3}_posttest`)
+- Fitur ujian tetap sama: token gate + kunci layar otomatis + timer + auto-grade + review + anti-contek
+
+## Anti-Contek: Kunci Soal setelah 3× Pelanggaran
+- 3× pindah tab/keluar kunci layar → **soal dikunci** (screensaver "Ujian Dikunci", bukan cuma peringatan). Jawaban tidak bisa dilihat/diubah sampai dibuka guru.
+- Pelanggaran disimpan di `jarkomlab_${storageKey}_warns` (localStorage) → tidak hilang saat refresh.
+- Guru membuka lewat **tombol "Buka Akses"** di Rekap Nilai (kolom Akses) → modal berisi Kode Buka Akses per modul.
+- Kode = `unlockCode(nis, modulKey)` di `src/lib/examLib.js` (hash NIS+modul+PIN guru) → diverifikasi client-side, deterministik; siswa tidak bisa membuka tanpa guru.
 
 ## Fitur Lengkap
 - Dashboard, Modul 1-3 (materi + video + section tracker), Post Test ujian per modul (exam-only: token gate + timer + auto-grade + review + anti-contek)
