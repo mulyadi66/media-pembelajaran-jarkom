@@ -25,6 +25,8 @@ const RekapNilai = lazy(() => import('./pages/RekapNilai'));
 const WiringPuzzle = lazy(() => import('./pages/WiringPuzzle'));
 const IPClassifier = lazy(() => import('./pages/IPClassifier'));
 const PostTestModul1 = lazy(() => import('./pages/PostTestModul1'));
+const PostTestModul2 = lazy(() => import('./pages/PostTestModul2'));
+const PostTestModul3 = lazy(() => import('./pages/PostTestModul3'));
 
 // DKK pages
 const Elemen1 = lazy(() => import('./pages/dkk/Elemen1'));
@@ -148,7 +150,9 @@ export default function App() {
                 <Route path="/kka-xi/hasil" element={<HasilKKAXI />} />
                 <Route path="/mpk1/modul1" element={<Modul1 />} />
                 <Route path="/mpk1/modul2" element={<Modul2 />} />
+                <Route path="/mpk1/posttest-modul2" element={<PostTestModul2 />} />
                 <Route path="/mpk1/modul3" element={<Modul3 />} />
+                <Route path="/mpk1/posttest-modul3" element={<PostTestModul3 />} />
                 <Route path="/mpk1/posttest-modul1" element={<PostTestModul1 />} />
                 <Route path="/mpk1/flashcard" element={<FlashcardPage />} />
                 <Route path="/mpk1/simulator" element={<DeviceSimulator />} />

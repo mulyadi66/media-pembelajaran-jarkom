@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
-import { Projector, Star, Minus, Circle, GitBranch, Network, Info, Calculator } from 'lucide-react';
+import { Projector, Star, Minus, Circle, GitBranch, Network, Info, Calculator, ClipboardCheck, ArrowRight } from 'lucide-react';
 import SectionTracker from '../components/SectionTracker';
-import ModulPostTest from '../components/ModulPostTest';
-import { modul2PostTest } from '../data/modulPostTests';
 import { ContohSoal, Tugas } from '../components/ContohSoal';
 
 const sections = [
@@ -303,12 +302,20 @@ export default function Modul2() {
         ]} />
       </MateriCard>
 
-      <ModulPostTest
-        title="Post Test Modul 2"
-        questions={modul2PostTest}
-        storageKey="mpk1_modul2_posttest"
-        scoreKey="mpk1_modul2_posttest"
-      />
+      <div className="materi-card modul-posttest">
+        <div className="mp-test-banner">
+          <ClipboardCheck size={20} />
+          <div>
+            <h3 style={{ margin: 0 }}>Post Test Modul 2</h3>
+            <p style={{ margin: '2px 0 0', fontSize: '0.85rem', color: 'var(--text-light)' }}>
+              Sudah selesai memahami materi? Kerjakan ujiannya sekarang di halaman terpisah.
+            </p>
+          </div>
+        </div>
+        <Link to="/mpk1/posttest-modul2" className="btn btn-primary" style={{ justifyContent: 'center', marginTop: 12 }}>
+          Buka Halaman Post Test Modul 2 <ArrowRight size={16} />
+        </Link>
+      </div>
     </div>
   );
 }
