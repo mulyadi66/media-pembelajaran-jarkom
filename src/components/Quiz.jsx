@@ -92,6 +92,20 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
     setLock('pseudo'); // iPhone/iPad Safari: kunci tanpa dukungan fullscreen
   };
 
+  // Kunci layar otomatis begitu token ujian lolos (dipanggil dalam gesture klik "Buka Soal")
+  const autoLock = async () => {
+    if (lockModeRef.current !== 'none') return;
+    const el = document.documentElement;
+    if (typeof el.requestFullscreen === 'function') {
+      try {
+        await el.requestFullscreen();
+        setLock('fs');
+        return;
+      } catch { /* blokir browser → fallback pseudo */ }
+    }
+    setLock('pseudo');
+  };
+
   const qs = shuffledQs;
   const q = qs[currentIdx];
   const total = qs.length;
@@ -197,6 +211,7 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
       if (token.trim() === String(examToken).trim()) {
         setTokenOk(true);
         localStorage.setItem(`jarkomlab_${storageKey}_unlocked`, '1');
+        autoLock(); // kunci layar otomatis setelah token lolos
       } else {
         setTokenError(true);
         setToken('');
@@ -207,7 +222,7 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
         <KeyRound size={38} color="#6366f1" />
         <h2>Token Ujian</h2>
         <p className="quiz-token-hint">
-          Masukkan token yang diberikan guru untuk membuka soal ujian.
+          Masukkan token yang diberikan guru untuk membuka soal ujian. Layar akan <strong>terkunci otomatis</strong> — keluar dari kunci layar akan dicatat.
         </p>
         <form onSubmit={tryToken} noValidate>
           <input
