@@ -21,6 +21,7 @@ const subjects = {
     items: [
       { to: '/mpk1', icon: Home, label: 'Dashboard' },
       { to: '/mpk1/modul1', icon: Server, label: 'Modul 1: Peralatan Jaringan' },
+      { to: '/mpk1/posttest-modul1', icon: ClipboardCheck, label: 'Post Test Modul 1' },
       { to: '/mpk1/modul2', icon: Projector, label: 'Modul 2: Topologi Jaringan' },
       { to: '/mpk1/modul3', icon: CreditCard, label: 'Modul 3: Pengalamatan Jaringan' },
       { to: '/mpk1/osi-layer', icon: Layers, label: 'Layer OSI' },
@@ -38,6 +39,7 @@ const subjects = {
     ],
     titles: {
       '/mpk1': 'Dashboard', '/mpk1/modul1': 'Modul 1: Peralatan Jaringan',
+      '/mpk1/posttest-modul1': 'Post Test Modul 1',
       '/mpk1/modul2': 'Modul 2: Topologi Jaringan',       '/mpk1/modul3': 'Modul 3: Pengalamatan Jaringan',
       '/mpk1/osi-layer': 'Layer OSI',
       '/mpk1/modul-ajar': 'Modul Ajar',
@@ -50,6 +52,7 @@ const subjects = {
     descs: {
       '/mpk1': 'Media Pembelajaran Perencanaan & Pengalamatan Jaringan',
       '/mpk1/modul1': 'Kebutuhan teknis pengguna dan peralatan jaringan',
+      '/mpk1/posttest-modul1': 'Evaluasi akhir Modul 1 — 25 soal. Target: ≥70',
       '/mpk1/modul2': 'Perancangan dan simulasi berbagai topologi jaringan',
       '/mpk1/modul3': 'IP Address, Subnetting, CIDR, dan VLSM',
       '/mpk1/osi-layer': 'Model referensi OSI: 7 layer, enkapsulasi, dan TCP/IP',
