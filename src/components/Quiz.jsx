@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { CheckCircle, XCircle, ChevronLeft, ChevronRight, Clock, Award, RotateCcw, KeyRound, AlertTriangle } from 'lucide-react';
+import { CheckCircle, XCircle, ChevronLeft, ChevronRight, Clock, Award, RotateCcw, KeyRound, AlertTriangle, Lock, Maximize2 } from 'lucide-react';
 
 function shuffleArray(arr) {
   const a = [...arr];
@@ -41,6 +41,9 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
   const [token, setToken] = useState('');
   const [tokenError, setTokenError] = useState(false);
   const [tabWarns, setTabWarns] = useState(0);
+  const [locked, setLocked] = useState(false);
+  const [lockError, setLockError] = useState('');
+  const lockedRef = useRef(false);
   const timerRef = useRef(null);
 
   const qs = shuffledQs;
@@ -52,6 +55,7 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
     clearInterval(timerRef.current);
     localStorage.setItem(`jarkomlab_${storageKey}_submitted`, 'true');
     setSubmitted(true);
+    if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
     let correct = 0;
     qs.forEach((q, i) => { if (answers[i] === q.answer) correct++; });
     const score = Math.round((correct / total) * 100);
@@ -114,6 +118,41 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
     };
   }, [submitted, examStarted]);
 
+  // Kunci layar: fullscreen + sembunyikan sidebar/topbar agar siswa tidak membuka materi lain
+  useEffect(() => {
+    document.documentElement.classList.toggle('exam-lock-active', locked);
+    return () => document.documentElement.classList.remove('exam-lock-active');
+  }, [locked]);
+
+  useEffect(() => {
+    const onFs = () => {
+      const full = !!document.fullscreenElement;
+      setLocked(full);
+      if (!full && lockedRef.current && !submitted) setTabWarns(w => w + 1);
+      lockedRef.current = full;
+    };
+    document.addEventListener('fullscreenchange', onFs);
+    return () => document.removeEventListener('fullscreenchange', onFs);
+  }, [submitted]);
+
+  const toggleLock = async () => {
+    setLockError('');
+    if (document.fullscreenElement) {
+      try { await document.exitFullscreen(); } catch { /* abaikan */ }
+      return;
+    }
+    const el = document.documentElement;
+    if (!el.requestFullscreen) {
+      setLockError('Browser/sistem tidak mendukung fullscreen — kunci layar tidak aktif.');
+      return;
+    }
+    try {
+      await el.requestFullscreen();
+    } catch {
+      setLockError('Gagal masuk fullscreen. Klik tombol lagi.');
+    }
+  };
+
   // Catat waktu mulai ujian (untuk durasi pengerjaan di Rekap)
   useEffect(() => {
     if (submitted || !examStarted) return;
@@ -132,7 +171,9 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
     localStorage.removeItem(`jarkomlab_${storageKey}_order`);
     localStorage.removeItem(`jarkomlab_${storageKey}_deadline`);
     localStorage.removeItem(`jarkomlab_${storageKey}_startedAt`);
+    if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
     setTabWarns(0);
+    setLockError('');
     setAnswers({});
     setCurrentIdx(0);
     setSubmitted(false);
@@ -250,14 +291,29 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
 
   return (
     <div className="quiz-container">
+      {locked && (
+        <div className="lock-banner" role="status">
+          <Lock size={15} /> Layar terkunci — sidebar & navigasi disembunyikan. Jangan tekan <strong>Esc</strong> selama ujian.
+        </div>
+      )}
+      {lockError && (
+        <div className="quiz-tab-warning" role="alert">
+          <AlertTriangle size={15} /> {lockError}
+        </div>
+      )}
       {tabWarns > 0 && (
         <div className={`quiz-tab-warning ${tabWarns >= 3 ? 'critical' : ''}`} role="alert">
-          <AlertTriangle size={15} /> Pindah tab/keluar terdeteksi ({tabWarns}×) — ini dicatat dan bisa dianggap mencurangi ujian.
+          <AlertTriangle size={15} /> Pindah tab/keluar layar terdeteksi ({tabWarns}×) — ini dicatat dan bisa dianggap mencurangi ujian.
         </div>
       )}
       <div className="quiz-header">
         <span className="quiz-progress-text">Soal {currentIdx + 1} dari {total}</span>
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+          <button type="button" className="btn btn-secondary quiz-lock-btn" onClick={toggleLock}
+            aria-pressed={locked} aria-label={locked ? 'Keluar dari kunci layar' : 'Kunci layar (fullscreen)'}>
+            {locked ? <Lock size={16} /> : <Maximize2 size={16} />}
+            {locked ? 'Terkunci' : 'Kunci Layar'}
+          </button>
           <div className="quiz-timer">
             <Clock size={16} />
             <span>{timeLimit ? `${String(timerM).padStart(2, '0')}:${String(timerS).padStart(2, '0')}` : 'Tanpa Batas'}</span>
