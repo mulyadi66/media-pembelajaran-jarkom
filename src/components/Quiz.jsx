@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { CheckCircle, XCircle, ChevronLeft, ChevronRight, Clock, Award, RotateCcw, KeyRound, AlertTriangle, Lock, Maximize2 } from 'lucide-react';
+import { getIdentity, unlockCode } from '../lib/examLib';
 
 function shuffleArray(arr) {
   const a = [...arr];
@@ -40,13 +41,20 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
   const [tokenOk, setTokenOk] = useState(() => localStorage.getItem(`jarkomlab_${storageKey}_unlocked`) === '1');
   const [token, setToken] = useState('');
   const [tokenError, setTokenError] = useState(false);
-  const [tabWarns, setTabWarns] = useState(0);
+  const [tabWarns, setTabWarns] = useState(() => Number(localStorage.getItem(`jarkomlab_${storageKey}_warns`) || 0));
+  const [unlockInput, setUnlockInput] = useState('');
+  const [unlockError, setUnlockError] = useState(false);
   const [lockMode, setLockMode] = useState('none'); // none | fs (fullscreen) | pseudo (tanpa fullscreen)
   const lockModeRef = useRef('none');
   const timerRef = useRef(null);
   const locked = lockMode !== 'none';
 
   const setLock = (mode) => { lockModeRef.current = mode; setLockMode(mode); };
+
+  // Pelanggaran (pindah tab/keluar kunci) disimpan agar tidak hilang saat refresh
+  useEffect(() => {
+    localStorage.setItem(`jarkomlab_${storageKey}_warns`, String(tabWarns));
+  }, [tabWarns, storageKey]);
 
   // Kunci layar: fullscreen + sembunyikan sidebar/topbar agar siswa tidak membuka materi lain
   useEffect(() => {
@@ -196,8 +204,11 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
     localStorage.removeItem(`jarkomlab_${storageKey}_order`);
     localStorage.removeItem(`jarkomlab_${storageKey}_deadline`);
     localStorage.removeItem(`jarkomlab_${storageKey}_startedAt`);
+    localStorage.removeItem(`jarkomlab_${storageKey}_warns`);
     forceUnlock();
     setTabWarns(0);
+    setUnlockInput('');
+    setUnlockError(false);
     setAnswers({});
     setCurrentIdx(0);
     setSubmitted(false);
@@ -309,6 +320,49 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
     );
   }
 
+  // Ujian terkunci setelah 3× pelanggaran (pindah tab/keluar kunci) — dibuka guru via Kode Buka Akses
+  const identity = getIdentity();
+  const blocked = !submitted && identity && identity.nis && tabWarns >= 3;
+  if (blocked) {
+    const expected = unlockCode(identity.nis, storageKey);
+    const handleUnlock = (e) => {
+      e.preventDefault();
+      if (unlockInput.trim().toUpperCase() === expected) {
+        setTabWarns(0);
+        setUnlockError(false);
+        setUnlockInput('');
+      } else {
+        setUnlockError(true);
+        setUnlockInput('');
+      }
+    };
+    return (
+      <div className="quiz-locked" role="alertdialog" aria-modal="true" aria-label="Ujian dikunci">
+        <div className="quiz-locked-icon"><Lock size={30} /></div>
+        <h2>Ujian Dikunci</h2>
+        <p>Terlalu sering pindah tab / keluar dari kunci layar (3×). Soal dikunci untuk mencegah kecurangan.</p>
+        <p className="quiz-locked-hint">
+          Minta <strong>Kode Buka Akses</strong> ke guru untuk NIS <strong>{identity.nis}</strong> — guru
+          membukanya lewat tombol <em>"Buka Akses"</em> di halaman Rekap Nilai.
+        </p>
+        <form onSubmit={handleUnlock} noValidate>
+          <input
+            type="text" value={unlockInput} autoFocus
+            className="calc-input quiz-token-input"
+            placeholder="Kode buka akses dari guru"
+            aria-label="Kode buka akses dari guru"
+            autoComplete="off"
+            onChange={(e) => { setUnlockInput(e.target.value.toUpperCase()); setUnlockError(false); }}
+          />
+          {unlockError && <p className="identity-error">Kode salah. Minta kode yang benar ke guru.</p>}
+          <button className="btn btn-primary" type="submit" style={{ width: '100%', justifyContent: 'center' }}>
+            <Lock size={16} /> Buka Akses
+          </button>
+        </form>
+      </div>
+    );
+  }
+
   // Quiz in progress
   const timerM = Math.floor(secondsLeft / 60);
   const timerS = secondsLeft % 60;
@@ -326,7 +380,7 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
       )}
       {tabWarns > 0 && (
         <div className={`quiz-tab-warning ${tabWarns >= 3 ? 'critical' : ''}`} role="alert">
-          <AlertTriangle size={15} /> Pindah tab/keluar layar terdeteksi ({tabWarns}×) — ini dicatat dan bisa dianggap mencurangi ujian.
+          <AlertTriangle size={15} /> Pindah tab/keluar layar terdeteksi ({tabWarns}×) — soal akan dikunci otomatis setelah 3× dan hanya bisa dibuka guru.
         </div>
       )}
       <div className="quiz-header">

@@ -220,6 +220,17 @@ export function getRekapPin() {
   return (fromEnv && String(fromEnv).trim()) || '2468';
 }
 
+/** Kode buka akses untuk membuka ujian yang terkunci karena pelanggaran anti-contek.
+ *  Dihitung dari NIS + modul + PIN guru → hanya guru yang bisa membuatnya (tombol
+ *  "Buka Akses" di Rekap) dan diverifikasi di perangkat siswa tanpa server. */
+export function unlockCode(nis, modulKey) {
+  const secret = getRekapPin();
+  const str = `${nis}:${modulKey}:${secret}`;
+  let h = 5381;
+  for (let i = 0; i < str.length; i++) h = Math.imul(h, 33) + str.charCodeAt(i);
+  return Math.abs(h).toString(36).toUpperCase().padStart(6, '0').slice(0, 6);
+}
+
 // ============ ROSTER SISWA (lokal saja, untuk rekap) ============
 /** Daftar siswa {nis, nama, kelas} — disimpan lokal guru, tidak dikirim ke server. */
 export function getRoster() {

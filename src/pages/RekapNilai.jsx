@@ -27,6 +27,7 @@ import {
   getRoster,
   saveRoster,
   clearRoster,
+  unlockCode,
 } from '../lib/examLib';
 
 function predikat(avg) {
@@ -131,6 +132,7 @@ export default function RekapNilai() {
   const [source, setSource] = useState('server');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
+  const [unlockSel, setUnlockSel] = useState(null); // { nis, nama } daftar Kode Buka Akses
   const [q, setQ] = useState('');
   const [kelasSel, setKelasSel] = useState('');
   const [roster, setRoster] = useState(() => getRoster());
@@ -291,6 +293,17 @@ export default function RekapNilai() {
     setMessage('Roster siswa dihapus.');
   };
 
+  const copyUnlock = async (modul) => {
+    if (!unlockSel) return;
+    const code = unlockCode(unlockSel.nis, modul.key);
+    try {
+      await navigator.clipboard.writeText(code);
+      setMessage(`Kode buka akses ${modul.label} (${code}) disalin.`);
+    } catch {
+      setMessage(`Kode buka akses ${modul.label}: ${code}`);
+    }
+  };
+
   return (
     <div className="section-block" style={{ maxWidth: 920, margin: '0 auto' }}>
       <div className="materi-card">
@@ -427,17 +440,17 @@ export default function RekapNilai() {
               <tr>
                 <th>No</th><th>Nama</th><th>NIS</th><th>Kelas</th>
                 <th>Modul 1</th><th>Modul 2</th><th>Modul 3</th>
-                <th>Rata-rata</th><th>Predikat</th><th>Status</th><th>Durasi</th>
+                <th>Rata-rata</th><th>Predikat</th><th>Status</th><th>Durasi</th><th>Akses</th>
               </tr>
             </thead>
             <tbody>
               {effective.length === 0 && (
-                <tr><td colSpan={11} style={{ textAlign: 'center', padding: 30, color: 'var(--text-lighter)' }}>
+                <tr><td colSpan={12} style={{ textAlign: 'center', padding: 30, color: 'var(--text-lighter)' }}>
                   Belum ada data. Siswa yang sudah submit Post Test modul akan muncul di sini.
                 </td></tr>
               )}
               {effective.length > 0 && filtered.length === 0 && (
-                <tr><td colSpan={11} style={{ textAlign: 'center', padding: 30, color: 'var(--text-lighter)' }}>
+                <tr><td colSpan={12} style={{ textAlign: 'center', padding: 30, color: 'var(--text-lighter)' }}>
                   Tidak ada siswa yang cocok dengan pencarian/filter.
                 </td></tr>
               )}
@@ -463,6 +476,11 @@ export default function RekapNilai() {
                     {r.status === 'selesai' ? 'Selesai' : r.status === 'sebagian' ? 'Sebagian' : 'Belum'}
                   </span></td>
                   <td className="td-dur">{r.durTotal != null ? `±${r.durTotal} mnt` : '—'}</td>
+                  <td className="rekap-access">
+                    <button type="button" className="btn btn-secondary btn-sm" onClick={() => setUnlockSel({ nis: r.nis, nama: r.nama })}>
+                      <KeyRound size={13} /> Buka Akses
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -481,6 +499,30 @@ export default function RekapNilai() {
         <p className="sync-note no-print" style={{ marginTop: 16 }}>
           <CloudCog size={14} style={{ verticalAlign: 'middle' }} /> Retake dikunci server (NIS tidak bisa submit dua kali di modul yang sama).
         </p>
+
+        {unlockSel && (
+          <div className="unlock-modal-overlay" onClick={() => setUnlockSel(null)}>
+            <div className="unlock-modal" role="dialog" aria-modal="true" aria-label="Kode buka akses" onClick={(e) => e.stopPropagation()}>
+              <h3>Buka Akses Ujian</h3>
+              <p>
+                <strong>{unlockSel.nama}</strong> · NIS <strong>{unlockSel.nis}</strong>
+                <br />Berikan kode sesuai modul yang terkunci. Siswa memasukkannya di layar "Ujian Dikunci".
+              </p>
+              {MODUL_META.map((m) => (
+                <div key={m.key} className="unlock-row">
+                  <span>{m.label}</span>
+                  <code>{unlockCode(unlockSel.nis, m.key)}</code>
+                  <button type="button" className="btn btn-secondary btn-sm" onClick={() => copyUnlock(m)} aria-label={`Salin kode ${m.label}`}>
+                    <Copy size={13} /> Salin
+                  </button>
+                </div>
+              ))}
+              <button type="button" className="btn btn-secondary" style={{ width: '100%', justifyContent: 'center', marginTop: 14 }} onClick={() => setUnlockSel(null)}>
+                Tutup
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
