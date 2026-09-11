@@ -438,9 +438,9 @@ export default function RekapNilai() {
           <table className="rekap-table">
             <thead>
               <tr>
-                <th>No</th><th>Nama</th><th>NIS</th><th>Kelas</th>
+                <th>No</th><th>Nama</th><th>NIS</th><th>Kelas</th><th>Akses</th>
                 <th>Modul 1</th><th>Modul 2</th><th>Modul 3</th>
-                <th>Rata-rata</th><th>Predikat</th><th>Status</th><th>Durasi</th><th>Akses</th>
+                <th>Rata-rata</th><th>Predikat</th><th>Status</th><th>Durasi</th>
               </tr>
             </thead>
             <tbody>
@@ -460,6 +460,11 @@ export default function RekapNilai() {
                   <td style={{ fontWeight: 600 }}>{r.nama}</td>
                   <td className="rekap-nis">{r.nis}</td>
                   <td className="rekap-kelas">{r.kelas || '—'}</td>
+                  <td className="rekap-access">
+                    <button type="button" className="btn btn-secondary btn-sm" onClick={() => setUnlockSel({ nis: r.nis, nama: r.nama })}>
+                      <KeyRound size={13} /> Buka Akses
+                    </button>
+                  </td>
                   {r.vals.map((v, j) => (
                     <td key={j} className={v == null ? 'td-muted' : ''}>
                       {v ?? '—'}
@@ -476,11 +481,6 @@ export default function RekapNilai() {
                     {r.status === 'selesai' ? 'Selesai' : r.status === 'sebagian' ? 'Sebagian' : 'Belum'}
                   </span></td>
                   <td className="td-dur">{r.durTotal != null ? `±${r.durTotal} mnt` : '—'}</td>
-                  <td className="rekap-access">
-                    <button type="button" className="btn btn-secondary btn-sm" onClick={() => setUnlockSel({ nis: r.nis, nama: r.nama })}>
-                      <KeyRound size={13} /> Buka Akses
-                    </button>
-                  </td>
                 </tr>
               ))}
             </tbody>
@@ -497,7 +497,8 @@ export default function RekapNilai() {
         )}
 
         <p className="sync-note no-print" style={{ marginTop: 16 }}>
-          <CloudCog size={14} style={{ verticalAlign: 'middle' }} /> Retake dikunci server (NIS tidak bisa submit dua kali di modul yang sama).
+          <CloudCog size={14} style={{ verticalAlign: 'middle' }} /> Retake dikunci server (NIS tidak bisa submit dua kali di modul yang sama).<br />
+          <KeyRound size={14} style={{ verticalAlign: 'middle' }} /> Tombol <strong>Buka Akses</strong> (kolom Akses) membuat kode untuk membuka kembali ujian siswa yang terkunci karena 3× pelanggaran anti-contek.
         </p>
 
         {unlockSel && (
