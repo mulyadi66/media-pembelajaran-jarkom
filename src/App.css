@@ -927,6 +927,18 @@ a { text-decoration: none; color: inherit; }
 
 .quiz-lock-btn { white-space: nowrap; }
 
+.lock-pseudo-bar {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  background: #ecfdf5; border: 1px solid #a7f3d0; color: #047857;
+  border-radius: 10px; padding: 8px 12px; font-size: 0.8rem; font-weight: 600;
+  margin-bottom: 12px;
+}
+.lock-pseudo-exit {
+  margin-left: auto; border: none; background: transparent; color: var(--danger);
+  font-weight: 700; font-size: 0.78rem; font-family: inherit; cursor: pointer; padding: 4px 8px;
+}
+
 /* Mode kunci layar saat ujian: fullscreen + sembunyikan navigasi anti-contek */
 html.exam-lock-active .sidebar,
 html.exam-lock-active .topbar,

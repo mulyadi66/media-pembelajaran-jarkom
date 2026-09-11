@@ -41,10 +41,56 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
   const [token, setToken] = useState('');
   const [tokenError, setTokenError] = useState(false);
   const [tabWarns, setTabWarns] = useState(0);
-  const [locked, setLocked] = useState(false);
-  const [lockError, setLockError] = useState('');
-  const lockedRef = useRef(false);
+  const [lockMode, setLockMode] = useState('none'); // none | fs (fullscreen) | pseudo (tanpa fullscreen)
+  const lockModeRef = useRef('none');
   const timerRef = useRef(null);
+  const locked = lockMode !== 'none';
+
+  const setLock = (mode) => { lockModeRef.current = mode; setLockMode(mode); };
+
+  // Kunci layar: fullscreen + sembunyikan sidebar/topbar agar siswa tidak membuka materi lain
+  useEffect(() => {
+    document.documentElement.classList.toggle('exam-lock-active', locked);
+    return () => document.documentElement.classList.remove('exam-lock-active');
+  }, [locked]);
+
+  useEffect(() => {
+    const onFs = () => {
+      const full = !!document.fullscreenElement;
+      if (full) {
+        setLock('fs'); // masuk fullscreen (mis. lewat pintasan browser)
+      } else if (lockModeRef.current === 'fs') {
+        if (!submitted) setTabWarns(w => w + 1);
+        setLock('none'); // keluar fullscreen = pelanggaran
+      }
+    };
+    document.addEventListener('fullscreenchange', onFs);
+    return () => document.removeEventListener('fullscreenchange', onFs);
+  }, [submitted]);
+
+  // Keluar kunci layar (submit/retry) tanpa dihitung pelanggaran
+  const forceUnlock = () => {
+    if (document.fullscreenElement) document.exitFullscreen().catch(() => setLock('none'));
+    setLock('none');
+  };
+
+  const toggleLock = async () => {
+    if (lockMode === 'fs') { try { await document.exitFullscreen(); } catch { setLock('none'); } return; }
+    if (lockMode === 'pseudo') {
+      if (!submitted) setTabWarns(w => w + 1); // keluar dari kunci = pelanggaran
+      setLock('none');
+      return;
+    }
+    const el = document.documentElement;
+    if (typeof el.requestFullscreen === 'function') {
+      try {
+        await el.requestFullscreen();
+        setLock('fs'); // masuk fullscreen
+        return;
+      } catch { /* tak diizinkan → fallback pseudo di bawah */ }
+    }
+    setLock('pseudo'); // iPhone/iPad Safari: kunci tanpa dukungan fullscreen
+  };
 
   const qs = shuffledQs;
   const q = qs[currentIdx];
@@ -55,7 +101,7 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
     clearInterval(timerRef.current);
     localStorage.setItem(`jarkomlab_${storageKey}_submitted`, 'true');
     setSubmitted(true);
-    if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+    forceUnlock();
     let correct = 0;
     qs.forEach((q, i) => { if (answers[i] === q.answer) correct++; });
     const score = Math.round((correct / total) * 100);
@@ -118,41 +164,6 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
     };
   }, [submitted, examStarted]);
 
-  // Kunci layar: fullscreen + sembunyikan sidebar/topbar agar siswa tidak membuka materi lain
-  useEffect(() => {
-    document.documentElement.classList.toggle('exam-lock-active', locked);
-    return () => document.documentElement.classList.remove('exam-lock-active');
-  }, [locked]);
-
-  useEffect(() => {
-    const onFs = () => {
-      const full = !!document.fullscreenElement;
-      setLocked(full);
-      if (!full && lockedRef.current && !submitted) setTabWarns(w => w + 1);
-      lockedRef.current = full;
-    };
-    document.addEventListener('fullscreenchange', onFs);
-    return () => document.removeEventListener('fullscreenchange', onFs);
-  }, [submitted]);
-
-  const toggleLock = async () => {
-    setLockError('');
-    if (document.fullscreenElement) {
-      try { await document.exitFullscreen(); } catch { /* abaikan */ }
-      return;
-    }
-    const el = document.documentElement;
-    if (!el.requestFullscreen) {
-      setLockError('Browser/sistem tidak mendukung fullscreen — kunci layar tidak aktif.');
-      return;
-    }
-    try {
-      await el.requestFullscreen();
-    } catch {
-      setLockError('Gagal masuk fullscreen. Klik tombol lagi.');
-    }
-  };
-
   // Catat waktu mulai ujian (untuk durasi pengerjaan di Rekap)
   useEffect(() => {
     if (submitted || !examStarted) return;
@@ -171,9 +182,8 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
     localStorage.removeItem(`jarkomlab_${storageKey}_order`);
     localStorage.removeItem(`jarkomlab_${storageKey}_deadline`);
     localStorage.removeItem(`jarkomlab_${storageKey}_startedAt`);
-    if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+    forceUnlock();
     setTabWarns(0);
-    setLockError('');
     setAnswers({});
     setCurrentIdx(0);
     setSubmitted(false);
@@ -293,12 +303,10 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
     <div className="quiz-container">
       {locked && (
         <div className="lock-banner" role="status">
-          <Lock size={15} /> Layar terkunci — sidebar & navigasi disembunyikan. Jangan tekan <strong>Esc</strong> selama ujian.
-        </div>
-      )}
-      {lockError && (
-        <div className="quiz-tab-warning" role="alert">
-          <AlertTriangle size={15} /> {lockError}
+          <Lock size={15} />
+          {lockMode === 'fs'
+            ? <>Layar terkunci (fullscreen) — navigasi disembunyikan. Jangan tekan <strong>Esc</strong> selama ujian.</>
+            : <>Layar terkunci — semua materi & navigasi lain disembunyikan.</>}
         </div>
       )}
       {tabWarns > 0 && (
@@ -320,6 +328,14 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
           </div>
         </div>
       </div>
+
+      {lockMode === 'pseudo' && (
+        <div className="lock-pseudo-bar" role="status">
+          <Lock size={14} />
+          <span>Kunci tanpa fullscreen aktif — menu & materi lain disembunyikan.</span>
+          <button type="button" className="lock-pseudo-exit" onClick={toggleLock}>Keluar Kunci</button>
+        </div>
+      )}
 
       <div className="quiz-dots" role="tablist" aria-label="Navigasi soal">
         {qs.map((_, i) => (
