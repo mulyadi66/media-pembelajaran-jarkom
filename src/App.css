@@ -651,6 +651,19 @@ a { text-decoration: none; color: inherit; }
 .btn-sm { padding: 5px 9px; font-size: 0.74rem; border-radius: 8px; white-space: nowrap; }
 .rekap-access { text-align: center; white-space: nowrap; }
 
+.rekap-unlock-manual {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  margin: 10px 0; padding: 10px 12px;
+  border: 1px dashed var(--border); border-radius: 10px;
+  background: var(--sim-card); color: var(--text-light); font-size: 0.82rem;
+}
+.rekap-unlock-manual input {
+  flex: 1; min-width: 220px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 10px;
+  padding: 8px 10px; color: var(--text); font-size: 0.88rem; font-family: inherit; outline: none;
+}
+.rekap-unlock-manual input:focus { border-color: var(--primary); }
+
 .unlock-modal-overlay {
   position: fixed; inset: 0; z-index: 1000;
   background: rgba(15, 23, 42, 0.45);

@@ -133,6 +133,7 @@ export default function RekapNilai() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const [unlockSel, setUnlockSel] = useState(null); // { nis, nama } daftar Kode Buka Akses
+  const [manualNis, setManualNis] = useState('');
   const [q, setQ] = useState('');
   const [kelasSel, setKelasSel] = useState('');
   const [roster, setRoster] = useState(() => getRoster());
@@ -304,6 +305,13 @@ export default function RekapNilai() {
     }
   };
 
+  const openManual = () => {
+    const nis = manualNis.trim();
+    if (nis.length < 3) return;
+    const found = baseRowset.find(r => String(r.nis) === nis);
+    setUnlockSel({ nis, nama: found ? found.nama : `Siswa NIS ${nis}` });
+  };
+
   return (
     <div className="section-block" style={{ maxWidth: 920, margin: '0 auto' }}>
       <div className="materi-card">
@@ -424,6 +432,20 @@ export default function RekapNilai() {
           </span>
         </div>
 
+        <div className="rekap-unlock-manual no-print">
+          <KeyRound size={14} />
+          <input
+            type="text" inputMode="numeric" value={manualNis}
+            placeholder="NIS siswa yang ujiannya terkunci (belum tentu tampil di tabel), mis. 2903039"
+            aria-label="NIS siswa terkunci untuk dibuatkan kode buka akses"
+            onChange={(e) => { setManualNis(e.target.value.replace(/\D/g, '')); }}
+            onKeyDown={(e) => { if (e.key === 'Enter') openManual(); }}
+          />
+          <button type="button" className="btn btn-secondary btn-sm" onClick={openManual} disabled={manualNis.length < 3}>
+            <KeyRound size={13} /> Buat Kode Buka Akses
+          </button>
+        </div>
+
         {source === 'local' && (
           <div className="pause-note no-print">
             <CloudOff size={16} />
@@ -498,7 +520,7 @@ export default function RekapNilai() {
 
         <p className="sync-note no-print" style={{ marginTop: 16 }}>
           <CloudCog size={14} style={{ verticalAlign: 'middle' }} /> Retake dikunci server (NIS tidak bisa submit dua kali di modul yang sama).<br />
-          <KeyRound size={14} style={{ verticalAlign: 'middle' }} /> Tombol <strong>Buka Akses</strong> (kolom Akses) membuat kode untuk membuka kembali ujian siswa yang terkunci karena 3× pelanggaran anti-contek.
+          <KeyRound size={14} style={{ verticalAlign: 'middle' }} /> <strong>Buka Akses</strong>: klik tombol di kolom Akses, atau ketik NIS siswa yang sedang terkunci di kotak <em>"Buat Kode Buka Akses"</em> di atas (siswa yang belum submit memang belum tampil di tabel).
         </p>
 
         {unlockSel && (
