@@ -102,7 +102,7 @@ function parseRosterText(text) {
       const p = l.split(/[;,\t]/).map(s => s.trim());
       return { nis: p[0] || '', nama: p[1] || '', kelas: p[2] || '' };
     })
-    .filter(s => /^\d{4,10}$/.test(s.nis) && s.nama);
+    .filter(s => /^\d{4,12}$/.test(s.nis) && s.nama);
 }
 
 function exportCSV(rows) {

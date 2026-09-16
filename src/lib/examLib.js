@@ -45,7 +45,7 @@ export function clearIdentity() {
 export function getIdentityError({ nama, nis }) {
   if (!nama || !nama.trim()) return 'Nama wajib diisi.';
   if (!nis || !String(nis).trim()) return 'NIS wajib diisi.';
-  if (!/^\d{4,10}$/.test(String(nis).trim())) return 'NIS harus berupa angka 4–10 digit (tanpa spasi/titik).';
+  if (!/^\d{4,12}$/.test(String(nis).trim())) return 'NIS harus berupa angka 4–12 digit (tanpa spasi/titik).';
   return null;
 }
 

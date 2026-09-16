@@ -61,11 +61,11 @@ function IdentityForm({ initial, onSubmit, onCancel }) {
         />
       </label>
       <label className="identity-field">
-        <span>NIS (4–10 digit angka)</span>
+        <span>NIS (4–12 digit angka)</span>
         <input
           type="text" inputMode="numeric" value={nis}
-          onChange={(e) => { setNis(e.target.value.replace(/[^\d]/g, '')); setError(null); }}
-          placeholder="contoh: 20241234" maxLength={10}
+          placeholder="contoh: 202412345678" maxLength={12}
+          onChange={(e) => { setNis(e.target.value); setError(null); }}
         />
       </label>
       <label className="identity-field">
