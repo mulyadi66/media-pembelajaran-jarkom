@@ -367,7 +367,7 @@ export default function RekapNilai() {
               className="roster-textarea" rows={5}
               value={rosterText}
               onChange={(e) => setRosterText(e.target.value)}
-              placeholder={'Format satu baris per siswa: NIS;Nama;Kelas\n20241234;Ahmad Fauzi;XI TJKT 1\n20241235;Siti Aminah;XI TJKT 1'}
+              placeholder={'Format satu baris per siswa: NIS;Nama;Kelas\n20241234;Ahmad Fauzi;X TJKT 1\n20241235;Siti Aminah;X TJKT 1'}
               aria-label="Daftar siswa NIS;Nama;Kelas"
             />
             <div className="roster-actions">

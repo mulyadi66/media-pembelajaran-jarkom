@@ -58,16 +58,16 @@ export default [
   },
   {
     id: 5, level: 'C4 - Menganalisis', elemen: 'Elemen 4',
-    question: 'Jumlah siswa: XI TJKT 1 = 12 orang, XI TJKT 2 = 15 orang, XI TJKT 3 = 14 orang. Kesimpulan yang benar adalah.',
+    question: 'Jumlah siswa: X TJKT 1 = 12 orang, X TJKT 2 = 15 orang, X TJKT 3 = 14 orang. Kesimpulan yang benar adalah.',
     options: [
-      'A. XI TJKT 2 paling banyak siswanya',
-      'B. XI TJKT 1 paling banyak siswanya',
+      'A. X TJKT 2 paling banyak siswanya',
+      'B. X TJKT 1 paling banyak siswanya',
       'C. Semua kelas sama banyak siswanya',
-      'D. XI TJKT 3 paling banyak siswanya',
+      'D. X TJKT 3 paling banyak siswanya',
       'E. Data tersebut tidak bisa dianalisis',
     ],
     answer: 0,
-    explanation: 'XI TJKT 2 memiliki 15 siswa, paling banyak dibanding 12 dan 14, sehingga kelas tersebut paling banyak siswanya.',
+    explanation: 'X TJKT 2 memiliki 15 siswa, paling banyak dibanding 12 dan 14, sehingga kelas tersebut paling banyak siswanya.',
   },
   {
     id: 6, level: 'C2 - Memahami', elemen: 'Elemen 4',
@@ -253,7 +253,7 @@ export default [
   },
   {
     id: 20, level: 'C3 - Menerapkan', elemen: 'Elemen 4',
-    question: 'Dari 40 siswa kelas XI, 15 siswa membeli makan siang di kantin sekolah. Persentase siswa tersebut adalah.',
+    question: 'Dari 40 siswa kelas X, 15 siswa membeli makan siang di kantin sekolah. Persentase siswa tersebut adalah.',
     options: [
       'A. 15 persen',
       'B. 25 persen',

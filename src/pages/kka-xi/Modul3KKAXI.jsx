@@ -102,8 +102,8 @@ export default function Modul3KKAXI() {
         return sum(self.nilai) / len(self.nilai)
 
 # Membuat objek dari class Siswa
-siswa1 = Siswa("Budi", "XI TJKT")
-siswa2 = Siswa("Andi", "XI TJKT")
+siswa1 = Siswa("Budi", "X TJKT")
+siswa2 = Siswa("Andi", "X TJKT")
 
 siswa1.tambah_nilai(85)
 siswa1.tambah_nilai(90)
@@ -138,8 +138,8 @@ print(Siswa.sekolah)       # Output: SMKN 2 Kuningan`}
         return sum(self.nilai) / len(self.nilai)
 
 # Membuat objek
-siswa1 = Siswa("Budi", "XI TJKT")
-siswa2 = Siswa("Andi", "XI TJKT")
+siswa1 = Siswa("Budi", "X TJKT")
+siswa2 = Siswa("Andi", "X TJKT")
 
 print(siswa1.perkenalan())
 print(siswa2.perkenalan())
@@ -255,10 +255,10 @@ class Guru(Manusia):  # Guru juga mewarisi dari Manusia
     def mengajar(self):
         return f"Pak/Bu {self.nama} sedang mengajar {self.mata_pelajaran}"
 
-siswa = Siswa("Budi", 16, "XI TJKT")
+siswa = Siswa("Budi", 16, "X TJKT")
 guru = Guru("Pak Andi", 35, "Pemrograman")
 
-print(siswa.perkenalan())  # Output: Saya Budi, siswa kelas XI TJKT
+print(siswa.perkenalan())  # Output: Saya Budi, siswa kelas X TJKT
 print(guru.perkenalan())   # Output: Saya Pak Andi, umur 35 tahun
 print(siswa.belajar("Python"))  # Output: Budi sedang belajar Python`}
         </pre>
@@ -297,7 +297,7 @@ class Guru(Manusia):
     def mengajar(self):
         return f"Pak/Bu {self.nama} sedang mengajar {self.mata_pelajaran}"
 
-siswa = Siswa("Budi", 16, "XI TJKT")
+siswa = Siswa("Budi", 16, "X TJKT")
 guru = Guru("Pak Andi", 35, "Pemrograman")
 
 print(siswa.perkenalan())  # Override!

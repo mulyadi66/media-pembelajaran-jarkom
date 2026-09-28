@@ -212,7 +212,7 @@ export default function Modul1KKAXI() {
         <p>Personal branding adalah usaha sadar untuk membangun citra diri di dunia digital agar dikenal dengan keahlian dan minat tertentu. Bagi siswa SMK, personal branding yang baik dapat membuka peluang magang, beasiswa, dan karir.</p>
         <h3 style={{marginTop: 12}}>Platform untuk Personal Branding:</h3>
         <ul>
-          <li><strong>LinkedIn</strong> — Platform profesional untuk terhubung dengan perusahaan dan rekruter. Tips: gunakan foto profesional, tulis bio yang menjual (contoh: "Siswa XI TJKT | Tertarik di Networking & Cybersecurity | Sedang belajar Python"), unggah proyek dan sertifikasi.</li>
+          <li><strong>LinkedIn</strong> — Platform profesional untuk terhubung dengan perusahaan dan rekruter. Tips: gunakan foto profesional, tulis bio yang menjual (contoh: "Siswa X TJKT | Tertarik di Networking & Cybersecurity | Sedang belajar Python"), unggah proyek dan sertifikasi.</li>
           <li><strong>GitHub</strong> — Portofolio untuk siswa yang belajar coding. Unggah proyek-proyek sekolah, buat README yang baik, dan tunjukkan aktivitas coding (commit history).</li>
           <li><strong>Blog/Website Pribadi</strong> — Showcase tulisan, tutorial, atau portofolio. Bisa menggunakan platform gratis seperti WordPress, Medium, atau GitHub Pages.</li>
           <li><strong>Portofolio Digital</strong> — Kumpulan karya terbaik (desain, coding, tulisan, video) yang bisa diakses melalui satu link. Gunakan Canva, Figma, atau website pribadi untuk membuatnya.</li>
@@ -260,7 +260,7 @@ export default function Modul1KKAXI() {
               '(c) Reputasi digital: Saat calon majikan atau guru Googling nama Rina, mereka akan menemukan: (1) postingan yang menunjukkan lokasi real-time (risiko keamanan), (2) komentar pedas yang bisa mencerminkan karakter negatif, (3) tidak ada konten yang menunjukkan keahlian atau prestasi. Profil Rina tidak akan terlihat profesional di mata rekruter.'
             ]
           },
-          { soal: 'Berikut adalah dua profil LinkedIn siswa SMK:\n\nProfil A: Foto selfie di kamar, bio kosong, tidak ada pengalaman atau proyek yang dicantumkan. Username: "ganteng_skm4n1".\n\nProfil B: Foto profesional dengan latar bersih, bio: "Siswa XI TJKT SMKN 2 Kuningan | Tertarik di Networking & Cybersecurity | Sedang belajar Python & Linux | GitHub: @budi-dev", sertakan 3 proyek GitHub dengan screenshot hasil kerja.\n\nSeorang rekruter IT sedang mencari calon magang. Profil mana yang lebih menarik perhatiannya? Jelaskan 5 alasan berdasarkan prinsip personal branding!',
+          { soal: 'Berikut adalah dua profil LinkedIn siswa SMK:\n\nProfil A: Foto selfie di kamar, bio kosong, tidak ada pengalaman atau proyek yang dicantumkan. Username: "ganteng_skm4n1".\n\nProfil B: Foto profesional dengan latar bersih, bio: "Siswa X TJKT SMKN 2 Kuningan | Tertarik di Networking & Cybersecurity | Sedang belajar Python & Linux | GitHub: @budi-dev", sertakan 3 proyek GitHub dengan screenshot hasil kerja.\n\nSeorang rekruter IT sedang mencari calon magang. Profil mana yang lebih menarik perhatiannya? Jelaskan 5 alasan berdasarkan prinsip personal branding!',
             penyelesaian: [
               'Profil B jelas lebih menarik. Berikut 5 alasannya:',
               '1. Foto Profesional: Profil B menggunakan foto yang layak untuk konteks profesional, menunjukkan keseriusan. Profil A menggunakan selfie yang tidak profesional.',

@@ -73,7 +73,7 @@ function IdentityForm({ initial, onSubmit, onCancel }) {
         <input
           type="text" value={kelas}
           onChange={(e) => { setKelas(e.target.value); setError(null); }}
-          placeholder="contoh: XI TJKT 1" maxLength={40}
+          placeholder="contoh: X TJKT 1" maxLength={40}
         />
       </label>
       <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>

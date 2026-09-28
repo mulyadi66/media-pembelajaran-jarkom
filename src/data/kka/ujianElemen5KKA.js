@@ -204,7 +204,7 @@ export default [
     question: 'Perintah yang paling tepat untuk meminta bantuan AI membuat mind map pelajaran adalah.',
     options: [
       'A. Buatkan mind map',
-      'B. Buatkan mind map tentang tiga cara belajar yang efektif untuk siswa kelas XI',
+      'B. Buatkan mind map tentang tiga cara belajar yang efektif untuk siswa kelas X',
       'C. Tolong dong yang bagus ya',
       'D. Mind map dong ya',
       'E. Buatkan mind map yang panjang sekali',
