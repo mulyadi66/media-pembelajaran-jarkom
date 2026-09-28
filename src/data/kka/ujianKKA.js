@@ -2,7 +2,7 @@
  * Index bank soal Ujian KKA.
  *
  * Ujian KKA dipecah menjadi 5 ujian terpisah, satu per elemen, masing-masing
- * 15 soal (total 75 soal). Setiap elemen punya kunci storage sendiri
+ * 25 soal (total 125 soal). Setiap elemen punya kunci storage sendiri
  * (kka_elemen1_ujian .. kka_elemen5_ujian) sehingga:
  * - siswa bisa mengerjakan elemen 1..5 secara bertahap;
  * - nilai tiap elemen tercatat terpisah di server dan rekap guru;
@@ -16,11 +16,11 @@ import elemen3 from './ujianElemen3KKA.js';
 import elemen4 from './ujianElemen4KKA.js';
 import elemen5 from './ujianElemen5KKA.js';
 
-/** Total soal seluruh elemen (5 x 15 = 75). */
-export const UJIAN_KKA_TOTAL = 75;
+/** Total soal seluruh elemen (5 x 25 = 125). */
+export const UJIAN_KKA_TOTAL = 125;
 
 /** Jumlah soal per elemen. */
-export const UJIAN_KKA_SOAL_PER_ELEMEN = 15;
+export const UJIAN_KKA_SOAL_PER_ELEMEN = 25;
 
 /**
  * Daftar ujian per elemen. `key` harus sama dengan KKA_META di src/lib/examLib.js

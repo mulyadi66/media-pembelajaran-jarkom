@@ -43,6 +43,10 @@ function buildRows(raw) {
   const map = new Map();
   for (const r of raw) {
     if (!r.nis || !r.nama) continue;
+    // fetchExamResults() mengembalikan hasil SEMUA mapel, jadi wajib dibatasi
+    // ke modul MPK 1. Tanpa filter ini, siswa KKA/DKK ikut muncul sebagai
+    // baris kosong (semua modul null) di tabel Rekap MPK 1.
+    if (!MODUL_META.some(m => m.key === r.modul)) continue;
     const item = map.get(String(r.nis)) || { nis: String(r.nis), nama: r.nama, kelas: '', values: {}, dur: {}, lastAt: null };
     item.nama = r.nama;
     if (r.kelas) item.kelas = r.kelas;
@@ -148,6 +152,7 @@ export default function RekapNilai() {
       if (error) {
         setMessage(`Gagal ambil data server: ${error}.`);
         setSource('local');
+        setRows(buildRows(getExamHistory()));
       } else {
         setRows(buildRows(data || []));
         setSource('server');
@@ -268,11 +273,11 @@ export default function RekapNilai() {
       }
       clearExamLocal();
       setMessage(res.deleted > 0
-        ? `Reset selesai — ${res.deleted} baris dihapus dari server. Siswa bisa mengerjakan ulang.`
-        : 'Reset selesai — server sudah kosong. Siswa bisa mengerjakan ulang.');
+        ? `Reset selesai — ${res.deleted} baris dihapus dari server. Siswa di perangkatnya harus menekan "Reset Identitas" agar bisa mengulang.`
+        : 'Reset selesai — server sudah kosong. Siswa di perangkatnya harus menekan "Reset Identitas" agar bisa mengulang.');
     } else {
       clearExamLocal();
-      setMessage('Reset selesai pada perangkat ini (data lokal dihapus).');
+      setMessage('Reset selesai pada perangkat ini (data lokal dihapus). Siswa di perangkatnya harus menekan "Reset Identitas" agar bisa mengulang.');
     }
     await load();
     setLoading(false);

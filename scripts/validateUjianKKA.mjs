@@ -6,14 +6,16 @@
  *
  * Jalankan: node scripts/validateUjianKKA.mjs
  */
-import { UJIAN_KKA, UJIAN_KKA_TOTAL, getUjianElemen } from '../src/data/kka/ujianKKA.js';
+import { UJIAN_KKA, UJIAN_KKA_TOTAL, UJIAN_KKA_SOAL_PER_ELEMEN, getUjianElemen } from '../src/data/kka/ujianKKA.js';
 
 const errors = [];
 const warnings = [];
 
 for (const bank of UJIAN_KKA) {
   const qs = bank.questions;
-  if (qs.length !== 15) errors.push(`${bank.slug}: jumlah soal ${qs.length}, harusnya 15`);
+  if (qs.length !== UJIAN_KKA_SOAL_PER_ELEMEN) {
+    errors.push(`${bank.slug}: jumlah soal ${qs.length}, harusnya ${UJIAN_KKA_SOAL_PER_ELEMEN}`);
+  }
 
   qs.forEach((q, i) => {
     const at = `${bank.slug}#${q.id ?? i}`;
@@ -64,7 +66,8 @@ for (const bank of UJIAN_KKA) {
     for (const t of texts) {
       const m = t.match(/[a-z]{2}[A-Z][a-z]{2}/g);
       if (m) {
-        const suspicious = m.filter((x) => !/hitungDiskon|getName|NameError|ZeroDivision|Traceback|SyntaxError|Link|Else|If|For|While|Return|Print/.test(x));
+        const allowed = ['hitungDiskon', 'hitungRataRata', 'getName', 'NameError', 'ZeroDivision', 'Traceback', 'SyntaxError', 'Link', 'Else', 'If', 'For', 'While', 'Return', 'Print'];
+        const suspicious = m.filter((x) => !allowed.some((w) => w.includes(x)));
         if (suspicious.length) {
           warnings.push(`${at}: camelCode mencurigakan -> ${suspicious.join(', ')}`);
         }
@@ -79,7 +82,7 @@ for (const bank of UJIAN_KKA) {
 
 const total = UJIAN_KKA.reduce((a, b) => a + b.questions.length, 0);
 if (total !== UJIAN_KKA_TOTAL) errors.push(`total soal ${total} tidak cocok UJIAN_KKA_TOTAL ${UJIAN_KKA_TOTAL}`);
-if (total !== 75) errors.push(`total soal harus 75, ditemukan ${total}`);
+if (total !== 125) errors.push(`total soal harus 125, ditemukan ${total}`);
 if (getUjianElemen(0) !== undefined && getUjianElemen(6) !== null) {
   errors.push('getUjianElemen(6) seharusnya null');
 }

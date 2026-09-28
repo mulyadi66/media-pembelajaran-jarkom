@@ -1,5 +1,5 @@
 /**
- * Bank soal Ujian KKA â€” Elemen 1: Berpikir Komputasional (15 soal, C2â€“C5).
+ * Bank soal Ujian KKA - Elemen 1: Berpikir Komputasional (25 soal, C2-C5).
  * Dipakai halaman ujian /kka/ujian/elemen1.
  * Opsi wajib berawalan "A. ", "B. ", ... karena Quiz memotong 3 karakter pertama.
  */
@@ -88,7 +88,7 @@ export default [
     options: [
       'A. Membeli barang lalu menyimpan struk',
       'B. Ambil harga barang, kalikan 0,9, tampilkan harga akhir',
-      'C. Menghitung secara rougly di kepala',
+      'C. Menghitung secara kasar di kepala',
       'D. Meminta tolong kasir untuk menghitung',
       'E. Mencatat nama barang yang dibeli',
     ],
@@ -198,5 +198,135 @@ export default [
     ],
     answer: 3,
     explanation: 'Algoritma yang tepat menggunakan dekomposisi dan pengenalan pola: telusuri tiap angka 1 sampai 10, uji apakah habis dibagi 2 (genap), lalu tampilkan yang memenuhi. Opsi C benar hasilnya, tetapi bukan algoritma umum yang menggambarkan cara berpikirnya.',
+  },
+  {
+    id: 16, level: 'C2 - Memahami', elemen: 'Elemen 1',
+    question: 'Dalam pemrograman, abstraksi berarti.',
+    options: [
+      'A. Menyembunyikan detail yang tidak penting dan hanya menampilkan bagian yang esensial',
+      'B. Menampilkan semua baris kode internal program agar mudah dihafal',
+      'C. Menghapus semua baris kode yang tidak berjalan',
+      'D. Mengganti setiap variabel dengan angka tetap',
+      'E. Menyalin kode dari program lain tanpa perubahan',
+    ],
+    answer: 0,
+    explanation: 'Abstraksi membuat program lebih ringkas untuk dibaca: detail yang tidak diperlukan disembunyikan, sedangkan bagian penting tetap terlihat. Contohnya fungsi yang menerima masukan dan mengembalikan hasil.',
+  },
+  {
+    id: 17, level: 'C2 - Memahami', elemen: 'Elemen 1',
+    question: 'Perulangan (loop) dalam pemrograman berguna untuk.',
+    options: [
+      'A. Menjalankan satu blok instruksi berulang kali tanpa menulis ulang kode yang sama',
+      'B. Menyimpan data sementara di dalam memori',
+      'C. Menampilkan pesan kesalahan kepada pengguna',
+      'D. Mengubah kode menjadi bahasa mesin',
+      'E. Menghapus semua variabel yang tidak dipakai',
+    ],
+    answer: 0,
+    explanation: 'Perulangan dipakai saat instruksi yang sama perlu dijalankan banyak kali. Ini merupakan pengenalan pola: pola berulang ditulis sekali di dalam blok perulangan.',
+  },
+  {
+    id: 18, level: 'C3 - Menerapkan', elemen: 'Elemen 1',
+    question: 'Tugas: "Hitung luas dan keliling persegi panjang dari panjang dan lebar yang dimasukkan pengguna". Sub-masalah kedua yang perlu diselesaikan adalah.',
+    options: [
+      'A. Mengganti nama program menjadi kotak',
+      'B. Menghitung luas dengan panjang dikali lebar',
+      'C. Menghapus semua instruksi lain',
+      'D. Mencetak semua program ke kertas',
+      'E. Menginstal aplikasi baru',
+    ],
+    answer: 1,
+    explanation: 'Dekomposisi memecah tugas menjadi: (1) menerima input panjang dan lebar, (2) menghitung luas, (3) menghitung keliling, (4) menampilkan hasil. Menghitung luas adalah sub-masalah kedua.',
+  },
+  {
+    id: 19, level: 'C3 - Menerapkan', elemen: 'Elemen 1',
+    question: 'Diberikan pseudocode: (1) mulai, (2) input angka, (3) jika angka habis dibagi 2 maka tampilkan "Genap", (4) selain itu tampilkan "Ganjil", (5) selesai. Algoritma ini berfungsi untuk.',
+    options: [
+      'A. Mengurutkan angka dari kecil ke besar',
+      'B. Mencari nilai terbesar dari daftar angka',
+      'C. Menghitung rata-rata semua angka',
+      'D. Menentukan apakah sebuah angka termasuk genap atau ganjil',
+      'E. Menghapus angka duplikat dari daftar',
+    ],
+    answer: 3,
+    explanation: 'Pseudocode tersebut hanya memeriksa satu angka lalu menampilkan keterangan genap atau ganjil, sehingga tujuannya adalah penentuan bilangan genap atau ganjil.',
+  },
+  {
+    id: 20, level: 'C3 - Menerapkan', elemen: 'Elemen 1',
+    question: 'Data penjualan buku di sekolah: Senin 10 buku, Selasa 20 buku, Rabu 30 buku, Kamis 40 buku. Angka berikutnya pada hari Jumat adalah.',
+    options: [
+      'A. 5 buku',
+      'B. 25 buku',
+      'C. 45 buku',
+      'D. 50 buku',
+      'E. 60 buku',
+    ],
+    answer: 3,
+    explanation: 'Pola penjualan naik 10 buku setiap hari (10, 20, 30, 40). Dengan pola yang sama, penjualan Jumat diperkirakan 50 buku.',
+  },
+  {
+    id: 21, level: 'C3 - Menerapkan', elemen: 'Elemen 1',
+    question: 'Saat membuat fungsi hitungRataRata, bagian yang perlu diketahui pemanggil fungsi adalah.',
+    options: [
+      'A. Nilai rata-rata yang dihasilkan fungsi',
+      'B. Perulangan di dalam fungsi',
+      'C. Baris kode yang menjumlahkan seluruh angka',
+      'D. Nama variabel sementara di dalam fungsi',
+      'E. Cara program dijalankan dari terminal',
+    ],
+    answer: 0,
+    explanation: 'Dengan abstraksi, pemanggil cukup mengetahui hasil fungsi, yaitu nilai rata-rata, tanpa perlu melihat perhitungan di dalamnya. Detail perulangan dan variabel lokal disembunyikan.',
+  },
+  {
+    id: 22, level: 'C4 - Menganalisis', elemen: 'Elemen 1',
+    question: 'Sebuah toko memakai program yang mengubah aturan diskon setiap bulan. Aturan penulisan program yang paling membuat perubahan mudah dilakukan adalah.',
+    options: [
+      'A. Menuliskan aturan diskon langsung di setiap baris kode yang berbeda',
+      'B. Memisahkan perhitungan diskon ke dalam satu fungsi atau variabel yang bernama jelas',
+      'C. Mengganti seluruh kode setiap awal bulan',
+      'D. Menghapus semua nama variabel agar kode lebih pendek',
+      'E. Menyalin kode ke lima berkas berbeda',
+    ],
+    answer: 1,
+    explanation: 'Abstraksi memisahkan bagian yang sering berubah (aturan diskon) dari bagian lain. Saat aturan berubah, cukup satu fungsi yang diperbarui, bukan seluruh baris kode.',
+  },
+  {
+    id: 23, level: 'C4 - Menganalisis', elemen: 'Elemen 1',
+    question: 'Dua siswa membuat algoritma untuk tugas yang sama. Algoritma A menuliskannya dalam satu panjang dan tidak memberi nama pada bagian-bagiannya, sedangkan algoritma B memecahnya menjadi beberapa langkah bernama jelas. Kesimpulan yang paling tepat adalah.',
+    options: [
+      'A. Algoritma A lebih baik karena tidak perlu dibagi menjadi langkah terpisah',
+      'B. Algoritma B lebih mudah diuji, diperbaiki, dan digunakan kembali karena dekomposisinya jelas',
+      'C. Kedua algoritma pasti menghasilkan nilai yang sama persis',
+      'D. Algoritma yang lebih panjang selalu lebih baik',
+      'E. Algoritma B tidak termasuk dekomposisi sama sekali',
+    ],
+    answer: 1,
+    explanation: 'Dekomposisi yang baik menghasilkan langkah-langkah bernama dan dapat diuji satu per satu. Hal itu memudahkan perbaikan kode, pengujian, dan pemakaian ulang program.',
+  },
+  {
+    id: 24, level: 'C5 - Menilai', elemen: 'Elemen 1',
+    question: 'Sebuah tim membuat program kasir. Ringkasan tertulis menyebut program "sudah jalan" tetapi tidak menjelaskan cara mengujinya. Penilaian paling tepat terhadap ringkasan tersebut adalah.',
+    options: [
+      'A. Ringkasan sudah cukup karena program dapat dijalankan',
+      'B. Ringkasan belum memenuhi syarat algoritma yang baik karena tidak dapat diuji dan langkahnya ambigu',
+      'C. Program harus selalu ditulis dalam bahasa tertentu',
+      'D. Ringkasan tidak perlu apa pun yang lain',
+      'E. Semua program kasir otomatis punya dekomposisi',
+    ],
+    answer: 1,
+    explanation: 'Algoritma yang baik langkahnya jelas, tidak ambigu, dan dapat diuji. Kalimat "sudah jalan" tidak menunjukkan langkah maupun cara menguji hasil, sehingga belum memenuhi syarat.',
+  },
+  {
+    id: 25, level: 'C5 - Menilai', elemen: 'Elemen 1',
+    question: 'Manakah pernyataan yang paling tepat menilai kualitas dekomposisi sebuah program?',
+    options: [
+      'A. Programnya memakai layar berwarna-warni dan animasi',
+      'B. Programnya sudah disalin ke semua komputer di sekolah',
+      'C. Programnya dapat dipecah menjadi bagian-bagian bernama jelas yang masing-masing dapat diuji dan dipakai ulang',
+      'D. Programnya memiliki baris kode sebanyak mungkin',
+      'E. Programnya memakai satu variabel untuk semua keperluan',
+    ],
+    answer: 2,
+    explanation: 'Kualitas dekomposisi terlihat dari pembagian masalah menjadi bagian yang jelas, dapat diuji sendiri, dan dapat dipakai ulang. Jumlah baris atau tampilan tidak menjadi ukuran kualitas.',
   },
 ];

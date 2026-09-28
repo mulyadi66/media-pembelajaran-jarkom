@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { NavLink, Link, Outlet, useLocation } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
+import { UJIAN_KKA_TOTAL, UJIAN_KKA_SOAL_PER_ELEMEN } from '../data/kka/ujianKKA.js';
 import DarkModeToggle from './DarkModeToggle';
 import StreakCounter from './StreakCounter';
 import {
@@ -143,7 +144,7 @@ const subjects = {
       { to: '/kka/challenge', icon: Zap, label: 'Latihan Cepat' },
       { to: '/kka/pretest', icon: ClipboardCheck, label: 'Pre-Test' },
       { to: '/kka/posttest', icon: FileText, label: 'Post-Test' },
-      { to: '/kka/ujian', icon: ClipboardCheck, label: 'Ujian KKA (5 x 15 soal)' },
+      { to: '/kka/ujian', icon: ClipboardCheck, label: `Ujian KKA (5 x ${UJIAN_KKA_SOAL_PER_ELEMEN} soal)` },
       { to: '/kka/rekap', icon: ClipboardList, label: 'Rekap Nilai (Guru)' },
       { to: '/kka/hasil', icon: BarChart3, label: 'Hasil & Sertifikat' },
       { to: '/kka/kasus', icon: Briefcase, label: 'Studi Kasus' },
@@ -163,7 +164,7 @@ const subjects = {
       '/kka/challenge': 'Latihan Cepat KKA',
       '/kka/pretest': 'Pre-Test KKA',
       '/kka/posttest': 'Post-Test KKA',
-      '/kka/ujian': 'Ujian KKA — 5 Ujian per Elemen (75 Soal)',
+      '/kka/ujian': `Ujian KKA — 5 Ujian per Elemen (${UJIAN_KKA_TOTAL} Soal)`,
       '/kka/rekap': 'Rekap Nilai Ujian KKA (Guru)',
       '/kka/hasil': 'Hasil & Sertifikat KKA',
       '/kka/kasus': 'Studi Kasus KKA',
@@ -183,7 +184,7 @@ const subjects = {
       '/kka/challenge': 'Latihan cepat KKA melawan waktu',
       '/kka/pretest': 'Uji pemahaman awal KKA',
       '/kka/posttest': 'Evaluasi pemahaman KKA. Target: ≥70',
-      '/kka/ujian': 'Lima ujian mandiri 15 soal per elemen, dengan token guru, identitas, timer, dan anti-contek',
+      '/kka/ujian': `Lima ujian mandiri ${UJIAN_KKA_SOAL_PER_ELEMEN} soal per elemen, dengan token guru, identitas, timer, dan anti-contek`,
       '/kka/rekap': 'Rekap nilai Ujian KKA per siswa (khusus guru)',
       '/kka/hasil': 'Ringkasan, pencapaian, dan sertifikat KKA',
       '/kka/kasus': 'Terapkan pemahaman KKA dalam permasalahan nyata',

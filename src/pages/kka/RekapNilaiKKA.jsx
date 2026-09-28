@@ -23,11 +23,13 @@ import {
   getExamToken,
   isSupabaseConfigured,
   resetExamResultsSubject,
+  clearExamLocalSubject,
   getRoster,
   saveRoster,
   clearRoster,
   unlockCode,
 } from '../../lib/examLib';
+import { UJIAN_KKA_SOAL_PER_ELEMEN } from '../../data/kka/ujianKKA.js';
 
 const SUBJECT = 'kka';
 const PIN_KEY = 'rekapPinKkaOk';
@@ -248,6 +250,18 @@ export default function RekapNilaiKKA() {
     }
   };
 
+  // Ekspor selalu mengikuti yang terlihat di tabel. Kalau tidak ada fallback ke
+  // seluruh data: guru yang mengetik nama yang salah mengira dia mengexpor
+  // semua siswa padahal hanya dapat 0 baris (atau sebaliknya).
+  const doExportCSV = () => {
+    if (!filtered.length) {
+      setMessage('Tidak ada baris untuk diekspor — longgarkan pencarian atau filter kelas.');
+      return;
+    }
+    exportCSV(filtered);
+    setMessage(`CSV dibuat untuk ${filtered.length} siswa sesuai filter yang aktif.`);
+  };
+
   const clearRosterSave = () => {
     setRoster([]);
     clearRoster(SUBJECT);
@@ -263,6 +277,7 @@ export default function RekapNilaiKKA() {
 
     setLoading(true);
     setMessage('');
+    const catatanSiswa = ' Siswa di perangkatnya harus menekan "Reset Identitas" agar bisa mengulang.';
     if (isSupabaseConfigured && source !== 'local') {
       const res = await resetExamResultsSubject(pinInput.trim(), SUBJECT);
       if (!res.ok) {
@@ -273,11 +288,15 @@ export default function RekapNilaiKKA() {
         return;
       }
       setMessage(res.deleted > 0
-        ? `Reset selesai — ${res.deleted} baris Ujian KKA dihapus dari server. Siswa bisa mengerjakan ulang.`
-        : 'Reset selesai — server sudah kosong untuk Ujian KKA. Siswa bisa mengerjakan ulang.');
+        ? `Reset selesai — ${res.deleted} baris Ujian KKA dihapus dari server.${catatanSiswa}`
+        : `Reset selesai — server sudah kosong untuk Ujian KKA.${catatanSiswa}`);
     } else {
-      setMessage('Reset selesai pada perangkat ini (data lokal dihapus).');
+      setMessage(`Reset selesai pada perangkat ini (hasil Ujian KKA di perangkat ini dihapus).${catatanSiswa}`);
     }
+    // Server yang bersih belum cukup: kunci submit & riwayat lokal ikut
+    // dibuang, kalau tidak tabel langsung terisi lagi dari data lokal dan
+    // siswa di perangkat ini tetap terkunci.
+    clearExamLocalSubject(SUBJECT);
     await load();
     setLoading(false);
   };
@@ -357,7 +376,7 @@ export default function RekapNilaiKKA() {
           <div>
             <h2 style={{ marginBottom: 4 }}><ClipboardList size={20} style={{ verticalAlign: 'middle' }} /> Rekap Nilai Ujian KKA</h2>
             <p style={{ color: 'var(--text-light)', fontSize: '0.85rem' }}>
-              Koding dan Kecerdasan Artifisial (KKA) · Kelas XI TJKT · 5 elemen x 15 soal
+              Koding dan Kecerdasan Artifisial (KKA) · Kelas XI TJKT · 5 elemen x {UJIAN_KKA_SOAL_PER_ELEMEN} soal
             </p>
           </div>
           <div className="rekap-actions no-print">
@@ -367,7 +386,7 @@ export default function RekapNilaiKKA() {
             <button className="btn btn-danger" onClick={handleReset} disabled={loading || !rows.length}>
               <Trash2 size={16} /> Reset KKA
             </button>
-            <button className="btn btn-secondary" onClick={() => exportCSV(filtered.length ? filtered : effective)} disabled={!effective.length}>
+            <button className="btn btn-secondary" onClick={doExportCSV} disabled={!effective.length}>
               <Download size={16} /> CSV
             </button>
             <button className="btn btn-secondary" onClick={() => window.print()} disabled={!effective.length}>

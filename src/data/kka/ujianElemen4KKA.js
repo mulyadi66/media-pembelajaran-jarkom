@@ -1,5 +1,5 @@
 /**
- * Bank soal Ujian KKA - Elemen 4: Analisis Data (15 soal, C2-C5).
+ * Bank soal Ujian KKA - Elemen 4: Analisis Data (25 soal, C2-C5).
  * Dipakai halaman ujian /kka/ujian/elemen4.
  * Opsi wajib berawalan "A. ", "B. ", ... karena Quiz memotong 3 karakter pertama.
  */
@@ -32,7 +32,7 @@ export default [
   },
   {
     id: 3, level: 'C3 - Menerapkan', elemen: 'Elemen 4',
-    question: 'Data penjualan bakso sekolah selama 5 hari: 120, 150, 130, 180, 140. Hari dengan penjualan tertinggi adalah hari ke-4 dengan 180 porsi. Ukuran statistik yang paling tepat digunakan adalah.',
+    question: 'Data penjualan bakso sekolah selama 5 hari: 120, 150, 130, 180, 140. Ukuran statistik yang paling tepat untuk menggambarkan penjualan rata-rata setiap hari adalah.',
     options: [
       'A. Median',
       'B. Mean',
@@ -145,7 +145,7 @@ export default [
       'E. Perbandingan bagian terhadap keseluruhan',
     ],
     answer: 4,
-    explanation: 'Diagram lingkaran menampilkan proporsi tiap kategori terhadap keseluruhan, misalnya persentase(preferences) mata pelajaran favorit.',
+    explanation: 'Diagram lingkaran menampilkan proporsi tiap kategori terhadap keseluruhan, misalnya persentase pilihan mata pelajaran favorit siswa.',
   },
   {
     id: 12, level: 'C3 - Menerapkan', elemen: 'Elemen 4',
@@ -184,7 +184,7 @@ export default [
       'E. Histogram',
     ],
     answer: 1,
-    explanation: 'Grafik batang cocok untuk membandingkan jumlah pada beberapa kategori, seperti extracurricular. Diagram lingkaran untuk proporsi dari keseluruhan, sedangkan grafik garis untuk perubahan dari waktu ke waktu.',
+    explanation: 'Grafik batang cocok untuk membandingkan jumlah pada beberapa kategori, seperti kegiatan ekstrakurikuler. Diagram lingkaran untuk proporsi dari keseluruhan, sedangkan grafik garis untuk perubahan dari waktu ke waktu.',
   },
   {
     id: 15, level: 'C5 - Menilai', elemen: 'Elemen 4',
@@ -198,5 +198,135 @@ export default [
     ],
     answer: 1,
     explanation: 'Nilai tertinggi 200 pada hari ke-5 dan terendah 90 pada hari ke-3. Rata-ratanya (100 + 120 + 90 + 150 + 200 + 180 + 110) : 7 = 950 : 7 sekitar 136, bukan 300.',
+  },
+  {
+    id: 16, level: 'C2 - Memahami', elemen: 'Elemen 4',
+    question: 'Pernyataan yang paling tepat menggambarkan data kualitatif adalah.',
+    options: [
+      'A. Data yang menggambarkan sifat atau kategori, misalnya kesukaan siswa terhadap mata pelajaran',
+      'B. Data yang isinya berupa angka dan bisa dijumlahkan',
+      'C. Data yang hanya boleh disimpan di komputer',
+      'D. Data yang selalu berupa hasil pengukuran presisi',
+      'E. Data yang nilainya berubah setiap hari',
+    ],
+    answer: 0,
+    explanation: 'Data kualitatif menggambarkan sifat atau kategori dan tidak bisa langsung dijumlah. Data angka seperti tinggi badan termasuk data kuantitatif.',
+  },
+  {
+    id: 17, level: 'C3 - Menerapkan', elemen: 'Elemen 4',
+    question: 'Rata-rata empat nilai ujian adalah 80. Jika salah satu nilai 70 diganti menjadi 90, rata-rata barunya adalah.',
+    options: [
+      'A. 80',
+      'B. 82,5',
+      'C. 85',
+      'D. 87,5',
+      'E. 90',
+    ],
+    answer: 2,
+    explanation: 'Jumlah nilai semula adalah 320. Setelah 70 diganti 90, jumlahnya menjadi 340, sehingga rata-ratanya 340 : 4 = 85.',
+  },
+  {
+    id: 18, level: 'C3 - Menerapkan', elemen: 'Elemen 4',
+    question: 'Data waktu_tempuh (menit) enam siswa: 12, 15, 20, 25, 30, 35. Nilai median (nilai tengah) adalah.',
+    options: [
+      'A. 20',
+      'B. 22,5',
+      'C. 25',
+      'D. 27,5',
+      'E. 30',
+    ],
+    answer: 1,
+    explanation: 'Data berjumlah enam dan telah berurutan, sehingga median adalah rata-rata posisi ketiga dan keempat, yaitu (20 + 25) : 2 = 22,5.',
+  },
+  {
+    id: 19, level: 'C3 - Menerapkan', elemen: 'Elemen 4',
+    question: 'Untuk menampilkan perubahan suhu udara setiap jam dari pagi hingga malam, jenis grafik paling tepat adalah.',
+    options: [
+      'A. Diagram lingkaran',
+      'B. Grafik batang',
+      'C. Grafik garis',
+      'D. Peta panas',
+      'E. Histogram',
+    ],
+    answer: 2,
+    explanation: 'Grafik garis menampilkan perubahan nilai dari waktu ke waktu, sehingga cocok untuk data suhu per jam. Diagram lingkaran untuk proporsi dan grafik batang untuk perbandingan kategori.',
+  },
+  {
+    id: 20, level: 'C3 - Menerapkan', elemen: 'Elemen 4',
+    question: 'Dari 40 siswa kelas XI, 15 siswa membeli makan siang di kantin sekolah. Persentase siswa tersebut adalah.',
+    options: [
+      'A. 15 persen',
+      'B. 25 persen',
+      'C. 37,5 persen',
+      'D. 40 persen',
+      'E. 60 persen',
+    ],
+    answer: 2,
+    explanation: 'Persentase dihitung dari bagian dibagi keseluruhan dikali seratus persen, yaitu 15 : 40 x 100 persen = 37,5 persen.',
+  },
+  {
+    id: 21, level: 'C3 - Menerapkan', elemen: 'Elemen 4',
+    question: 'Nilai rapor lima siswa: 70, 80, 90, 80, 80. Mean, median, dan modus dari data tersebut berturut-turut adalah.',
+    options: [
+      'A. 80, 80, dan 80',
+      'B. 78, 80, dan 70',
+      'C. 80, 70, dan 90',
+      'D. 84, 80, dan 70',
+      'E. 80, 90, dan 80',
+    ],
+    answer: 0,
+    explanation: 'Jumlah nilai 400 dibagi lima siswa menghasilkan mean 80. Nilai tengahnya juga 80, dan angka 80 muncul tiga kali sehingga modusnya 80.',
+  },
+  {
+    id: 22, level: 'C4 - Menganalisis', elemen: 'Elemen 4',
+    question: 'Sebuah grafik batang menampilkan jumlah pengunjung website dari 10 sampai 12 orang, tetapi sumbu tegak dimulai dari angka 12 sehingga semua batang tampak sangat tinggi. Masalah utama grafik tersebut adalah.',
+    options: [
+      'A. Jumlah pengunjung tidak boleh ditampilkan dalam grafik',
+      'B. Sumbu tegak tidak dimulai dari nol sehingga selisih data terlihat jauh lebih besar',
+      'C. Grafik batang tidak boleh dipakai untuk data jumlah',
+      'D. Warna batang membuat angka sulit dibaca',
+      'E. Data pengunjung harus selalu ditulis sebagai tabel',
+    ],
+    answer: 1,
+    explanation: 'Memulai sumbu tegak bukan dari nol membuat perbedaan kecil tampak sangat besar. Grafik seperti itu dapat membuat pembaca salah menilai perubahan data.',
+  },
+  {
+    id: 23, level: 'C4 - Menganalisis', elemen: 'Elemen 4',
+    question: 'Sebelum menghitung rata-rata nilai satu kelas, pemeriksaan paling penting yang harus dilakukan adalah.',
+    options: [
+      'A. Memastikan semua data terisi dan tidak ada angka yang keliru, misalnya ada nilai 900',
+      'B. Mengubah semua nilai menjadi bilangan bulat',
+      'C. Menghapus nilai yang paling rendah',
+      'D. Menambah nilai untuk siswa yang tidak hadir',
+      'E. Menyusun data mulai dari yang terkecil',
+    ],
+    answer: 0,
+    explanation: 'Kualitas analisis bergantung pada kualitas data. Angka yang keliru seperti 900 akan menggeser rata-rata jauh, sehingga data harus diperiksa lebih dulu.',
+  },
+  {
+    id: 24, level: 'C5 - Menilai', elemen: 'Elemen 4',
+    question: 'Sebuah toko ingin menggambarkan harga lima barang yang bernilai dari 5.000 sampai 500.000 rupiah. Ukuran pemusatan paling tepat beserta alasannya adalah.',
+    options: [
+      'A. Mean, karena semua harga dianggap memiliki bobot sama',
+      'B. Median, karena ada harga yang jauh lebih besar sehingga mean terdistorsi',
+      'C. Modus, karena harga jual selalu memiliki modus',
+      'D. Range, karena range menunjukkan harga tertinggi',
+      'E. Semua ukuran pemusatan menghasilkan kesimpulan yang sama',
+    ],
+    answer: 1,
+    explanation: 'Harga 500.000 merupakan nilai ekstrem yang menaikkan mean jauh di atas harga-harga lain. Median lebih tahan terhadap nilai ekstrem sehingga lebih sesuai.',
+  },
+  {
+    id: 25, level: 'C5 - Menilai', elemen: 'Elemen 4',
+    question: 'Untuk memprediksi kebiasaan belajar seluruh siswa SMK, seorang siswa hanya melakukan survei pada lima teman satu angkatan. Mengapa kesimpulannya berisiko tidak tepat?',
+    options: [
+      'A. Karena lima teman terlalu sedikit untuk dihitung rata-ratanya',
+      'B. Karena contoh hanya berasal dari satu angkatan sehingga belum mewakili seluruh sekolah',
+      'C. Karena survei dilakukan pada pagi hari',
+      'D. Karena pertanyaan surveinya terlalu banyak',
+      'E. Karena semua jawaban teman dianggap benar tanpa diperiksa',
+    ],
+    answer: 1,
+    explanation: 'Kesimpulan dari lima teman hanya menggambarkan kelompok kecil. Generalisasi ke seluruh sekolah memerlukan sampel yang mewakili berbagai kelas dan latar belakang.',
   },
 ];

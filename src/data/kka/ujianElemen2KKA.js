@@ -1,5 +1,5 @@
 /**
- * Bank soal Ujian KKA - Elemen 2: Literasi Digital (15 soal, C2-C5).
+ * Bank soal Ujian KKA - Elemen 2: Literasi Digital (25 soal, C2-C5).
  * Dipakai halaman ujian /kka/ujian/elemen2.
  * Opsi wajib berawalan "A. ", "B. ", ... karena Quiz memotong 3 karakter pertama.
  */
@@ -198,5 +198,135 @@ export default [
     ],
     answer: 0,
     explanation: 'Mengecek sumber resmi dan mencocokkan beberapa media independen adalah cara memverifikasi. Menghapus, mendelegasikan, atau mengubah judul bukan langkah verifikasi.',
+  },
+  {
+    id: 16, level: 'C2 - Memahami', elemen: 'Elemen 2',
+    question: 'Keterampilan digital adalah kemampuan untuk.',
+    options: [
+      'A. Menggunakan teknologi digital secara efektif untuk mencapai tujuan',
+      'B. Menghafal seluruh pintasan papan ketik',
+      'C. Menghindari semua bentuk teknologi di sekolah',
+      'D. Membeli perangkat yang nilainya paling mahal',
+      'E. Menggunakan teknologi hanya untuk hiburan ringan',
+    ],
+    answer: 0,
+    explanation: 'Keterampilan digital bukan soal alat mahal, melainkan kemampuan memakai teknologi secara efektif, aman, dan bertanggung jawab.',
+  },
+  {
+    id: 17, level: 'C3 - Menerapkan', elemen: 'Elemen 2',
+    question: 'Aisyah menemukan situs yang menawarkan hadiah 100 ribu tetapi meminta data pribadi untuk aktivasi. Tindakan paling tepat adalah.',
+    options: [
+      'A. Mengisi data pribadi agar hadiah tidak hangus',
+      'B. Menutup halaman itu lalu mengecek informasi dari kanal resmi',
+      'C. Mengirimkan data pribadi teman agar prosesnya lebih cepat',
+      'D. Membayar biaya kecil agar proses aktivasi berhasil',
+      'E. Membalas pesan broadcast dari nomor tidak dikenal',
+    ],
+    answer: 1,
+    explanation: 'Tawaran yang menggoda namun meminta data pribadi adalah pola penipuan. Daripada mengisi data, lebih baik menutup halaman dan memeriksa ke kanal resmi.',
+  },
+  {
+    id: 18, level: 'C3 - Menerapkan', elemen: 'Elemen 2',
+    question: 'Tindakan paling tepat saat memakai jaringan Wi-Fi publik di tempat umum adalah.',
+    options: [
+      'A. Menghindari login aplikasi keuangan dan memastikan situs memakai kunci enkripsi',
+      'B. Menyambungkan otomatis ke semua jaringan yang ditemukan',
+      'C. Membuka seluruh aplikasi di ponsel agar hemat kuota',
+      'D. Memberikan kata sandi kepada pemilik warung yang menawarkan jaringan',
+      'E. Mengaktifkan titik akses pribadi tanpa kata sandi',
+    ],
+    answer: 0,
+    explanation: 'Jaringan publik bisa disadap orang lain. Karena itu hindari login dan transaksi penting, serta periksa alamat situs memakai kunci enkripsi.',
+  },
+  {
+    id: 19, level: 'C3 - Menerapkan', elemen: 'Elemen 2',
+    question: 'Di kolom komentar sebuah video ada hinaan berat yang ditujukan kepada orang yang tidak dikenal. Respons paling tepat adalah.',
+    options: [
+      'A. Membalas dengan hinaan yang sama',
+      'B. Meneruskan ke grup agar orang lain ikut menyindir',
+      'C. Melaporkan konten tersebut dan memblokir akun pelaku',
+      'D. Menulis komentar tawa agar kalimatnya terlihat tidak serius',
+      'E. Mengambil tangkapan layar lalu mempostingnya di media lain',
+    ],
+    answer: 2,
+    explanation: 'Melaporkan dan memblokir melindungi korban sekaligus menghentikan penyebaran kebencian. Membalas, meneruskan, atau menyalin ulang justru menyebarkan kebencian lebih luas.',
+  },
+  {
+    id: 20, level: 'C3 - Menerapkan', elemen: 'Elemen 2',
+    question: 'Sebelum mengunggah foto yang memuat banyak orang ke media sosial, hal paling penting untuk diperhatikan adalah.',
+    options: [
+      'A. Meminta izin orang yang muncul agar privasi dan hak gambarnya terjaga',
+      'B. Menambah banyak stiker agar unggahan lebih menarik',
+      'C. Memilih filter dengan terang paling tinggi',
+      'D. Mengunggah pada jam paling banyak orang daring',
+      'E. Menyalin foto yang sama ke tiga akun sekaligus',
+    ],
+    answer: 0,
+    explanation: 'Mengunggah foto orang lain tanpa izin dapat melanggar privasi dan hak gambar mereka. Meminta izin lebih dulu merupakan sikap bertanggung jawab.',
+  },
+  {
+    id: 21, level: 'C3 - Menerapkan', elemen: 'Elemen 2',
+    question: 'Sebuah pesan broadcast mengaku dari dinas pendidikan dan menawarkan bantuan gratis, tetapi meminta data identitas agar bisa didaftarkan. Langkah paling tepat adalah.',
+    options: [
+      'A. Langsung mengirim data agar kesempatan tidak hilang',
+      'B. Meneruskan ke semua teman agar mereka juga mendapat',
+      'C. Meneruskan ke grup hanya jika ada teman yang percaya',
+      'D. Memeriksa ke akun resmi instansi dan situs resmi terkait',
+      'E. Membalas pesan tersebut dengan data teman sendiri',
+    ],
+    answer: 3,
+    explanation: 'Permintaan data pribadi lewat pesan broadcast perlu dicurigai. Informasi resmi baru dapat dipercaya setelah diperiksa melalui kanal resmi instansi.',
+  },
+  {
+    id: 22, level: 'C4 - Menganalisis', elemen: 'Elemen 2',
+    question: 'Dua situs berbeda menulis berita yang saling berbeda tentang hal yang sama. Langkah analisis paling tepat untuk menilai mana yang lebih kuat adalah.',
+    options: [
+      'A. Mengambil berita dari situs yang iklanannya paling banyak',
+      'B. Membandingkan nama penulis, tanggal terbit, dan apakah berita itu mengutip sumber lain',
+      'C. Memilih berita yang paling banyak dibaca',
+      'D. Mengikuti pendapat pembaca di kolom komentar',
+      'E. Memilih berita yang paling singkat',
+    ],
+    answer: 1,
+    explanation: 'Kredibilitas dinilai dari penulis, tanggal terbit, dan apakah berita mengutip sumber lain. Jumlah pembaca atau isi kolom komentar bukan ukuran kredibilitas.',
+  },
+  {
+    id: 23, level: 'C4 - Menganalisis', elemen: 'Elemen 2',
+    question: 'Seseorang membuat lima ratus ulasan di satu akun yang baru dibuat dua hari lalu untuk merusak reputasi toko. Simpulan paling tepat adalah.',
+    options: [
+      'A. Ulasan baru selalu lebih dapat dipercaya',
+      'B. Banyak ulasan dari akun baru menandakan popularitas yang nyata',
+      'C. Pola ini perlu dicurigai sebagai manipulasi untuk menekan reputasi toko',
+      'D. Kredibilitas toko ditentukan oleh foto profil saja',
+      'E. Toko dengan ulasan sedikit otomatis tidak layak',
+    ],
+    answer: 2,
+    explanation: 'Ulasan yang menumpuk dari satu akun baru menandakan pola manipulatif. Pola seperti ini perlu diperiksa lebih dalam sebelum bisa dipercaya.',
+  },
+  {
+    id: 24, level: 'C5 - Menilai', elemen: 'Elemen 2',
+    question: 'Seorang siswa memakai foto orang lain sebagai foto profil lalu mengubahnya agar terlihat seperti orang berbeda. Penilaian etika paling tepat adalah.',
+    options: [
+      'A. Tidak ada masalah karena yang diubah hanya tampilan',
+      'B. Tindakan ini melanggar hak gambar dan privasi orang lain serta menyesatkan yang melihat',
+      'C. Tindakan ini otomatis diperbolehkan di media sosial',
+      'D. Foto profil bebas dipakai selama tidak untuk keperluan komersial',
+      'E. Tindakan ini baru salah apabila orang yang difoto protes',
+    ],
+    answer: 1,
+    explanation: 'Menggunakan dan mengubah foto orang lain tanpa izin melanggar hak gambar dan privasi orang tersebut, serta dapat menyesatkan pihak lain yang melihat.',
+  },
+  {
+    id: 25, level: 'C5 - Menilai', elemen: 'Elemen 2',
+    question: 'Dua teman berbeda pendapat soal kebenaran sebuah kiriman di media sosial. Proses paling bertanggung jawab untuk menyelesaikan perbedaan itu adalah.',
+    options: [
+      'A. Mengikuti pendapat teman yang pengikutnya paling banyak',
+      'B. Membiarkan masing-masing tetap pada pendapatnya',
+      'C. Meminta mereka berdebat panjang sampai salah satu mengalah',
+      'D. Mencari sumber asli, memeriksa tanggal, lalu menarik kesimpulan dari bukti',
+      'E. Menghapus kiriman itu dari kedua akun masing-masing',
+    ],
+    answer: 3,
+    explanation: 'Perbedaan fakta diselesaikan dengan kembali ke sumber asli, memeriksa tanggal unggahan, lalu menarik kesimpulan berdasarkan bukti yang tersedia.',
   },
 ];

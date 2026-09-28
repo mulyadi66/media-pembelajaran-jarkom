@@ -17,7 +17,13 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
     if (storedOrder) {
       try {
         const order = JSON.parse(storedOrder);
-        if (Array.isArray(order) && order.length === questions.length) return order.map(i => questions[i]);
+        // Validasi juga isi order: bank soal bisa saja diedit/berkurang setelah
+        // siswa menyimpan urutan. Order basi (indeks di luar jangkauan) akan
+        // membuat questions[i] undefined → halaman crash, jadi acak ulang.
+        const valid = Array.isArray(order)
+          && order.length === questions.length
+          && order.every(i => Number.isInteger(i) && i >= 0 && i < questions.length);
+        if (valid) return order.map(i => questions[i]);
       } catch { /* order korup, acak ulang */ }
     }
     return shuffleArray(questions);
@@ -48,6 +54,13 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
   const lockModeRef = useRef('none');
   const timerRef = useRef(null);
   const locked = lockMode !== 'none';
+
+  // Ujian resmi (ada token guru) baru "mulai" setelah token tervalidasi.
+  // Quiz biasa (pre-test, challenge) tanpa token langsung dianggap berjalan.
+  // WAJIB dihitung sebelum efek timer: kalau tidak, hitungan mundur sudah
+  // berjalan saat siswa masih di layar token, dan bisa auto-submit nilai 0
+  // yang lalu mengunci modul secara permanen di server.
+  const examStarted = Boolean(examToken && tokenOk) || !examToken;
 
   const setLock = (mode) => { lockModeRef.current = mode; setLockMode(mode); };
 
@@ -122,6 +135,10 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
   const handleSubmit = useCallback(() => {
     clearInterval(timerRef.current);
     localStorage.setItem(`jarkomlab_${storageKey}_submitted`, 'true');
+    // Deadline harus dibuang saat submit (bukan hanya saat waktu habis). Kalau
+    // tertinggal, attempt berikutnya akan mewarisi deadline lama — bisa langsung
+    // habis dan auto-submit nilai 0.
+    localStorage.removeItem(`jarkomlab_${storageKey}_deadline`);
     setSubmitted(true);
     forceUnlock();
     let correct = 0;
@@ -137,7 +154,7 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
   useEffect(() => { submitRef.current = handleSubmit; }, [handleSubmit]);
 
   useEffect(() => {
-    if (submitted || !timeLimit) return;
+    if (submitted || !timeLimit || !examStarted) return;
     const deadlineKey = `jarkomlab_${storageKey}_deadline`;
     let deadline = parseInt(localStorage.getItem(deadlineKey) || '0', 10);
     if (!Number.isFinite(deadline) || deadline <= 0) {
@@ -155,7 +172,7 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
       }
     }, 1000);
     return () => clearInterval(timerRef.current);
-  }, [submitted, timeLimit, storageKey]);
+  }, [submitted, timeLimit, storageKey, examStarted]);
 
   useEffect(() => {
     localStorage.setItem(`jarkomlab_${storageKey}`, JSON.stringify(answers));
@@ -168,7 +185,6 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
   }, [submitted, storageKey, shuffledQs, questions]);
 
   // Peringatan anti-contek: monitor pindah tab / keluar saat ujian berlangsung
-  const examStarted = Boolean(examToken && tokenOk) || !examToken;
   useEffect(() => {
     if (submitted || !examStarted) return;
     const onVis = () => {
@@ -314,7 +330,16 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
           })}
         </div>
         <div style={{textAlign: 'center', marginTop: 20, display: 'flex', gap: 10, justifyContent: 'center', flexWrap: 'wrap'}}>
-          <button className="btn btn-primary" onClick={handleRetry}><RotateCcw size={16} /> Ulangi</button>
+          {examToken ? (
+            // Ujian resmi: submit hanya bisa satu kali (dikunci server & guru),
+            // jadi jangan tawarkan "Ulangi" — attempt kedua akan ditolak dan
+            // layar nilai justru tertutup kartu "sudah dikerjakan".
+            <p className="exam-status saved" style={{ margin: 0 }}>
+              <CheckCircle size={16} /> Ujian ini hanya bisa dikirim satu kali. Nilai di atas sudah tercatat untuk rapor guru.
+            </p>
+          ) : (
+            <button className="btn btn-primary" onClick={handleRetry}><RotateCcw size={16} /> Ulangi</button>
+          )}
         </div>
       </div>
     );
@@ -427,7 +452,7 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
             return (
               <div key={i} className={`option-item ${isSelected ? 'selected' : ''}`} onClick={() => selectOption(i)}
                 role="radio" aria-checked={isSelected} tabIndex={0}
-                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') selectOption(i); }}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectOption(i); } }}
                 aria-label={`${letters[i]}: ${opt.substring(3)}${isSelected ? ' (terpilih)' : ''}`}>
                 <div className="option-letter">{letters[i]}</div>
                 <span>{opt.substring(3)}</span>

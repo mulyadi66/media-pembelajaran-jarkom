@@ -229,6 +229,31 @@ export function clearExamLocal() {
 }
 
 /**
+ * Hapus hasil ujian lokal milik SATU mata pelajaran saja (prefix modul), tanpa
+ * menyentuh mapel lain. Dipakai tombol Reset di Rekap Nilai per mapel supaya
+ * nilai MPK 1 / mapel lain di perangkat guru tidak ikut terhapus.
+ * @param {string} subject 'mpk1' | 'kka'
+ */
+export function clearExamLocalSubject(subject) {
+  const prefix = SUBJECT_PREFIX[subject] || SUBJECT_PREFIX.mpk1;
+  const milik = (modul) => String(modul || '').startsWith(prefix);
+
+  saveJSON(K.history, getExamHistory().filter(r => !milik(r.modul)));
+  saveJSON(K.pending, getPending().filter(r => !milik(r.modul)));
+
+  const submitted = getExamSubmitted();
+  for (const key of Object.keys(submitted)) if (milik(key)) delete submitted[key];
+  saveJSON(K.submitted, submitted);
+
+  for (const m of ALL_MODUL_META) if (milik(m.key)) clearQuizStorage(m.key);
+  try {
+    const scores = JSON.parse(localStorage.getItem('jarkomlab_scores') || '{}');
+    for (const m of ALL_MODUL_META) if (milik(m.key)) delete scores[m.key];
+    localStorage.setItem('jarkomlab_scores', JSON.stringify(scores));
+  } catch { /* abaikan jika data korup */ }
+}
+
+/**
  * Hapus seluruh hasil ujian di server. Memvalidasi PIN server-side via fungsi
  * `reset_exam_results` (lihat supabase/schema.sql). @returns {Promise<{ok:boolean,error?:string,deleted?:number,localOnly?:boolean}>}
  */

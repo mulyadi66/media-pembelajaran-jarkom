@@ -3,22 +3,56 @@ import Badges from '../../components/Badges';
 import { checkBadges } from '../../data/badges';
 import Certificate from '../../components/Certificate';
 import Leaderboard from '../../components/Leaderboard';
-import { Trash2, Award, TrendingUp } from 'lucide-react';
+import { Trash2, Award, TrendingUp, ClipboardCheck } from 'lucide-react';
+import { KKA_META, getExamHistory } from '../../lib/examLib';
+import { UJIAN_KKA_SOAL_PER_ELEMEN } from '../../data/kka/ujianKKA.js';
+
+/** Jumlah jawaban tersimpan untuk sebuah quiz (aman terhadap data korup). */
+function countAnswered(storageKey) {
+  try {
+    const raw = JSON.parse(localStorage.getItem(`jarkomlab_${storageKey}`) || '{}');
+    return raw && typeof raw === 'object' ? Object.keys(raw).length : 0;
+  } catch { return 0; }
+}
 
 export default function HasilKKA() {
   const MODULE_IDS = ['kka_elemen1', 'kka_elemen2', 'kka_elemen3', 'kka_elemen4', 'kka_elemen5'];
   const { scores, modulesRead, resetAll, studentName, saveStudentName } = useApp();
   const pretestScore = scores.kka_pretest || 0;
   const posttestScore = scores.kka_posttest || 0;
-  const pretestAnswered = Object.keys(JSON.parse(localStorage.getItem('jarkomlab_kka_pretestAnswers') || '{}')).length;
-  const posttestAnswered = Object.keys(JSON.parse(localStorage.getItem('jarkomlab_kka_posttestAnswers') || '{}')).length;
+  const pretestAnswered = countAnswered('kka_pretestAnswers');
+  const posttestAnswered = countAnswered('kka_posttestAnswers');
   const growth = posttestScore > 0 && pretestScore > 0 ? posttestScore - pretestScore : null;
   const earnedBadges = checkBadges(scores, modulesRead, {
     pretestKey: 'kka_pretest',
     posttestKey: 'kka_posttest',
     moduleIds: MODULE_IDS,
   });
-  const passed = posttestScore >= 70;
+
+  // Ujian KKA per elemen: nilai diambil dari riwayat ujian yang tersimpan di
+  // perangkat ini (sumber yang sama dengan rekap guru), bukan dari pre/post-test.
+  const history = getExamHistory();
+  const ujianElemen = KKA_META.map(m => {
+    const h = history.find(r => r.modul === m.key);
+    return {
+      key: m.key,
+      label: m.label,
+      nilai: h ? h.nilai : null,
+      durasi: h && h.startedAt && h.finishedAt
+        ? Math.max(1, Math.round((h.finishedAt - h.startedAt) / 60000))
+        : null,
+    };
+  });
+  const nilaiElemen = ujianElemen.filter(e => e.nilai != null).map(e => e.nilai);
+  const jmlElemen = nilaiElemen.length;
+  const rataElemen = jmlElemen ? Math.round(nilaiElemen.reduce((a, b) => a + b, 0) / jmlElemen) : null;
+  const semuaElemenSelesai = jmlElemen === KKA_META.length;
+
+  // Lulus bila post-test >= 70, atau bila kelima elemen ujian >= 70.
+  const lulusPosttest = posttestScore >= 70;
+  const lulusUjian = semuaElemenSelesai && rataElemen >= 70;
+  const passed = lulusPosttest || lulusUjian;
+  const nilaiSertifikat = lulusPosttest ? posttestScore : (rataElemen ?? 0);
   const readCount = MODULE_IDS.filter(id => modulesRead[id]).length;
 
   return (
@@ -74,13 +108,40 @@ export default function HasilKKA() {
         </div>
       </div>
 
+      <div className="result-card fade-in" style={{textAlign: 'left'}}>
+        <h3 style={{marginBottom: 6}}>
+          <ClipboardCheck size={18} style={{color: 'var(--primary)', verticalAlign: 'middle'}} /> Ujian KKA per Elemen
+        </h3>
+        <p style={{color: 'var(--text-light)', fontSize: '0.85rem', marginBottom: 16}}>
+          Ini nilai yang tercatat di rekap guru. Kerjakan di halaman <strong>Ujian KKA</strong> (butuh token guru).
+        </p>
+        {ujianElemen.map(e => (
+          <ScoreBar
+            key={e.key}
+            label={e.label}
+            score={e.nilai}
+            answered={e.nilai != null ? UJIAN_KKA_SOAL_PER_ELEMEN : 0}
+            suffix={e.durasi != null ? ` · ${e.durasi} mnt` : ''}
+          />
+        ))}
+        <div className="rekap-modul-stats" style={{marginTop: 8}}>
+          <div className="rsm-item rsm-total">
+            <span className="rsm-label">Rerata {jmlElemen}/{KKA_META.length} elemen</span>
+            <span className={`rsm-avg ${rataElemen == null ? 'muted' : ''}`}>{rataElemen == null ? '—' : rataElemen}</span>
+            <span className="rsm-count">{lulusUjian ? 'Lulus ujian KKA' : semuaElemenSelesai ? 'Belum mencapai 70' : 'Belum lengkap'}</span>
+          </div>
+        </div>
+      </div>
+
       {passed && (
         <div className="result-card fade-in">
           <h3 style={{marginBottom: 16}}><Award size={18} style={{color: 'var(--success)', verticalAlign: 'middle'}} /> Sertifikat</h3>
           <p style={{color: 'var(--text-light)', marginBottom: 16, fontSize: '0.9rem'}}>
-            Kamu telah lulus post-test! Download sertifikat di bawah ini.
+            {lulusPosttest
+              ? 'Kamu telah lulus post-test! Download sertifikat di bawah ini.'
+              : `Kamu telah menyelesaikan kelima elemen Ujian KKA dengan rerata ${rataElemen}. Download sertifikat di bawah ini.`}
           </p>
-          <Certificate studentName={studentName || 'Siswa'} score={posttestScore} module="KKA JarkomLab" title="Koding dan Kecerdasan Artifisial (KKA)" />
+          <Certificate studentName={studentName || 'Siswa'} score={nilaiSertifikat} module="KKA JarkomLab" title="Koding dan Kecerdasan Artifisial (KKA)" />
         </div>
       )}
 
@@ -93,20 +154,21 @@ export default function HasilKKA() {
   );
 }
 
-function ScoreBar({ label, score, answered }) {
-  const passed = score >= 70;
+function ScoreBar({ label, score, answered, suffix = '' }) {
+  const nilai = score ?? 0;
+  const passed = nilai >= 70;
   return (
     <div style={{marginBottom: 16}}>
       <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:8}}>
         <span style={{fontWeight:600}}>{label}</span>
-        <span style={{fontWeight:700,color: score > 0 ? (passed ? 'var(--success)' : 'var(--danger)') : 'var(--text-light)'}}>{score}/100</span>
+        <span style={{fontWeight:700,color: nilai > 0 ? (passed ? 'var(--success)' : 'var(--danger)') : 'var(--text-light)'}}>{nilai}/100</span>
       </div>
       <div className="progress-bar" style={{height:10}}>
-        <div className="progress-fill" style={{width: score + '%', background: score > 0 ? (passed ? 'var(--success)' : 'var(--danger)') : 'var(--border)'}} />
+        <div className="progress-fill" style={{width: nilai + '%', background: nilai > 0 ? (passed ? 'var(--success)' : 'var(--danger)') : 'var(--border)'}} />
       </div>
       <div style={{fontSize:'0.8rem',color:'var(--text-light)',marginTop:4}}>
-        {answered > 0 ? `${answered} soal terjawab` : 'Belum dikerjakan'}
-        {score > 0 && (passed ? ' — Lulus' : ' — Target: 70')}
+        {answered > 0 ? `${answered} soal terjawab${suffix}` : 'Belum dikerjakan'}
+        {nilai > 0 && (passed ? ' — Lulus' : ' — Target: 70')}
       </div>
     </div>
   );

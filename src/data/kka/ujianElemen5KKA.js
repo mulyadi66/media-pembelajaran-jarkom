@@ -1,5 +1,5 @@
 /**
- * Bank soal Ujian KKA - Elemen 5: Literasi dan Etika AI (15 soal, C2-C5).
+ * Bank soal Ujian KKA - Elemen 5: Literasi dan Etika AI (25 soal, C2-C5).
  * Dipakai halaman ujian /kka/ujian/elemen5.
  * Opsi wajib berawalan "A. ", "B. ", ... karena Quiz memotong 3 karakter pertama.
  */
@@ -106,7 +106,7 @@ export default [
       'E. Mengizinkan lalu mengunduh data pribadi sendiri',
     ],
     answer: 2,
-    explanation: 'Prinsip minim data menyatakan kita hanya memberikan data yang benar-benar diperlukan. Membaca tujuan penggunaan data sebelum mengizinkan protects privasi dan mengurangi risiko penyalahgunaan.',
+    explanation: 'Prinsip minim data menyatakan kita hanya memberikan data yang benar-benar diperlukan. Membaca tujuan penggunaan data sebelum mengizinkan akses melindungi privasi dan mengurangi risiko penyalahgunaan.',
   },
   {
     id: 9, level: 'C3 - Menerapkan', elemen: 'Elemen 5',
@@ -125,7 +125,7 @@ export default [
     id: 10, level: 'C3 - Menerapkan', elemen: 'Elemen 5',
     question: 'Etika penggunaan AI dalam pekerjaan sekolah menuntut pengguna untuk.',
     options: [
-      'A. Meng keterbukaan penggunaan AI dan bertanggung jawab atas hasil akhir',
+      'A. Mengutamakan keterbukaan penggunaan AI dan bertanggung jawab atas hasil akhir',
       'B. Menyembunyikan penggunaan AI agar pekerjaan terlihat asli',
       'C. Mengganti nama AI menjadi nama sendiri',
       'D. Menggunakan AI tanpa batas karena akan lebih cepat',
@@ -198,5 +198,135 @@ export default [
     ],
     answer: 0,
     explanation: 'Sebelum memakai AI untuk keputusan penting, kita harus memastikan adil, transparan, dapat diaudit, dan tetap ada pengawasan manusia. Kecepatan dan biaya penting tetapi bukan prioritas utama secara etis.',
+  },
+  {
+    id: 16, level: 'C3 - Menerapkan', elemen: 'Elemen 5',
+    question: 'Perintah yang paling tepat untuk meminta bantuan AI membuat mind map pelajaran adalah.',
+    options: [
+      'A. Buatkan mind map',
+      'B. Buatkan mind map tentang tiga cara belajar yang efektif untuk siswa kelas XI',
+      'C. Tolong dong yang bagus ya',
+      'D. Mind map dong ya',
+      'E. Buatkan mind map yang panjang sekali',
+    ],
+    answer: 1,
+    explanation: 'Perintah yang baik menjelaskan topik, lingkup, dan bentuk keluaran yang diinginkan. Perintah yang terlalu singkat membuat hasil AI tidak terarah.',
+  },
+  {
+    id: 17, level: 'C3 - Menerapkan', elemen: 'Elemen 5',
+    question: 'Saat memakai aplikasi AI generatif, data pribadi yang sebaiknya tidak dimasukkan adalah.',
+    options: [
+      'A. Nama lengkap dan nomor identitas siswa',
+      'B. Topik pelajaran yang sedang dipelajari',
+      'C. Bentuk keluaran yang diinginkan',
+      'D. Batasan panjang jawaban',
+      'E. Gaya bahasa yang disukai',
+    ],
+    answer: 0,
+    explanation: 'Data pribadi dapat tersimpan atau dipakai untuk melatih model sehingga tidak lagi sepenuhnya berada di bawah kendali pengguna. Topik dan bentuk keluaran aman dibagikan.',
+  },
+  {
+    id: 18, level: 'C3 - Menerapkan', elemen: 'Elemen 5',
+    question: 'Sebuah AI generatif membuat deskripsi sejarah yang memuat satu tanggal yang keliru. Langkah paling tepat adalah.',
+    options: [
+      'A. Langsung memakai teks itu karena hasil AI selalu benar',
+      'B. Memeriksa ulang fakta penting ke sumber yang dapat dipercaya',
+      'C. Menyalin teks itu ke lima sumber sekaligus tanpa memeriksa',
+      'D. Menghapus seluruh hasil yang diberikan AI tanpa membacanya',
+      'E. Menambahkan satu kalimat tanpa sumber agar teks terlihat lengkap',
+    ],
+    answer: 1,
+    explanation: 'AI generatif dapat menghasilkan informasi yang keliru. Karena itu hasil AI harus diverifikasi ke sumber tepercaya sebelum dipakai.',
+  },
+  {
+    id: 19, level: 'C3 - Menerapkan', elemen: 'Elemen 5',
+    question: 'Peran manusia dalam sistem AI yang paling tepat adalah.',
+    options: [
+      'A. Membiarkan AI bekerja tanpa pengawasan karena hasilnya selalu benar',
+      'B. Memeriksa, mengoreksi, dan bertanggung jawab atas keluaran yang dipakai',
+      'C. Menyembunyikan kesalahan sistem agar pengguna tidak bingung',
+      'D. Menggantikan semua keputusan yang ada dengan keputusan pribadi',
+      'E. Menyimpan keluaran AI apa adanya tanpa pemeriksaan',
+    ],
+    answer: 1,
+    explanation: 'AI adalah alat bantu, bukan pengganti penilaian manusia. Pengguna tetap memeriksa hasil dan bertanggung jawab atas keputusan yang diambil.',
+  },
+  {
+    id: 20, level: 'C3 - Menerapkan', elemen: 'Elemen 5',
+    question: 'Sebuah sistem AI dilatih memakai data dari satu daerah saja, lalu dipakai menilai kelayakan semua wilayah. Masalah paling mendasar yang muncul adalah.',
+    options: [
+      'A. Sistem menjadi terlalu lambat saat dijalankan',
+      'B. Keputusan dapat tidak adil bagi wilayah yang data latihannya tidak ada',
+      'C. Sistem tidak lagi bisa menyimpan data',
+      'D. Data menjadi lebih mudah dibaca oleh pengguna',
+      'E. Waktu pelatihan model menjadi lebih lama',
+    ],
+    answer: 1,
+    explanation: 'Keterbatasan data latihan membuat sistem tidak mengenal kondisi wilayah lain, sehingga hasilnya bisa bias dan tidak adil bagi kelompok yang datanya minim.',
+  },
+  {
+    id: 21, level: 'C3 - Menerapkan', elemen: 'Elemen 5',
+    question: 'Wujud video yang dibuat dengan teknologi AI untuk meniru wajah dan suara seseorang secara palsu disebut.',
+    options: [
+      'A. Deepfake',
+      'B. Podcast',
+      'C. Watermark',
+      'D. Cache',
+      'E. Spreadsheet',
+    ],
+    answer: 0,
+    explanation: 'Istilah untuk video palsu hasil generatif AI adalah deepfake. Pemakaiannya untuk menipu atau mempermalukan orang melanggar etika dan merusak nama baik.',
+  },
+  {
+    id: 22, level: 'C3 - Menerapkan', elemen: 'Elemen 5',
+    question: 'Sistem yang memisahkan email spam dari email biasa bekerja menggunakan.',
+    options: [
+      'A. Pembelajaran terawasi karena data contoh sudah diberi label spam atau bukan spam',
+      'B. Pembelajaran tidak terawasi karena semua data tidak punya label',
+      'C. Aturan tetap tanpa data contoh sama sekali',
+      'D. Perhitungan matematika murni tanpa data',
+      'E. Penyimpanan data di luar jaringan',
+    ],
+    answer: 0,
+    explanation: 'Klasifikasi email dilatih dari data yang sudah berlabel spam atau bukan spam, sehingga termasuk pembelajaran terawasi yang memerlukan data contoh berlabel.',
+  },
+  {
+    id: 23, level: 'C3 - Menerapkan', elemen: 'Elemen 5',
+    question: 'Data menunjukkan negara yang banyak memakai internet memiliki nilai sekolah yang tinggi. Simpulan paling tepat adalah.',
+    options: [
+      'A. Internet pasti menyebabkan nilai meningkat di semua negara',
+      'B. Ada hubungan antara pemakaian internet dan nilai, tetapi belum membuktikan sebab-akibat',
+      'C. Tidak ada hubungan sama sekali antara keduanya',
+      'D. Nilai pasti menurun karena banyaknya pemakaian internet',
+      'E. Semua negara tanpa internet pasti nilainya tinggi',
+    ],
+    answer: 1,
+    explanation: 'Data hanya menunjukkan pola hubungan, bukan sebab. Faktor lain seperti fasilitas sekolah dan kondisi ekonomi juga memengaruhi nilai sehingga perlu diteliti lebih dalam.',
+  },
+  {
+    id: 24, level: 'C4 - Menganalisis', elemen: 'Elemen 5',
+    question: 'Mengapa data uji harus terpisah dari data yang dipakai untuk melatih model AI?',
+    options: [
+      'A. Supaya data uji terlihat lebih rapi saat ditampilkan',
+      'B. Supaya angka keberhasilan tidak terlalu tinggi karena model sudah menghafal data latihan',
+      'C. Supaya model tidak perlu diuji sama sekali',
+      'D. Supaya program berjalan lebih cepat saat dijalankan',
+      'E. Supaya jumlah data yang dikumpulkan menjadi lebih sedikit',
+    ],
+    answer: 1,
+    explanation: 'Jika data yang sama dipakai untuk melatih dan menguji, model terlihat sangat baik tetapi belum tentu mampu menangani data baru. Data uji terpisah menguji kemampuan pada data baru.',
+  },
+  {
+    id: 25, level: 'C5 - Menilai', elemen: 'Elemen 5',
+    question: 'Sekolah memperbolehkan siswa memakai AI untuk membantu tugas, tetapi penilaian tetap di tangan guru. Aturan tambahan yang paling tepat adalah.',
+    options: [
+      'A. Siswa wajib menyebutkan penggunaan AI dan memeriksa ulang hasilnya sebelum dikumpulkan',
+      'B. Siswa dilarang menyimpan catatan penggunaan AI sama sekali',
+      'C. Guru cukup menerima hasil AI tanpa memeriksa isinya',
+      'D. AI yang dipakai harus yang paling mahal agar hasilnya bagus',
+      'E. Tugas yang memakai AI tidak perlu dinilai lagi',
+    ],
+    answer: 0,
+    explanation: 'Kebijakan yang baik menuntut kejujuran, verifikasi, dan tanggung jawab. Menyebutkan penggunaan AI menjaga kejujuran, sedangkan memeriksa ulang menjaga kualitas jawaban.',
   },
 ];
