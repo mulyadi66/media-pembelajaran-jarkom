@@ -89,7 +89,7 @@ function IdentityForm({ initial, onSubmit, onCancel }) {
   );
 }
 
-export default function ModulPostTest({ questions, storageKey, scoreKey, title }) {
+export default function ModulPostTest({ questions, storageKey, scoreKey, title, meta = MODUL_META }) {
   const { saveQuizScore } = useApp();
   const [identity, setIdentity] = useState(() => getIdentity());
   const [locked, setLocked] = useState(() => isModulLocked(scoreKey));
@@ -99,9 +99,9 @@ export default function ModulPostTest({ questions, storageKey, scoreKey, title }
   const handleIdentitySubmit = async (i) => {
     if (isSupabaseConfigured) {
       try {
-        const { data, error } = await findNisRecords(i.nis);
+        const { data, error } = await findNisRecords(i.nis, meta.map(m => m.key));
         if (!error && Array.isArray(data) && data.length > 0) {
-          const modulLabel = MODUL_META.find(m => m.key === scoreKey)?.label || scoreKey;
+          const modulLabel = meta.find(m => m.key === scoreKey)?.label || scoreKey;
           throw new Error(
             `NIS ${i.nis} sudah terverifikasi di server pada ${modulLabel} — tidak bisa mengerjakan ulang. Bila ini perangkat bersama, gunakan tombol "Reset Identitas".`
           );

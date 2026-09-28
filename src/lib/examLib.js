@@ -16,6 +16,17 @@ export const MODUL_META = [
   { key: 'mpk1_modul3_posttest', label: 'Modul 3' },
 ];
 
+/** Ujian KKA (satu paket, menggantikan Post Test biasa). */
+export const KKA_META = [
+  { key: 'kka_posttest_ujian', label: 'Ujian KKA' },
+];
+
+/** Semua kunci ujian di aplikasi — dipakai saat membersihkan data lokal. */
+export const ALL_MODUL_META = [...MODUL_META, ...KKA_META];
+
+/** Prefix modul per mapel — untuk reset hanya satu mata pelajaran. */
+export const SUBJECT_PREFIX = { mpk1: 'mpk1_', kka: 'kka_' };
+
 function loadJSON(key, fallback) {
   try {
     const raw = localStorage.getItem(key);
@@ -170,14 +181,18 @@ export async function fetchExamResults() {
   return { data, error: error?.message };
 }
 
-/** Cek apakah NIS sudah pernah tercatat di server (untuk validasi identitas). */
-export async function findNisRecords(nis) {
+/** Cek apakah NIS sudah pernah tercatat di server (untuk validasi identitas).
+ *  @param {string} nis
+ *  @param {string[]} [modulKeys] batasi hanya modul(mapel) tertentu. */
+export async function findNisRecords(nis, modulKeys) {
   if (!supabase) return { error: 'not-configured', data: [] };
-  const { data, error } = await supabase
+  let req = supabase
     .from('exam_results')
     .select('modul,nilai,created_at')
     .eq('nis', String(nis).trim())
     .order('created_at', { ascending: false });
+  if (Array.isArray(modulKeys) && modulKeys.length) req = req.in('modul', modulKeys);
+  const { data, error } = await req;
   return { data, error: error?.message };
 }
 
@@ -189,6 +204,7 @@ function clearQuizStorage(key) {
   localStorage.removeItem(`jarkomlab_${key}_deadline`);
   localStorage.removeItem(`jarkomlab_${key}_unlocked`);
   localStorage.removeItem(`jarkomlab_${key}_startedAt`);
+  localStorage.removeItem(`jarkomlab_${key}_warns`);
 }
 
 /** Hapus semua hasil ujian di perangkat ini (riwayat, kunci retake, antrian, skor). Identitas siswa tetap. */
@@ -196,10 +212,10 @@ export function clearExamLocal() {
   localStorage.removeItem(K.history);
   localStorage.removeItem(K.submitted);
   localStorage.removeItem(K.pending);
-  for (const m of MODUL_META) clearQuizStorage(m.key);
+  for (const m of ALL_MODUL_META) clearQuizStorage(m.key);
   try {
     const scores = JSON.parse(localStorage.getItem('jarkomlab_scores') || '{}');
-    for (const m of MODUL_META) delete scores[m.key];
+    for (const m of ALL_MODUL_META) delete scores[m.key];
     localStorage.setItem('jarkomlab_scores', JSON.stringify(scores));
   } catch { /* abaikan jika data korup */ }
 }
@@ -211,6 +227,22 @@ export function clearExamLocal() {
 export async function resetExamResults(pin) {
   if (!supabase) return { ok: true, localOnly: true, deleted: 0 };
   const { data, error } = await supabase.rpc('reset_exam_results', { pin: String(pin || '') });
+  if (error) return { ok: false, error: error.message };
+  return { ok: true, deleted: data ?? 0 };
+}
+
+/**
+ * Hapus hasil ujian milik satu mata pelajaran saja (prefix modul), tanpa
+ * menyentuh mapel lain. Memakai fungsi server `reset_exam_results_subject`
+ * (lihat supabase/schema.sql). @param {string} subject 'mpk1' | 'kka'
+ */
+export async function resetExamResultsSubject(pin, subject) {
+  const prefix = SUBJECT_PREFIX[subject] || SUBJECT_PREFIX.mpk1;
+  if (!supabase) return { ok: true, localOnly: true, deleted: 0 };
+  const { data, error } = await supabase.rpc('reset_exam_results_subject', {
+    pin: String(pin || ''),
+    subject_prefix: prefix,
+  });
   if (error) return { ok: false, error: error.message };
   return { ok: true, deleted: data ?? 0 };
 }
@@ -232,17 +264,22 @@ export function unlockCode(nis, modulKey) {
 }
 
 // ============ ROSTER SISWA (lokal saja, untuk rekap) ============
+/** Kunci roster dipisah per mapel agar daftar siswa tiap pelajaran tidak tertimpa. */
+function rosterKey(subject) {
+  return subject && subject !== 'mpk1' ? `${K.roster}_${subject}` : K.roster;
+}
+
 /** Daftar siswa {nis, nama, kelas} — disimpan lokal guru, tidak dikirim ke server. */
-export function getRoster() {
-  return loadJSON(K.roster, []);
+export function getRoster(subject) {
+  return loadJSON(rosterKey(subject), []);
 }
 
-export function saveRoster(list) {
-  saveJSON(K.roster, list.filter(s => s && s.nis && s.nama));
+export function saveRoster(list, subject) {
+  saveJSON(rosterKey(subject), list.filter(s => s && s.nis && s.nama));
 }
 
-export function clearRoster() {
-  localStorage.removeItem(K.roster);
+export function clearRoster(subject) {
+  localStorage.removeItem(rosterKey(subject));
 }
 
 /** Token yang harus dimasukkan siswa agar soal Ujian (Post Test modul) bisa dibuka. */

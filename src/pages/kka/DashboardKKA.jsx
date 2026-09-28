@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Code2, Brain, Terminal, BookOpen, Trophy, Cpu, Zap, ClipboardCheck, FileText, BarChart3, GitBranch, Database, MonitorSmartphone, Briefcase, FileDown, BookA, Puzzle, Bot } from 'lucide-react';
+import { Code2, Brain, Terminal, BookOpen, Trophy, Cpu, Zap, ClipboardCheck, FileText, BarChart3, GitBranch, Database, MonitorSmartphone, Briefcase, FileDown, BookA, Puzzle, Bot, ClipboardList } from 'lucide-react';
 
 export default function DashboardKKA() {
   const elements = [
@@ -15,6 +15,8 @@ export default function DashboardKKA() {
     { to: '/kka/challenge', title: 'Latihan Cepat', desc: 'Tes kecepatan', icon: Zap, color: ['#f59e0b', '#f97316'] },
     { to: '/kka/pretest', title: 'Pre-Test', desc: 'Uji awal', icon: ClipboardCheck, color: ['#06b6d4', '#0891b2'] },
     { to: '/kka/posttest', title: 'Post-Test', desc: 'Evaluasi akhir', icon: FileText, color: ['#ef4444', '#dc2626'] },
+    { to: '/kka/ujian', title: 'Ujian KKA', desc: 'Ujian 25 soal (token guru)', icon: ClipboardCheck, color: ['#f97316', '#ea580c'] },
+    { to: '/kka/rekap', title: 'Rekap Nilai', desc: 'Nilai ujian (guru)', icon: ClipboardList, color: ['#0d9488', '#0f766e'] },
     { to: '/kka/hasil', title: 'Hasil & Sertifikat', desc: 'Pencapaian & sertifikat', icon: BarChart3, color: ['#f43f5e', '#e11d48'] },
     { to: '/kka/kasus', title: 'Studi Kasus', desc: 'Terapkan pemahaman', icon: Briefcase, color: ['#14b8a6', '#0d9488'] },
     { to: '/kka/worksheet', title: 'Lembar Kerja', desc: 'Latihan offline', icon: FileDown, color: ['#84cc16', '#65a30d'] },

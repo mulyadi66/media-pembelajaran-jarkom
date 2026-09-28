@@ -67,3 +67,35 @@ $$;
 
 revoke all on function public.reset_exam_results(pin text) from public;
 grant execute on function public.reset_exam_results(pin text) to anon;
+
+-- ============================================================================
+-- Reset per mata pelajaran (dipakai Rekap Nilai KKA, /kka/rekap).
+-- Hanya menghapus baris dengan modul berawalan 'kka_' sehingga nilai
+-- MPK 1 / mapel lain tetap aman. Jalankan blok ini di SQL Editor Supabase.
+-- PENTING: prefix harus sesuai SUBJECT_PREFIX di src/lib/examLib.js
+-- ('mpk1_' untuk MPK 1, 'kka_' untuk KKA) dan pin harus sama dengan
+-- VITE_REKAP_PIN di Vercel.
+-- ============================================================================
+create or replace function public.reset_exam_results_subject(pin text, subject_prefix text)
+returns integer
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare deleted_rows integer;
+begin
+  if pin is null or pin <> '2468' then
+    raise exception 'PIN salah';
+  end if;
+  if subject_prefix is null or subject_prefix = '' then
+    raise exception 'prefix mapel wajib diisi';
+  end if;
+  delete from public.exam_results
+    where modul like subject_prefix || '%';
+  get diagnostics deleted_rows = row_count;
+  return deleted_rows;
+end;
+$$;
+
+revoke all on function public.reset_exam_results_subject(pin text, subject_prefix text) from public;
+grant execute on function public.reset_exam_results_subject(pin text, subject_prefix text) to anon;
