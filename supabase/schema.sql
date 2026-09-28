@@ -69,12 +69,46 @@ revoke all on function public.reset_exam_results(pin text) from public;
 grant execute on function public.reset_exam_results(pin text) to anon;
 
 -- ============================================================================
--- Reset per mata pelajaran (dipakai Rekap Nilai KKA, /kka/rekap).
--- Hanya menghapus baris dengan modul berawalan 'kka_' sehingga nilai
--- MPK 1 / mapel lain tetap aman. Jalankan blok ini di SQL Editor Supabase.
--- PENTING: prefix harus sesuai SUBJECT_PREFIX di src/lib/examLib.js
--- ('mpk1_' untuk MPK 1, 'kka_' untuk KKA) dan pin harus sama dengan
--- VITE_REKAP_PIN di Vercel.
+-- Reset per mata pelajaran dengan DAFTAR KEY PERSIS (dipakai Rekap Nilai KKA
+-- dan KKA XI). Ini yang dipakai aplikasi — paling aman karena 'kka_elemen1_ujian'
+-- dan 'kka_xi_modul1_ujian' sama-sama diawali 'kka_', sehingga tidak mungkin
+-- dibedakan oleh prefix. Jalankan blok ini di SQL Editor Supabase.
+-- pin harus sama dengan VITE_REKAP_PIN di Vercel.
+-- ============================================================================
+create or replace function public.reset_exam_results_keys(pin text, subject_keys text[])
+returns integer
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare deleted_rows integer;
+begin
+  if pin is null or pin <> '2468' then
+    raise exception 'PIN salah';
+  end if;
+  if subject_keys is null or array_length(subject_keys, 1) is null then
+    raise exception 'daftar kunci modul wajib diisi';
+  end if;
+  delete from public.exam_results
+    where modul = any(subject_keys);
+  get diagnostics deleted_rows = row_count;
+  return deleted_rows;
+end;
+$$;
+
+revoke all on function public.reset_exam_results_keys(pin text, subject_keys text[]) from public;
+grant execute on function public.reset_exam_results_keys(pin text, subject_keys text[]) to anon;
+
+-- ============================================================================
+-- Versi lama (prefix, semantik `like prefix || '%'`). Dipakai hanya sebagai
+-- cadangan kalau fungsi reset_exam_results_keys di atas belum terpasang.
+--
+-- Prefix WAJIB tidak tumpang tindih. Karena 'kka_elemen1_ujian' dan
+-- 'kka_xi_modul1_ujian' sama-sama diawali 'kka_', prefix 'kka' akan menghapus
+-- KKA reguler DAN KKA XI sekaligus. Karena itu prefix KKA reguler memakai
+-- 'kka_elemen' (tepat di titik pembeda), bukan 'kka'.
+-- Prefix dikirim dari SUBJECT_LEGACY_PREFIX di src/lib/examLib.js:
+--   mpk1 -> 'mpk1_'      kka -> 'kka_elemen'      kka_xi -> 'kka_xi_'
 -- ============================================================================
 create or replace function public.reset_exam_results_subject(pin text, subject_prefix text)
 returns integer

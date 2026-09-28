@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { NavLink, Link, Outlet, useLocation } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { UJIAN_KKA_TOTAL, UJIAN_KKA_SOAL_PER_ELEMEN } from '../data/kka/ujianKKA.js';
+import { UJIAN_KKA_XI_TOTAL, UJIAN_KKA_XI_SOAL_PER_MODUL } from '../data/kka-xi/ujianKKAXI.js';
 import DarkModeToggle from './DarkModeToggle';
 import StreakCounter from './StreakCounter';
 import {
@@ -256,12 +257,14 @@ const subjects = {
       { to: '/kka-xi', icon: Home, label: 'Dashboard' },
       { to: '/kka-xi/modul1', icon: Globe, label: 'Modul 1: Menyaring Fakta & Identitas Digital' },
       { to: '/kka-xi/modul2', icon: Brain, label: 'Modul 2: Algoritma & Struktur Data' },
-      { to: '/kka-xi/modul3', icon: Terminal, label: 'Modul 3: Algoritma Pemograman' },
+      { to: '/kka-xi/modul3', icon: Terminal, label: 'Modul 3: Algoritma Pemrograman' },
       { to: '/kka-xi/modul4', icon: Code2, label: 'Modul 4: Pengembangan Web' },
       { to: '/kka-xi/flashcard', icon: BookOpen, label: 'Flashcard' },
       { to: '/kka-xi/challenge', icon: Zap, label: 'Latihan Cepat' },
       { to: '/kka-xi/kasus', icon: Briefcase, label: 'Studi Kasus' },
       { to: '/kka-xi/pretest', icon: ClipboardCheck, label: 'Pre-Test' },
+      { to: '/kka-xi/ujian', icon: ClipboardCheck, label: `Ujian KKA XI (4 x ${UJIAN_KKA_XI_SOAL_PER_MODUL} soal)` },
+      { to: '/kka-xi/rekap', icon: ClipboardList, label: 'Rekap Nilai (Guru)' },
       { to: '/kka-xi/worksheet', icon: FileDown, label: 'Lembar Kerja' },
       { to: '/kka-xi/glossary', icon: BookA, label: 'Glossarium' },
       { to: '/kka-xi/hasil', icon: BarChart3, label: 'Hasil & Sertifikat' },
@@ -270,13 +273,14 @@ const subjects = {
       '/kka-xi': 'Dashboard KKA XI',
       '/kka-xi/modul1': 'Modul 1: Menyaring Fakta, Identitas Digital & Kolaborasi Konten',
       '/kka-xi/modul2': 'Modul 2: Pengembangan Algoritma dan Struktur Data',
-      '/kka-xi/modul3': 'Modul 3: Algoritma Pemograman',
+      '/kka-xi/modul3': 'Modul 3: Algoritma Pemrograman',
       '/kka-xi/modul4': 'Modul 4: Pengembangan Web yang Responsif dan Interaktif',
       '/kka-xi/flashcard': 'Flashcard Interaktif KKA XI',
       '/kka-xi/challenge': 'Latihan Cepat KKA XI',
       '/kka-xi/kasus': 'Studi Kasus KKA XI',
       '/kka-xi/pretest': 'Pre-Test KKA XI',
-      '/kka-xi/posttest': 'Post-Test KKA XI',
+      '/kka-xi/ujian': `Ujian KKA XI — 4 Ujian per Modul (${UJIAN_KKA_XI_TOTAL} Soal)`,
+      '/kka-xi/rekap': 'Rekap Nilai Ujian KKA XI (Guru)',
       '/kka-xi/worksheet': 'Lembar Kerja KKA XI',
       '/kka-xi/glossary': 'Glossarium KKA XI',
       '/kka-xi/hasil': 'Hasil & Sertifikat KKA XI',
@@ -291,7 +295,8 @@ const subjects = {
       '/kka-xi/challenge': 'Latihan cepat KKA XI melawan waktu',
       '/kka-xi/kasus': 'Terapkan pemahaman KKA XI dalam permasalahan nyata',
       '/kka-xi/pretest': 'Uji pemahaman awal KKA XI',
-      '/kka-xi/posttest': 'Evaluasi pemahaman KKA XI. Target: ≥70',
+      '/kka-xi/ujian': 'Ujian KKA XI per modul. Token guru, identitas, timer, dan submit sekali per modul',
+      '/kka-xi/rekap': 'Rekap nilai Ujian KKA XI untuk guru. Filter, statistik, ekspor CSV, dan cetak',
       '/kka-xi/worksheet': 'Lembar kerja praktik offline KKA XI',
       '/kka-xi/glossary': 'Daftar istilah penting dalam Koding & Kecerdasan Artifisial XI',
       '/kka-xi/hasil': 'Ringkasan, pencapaian, dan sertifikat KKA XI',

@@ -29,11 +29,45 @@ export const KKA_META = [
   { key: 'kka_elemen5_ujian', label: 'Elemen 5' },
 ];
 
-/** Semua kunci ujian di aplikasi — dipakai saat membersihkan data lokal. */
-export const ALL_MODUL_META = [...MODUL_META, ...KKA_META];
+/**
+ * Ujian KKA XI dipecah per modul (menggantikan Post Test KKA XI).
+ * Kunci WAJIB sama dengan `key` di src/data/kka-xi/ujianKKAXI.js karena dipakai
+ * sebagai storageKey, scoreKey, dan kolom `modul` di Supabase.
+ */
+export const KKA_XI_META = [
+  { key: 'kka_xi_modul1_ujian', label: 'Modul 1' },
+  { key: 'kka_xi_modul2_ujian', label: 'Modul 2' },
+  { key: 'kka_xi_modul3_ujian', label: 'Modul 3' },
+  { key: 'kka_xi_modul4_ujian', label: 'Modul 4' },
+];
 
-/** Prefix modul per mapel — untuk reset hanya satu mata pelajaran. */
-export const SUBJECT_PREFIX = { mpk1: 'mpk1_', kka: 'kka_' };
+/** Semua kunci ujian di aplikasi — dipakai saat membersihkan data lokal. */
+export const ALL_MODUL_META = [...MODUL_META, ...KKA_META, ...KKA_XI_META];
+
+/**
+ * Kunci modul ujian per mata pelajaran — dipakai saat reset per mapel.
+ *
+ * PENTING: pakai DAFTAR KEY, bukan prefix. Prefix tidak bisa membedakan
+ * 'kka' dari 'kka_xi_' karena 'kka_xi_modul1_ujian' sama-sama diawali 'kka_'.
+ * Reset KKA reguler akan ikut menghapus nilai KKA XI kalau memakai awalan.
+ */
+export const SUBJECT_KEYS = {
+  mpk1: MODUL_META.map(m => m.key),
+  kka: KKA_META.map(m => m.key),
+  kka_xi: KKA_XI_META.map(m => m.key),
+};
+
+/**
+ * Prefix untuk fungsi reset versi LAMA di server (yang masih cocok dengan
+ * `like prefix || '%'`). Dipilih agar tetap tidak tumpang tindih:
+ * 'kka_elemen' hanya mengenai KKA reguler, bukan 'kka_xi_...'.
+ */
+export const SUBJECT_LEGACY_PREFIX = { mpk1: 'mpk1_', kka: 'kka_elemen', kka_xi: 'kka_xi_' };
+
+/** Kunci modul ujian milik satu mapel. */
+export function getSubjectKeys(subject) {
+  return SUBJECT_KEYS[subject] || SUBJECT_KEYS.mpk1;
+}
 
 function loadJSON(key, fallback) {
   try {
@@ -229,14 +263,14 @@ export function clearExamLocal() {
 }
 
 /**
- * Hapus hasil ujian lokal milik SATU mata pelajaran saja (prefix modul), tanpa
- * menyentuh mapel lain. Dipakai tombol Reset di Rekap Nilai per mapel supaya
- * nilai MPK 1 / mapel lain di perangkat guru tidak ikut terhapus.
- * @param {string} subject 'mpk1' | 'kka'
+ * Hapus hasil ujian lokal milik SATU mata pelajaran saja, tanpa menyentuh mapel
+ * lain. Dipakai tombol Reset di Rekap Nilai per mapel supaya nilai MPK 1 / mapel
+ * lain di perangkat guru tidak ikut terhapus.
+ * @param {string} subject 'mpk1' | 'kka' | 'kka_xi'
  */
 export function clearExamLocalSubject(subject) {
-  const prefix = SUBJECT_PREFIX[subject] || SUBJECT_PREFIX.mpk1;
-  const milik = (modul) => String(modul || '').startsWith(prefix);
+  const keys = getSubjectKeys(subject);
+  const milik = (modul) => keys.includes(String(modul || ''));
 
   saveJSON(K.history, getExamHistory().filter(r => !milik(r.modul)));
   saveJSON(K.pending, getPending().filter(r => !milik(r.modul)));
@@ -265,19 +299,35 @@ export async function resetExamResults(pin) {
 }
 
 /**
- * Hapus hasil ujian milik satu mata pelajaran saja (prefix modul), tanpa
- * menyentuh mapel lain. Memakai fungsi server `reset_exam_results_subject`
- * (lihat supabase/schema.sql). @param {string} subject 'mpk1' | 'kka'
+ * Hapus hasil ujian milik SATU mata pelajaran saja, tanpa menyentuh mapel lain.
+ *
+ * Memakai fungsi server `reset_exam_results_keys` yang menerima DAFTAR KEY
+ * persis (lihat supabase/schema.sql) — paling aman, karena prefix tidak bisa
+ * membedakan 'kka' dari 'kka_xi_'. Bila fungsi itu belum ada di database
+ * (SQL Editor belum dijalankan ulang), jatuh ke `reset_exam_results_subject`
+ * versi lama memakai prefix yang sudah disetel tidak tumpang tindih.
+ * @param {string} subject 'mpk1' | 'kka' | 'kka_xi'
  */
 export async function resetExamResultsSubject(pin, subject) {
-  const prefix = SUBJECT_PREFIX[subject] || SUBJECT_PREFIX.mpk1;
+  const keys = getSubjectKeys(subject);
   if (!supabase) return { ok: true, localOnly: true, deleted: 0 };
-  const { data, error } = await supabase.rpc('reset_exam_results_subject', {
+
+  const { data, error } = await supabase.rpc('reset_exam_results_keys', {
     pin: String(pin || ''),
-    subject_prefix: prefix,
+    subject_keys: keys,
   });
-  if (error) return { ok: false, error: error.message };
-  return { ok: true, deleted: data ?? 0 };
+  if (!error) return { ok: true, deleted: data ?? 0 };
+
+  // Fungsi versi baru belum terpasang di database → coba yang lama.
+  const notFound = error.code === '42883' || error.code === 'PGRST202' || /not found|does not exist/i.test(error.message || '');
+  if (!notFound) return { ok: false, error: error.message };
+
+  const legacy = await supabase.rpc('reset_exam_results_subject', {
+    pin: String(pin || ''),
+    subject_prefix: SUBJECT_LEGACY_PREFIX[subject] || SUBJECT_LEGACY_PREFIX.mpk1,
+  });
+  if (legacy.error) return { ok: false, error: legacy.error.message };
+  return { ok: true, deleted: legacy.data ?? 0 };
 }
 
 export function getRekapPin() {

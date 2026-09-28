@@ -20,7 +20,7 @@ export const worksheetsKKAXI = {
     ]
   },
   modul3: {
-    title: 'Modul 3: Algoritma Pemograman',
+    title: 'Modul 3: Algoritma Pemrograman',
     questions: [
       { id: 1, type: 'essay', question: 'Buatlah program Python sederhana yang menerima input nama dan umur dari pengguna, lalu menentukan apakah sudah boleh memilih (≥17 tahun) atau belum.', hint: 'Gunakan input(), int(), if-elif-else.' },
       { id: 2, type: 'essay', question: 'Jelaskan perbedaan antara variabel, konstanta, dan tipe data. Berikan contoh masing-masing dalam Python.', hint: 'var = nilai, const (Python tidak ada), int/float/str/bool.' },

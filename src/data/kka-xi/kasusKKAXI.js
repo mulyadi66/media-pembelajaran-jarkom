@@ -23,7 +23,7 @@ export const kasusKKAXI = [
   {
     id: 'kka_xi_kasus2',
     icon: Brain,
-    tag: 'Kasus 2 — Algoritma & Pemograman',
+    tag: 'Kasus 2 — Algoritma & Pemrograman',
     title: 'Optimalisasi Jadwal Piket Kelas',
     desc: 'Seorang wali kelas meminta bantuan siswa untuk membuat program yang menghasilkan jadwal piket otomatis untuk 30 siswa dalam 6 hari (Senin-Sabtu), di mana setiap siswa piket tepat 1 kali dalam 1 siklus.',
     details: [

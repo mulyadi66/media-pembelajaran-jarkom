@@ -1,17 +1,20 @@
 import { Trophy, Medal, Download } from 'lucide-react';
 import { useRef, useState } from 'react';
 
-export default function Leaderboard({ scores = {}, pretestKey = 'pretest', posttestKey = 'posttest' }) {
+export default function Leaderboard({ scores = {}, pretestKey = 'pretest', posttestKey = 'posttest', examAvg = null }) {
   const ref = useRef(null);
   const [loading, setLoading] = useState(false);
   const pretest = scores[pretestKey] || 0;
-  const posttest = scores[posttestKey] || 0;
+  // Mapel tanpa post-test (KKA & KKA XI) mengirim rata-rata nilai ujian,
+  // menggantikan baris "Post-Test" yang tidak lagi relevan.
+  const posttest = examAvg != null ? examAvg : (scores[posttestKey] || 0);
+  const namaPost = examAvg != null ? 'Rata-rata Ujian' : 'Post-Test';
   const total = pretest + posttest;
   const avg = (pretest + posttest) > 0 ? Math.round(total / ((pretest > 0 ? 1 : 0) + (posttest > 0 ? 1 : 0) || 1)) : 0;
 
   const entries = [
     { name: 'Pre-Test', score: pretest, color: '#f59e0b' },
-    { name: 'Post-Test', score: posttest, color: '#10b981' },
+    { name: namaPost, score: posttest, color: '#10b981' },
   ].filter(e => e.score > 0).sort((a, b) => b.score - a.score);
 
   const exportImage = async () => {
@@ -57,7 +60,7 @@ export default function Leaderboard({ scores = {}, pretestKey = 'pretest', postt
         ))}
         {entries.length === 0 && (
           <p style={{ textAlign: 'center', color: 'var(--text-lighter)', padding: 20, fontSize: '0.85rem' }}>
-            Kerjakan pre-test atau post-test untuk mulai!
+            Kerjakan pre-test atau ujian untuk mulai!
           </p>
         )}
       </div>

@@ -622,6 +622,23 @@ a { text-decoration: none; color: inherit; }
 .modul-posttest.locked .mp-test-banner { background: linear-gradient(135deg, #fef2f2, #fee2e2); }
 .modul-posttest.locked .mp-test-banner svg { color: var(--danger); }
 
+/* ========== DAFTAR UJIAN PER MODUL (KKA & KKA XI) ========== */
+.ujian-elemen-list { display: grid; gap: 12px; margin-top: 16px; }
+.ujian-elemen-card {
+  display: flex; align-items: center; gap: 14px; padding: 14px 16px;
+  background: var(--card-bg, #fff); border: 1px solid var(--border, #e2e8f0);
+  border-radius: 12px; text-decoration: none; color: inherit; transition: .15s;
+}
+.ujian-elemen-card:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,.08); }
+.ujian-elemen-icon {
+  width: 42px; height: 42px; border-radius: 10px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; color: #fff;
+}
+.ujian-elemen-body { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
+.ujian-elemen-body strong { font-size: 0.95rem; }
+.ujian-elemen-body span { font-size: 0.82rem; color: var(--text-light); }
+.ujian-elemen-body small { font-size: 0.75rem; color: var(--text-lighter, #94a3b8); }
+
 /* ========== REKAP NILAI ========== */
 .rekap-pin-card { text-align: center; padding: 34px; }
 .rekap-icon {

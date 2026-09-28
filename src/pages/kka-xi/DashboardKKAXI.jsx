@@ -2,22 +2,36 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useApp } from '../../context/AppContext';
 import { checkBadges } from '../../data/badges';
-import { Code2, Brain, Terminal, Globe, BookOpen, Trophy, Award, BookA, Zap, FileDown, BarChart3, Briefcase, ClipboardCheck, RotateCcw, MonitorSmartphone } from 'lucide-react';
+import { Code2, Brain, Terminal, Globe, BookOpen, Trophy, Award, BookA, Zap, FileDown, BarChart3, Briefcase, ClipboardCheck, RotateCcw, MonitorSmartphone, ClipboardList } from 'lucide-react';
 import ConfirmModal from '../../components/ConfirmModal';
+import { KKA_XI_META, getExamHistory } from '../../lib/examLib';
+import { UJIAN_KKA_XI_SOAL_PER_MODUL } from '../../data/kka-xi/ujianKKAXI.js';
 
 export default function DashboardKKAXI() {
   const { modulesRead, scores, resetAll } = useApp();
   const [showReset, setShowReset] = useState(false);
+
+  // Post-test KKA XI diganti Ujian KKA XI per modul, jadi badge pencapaian
+  // akhir memakai rata-rata nilai ujian dari riwayat ujian di perangkat ini.
+  const history = getExamHistory();
+  const nilaiUjian = KKA_XI_META
+    .map(m => { const h = history.find(r => r.modul === m.key); return h ? h.nilai : null; })
+    .filter(n => n != null);
+  const examAvg = nilaiUjian.length
+    ? Math.round(nilaiUjian.reduce((a, b) => a + b, 0) / nilaiUjian.length)
+    : null;
+
   const earnedBadges = checkBadges(scores, modulesRead, {
     pretestKey: 'kka_xi_pretest',
-    posttestKey: 'kka_xi_posttest',
     moduleIds: ['kka_xi_modul1', 'kka_xi_modul2', 'kka_xi_modul3', 'kka_xi_modul4'],
+    examAvg,
+    examDone: nilaiUjian.length === KKA_XI_META.length,
   });
 
   const modules = [
     { to: '/kka-xi/modul1', icon: Globe, title: 'Menyaring Fakta, Identitas Digital & Kolaborasi Konten', desc: 'Verifikasi hoaks, reputasi online, dan kreasi konten digital', color: ['#06b6d4', '#0891b2'] },
     { to: '/kka-xi/modul2', icon: Brain, title: 'Pengembangan Algoritma dan Struktur Data', desc: 'Array, linked list, stack, queue, sorting, searching', color: ['#10b981', '#059669'] },
-    { to: '/kka-xi/modul3', icon: Terminal, title: 'Algoritma Pemograman', desc: 'Variabel, percabangan, perulangan, fungsi, debugging', color: ['#f59e0b', '#d97706'] },
+    { to: '/kka-xi/modul3', icon: Terminal, title: 'Algoritma Pemrograman', desc: 'Variabel, percabangan, perulangan, fungsi, debugging', color: ['#f59e0b', '#d97706'] },
     { to: '/kka-xi/modul4', icon: Code2, title: 'Pengembangan Web yang Responsif dan Interaktif', desc: 'HTML, CSS, JavaScript, responsive design, DOM', color: ['#8b5cf6', '#6d28d9'] },
   ];
 
@@ -26,6 +40,8 @@ export default function DashboardKKAXI() {
     { to: '/kka-xi/challenge', icon: Zap, title: 'Latihan Cepat', desc: 'Tes kecepatan', color: ['#f59e0b', '#f97316'] },
     { to: '/kka-xi/kasus', icon: Briefcase, title: 'Studi Kasus', desc: 'Skenario nyata', color: ['#10b981', '#059669'] },
     { to: '/kka-xi/pretest', icon: ClipboardCheck, title: 'Pre-Test', desc: 'Uji awal', color: ['#06b6d4', '#0891b2'] },
+    { to: '/kka-xi/ujian', icon: ClipboardCheck, title: 'Ujian KKA XI', desc: `4 modul x ${UJIAN_KKA_XI_SOAL_PER_MODUL} soal (token guru)`, color: ['#f97316', '#ea580c'] },
+    { to: '/kka-xi/rekap', icon: ClipboardList, title: 'Rekap Nilai', desc: 'Nilai ujian (guru)', color: ['#0d9488', '#0f766e'] },
     { to: '/kka-xi/worksheet', icon: FileDown, title: 'Lembar Kerja', desc: 'Soal offline', color: ['#7c3aed', '#6d28d9'] },
     { to: '/kka-xi/glossary', icon: BookOpen, title: 'Glossarium', desc: 'Istilah KKA XI', color: ['#0ea5e9', '#0284c7'] },
     { to: '/kka-xi/hasil', icon: BarChart3, title: 'Hasil', desc: 'Pencapaian & sertifikat', color: ['#f43f5e', '#e11d48'] },
@@ -42,7 +58,7 @@ export default function DashboardKKAXI() {
             <div className="stat"><BookOpen size={18} /> <span>4 Modul</span></div>
             <div className="stat"><Briefcase size={18} /> <span>Studi Kasus</span></div>
             <div className="stat"><Code2 size={18} /> <span>Algoritma & Web</span></div>
-            <div className="stat"><ClipboardCheck size={18} /> <span>Pre & Post Test</span></div>
+            <div className="stat"><ClipboardCheck size={18} /> <span>Pre-Test &amp; Ujian</span></div>
           </div>
         </div>
         <div className="hero-visual">
@@ -138,7 +154,7 @@ export default function DashboardKKAXI() {
         <ConfirmModal
           open={showReset}
           title="Reset Semua Pengerjaan?"
-          message="Semua progress, nilai, jawaban pretest/posttest, dan data lainnya akan dihapus permanen."
+          message="Semua progress, nilai, jawaban pretest/ujian, dan data lainnya akan dihapus permanen."
           confirmLabel="Ya, Reset"
           cancelLabel="Batal"
           onConfirm={() => { resetAll(); setShowReset(false); }}
