@@ -30,7 +30,7 @@ export default function DashboardKKA() {
     <>
       <section className="hero">
         <div className="hero-content">
-          <div className="hero-badge">Kelas XI TJKT</div>
+          <div className="hero-badge">Kelas X TJKT</div>
           <h1>Koding dan Kecerdasan Artifisial (KKA)</h1>
           <p>Mata Pelajaran Kejuruan — Dasar Pemrograman & Kecerdasan Artifisial</p>
           <div className="hero-stats">
