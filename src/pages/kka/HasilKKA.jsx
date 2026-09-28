@@ -23,12 +23,6 @@ export default function HasilKKA() {
   const pretestAnswered = countAnswered('kka_pretestAnswers');
   const posttestAnswered = countAnswered('kka_posttestAnswers');
   const growth = posttestScore > 0 && pretestScore > 0 ? posttestScore - pretestScore : null;
-  const earnedBadges = checkBadges(scores, modulesRead, {
-    pretestKey: 'kka_pretest',
-    posttestKey: 'kka_posttest',
-    moduleIds: MODULE_IDS,
-  });
-
   // Ujian KKA per elemen: nilai diambil dari riwayat ujian yang tersimpan di
   // perangkat ini (sumber yang sama dengan rekap guru), bukan dari pre/post-test.
   const history = getExamHistory();
@@ -47,6 +41,17 @@ export default function HasilKKA() {
   const jmlElemen = nilaiElemen.length;
   const rataElemen = jmlElemen ? Math.round(nilaiElemen.reduce((a, b) => a + b, 0) / jmlElemen) : null;
   const semuaElemenSelesai = jmlElemen === KKA_META.length;
+
+  // Post-test KKA sudah dihapus dari UI, jadi badge "pencapaian akhir"
+  // (Achiever / Network Pro / Perfect Score / Growing) memakai rata-rata
+  // nilai Ujian KKA per elemen.
+  const earnedBadges = checkBadges(scores, modulesRead, {
+    pretestKey: 'kka_pretest',
+    posttestKey: 'kka_posttest',
+    moduleIds: MODULE_IDS,
+    examAvg: rataElemen,
+    examDone: semuaElemenSelesai,
+  });
 
   // Lulus bila post-test >= 70, atau bila kelima elemen ujian >= 70.
   const lulusPosttest = posttestScore >= 70;
@@ -86,7 +91,7 @@ export default function HasilKKA() {
 
       <div className="result-card fade-in" style={{textAlign: 'left'}}>
         <h3 style={{marginBottom: 16}}><Award size={18} style={{color: 'var(--primary)', verticalAlign: 'middle'}} /> Pencapaian ({earnedBadges.length}/8)</h3>
-        <Badges earnedIds={earnedBadges} />
+        <Badges earnedIds={earnedBadges} examMode examName="Ujian KKA" />
       </div>
 
       <div className="result-card fade-in" style={{textAlign: 'left'}}>
