@@ -16,9 +16,17 @@ export const MODUL_META = [
   { key: 'mpk1_modul3_posttest', label: 'Modul 3' },
 ];
 
-/** Ujian KKA (satu paket, menggantikan Post Test biasa). */
+/**
+ * Ujian KKA dipecah per elemen (menggantikan Post Test biasa).
+ * Kunci ini WAJIB sama dengan `key` di src/data/kka/ujianKKA.js karena dipakai
+ * sebagai storageKey, scoreKey, dan kolom `modul` di Supabase.
+ */
 export const KKA_META = [
-  { key: 'kka_posttest_ujian', label: 'Ujian KKA' },
+  { key: 'kka_elemen1_ujian', label: 'Elemen 1' },
+  { key: 'kka_elemen2_ujian', label: 'Elemen 2' },
+  { key: 'kka_elemen3_ujian', label: 'Elemen 3' },
+  { key: 'kka_elemen4_ujian', label: 'Elemen 4' },
+  { key: 'kka_elemen5_ujian', label: 'Elemen 5' },
 ];
 
 /** Semua kunci ujian di aplikasi — dipakai saat membersihkan data lokal. */

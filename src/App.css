@@ -641,6 +641,8 @@ a { text-decoration: none; color: inherit; }
 .rekap-table td { padding: 9px 12px; border-bottom: 1px solid var(--border); color: var(--text); }
 .rekap-table tbody tr:hover { background: rgba(99,102,241,0.05); }
 .rekap-table .td-muted { color: var(--text-lighter); }
+.rekap-table .rekap-rata { font-weight: 700; }
+.rekap-table .rekap-rata .modul-cell-sub { font-weight: 400; }
 .rekap-table .td-avg { font-weight: 800; color: var(--primary-dark); }
 .rekap-nis { font-variant-numeric: tabular-nums; color: var(--text-light); }
 .rekap-kelas { color: var(--text-light); }

@@ -143,7 +143,7 @@ const subjects = {
       { to: '/kka/challenge', icon: Zap, label: 'Latihan Cepat' },
       { to: '/kka/pretest', icon: ClipboardCheck, label: 'Pre-Test' },
       { to: '/kka/posttest', icon: FileText, label: 'Post-Test' },
-      { to: '/kka/ujian', icon: ClipboardCheck, label: 'Ujian KKA (25 soal)' },
+      { to: '/kka/ujian', icon: ClipboardCheck, label: 'Ujian KKA (5 x 15 soal)' },
       { to: '/kka/rekap', icon: ClipboardList, label: 'Rekap Nilai (Guru)' },
       { to: '/kka/hasil', icon: BarChart3, label: 'Hasil & Sertifikat' },
       { to: '/kka/kasus', icon: Briefcase, label: 'Studi Kasus' },
@@ -163,7 +163,7 @@ const subjects = {
       '/kka/challenge': 'Latihan Cepat KKA',
       '/kka/pretest': 'Pre-Test KKA',
       '/kka/posttest': 'Post-Test KKA',
-      '/kka/ujian': 'Ujian KKA — Post Test 25 Soal',
+      '/kka/ujian': 'Ujian KKA — 5 Ujian per Elemen (75 Soal)',
       '/kka/rekap': 'Rekap Nilai Ujian KKA (Guru)',
       '/kka/hasil': 'Hasil & Sertifikat KKA',
       '/kka/kasus': 'Studi Kasus KKA',
@@ -183,7 +183,7 @@ const subjects = {
       '/kka/challenge': 'Latihan cepat KKA melawan waktu',
       '/kka/pretest': 'Uji pemahaman awal KKA',
       '/kka/posttest': 'Evaluasi pemahaman KKA. Target: ≥70',
-      '/kka/ujian': 'Ujian KKA 25 soal dengan token guru, identitas, timer, dan anti-contek',
+      '/kka/ujian': 'Lima ujian mandiri 15 soal per elemen, dengan token guru, identitas, timer, dan anti-contek',
       '/kka/rekap': 'Rekap nilai Ujian KKA per siswa (khusus guru)',
       '/kka/hasil': 'Ringkasan, pencapaian, dan sertifikat KKA',
       '/kka/kasus': 'Terapkan pemahaman KKA dalam permasalahan nyata',
@@ -318,6 +318,11 @@ export default function Layout() {
   const { prefix, label, logo: Logo, items, titles, descs } = subject;
   const isDashboard = path === prefix;
 
+  // Rute dinamis (mis. /kka/ujian/elemen3) mewarisi judul & deskripsi induknya.
+  const basePath = path.startsWith('/kka/ujian/') ? '/kka/ujian' : path;
+  const pageTitle = titles[path] || titles[basePath] || '';
+  const pageDesc = descs[path] || descs[basePath] || '';
+
   return (
     <div className={`app-layout ${sidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
       {sidebarOpen && <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)} role="button" tabIndex={0} aria-label="Tutup menu navigasi" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSidebarOpen(false); }}} />}
@@ -382,11 +387,11 @@ export default function Layout() {
               <span className="sep">/</span>
               <Link to={prefix}>{label}</Link>
               {path !== prefix && (
-                <><span className="sep">/</span><span>{titles[path] || ''}</span></>
+                <><span className="sep">/</span><span>{pageTitle}</span></>
               )}
             </div>
-            <h1>{titles[path] || ''}</h1>
-            <p>{descs[path] || ''}</p>
+            <h1>{pageTitle}</h1>
+            <p>{pageDesc}</p>
           </div>
         )}
 
