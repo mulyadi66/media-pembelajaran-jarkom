@@ -25,7 +25,7 @@ import {
 } from '../lib/examLib';
 import { isSupabaseConfigured } from '../lib/supabase';
 
-function IdentityForm({ initial, onSubmit, onCancel }) {
+function IdentityForm({ initial, onSubmit, onCancel, kelasPlaceholder }) {
   const [nama, setNama] = useState(initial?.nama || '');
   const [nis, setNis] = useState(initial?.nis || '');
   const [kelas, setKelas] = useState(initial?.kelas || '');
@@ -73,7 +73,7 @@ function IdentityForm({ initial, onSubmit, onCancel }) {
         <input
           type="text" value={kelas}
           onChange={(e) => { setKelas(e.target.value); setError(null); }}
-          placeholder="contoh: X TJKT 1" maxLength={40}
+          placeholder={kelasPlaceholder} maxLength={40}
         />
       </label>
       <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
@@ -89,7 +89,7 @@ function IdentityForm({ initial, onSubmit, onCancel }) {
   );
 }
 
-export default function ModulPostTest({ questions, storageKey, scoreKey, title, meta = MODUL_META }) {
+export default function ModulPostTest({ questions, storageKey, scoreKey, title, meta = MODUL_META, kelasPlaceholder = 'contoh: X TJKT 1' }) {
   const { saveQuizScore } = useApp();
   const [identity, setIdentity] = useState(() => getIdentity());
   const [locked, setLocked] = useState(() => isModulLocked(scoreKey));
@@ -146,6 +146,7 @@ export default function ModulPostTest({ questions, storageKey, scoreKey, title, 
           initial={identity}
           onSubmit={handleIdentitySubmit}
           onCancel={identity ? () => setEditing(false) : undefined}
+          kelasPlaceholder={kelasPlaceholder}
         />
       </div>
     );
