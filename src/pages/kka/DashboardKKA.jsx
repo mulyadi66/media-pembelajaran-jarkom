@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Code2, Brain, Terminal, BookOpen, Trophy, Cpu, Zap, ClipboardCheck, FileText, BarChart3, GitBranch, Database, MonitorSmartphone, Briefcase, FileDown, BookA, Puzzle, Bot, ClipboardList } from 'lucide-react';
+import { Code2, Brain, Terminal, BookOpen, Trophy, Cpu, Zap, ClipboardCheck, BarChart3, GitBranch, Database, MonitorSmartphone, Briefcase, FileDown, BookA, Puzzle, Bot, ClipboardList } from 'lucide-react';
 import { UJIAN_KKA_SOAL_PER_ELEMEN } from '../../data/kka/ujianKKA.js';
 
 export default function DashboardKKA() {
@@ -15,7 +15,6 @@ export default function DashboardKKA() {
     { to: '/kka/flashcard', title: 'Flashcard', desc: 'Hafal istilah KKA', icon: BookOpen, color: ['#8b5cf6', '#6d28d9'] },
     { to: '/kka/challenge', title: 'Latihan Cepat', desc: 'Tes kecepatan', icon: Zap, color: ['#f59e0b', '#f97316'] },
     { to: '/kka/pretest', title: 'Pre-Test', desc: 'Uji awal', icon: ClipboardCheck, color: ['#06b6d4', '#0891b2'] },
-    { to: '/kka/posttest', title: 'Post-Test', desc: 'Evaluasi akhir', icon: FileText, color: ['#ef4444', '#dc2626'] },
     { to: '/kka/ujian', title: 'Ujian KKA', desc: `5 elemen x ${UJIAN_KKA_SOAL_PER_ELEMEN} soal (token guru)`, icon: ClipboardCheck, color: ['#f97316', '#ea580c'] },
     { to: '/kka/rekap', title: 'Rekap Nilai', desc: 'Nilai ujian (guru)', icon: ClipboardList, color: ['#0d9488', '#0f766e'] },
     { to: '/kka/hasil', title: 'Hasil & Sertifikat', desc: 'Pencapaian & sertifikat', icon: BarChart3, color: ['#f43f5e', '#e11d48'] },

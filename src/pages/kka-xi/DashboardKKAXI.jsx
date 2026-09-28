@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useApp } from '../../context/AppContext';
 import { checkBadges } from '../../data/badges';
-import { Code2, Brain, Terminal, Globe, BookOpen, Trophy, Award, BookA, Zap, FileDown, BarChart3, Briefcase, ClipboardCheck, FileText, RotateCcw, MonitorSmartphone } from 'lucide-react';
+import { Code2, Brain, Terminal, Globe, BookOpen, Trophy, Award, BookA, Zap, FileDown, BarChart3, Briefcase, ClipboardCheck, RotateCcw, MonitorSmartphone } from 'lucide-react';
 import ConfirmModal from '../../components/ConfirmModal';
 
 export default function DashboardKKAXI() {
@@ -26,7 +26,6 @@ export default function DashboardKKAXI() {
     { to: '/kka-xi/challenge', icon: Zap, title: 'Latihan Cepat', desc: 'Tes kecepatan', color: ['#f59e0b', '#f97316'] },
     { to: '/kka-xi/kasus', icon: Briefcase, title: 'Studi Kasus', desc: 'Skenario nyata', color: ['#10b981', '#059669'] },
     { to: '/kka-xi/pretest', icon: ClipboardCheck, title: 'Pre-Test', desc: 'Uji awal', color: ['#06b6d4', '#0891b2'] },
-    { to: '/kka-xi/posttest', icon: FileText, title: 'Post-Test', desc: 'Evaluasi akhir', color: ['#ef4444', '#dc2626'] },
     { to: '/kka-xi/worksheet', icon: FileDown, title: 'Lembar Kerja', desc: 'Soal offline', color: ['#7c3aed', '#6d28d9'] },
     { to: '/kka-xi/glossary', icon: BookOpen, title: 'Glossarium', desc: 'Istilah KKA XI', color: ['#0ea5e9', '#0284c7'] },
     { to: '/kka-xi/hasil', icon: BarChart3, title: 'Hasil', desc: 'Pencapaian & sertifikat', color: ['#f43f5e', '#e11d48'] },
