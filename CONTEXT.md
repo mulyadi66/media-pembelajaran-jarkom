@@ -1,8 +1,8 @@
 # Context Save — Media Pembelajaran Jarkom
 
-**Terakhir diupdate:** 10 September 2026
+**Terakhir diupdate:** 28 September 2026
 **Branch:** master
-**Status:** Bersih (no uncommitted changes — tip terakhir `56a8a78`)
+**Status:** Bersih (no uncommitted changes — tip terakhir `079375d`)
 
 ---
 
@@ -19,6 +19,24 @@ Media pembelajaran interaktif React untuk siswa SMK TJKT Kelas XI, Fase F — Pe
 - React 19 + Vite, React Router, Lucide React, html2canvas + jsPDF
 - State: Context API (AppContext), localStorage persistence
 - PWA: manifest.json + service worker
+- Lint: `oxlint` (`npm run lint`); build: `npm run build` — keduanya harus lolos sebelum push
+
+## Design Tokens & Aksesibilitas (`src/App.css`)
+Semua styling terpusat di `src/App.css` (~2500 baris) + `index.css` (kosong, tidak dipakai).
+
+**Token warna — WAJIB pakai yang benar:**
+- `--primary` (#5b5ed6 light / #6063e0 dark) → khusus **fill/gradien/border**, bukan untuk teks
+- `--primary-text` (#4f46e5 light / #a5b4fc dark) → khusus **warna teks** accent
+- Alasannya: `--primary` lama (#6366f1) dipakai untuk fill dan teks sekaligus, tradeoff-nya bertentangan (fill butuh gelap agar teks putih terbaca, teks accent butuh terang agar terbaca di atas putih). Kalau butuh warna accent untuk teks, pakai `--primary-text`, jangan `--primary`.
+- `--text` / `--text-light` / `--text-lighter`: tiga tingkat hierarki teks, semua sudah lolos WCAG AA
+- **Jangan tambah hex mentah** untuk warna teks/border; pakai token agar dark mode otomatis ikut
+
+**Aturan aksesibilitas yang sudah ditegakkan (jaga saat edit baru):**
+- Kontras teks min 4.5:1, komponen UI/border min 3:1
+- `:focus-visible` global sudah ada — **dilarang** menambah `outline: none` tanpa cincin fokus pengganti
+- Semua target sentuh min 44×44px. Untuk elemen kecil yang harus tetap tampil kecil (titik navigasi flashcard), pakai `::after` 44×44px sebagai area sentuh
+- `@media (prefers-reduced-motion: reduce)` sudah ada di atas file — animasi `float`/`pulse`/spinner/skeleton dimatikan. Kalau menambah animasi baru, daftarkan di blok itu
+- Verifikasi kontras: hitung rasio WCAG sebelum pilih warna, jangan menebak
 
 ## MPK 1 — Post Test & Rekap Nilai Guru
 - **Mapel:** Perencanaan & Pengalamatan Jaringan, rute `/mpk1/` (dashboard) + modul 1/2/3 + rekap.
@@ -68,6 +86,15 @@ Media pembelajaran interaktif React untuk siswa SMK TJKT Kelas XI, Fase F — Pe
 3. `.sim-canvas` ditambah `position: relative` — device simulator seharusnya sudah bisa drag & drop
 4. Kolom **Akses** (tombol "Buka Akses") dipindah ke depan (sebelah Kelas) — tadinya di pojok kanan tabel tersembunyi di balik scroll horizontal
 5. `vercel.json` + header `Cache-Control: no-cache` untuk `index.html` — update fitur langsung terlihat tanpa hard refresh (deploy ini perlu dipantau sampai chunk baru live, sebelumnya sempat rollover gagal 404)
+6. **UI/UX overhaul** (`079375d`): kontras warna WCAG AA, focus keyboard, target sentuh 44px — detail di bagian Design Tokens & Aksesibilitas
+
+## Catatan Review UI/UX (28 Sep 2026) — belum dikerjakan
+Temuan dari review, sengaja ditunda karena di luar 3 prioritas yang sudah diperbaiki:
+- `overflow-x: hidden` di `body` (`App.css:65`) — menutupi gejala, bukan memperbaiki. Kandidat akar masalah kalau tabel Rekap bermasalah di HP
+- 14 file masih pakai emoji sebagai ikon (`📡` di Modul2/Modul3MPK2, `⚙️` di Modul2, `🔌`/`📞`/`📶` di simulator MPK2) — project sudah konsisten pakai Lucide, tinggal ganti
+- Sidebar MPK1 punya 19 item nav datar tanpa pengelompokan; saat collapsed teksnya hilang tanpa `title`/`aria-label` per item
+- 249 hex mentah masih ada di `App.css` (dark mode masih ditulis manual per-kelas)
+- `aria-live` hanya dipakai di `Quiz.jsx`, padahal ada timer countdown; heading `h1`→`h2` skipping di beberapa halaman
 
 ## Post Test Terpisah per Modul
 - Post Test Modul 1/2/3 masing-masing di halaman khusus: `/mpk1/posttest-modul1`, `/mpk1/posttest-modul2`, `/mpk1/posttest-modul3` (lazy-route di `App.jsx`, item + titles/descs di `Layout.jsx`, kartu CTA di halaman materi; storage/score keys tetap `mpk1_modul{1,2,3}_posttest`)
@@ -85,6 +112,14 @@ Media pembelajaran interaktif React untuk siswa SMK TJKT Kelas XI, Fase F — Pe
 - Flashcard (35 istilah), Glossary (35 istilah + search), Worksheet (24 essay), Challenge mode (30 soal timed)
 - Device Simulator (drag & drop), Certificate generator, Badges, Streak, Leaderboard
 - Dark mode, PWA, Print styles, Error boundary
+
+## Ujian KKA (Koding & Kecerdasan Artifisial) — `src/pages/kka/`
+- **Rute:** `/kka` (dashboard), `/kka/elemen1..5`, `/kka/ujian/elemen1..5`, `/kka/rekap`
+- **5 Elemen**, tiap elemen 25 soal (total 125), bank di `src/data/kka/ujianKKA.js` (`UJIAN_KKA_TOTAL=125`, `UJIAN_KKA_SOAL_PER_ELEMEN=25`)
+- Alur sama seperti Post Test MPK 1: token → identitas → soal + timer → submit → review
+- **State keys:** `kka_elemen{1..5}_ujian` (satu key per elemen)
+- Rekap `/kka/rekap` (PIN via `getRekapPin`, flag sessionStorage `rekapPinKkaOk`)
+- Badge dashboard memakai rata-rata Ujian KKA per elemen — Post Test KKA dihapus dari UI
 
 ## KKA XI (Koding & Kecerdasan Artifisial XI)
 - **Kode:** KKA XI, rute `/kka-xi/`
@@ -107,3 +142,7 @@ Media pembelajaran interaktif React untuk siswa SMK TJKT Kelas XI, Fase F — Pe
 - [x] Bank soal pretest/posttest MPK1 & DKK (15→20 soal per bank)
 - [x] Export leaderboard ke PNG (html2canvas)
 - [x] Aksesibilitas — ARIA labels, keyboard nav, aria-hidden dekoratif
+- [x] Kontras warna WCAG AA (token `--primary-text` dipisah dari `--primary`)
+- [x] Focus keyboard global (`:focus-visible`, tanpa `outline: none` telanjang)
+- [x] `prefers-reduced-motion: reduce` untuk animasi float/pulse/spinner/skeleton
+- [x] Target sentuh min 44×44px di tombol, nav, dan chip
