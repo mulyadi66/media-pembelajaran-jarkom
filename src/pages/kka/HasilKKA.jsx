@@ -13,24 +13,18 @@ import {
   getRataPretest,
 } from '../../data/kka/pretestKKA.js';
 
-/** Jumlah jawaban tersimpan untuk sebuah quiz (aman terhadap data korup). */
-function countAnswered(storageKey) {
-  try {
-    const raw = JSON.parse(localStorage.getItem(`jarkomlab_${storageKey}`) || '{}');
-    return raw && typeof raw === 'object' ? Object.keys(raw).length : 0;
-  } catch { return 0; }
-}
-
+/** Jumlah elemen Ujian KKA yang sudah punya nilai. */
 export default function HasilKKA() {
   const MODULE_IDS = ['kka_elemen1', 'kka_elemen2', 'kka_elemen3', 'kka_elemen4', 'kka_elemen5'];
   const { scores, modulesRead, resetAll, studentName, saveStudentName } = useApp();
   const pretestElemen = getNilaiPretest(scores);
   const { rata: rataPretest, selesai: pretestSelesai } = getRataPretest(scores);
   const pretestScore = rataPretest ?? 0;
-  const posttestScore = scores.kka_posttest || 0;
   const pretestAnswered = PRETEST_KKA.filter(b => scores[b.key] !== undefined).length;
-  const posttestAnswered = countAnswered('kka_posttestAnswers');
-  const growth = posttestScore > 0 && pretestScore > 0 ? posttestScore - pretestScore : null;
+  // Post-test KKA sudah dihapus dari navigasi, jadi kartu ringkasan memakai
+  // rata-rata Ujian KKA. Nilai post-test lama hanya dipakai sebagai fallback
+  // kelulusan sertifikat untuk siswa yang sempat mengerjakannya.
+  const posttestScore = scores.kka_posttest || 0;
   // Ujian KKA per elemen: nilai diambil dari riwayat ujian yang tersimpan di
   // perangkat ini (sumber yang sama dengan rekap guru), bukan dari pre/post-test.
   const history = getExamHistory();
@@ -84,16 +78,20 @@ export default function HasilKKA() {
         <h2 style={{marginBottom: 20}}><TrendingUp size={20} style={{color: 'var(--primary)', verticalAlign: 'middle'}} /> Ringkasan Perkembangan KKA</h2>
         <div className="result-details" style={{marginTop: 0}}>
           <div className="result-detail">
-            <div className="detail-value">{pretestScore}</div>
+            <div className="detail-value" style={{color: 'var(--primary)'}}>
+              {pretestScore > 0 ? pretestScore : '-'}
+            </div>
             <div className="detail-label">Pre-Test</div>
           </div>
           <div className="result-detail">
-            <div className="detail-value">{posttestScore}</div>
-            <div className="detail-label">Post-Test</div>
+            <div className="detail-value" style={{color: 'var(--primary)'}}>
+              {rataElemen ?? '-'}
+            </div>
+            <div className="detail-label">Ujian KKA</div>
           </div>
           <div className="result-detail">
-            <div className="detail-value" style={{color: growth !== null ? (growth > 0 ? 'var(--success)' : 'var(--danger)') : 'var(--text-light)'}}>
-              {growth !== null ? (growth > 0 ? '+' : '') + growth : '-'}
+            <div className="detail-value" style={{color: growthUjian !== null ? (growthUjian > 0 ? 'var(--success)' : 'var(--danger)') : 'var(--text-light)'}}>
+              {growthUjian !== null ? (growthUjian > 0 ? '+' : '') + growthUjian : '-'}
             </div>
             <div className="detail-label">Pertumbuhan</div>
           </div>
@@ -112,7 +110,7 @@ export default function HasilKKA() {
       <div className="result-card fade-in" style={{textAlign: 'left'}}>
         <h3 style={{marginBottom: 20}}>Detail Penilaian</h3>
         <ScoreBar label={`Pre-Test KKA (rata-rata ${pretestSelesai}/${PRETEST_KKA.length} elemen)`} score={pretestScore} answered={pretestAnswered} />
-        <ScoreBar label="Post-Test KKA" score={posttestScore} answered={posttestAnswered} />
+        <ScoreBar label={`Ujian KKA (rata-rata ${jmlElemen}/${KKA_META.length} elemen)`} score={rataElemen ?? 0} answered={jmlElemen * UJIAN_KKA_SOAL_PER_ELEMEN} />
         <div style={{marginTop: 16}}>
           <div style={{display:'flex',justifyContent:'space-between',marginBottom:8}}>
             <span style={{fontWeight:600}}>Elemen Dibaca</span>
