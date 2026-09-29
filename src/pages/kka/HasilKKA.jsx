@@ -6,6 +6,12 @@ import Leaderboard from '../../components/Leaderboard';
 import { Trash2, Award, TrendingUp, ClipboardCheck } from 'lucide-react';
 import { KKA_META, getExamHistory } from '../../lib/examLib';
 import { UJIAN_KKA_SOAL_PER_ELEMEN } from '../../data/kka/ujianKKA.js';
+import {
+  PRETEST_KKA,
+  PRETEST_KKA_SOAL_PER_ELEMEN,
+  getNilaiPretest,
+  getRataPretest,
+} from '../../data/kka/pretestKKA.js';
 
 /** Jumlah jawaban tersimpan untuk sebuah quiz (aman terhadap data korup). */
 function countAnswered(storageKey) {
@@ -18,9 +24,11 @@ function countAnswered(storageKey) {
 export default function HasilKKA() {
   const MODULE_IDS = ['kka_elemen1', 'kka_elemen2', 'kka_elemen3', 'kka_elemen4', 'kka_elemen5'];
   const { scores, modulesRead, resetAll, studentName, saveStudentName } = useApp();
-  const pretestScore = scores.kka_pretest || 0;
+  const pretestElemen = getNilaiPretest(scores);
+  const { rata: rataPretest, selesai: pretestSelesai } = getRataPretest(scores);
+  const pretestScore = rataPretest ?? 0;
   const posttestScore = scores.kka_posttest || 0;
-  const pretestAnswered = countAnswered('kka_pretestAnswers');
+  const pretestAnswered = PRETEST_KKA.filter(b => scores[b.key] !== undefined).length;
   const posttestAnswered = countAnswered('kka_posttestAnswers');
   const growth = posttestScore > 0 && pretestScore > 0 ? posttestScore - pretestScore : null;
   // Ujian KKA per elemen: nilai diambil dari riwayat ujian yang tersimpan di
@@ -41,6 +49,9 @@ export default function HasilKKA() {
   const jmlElemen = nilaiElemen.length;
   const rataElemen = jmlElemen ? Math.round(nilaiElemen.reduce((a, b) => a + b, 0) / jmlElemen) : null;
   const semuaElemenSelesai = jmlElemen === KKA_META.length;
+  // Selisih pre-test terhadap rata-rata Ujian KKA — ini yang paling bermakna
+  // untuk KKA karena Post-Test tidak lagi dipakai di UI.
+  const growthUjian = rataElemen != null && pretestScore > 0 ? rataElemen - pretestScore : null;
 
   // Post-test KKA sudah dihapus dari UI, jadi badge "pencapaian akhir"
   // (Achiever / Network Pro / Perfect Score / Growing) memakai rata-rata
@@ -100,7 +111,7 @@ export default function HasilKKA() {
 
       <div className="result-card fade-in" style={{textAlign: 'left'}}>
         <h3 style={{marginBottom: 20}}>Detail Penilaian</h3>
-        <ScoreBar label="Pre-Test KKA" score={pretestScore} answered={pretestAnswered} />
+        <ScoreBar label={`Pre-Test KKA (rata-rata ${pretestSelesai}/${PRETEST_KKA.length} elemen)`} score={pretestScore} answered={pretestAnswered} />
         <ScoreBar label="Post-Test KKA" score={posttestScore} answered={posttestAnswered} />
         <div style={{marginTop: 16}}>
           <div style={{display:'flex',justifyContent:'space-between',marginBottom:8}}>
@@ -109,6 +120,35 @@ export default function HasilKKA() {
           </div>
           <div className="progress-bar" style={{height:10}}>
             <div className="progress-fill" style={{width: (readCount / MODULE_IDS.length * 100) + '%'}} />
+          </div>
+        </div>
+      </div>
+
+      <div className="result-card fade-in" style={{textAlign: 'left'}}>
+        <h3 style={{marginBottom: 6}}>
+          <ClipboardCheck size={18} style={{color: 'var(--primary)', verticalAlign: 'middle'}} /> Pre-Test KKA per Elemen
+        </h3>
+        <p style={{color: 'var(--text-light)', fontSize: '0.85rem', marginBottom: 16}}>
+          Nilai pemahaman awal, dikerjakan di halaman <strong>Pre-Test</strong> sebelum belajar
+          ({PRETEST_KKA_SOAL_PER_ELEMEN} soal per elemen, boleh diulang). Bandingkan dengan nilai
+          Ujian KKA di bawah untuk melihat how besar kemajuanmu.
+        </p>
+        {pretestElemen.map(m => (
+          <ScoreBar
+            key={m.key}
+            label={m.label}
+            score={m.nilai}
+            answered={m.nilai != null ? PRETEST_KKA_SOAL_PER_ELEMEN : 0}
+          />
+        ))}
+        <div className="rekap-modul-stats" style={{marginTop: 8}}>
+          <div className="rsm-item rsm-total">
+            <span className="rsm-label">Rata-rata pre-test {pretestSelesai}/{PRETEST_KKA.length} elemen</span>
+            <span className={`rsm-avg ${rataPretest == null ? 'muted' : ''}`}>{rataPretest == null ? '—' : rataPretest}</span>
+            <span className="rsm-count">
+              Selisih ke rata-rata ujian:{' '}
+              {growthUjian == null ? '-' : (growthUjian > 0 ? '+' : '') + growthUjian}
+            </span>
           </div>
         </div>
       </div>

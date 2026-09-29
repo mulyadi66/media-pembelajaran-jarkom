@@ -4,6 +4,7 @@ import { useApp } from '../context/AppContext';
 import { UJIAN_KKA_TOTAL, UJIAN_KKA_SOAL_PER_ELEMEN } from '../data/kka/ujianKKA.js';
 import { UJIAN_KKA_XI_TOTAL, UJIAN_KKA_XI_SOAL_PER_MODUL } from '../data/kka-xi/ujianKKAXI.js';
 import { PRETEST_KKA_XI_TOTAL, PRETEST_KKA_XI_SOAL_PER_MODUL } from '../data/kka-xi/pretestKKAXI.js';
+import { PRETEST_KKA_TOTAL, PRETEST_KKA_SOAL_PER_ELEMEN } from '../data/kka/pretestKKA.js';
 import DarkModeToggle from './DarkModeToggle';
 import StreakCounter from './StreakCounter';
 import {
@@ -144,7 +145,7 @@ const subjects = {
       { to: '/kka/elemen5', icon: Brain, label: 'Elemen 5: Literasi & Etika AI' },
       { to: '/kka/flashcard', icon: BookOpen, label: 'Flashcard' },
       { to: '/kka/challenge', icon: Zap, label: 'Latihan Cepat' },
-      { to: '/kka/pretest', icon: ClipboardCheck, label: 'Pre-Test' },
+      { to: '/kka/pretest', icon: ClipboardCheck, label: `Pre-Test (5 x ${PRETEST_KKA_SOAL_PER_ELEMEN} soal)` },
       { to: '/kka/ujian', icon: ClipboardCheck, label: `Ujian KKA (5 x ${UJIAN_KKA_SOAL_PER_ELEMEN} soal)` },
       { to: '/kka/rekap', icon: ClipboardList, label: 'Rekap Nilai (Guru)' },
       { to: '/kka/hasil', icon: BarChart3, label: 'Hasil & Sertifikat' },
@@ -163,7 +164,7 @@ const subjects = {
       '/kka/elemen5': 'Elemen 5: Literasi & Etika Kecerdasan Artifisial',
       '/kka/flashcard': 'Flashcard Interaktif KKA',
       '/kka/challenge': 'Latihan Cepat KKA',
-      '/kka/pretest': 'Pre-Test KKA',
+      '/kka/pretest': `Pre-Test KKA — 5 Pre-Test per Elemen (${PRETEST_KKA_TOTAL} Soal)`,
       '/kka/posttest': 'Post-Test KKA',
       '/kka/ujian': `Ujian KKA — 5 Ujian per Elemen (${UJIAN_KKA_TOTAL} Soal)`,
       '/kka/rekap': 'Rekap Nilai Ujian KKA (Guru)',
@@ -183,7 +184,7 @@ const subjects = {
       '/kka/elemen5': 'Konsep AI, etika penggunaan, dan bias',
       '/kka/flashcard': 'Kartu interaktif istilah Koding dan Kecerdasan Artifisial',
       '/kka/challenge': 'Latihan cepat KKA melawan waktu',
-      '/kka/pretest': 'Uji pemahaman awal KKA',
+      '/kka/pretest': `Uji pemahaman awal per elemen: ${PRETEST_KKA_SOAL_PER_ELEMEN} soal tiap elemen (${PRETEST_KKA_TOTAL} soal), lengkap dengan tingkat kesulitan`,
       '/kka/posttest': 'Evaluasi pemahaman KKA. Target: ≥70',
       '/kka/ujian': `Lima ujian mandiri ${UJIAN_KKA_SOAL_PER_ELEMEN} soal per elemen, dengan token guru, identitas, timer, dan anti-contek`,
       '/kka/rekap': 'Rekap nilai Ujian KKA per siswa (khusus guru)',
@@ -324,7 +325,7 @@ export default function Layout() {
   const isDashboard = path === prefix;
 
   // Rute dinamis (mis. /kka-xi/pretest/modul3) mewarisi judul & deskripsi induknya.
-  const basePath = ['/kka/ujian/', '/kka-xi/ujian/', '/kka-xi/pretest/']
+  const basePath = ['/kka/ujian/', '/kka/pretest/', '/kka-xi/ujian/', '/kka-xi/pretest/']
     .find(p => path.startsWith(p))?.slice(0, -1) || path;
   const pageTitle = titles[path] || titles[basePath] || '';
   const pageDesc = descs[path] || descs[basePath] || '';

@@ -66,6 +66,7 @@ const Elemen5KKA = lazy(() => import('./pages/kka/Elemen5'));
 const FlashcardPageKKA = lazy(() => import('./pages/kka/FlashcardPageKKA'));
 const ChallengePageKKA = lazy(() => import('./pages/kka/ChallengePageKKA'));
 const PreTestKKA = lazy(() => import('./pages/kka/PreTestKKA'));
+const PreTestElemenKKA = lazy(() => import('./pages/kka/PreTestElemenKKA'));
 const PostTestKKA = lazy(() => import('./pages/kka/PostTestKKA'));
 const PostTestUjianKKA = lazy(() => import('./pages/kka/PostTestUjianKKA'));
 const UjianElemenKKA = lazy(() => import('./pages/kka/UjianElemenKKA'));
@@ -134,6 +135,7 @@ export default function App() {
                 <Route path="/kka/flashcard" element={<FlashcardPageKKA />} />
                 <Route path="/kka/challenge" element={<ChallengePageKKA />} />
                 <Route path="/kka/pretest" element={<PreTestKKA />} />
+                <Route path="/kka/pretest/:slug" element={<PreTestElemenKKA />} />
                 <Route path="/kka/posttest" element={<PostTestKKA />} />
                 <Route path="/kka/ujian" element={<PostTestUjianKKA />} />
                 <Route path="/kka/ujian/:slug" element={<UjianElemenKKA />} />
