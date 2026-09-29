@@ -1,8 +1,8 @@
 # Context Save — Media Pembelajaran Jarkom
 
-**Terakhir diupdate:** 28 September 2026
+**Terakhir diupdate:** 29 September 2026
 **Branch:** master
-**Status:** Bersih (no uncommitted changes — tip terakhir `079375d`)
+**Status:** Bersih (no uncommitted changes — tip terakhir `148385b`)
 
 ---
 
@@ -87,6 +87,13 @@ Semua styling terpusat di `src/App.css` (~2500 baris) + `index.css` (kosong, tid
 4. Kolom **Akses** (tombol "Buka Akses") dipindah ke depan (sebelah Kelas) — tadinya di pojok kanan tabel tersembunyi di balik scroll horizontal
 5. `vercel.json` + header `Cache-Control: no-cache` untuk `index.html` — update fitur langsung terlihat tanpa hard refresh (deploy ini perlu dipantau sampai chunk baru live, sebelumnya sempat rollover gagal 404)
 6. **UI/UX overhaul** (`079375d`): kontras warna WCAG AA, focus keyboard, target sentuh 44px — detail di bagian Design Tokens & Aksesibilitas
+7. **Pre-Test KKA XI** dipecah per modul (`1211c91`): 4 × 30 soal, kunci storage per modul
+8. **Pre-Test KKA** dipecah per elemen (`a1599c8`): 5 × 30 soal, bank lama 20 soal campur dibuang
+9. **Halaman Hasil KKA** (`c2a551d`, `c32e26f`): Post-Test yang sudah mati dibuang dari ringkasan,
+   Detail Penilaian, dan `checkBadges`; `Leaderboard` diberi `examAvg` supaya kolom kedua
+   berbunyi "Rata-rata Ujian" dan bukan "Post-Test 0" selamanya
+10. **Post-Test KKA dihapus total** (`cd1a3c7`) dan `PostTestUjianKKA.jsx` di-rename jadi
+    `UjianKKALanding.jsx` (`148385b`) karena namanya menyesatkan (sebenarnya landing Ujian)
 
 ## Catatan Review UI/UX (28 Sep 2026) — belum dikerjakan
 Temuan dari review, sengaja ditunda karena di luar 3 prioritas yang sudah diperbaiki:
@@ -95,6 +102,51 @@ Temuan dari review, sengaja ditunda karena di luar 3 prioritas yang sudah diperb
 - Sidebar MPK1 punya 19 item nav datar tanpa pengelompokan; saat collapsed teksnya hilang tanpa `title`/`aria-label` per item
 - 249 hex mentah masih ada di `App.css` (dark mode masih ditulis manual per-kelas)
 - `aria-live` hanya dipakai di `Quiz.jsx`, padahal ada timer countdown; heading `h1`→`h2` skipping di beberapa halaman
+
+## Pre-Test Terpisah per Elemen/Modul (KKA & KKA XI)
+Pola yang dipakai di dua mapel KKA: pre-test dipecah per unit, bukan satu paket campur.
+- **Kenapa:** siswa bisa mengukur pemahaman awal tiap unit sebelum belajar, dan satu unit
+  yang belum dikerjakan tidak menghalangi unit lain. Bank lama yang campur semua elemen
+  (KKA) dibuang total.
+- **Komposisi tiap unit:** 30 soal = 10 Mudah (C2) + 10 Sedang (C3) + 10 Sulit (C5).
+  Kunci jawaban wajib tersebar merata 6/6/6/6/6 per indeks 0-4 (dicek saat menulis bank).
+  Field per soal: `id`, `level` (`'Mudah · C2 - Memahami'`), `diff` (`'Mudah'`),
+  `elemen`, `question`, `options` (5, berprefiks `"A. "`..`"E. "`), `answer` (indeks 0-based),
+  `explanation`.
+- **Tidak pakai token guru dan boleh diulang** — tujuannya diagnostik, bukan nilai rapor.
+  Bandingkan dengan Ujian (bertoken, submit sekali).
+- **Nilai ganda per unit + agregat:** nilai tiap unit disimpan di key sendiri untuk halaman
+  Hasil, lalu rata-rata unit yang sudah dikerjakan disimpan di key agregat lama supaya badge,
+  leaderboard, dan growth tidak perlu diubah.
+- **Landing + halaman per unit:** `/kka/pretest` (daftar elemen) dan `/kka/pretest/:slug`;
+  `/kka-xi/pretest` dan `/kka-xi/pretest/:slug`. `Quiz` diberi `key={bank.key}` supaya
+  remount saat pindah unit — tanpa itu state soal/timer mewarisi unit sebelumnya.
+- CSS: `.pretest-tingkat-list` / `-item` / `-badge` + `.ujian-elemen-list` / `-card` di `App.css`
+  (dipakai bersama oleh pre-test dan landing ujian).
+- `getNilaiPretest()` dan `getRataPretest()` di file index tiap mapel: nilai 0 ikut dihitung
+  (siswa tetap sudah mengerjakan unit itu), `null` = belum.
+
+### KKA — Pre-Test per Elemen (5 × 30 = 150 soal)
+- Bank: `src/data/kka/pretestElemen1KKA.js` .. `pretestElemen5KKA.js` (materi: berpikir
+  komputasional, literasi digital, algoritma pemrograman, analisis data, literasi & etika AI).
+- Index: `src/data/kka/pretestKKA.js` → `PRETEST_KKA`, `PRETEST_KKA_SOAL_PER_ELEMEN=30`,
+  `PRETEST_KKA_TOTAL=150`, `PRETEST_KKA_TINGKAT`, `getPretestBySlug`, `getNilaiPretest`, `getRataPretest`.
+- Halaman: `src/pages/kka/PreTestKKA.jsx` (landing) + `PreTestElemenKKA.jsx` (per elemen).
+- **State keys:** `kka_elemen{1..5}_pretest` (jawaban/order/deadline/submitted per elemen)
+  + agregat `kka_pretest`. Key lama `kka_pretestAnswers` sudah tidak dipakai.
+- Elemen 3 (algoritma) punya soal kode Python — nomor soal memakai `for i in range(2, 11, 2): print(i)`
+  dst. Format satu baris WAJIB: `for ...: print(...)` memang SyntaxError di Python, dan
+  `print("Tinggi" if nilai > 80 else "Cukup")` dipakai untuk if-else satu baris. **Jalankan
+  kodenya dengan Python sebelum menetapkan kunci.** `.question-text` sudah `white-space: pre-line`
+  jadi `\n` di soal tampil rapi.
+
+### KKA XI — Pre-Test per Modul (4 × 30 = 120 soal)
+- Bank: `src/data/kka-xi/pretestModul1KKAXI.js` .. `pretestModul4KKAXI.js`.
+- Index: `src/data/kka-xi/pretestKKAXI.js` → `PRETEST_KKA_XI`, `PRETEST_KKA_XI_SOAL_PER_MODUL=30`,
+  `PRETEST_KKA_XI_TOTAL=120`.
+- Halaman: `src/pages/kka-xi/PreTestKKAXI.jsx` + `PreTestModulKKAXI.jsx`.
+- **State keys:** `kka_xi_modul{1..4}_pretest` + agregat `kka_xi_pretest`.
+  Key lama `kka_xi_pretestAnswers` sudah tidak dipakai; `kka_xi_posttest`/`_posttestAnswers` masih aktif.
 
 ## Post Test Terpisah per Modul
 - Post Test Modul 1/2/3 masing-masing di halaman khusus: `/mpk1/posttest-modul1`, `/mpk1/posttest-modul2`, `/mpk1/posttest-modul3` (lazy-route di `App.jsx`, item + titles/descs di `Layout.jsx`, kartu CTA di halaman materi; storage/score keys tetap `mpk1_modul{1,2,3}_posttest`)
@@ -114,19 +166,27 @@ Temuan dari review, sengaja ditunda karena di luar 3 prioritas yang sudah diperb
 - Dark mode, PWA, Print styles, Error boundary
 
 ## Ujian KKA (Koding & Kecerdasan Artifisial) — `src/pages/kka/`
-- **Rute:** `/kka` (dashboard), `/kka/elemen1..5`, `/kka/ujian/elemen1..5`, `/kka/rekap`
+- **Rute:** `/kka` (dashboard), `/kka/elemen1..5`, `/kka/ujian` (landing), `/kka/ujian/elemen1..5`, `/kka/rekap`, `/kka/pretest` + `/kka/pretest/:slug`
 - **5 Elemen**, tiap elemen 25 soal (total 125), bank di `src/data/kka/ujianKKA.js` (`UJIAN_KKA_TOTAL=125`, `UJIAN_KKA_SOAL_PER_ELEMEN=25`)
 - Alur sama seperti Post Test MPK 1: token → identitas → soal + timer → submit → review
 - **State keys:** `kka_elemen{1..5}_ujian` (satu key per elemen)
 - Rekap `/kka/rekap` (PIN via `getRekapPin`, flag sessionStorage `rekapPinKkaOk`)
-- Badge dashboard memakai rata-rata Ujian KKA per elemen — Post Test KKA dihapus dari UI
+- **Post-Test KKA sudah dihapus total** (`cd1a3c7`): file `PostTestKKA.jsx` + `posttestKKA.js`
+  dan route `/kka/posttest` dibuang. Sertifikat + badge + leaderboard **tidak** lagi membaca
+  `kka_posttest`; syaratnya hanya Ujian KKA (5 elemen selesai, rerata ≥ 70). Nilai `kka_posttest`
+  yang tertinggal di storage siswa lawas diabaikan diam-diam, tidak dihapus.
+- **Nama file jebakan:** landing `/kka/ujian` ada di `UjianKKALanding.jsx`. Semula bernama
+  `PostTestUjianKKA.jsx` dan sudah di-rename (`148385b`) karena terlihat seperti file mati.
+  Kalau menambah file Ujian KKA, jangan salah hapus yang namanya mengandung "PostTest".
+- `Leaderboard` untuk KKA/KKA XI **wajib** diberi `examAvg` (rata-rata Ujian) — kalau tidak,
+  kolom kedua jatuh ke `posttestKey` dan tampil "Post-Test 0" selamanya.
 
 ## KKA XI (Koding & Kecerdasan Artifisial XI)
 - **Kode:** KKA XI, rute `/kka-xi/`
 - **4 Modul:** (1) Menyaring Fakta, Identitas Digital & Kolaborasi Konten, (2) Algoritma & Struktur Data, (3) Algoritma Pemograman, (4) Pengembangan Web Responsif & Interaktif
 - **Fitur:** Dashboard, Modul1-4 (materi + section tracker), Flashcard (35 istilah), Glossary (35 + search), Worksheet (20 essay), PreTest/PostTest (20 HOTS), Challenge (30 soal cepat), Kasus (3 studi kasus), Hasil (ringkasan + reset)
 - **Data:** `src/data/kka-xi/`, halaman: `src/pages/kka-xi/`
-- **State keys:** `kka_xi_pretest`, `kka_xi_posttest`, `kka_xi_pretestAnswers`, `kka_xi_posttestAnswers`
+- **State keys:** `kka_xi_modul{1..4}_pretest`, `kka_xi_pretest` (agregat), `kka_xi_posttest`, `kka_xi_posttestAnswers`
 
 ## Potensi Lanjutan
 - [x] Post Test Modul 1/2/3 → 25 soal sesuai materi masing-masing; timer dinamis (±1,5 menit/soal)
@@ -146,3 +206,8 @@ Temuan dari review, sengaja ditunda karena di luar 3 prioritas yang sudah diperb
 - [x] Focus keyboard global (`:focus-visible`, tanpa `outline: none` telanjang)
 - [x] `prefers-reduced-motion: reduce` untuk animasi float/pulse/spinner/skeleton
 - [x] Target sentuh min 44×44px di tombol, nav, dan chip
+- [x] Pre-Test KKA XI dipecah per modul (4 × 30 = 120 soal) + pre-test tak bertoken, boleh diulang
+- [x] Pre-Test KKA dipecah per elemen (5 × 30 = 150 soal); bank lama 20 soal campur dibuang
+- [x] Audit bank soal KKA: kunci diverifikasi, snippet Python dijalankan, perhitungan statistik dihitung ulang
+- [x] Post-Test KKA dihapus total (route, file, bank soal) + fallback sertifikat/badge/leaderboard
+- [x] Audit bank soal KKA XI: 120 soal diverifikasi, 3 bug kunci soal diperbaiki
