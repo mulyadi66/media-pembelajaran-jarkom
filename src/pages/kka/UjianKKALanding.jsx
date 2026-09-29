@@ -12,7 +12,7 @@ const ICON_COLOR = [
 ];
 
 /** Landing /kka/ujian — siswa memilih elemen yang akan dikerjakan. */
-export default function PostTestUjianKKA() {
+export default function UjianKKALanding() {
   const history = getExamHistory();
 
   const hasil = (key) => history.find((h) => h.modul === key);
