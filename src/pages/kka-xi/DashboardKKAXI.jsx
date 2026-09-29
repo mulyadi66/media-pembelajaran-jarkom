@@ -6,6 +6,7 @@ import { Code2, Brain, Terminal, Globe, BookOpen, Trophy, Award, BookA, Zap, Fil
 import ConfirmModal from '../../components/ConfirmModal';
 import { KKA_XI_META, getExamHistory } from '../../lib/examLib';
 import { UJIAN_KKA_XI_SOAL_PER_MODUL } from '../../data/kka-xi/ujianKKAXI.js';
+import { PRETEST_KKA_XI_SOAL_PER_MODUL, getRataPretest } from '../../data/kka-xi/pretestKKAXI.js';
 
 export default function DashboardKKAXI() {
   const { modulesRead, scores, resetAll } = useApp();
@@ -28,6 +29,9 @@ export default function DashboardKKAXI() {
     examDone: nilaiUjian.length === KKA_XI_META.length,
   });
 
+  // Pre-test KKA XI per modul: kartu cepat menampilkan progres, bukan hanya link.
+  const pretest = getRataPretest(scores);
+
   const modules = [
     { to: '/kka-xi/modul1', icon: Globe, title: 'Menyaring Fakta, Identitas Digital & Kolaborasi Konten', desc: 'Verifikasi hoaks, reputasi online, dan kreasi konten digital', color: ['#06b6d4', '#0891b2'] },
     { to: '/kka-xi/modul2', icon: Brain, title: 'Pengembangan Algoritma dan Struktur Data', desc: 'Array, linked list, stack, queue, sorting, searching', color: ['#10b981', '#059669'] },
@@ -39,7 +43,7 @@ export default function DashboardKKAXI() {
     { to: '/kka-xi/flashcard', icon: BookA, title: 'Flashcard', desc: 'Hafal istilah KKA XI', color: ['#8b5cf6', '#6d28d9'] },
     { to: '/kka-xi/challenge', icon: Zap, title: 'Latihan Cepat', desc: 'Tes kecepatan', color: ['#f59e0b', '#f97316'] },
     { to: '/kka-xi/kasus', icon: Briefcase, title: 'Studi Kasus', desc: 'Skenario nyata', color: ['#10b981', '#059669'] },
-    { to: '/kka-xi/pretest', icon: ClipboardCheck, title: 'Pre-Test', desc: 'Uji awal', color: ['#06b6d4', '#0891b2'] },
+    { to: '/kka-xi/pretest', icon: ClipboardCheck, title: 'Pre-Test', desc: `${PRETEST_KKA_XI_SOAL_PER_MODUL} soal per modul${pretest.rata != null ? ` · rata-rata ${pretest.rata}` : ''}`, color: ['#06b6d4', '#0891b2'] },
     { to: '/kka-xi/ujian', icon: ClipboardCheck, title: 'Ujian KKA XI', desc: `4 modul x ${UJIAN_KKA_XI_SOAL_PER_MODUL} soal (token guru)`, color: ['#f97316', '#ea580c'] },
     { to: '/kka-xi/rekap', icon: ClipboardList, title: 'Rekap Nilai', desc: 'Nilai ujian (guru)', color: ['#0d9488', '#0f766e'] },
     { to: '/kka-xi/worksheet', icon: FileDown, title: 'Lembar Kerja', desc: 'Soal offline', color: ['#7c3aed', '#6d28d9'] },

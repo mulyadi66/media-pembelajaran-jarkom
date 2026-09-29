@@ -88,6 +88,7 @@ const GlossaryPageKKAXI = lazy(() => import('./pages/kka-xi/GlossaryPageKKAXI'))
 const ChallengePageKKAXI = lazy(() => import('./pages/kka-xi/ChallengePageKKAXI'));
 const WorksheetPageKKAXI = lazy(() => import('./pages/kka-xi/WorksheetPageKKAXI'));
 const PreTestKKAXI = lazy(() => import('./pages/kka-xi/PreTestKKAXI'));
+const PreTestModulKKAXI = lazy(() => import('./pages/kka-xi/PreTestModulKKAXI'));
 const UjianKKAXI = lazy(() => import('./pages/kka-xi/UjianKKAXI'));
 const UjianModulKKAXI = lazy(() => import('./pages/kka-xi/UjianModulKKAXI'));
 const RekapNilaiKKAXI = lazy(() => import('./pages/kka-xi/RekapNilaiKKAXI'));
@@ -153,6 +154,7 @@ export default function App() {
                 <Route path="/kka-xi/challenge" element={<ChallengePageKKAXI />} />
                 <Route path="/kka-xi/worksheet" element={<WorksheetPageKKAXI />} />
                 <Route path="/kka-xi/pretest" element={<PreTestKKAXI />} />
+                <Route path="/kka-xi/pretest/:slug" element={<PreTestModulKKAXI />} />
                 <Route path="/kka-xi/ujian" element={<UjianKKAXI />} />
                 <Route path="/kka-xi/ujian/:slug" element={<UjianModulKKAXI />} />
                 <Route path="/kka-xi/rekap" element={<RekapNilaiKKAXI />} />

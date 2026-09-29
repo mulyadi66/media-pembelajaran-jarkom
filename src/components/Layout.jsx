@@ -3,6 +3,7 @@ import { NavLink, Link, Outlet, useLocation } from 'react-router-dom';
 import { useApp } from '../context/AppContext';
 import { UJIAN_KKA_TOTAL, UJIAN_KKA_SOAL_PER_ELEMEN } from '../data/kka/ujianKKA.js';
 import { UJIAN_KKA_XI_TOTAL, UJIAN_KKA_XI_SOAL_PER_MODUL } from '../data/kka-xi/ujianKKAXI.js';
+import { PRETEST_KKA_XI_TOTAL, PRETEST_KKA_XI_SOAL_PER_MODUL } from '../data/kka-xi/pretestKKAXI.js';
 import DarkModeToggle from './DarkModeToggle';
 import StreakCounter from './StreakCounter';
 import {
@@ -262,7 +263,7 @@ const subjects = {
       { to: '/kka-xi/flashcard', icon: BookOpen, label: 'Flashcard' },
       { to: '/kka-xi/challenge', icon: Zap, label: 'Latihan Cepat' },
       { to: '/kka-xi/kasus', icon: Briefcase, label: 'Studi Kasus' },
-      { to: '/kka-xi/pretest', icon: ClipboardCheck, label: 'Pre-Test' },
+      { to: '/kka-xi/pretest', icon: ClipboardCheck, label: `Pre-Test (4 x ${PRETEST_KKA_XI_SOAL_PER_MODUL} soal)` },
       { to: '/kka-xi/ujian', icon: ClipboardCheck, label: `Ujian KKA XI (4 x ${UJIAN_KKA_XI_SOAL_PER_MODUL} soal)` },
       { to: '/kka-xi/rekap', icon: ClipboardList, label: 'Rekap Nilai (Guru)' },
       { to: '/kka-xi/worksheet', icon: FileDown, label: 'Lembar Kerja' },
@@ -278,7 +279,7 @@ const subjects = {
       '/kka-xi/flashcard': 'Flashcard Interaktif KKA XI',
       '/kka-xi/challenge': 'Latihan Cepat KKA XI',
       '/kka-xi/kasus': 'Studi Kasus KKA XI',
-      '/kka-xi/pretest': 'Pre-Test KKA XI',
+      '/kka-xi/pretest': `Pre-Test KKA XI — 4 Pre-Test per Modul (${PRETEST_KKA_XI_TOTAL} Soal)`,
       '/kka-xi/ujian': `Ujian KKA XI — 4 Ujian per Modul (${UJIAN_KKA_XI_TOTAL} Soal)`,
       '/kka-xi/rekap': 'Rekap Nilai Ujian KKA XI (Guru)',
       '/kka-xi/worksheet': 'Lembar Kerja KKA XI',
@@ -294,7 +295,7 @@ const subjects = {
       '/kka-xi/flashcard': 'Kartu interaktif istilah Koding & Kecerdasan Artifisial XI',
       '/kka-xi/challenge': 'Latihan cepat KKA XI melawan waktu',
       '/kka-xi/kasus': 'Terapkan pemahaman KKA XI dalam permasalahan nyata',
-      '/kka-xi/pretest': 'Uji pemahaman awal KKA XI',
+      '/kka-xi/pretest': `Uji pemahaman awal per modul. ${PRETEST_KKA_XI_SOAL_PER_MODUL} soal tiap modul, tingkat mudah, sedang, dan sulit`,
       '/kka-xi/ujian': 'Ujian KKA XI per modul. Token guru, identitas, timer, dan submit sekali per modul',
       '/kka-xi/rekap': 'Rekap nilai Ujian KKA XI untuk guru. Filter, statistik, ekspor CSV, dan cetak',
       '/kka-xi/worksheet': 'Lembar kerja praktik offline KKA XI',
@@ -322,8 +323,9 @@ export default function Layout() {
   const { prefix, label, logo: Logo, items, titles, descs } = subject;
   const isDashboard = path === prefix;
 
-  // Rute dinamis (mis. /kka/ujian/elemen3) mewarisi judul & deskripsi induknya.
-  const basePath = path.startsWith('/kka/ujian/') ? '/kka/ujian' : path;
+  // Rute dinamis (mis. /kka-xi/pretest/modul3) mewarisi judul & deskripsi induknya.
+  const basePath = ['/kka/ujian/', '/kka-xi/ujian/', '/kka-xi/pretest/']
+    .find(p => path.startsWith(p))?.slice(0, -1) || path;
   const pageTitle = titles[path] || titles[basePath] || '';
   const pageDesc = descs[path] || descs[basePath] || '';
 

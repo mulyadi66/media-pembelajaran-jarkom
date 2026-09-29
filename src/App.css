@@ -639,6 +639,21 @@ a { text-decoration: none; color: inherit; }
 .ujian-elemen-body span { font-size: 0.82rem; color: var(--text-light); }
 .ujian-elemen-body small { font-size: 0.75rem; color: var(--text-lighter, #94a3b8); }
 
+/* ========== RINGKASAN TINGKAT KESULITAN PRE-TEST ========== */
+.pretest-tingkat-list { display: grid; gap: 8px; }
+.pretest-tingkat-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 12px; border: 1px solid var(--border, #e2e8f0); border-radius: 10px;
+}
+.pretest-tingkat-item > div { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.pretest-tingkat-item strong { font-size: 0.88rem; }
+.pretest-tingkat-item span { font-size: 0.8rem; color: var(--text-light); }
+.pretest-tingkat-badge {
+  flex-shrink: 0; min-width: 72px; text-align: center;
+  padding: 6px 10px; border-radius: 999px;
+  color: #fff; font-size: 0.75rem !important; font-weight: 700;
+}
+
 /* ========== REKAP NILAI ========== */
 .rekap-pin-card { text-align: center; padding: 34px; }
 .rekap-icon {

@@ -6,20 +6,23 @@ import Leaderboard from '../../components/Leaderboard';
 import { Trash2, Award, TrendingUp, ClipboardCheck } from 'lucide-react';
 import { KKA_XI_META, getExamHistory } from '../../lib/examLib';
 import { UJIAN_KKA_XI_SOAL_PER_MODUL } from '../../data/kka-xi/ujianKKAXI.js';
-
-/** Jumlah jawaban tersimpan untuk sebuah quiz (aman terhadap data korup). */
-function countAnswered(storageKey) {
-  try {
-    const raw = JSON.parse(localStorage.getItem(`jarkomlab_${storageKey}`) || '{}');
-    return raw && typeof raw === 'object' ? Object.keys(raw).length : 0;
-  } catch { return 0; }
-}
+import {
+  PRETEST_KKA_XI,
+  PRETEST_KKA_XI_SOAL_PER_MODUL,
+  getNilaiPretest,
+  getRataPretest,
+} from '../../data/kka-xi/pretestKKAXI.js';
 
 export default function HasilKKAXI() {
   const MODULE_IDS = ['kka_xi_modul1', 'kka_xi_modul2', 'kka_xi_modul3', 'kka_xi_modul4'];
   const { scores, modulesRead, resetAll, studentName, saveStudentName } = useApp();
-  const pretestScore = scores.kka_xi_pretest || 0;
-  const pretestAnswered = countAnswered('kka_xi_pretestAnswers');
+  // Pre-test KKA XI sudah dipecah per modul; nilai di bawah adalah rata-rata
+  // dari modul yang sudah dikerjakan (disimpan juga di scores.kka_xi_pretest).
+  const pretestModul = getNilaiPretest(scores);
+  const { rata: rataPretest, selesai: pretestSelesai } = getRataPretest(scores);
+  const pretestScore = rataPretest ?? 0;
+  const pretestAnswered = PRETEST_KKA_XI.filter(b => scores[b.key] !== undefined).length
+    * PRETEST_KKA_XI_SOAL_PER_MODUL;
 
   // Ujian KKA XI per modul: nilai diambil dari riwayat ujian yang tersimpan di
   // perangkat ini (sumber yang sama dengan rekap guru), bukan dari pre/post-test.
@@ -93,8 +96,38 @@ export default function HasilKKAXI() {
       </div>
 
       <div className="result-card fade-in" style={{textAlign: 'left'}}>
+        <h3 style={{marginBottom: 6}}>
+          <ClipboardCheck size={18} style={{color: 'var(--primary)', verticalAlign: 'middle'}} /> Pre-Test KKA XI per Modul
+        </h3>
+        <p style={{color: 'var(--text-light)', fontSize: '0.85rem', marginBottom: 16}}>
+          Nilai pemahaman awal, dikerjakan di halaman <strong>Pre-Test</strong> sebelum belajar
+          ({PRETEST_KKA_XI_SOAL_PER_MODUL} soal per modul, boleh diulang). Bandingkan dengan nilai
+          Ujian KKA XI di bawah untuk melihat how besar kemajuanmu.
+        </p>
+        {pretestModul.map(m => (
+          <ScoreBar
+            key={m.key}
+            label={m.label}
+            score={m.nilai}
+            answered={m.nilai != null ? PRETEST_KKA_XI_SOAL_PER_MODUL : 0}
+          />
+        ))}
+        <div className="rekap-modul-stats" style={{marginTop: 8}}>
+          <div className="rsm-item rsm-total">
+            <span className="rsm-label">Rata-rata pre-test {pretestSelesai}/{PRETEST_KKA_XI.length} modul</span>
+            <span className={`rsm-avg ${rataPretest == null ? 'muted' : ''}`}>{rataPretest == null ? '—' : rataPretest}</span>
+            <span className="rsm-count">Selisih ke rata-rata ujian: {growth == null ? '-' : (growth > 0 ? '+' : '') + growth}</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="result-card fade-in" style={{textAlign: 'left'}}>
         <h3 style={{marginBottom: 20}}>Detail Penilaian</h3>
-        <ScoreBar label="Pre-Test KKA XI" score={pretestScore} answered={pretestAnswered} />
+        <ScoreBar
+          label={`Pre-Test KKA XI (rata-rata ${pretestSelesai}/${PRETEST_KKA_XI.length} modul)`}
+          score={pretestScore}
+          answered={pretestAnswered}
+        />
         <div style={{marginTop: 16}}>
           <div style={{display:'flex',justifyContent:'space-between',marginBottom:8}}>
             <span style={{fontWeight:600}}>Modul Dibaca</span>
