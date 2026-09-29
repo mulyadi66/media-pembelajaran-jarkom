@@ -21,10 +21,9 @@ export default function HasilKKA() {
   const { rata: rataPretest, selesai: pretestSelesai } = getRataPretest(scores);
   const pretestScore = rataPretest ?? 0;
   const pretestAnswered = PRETEST_KKA.filter(b => scores[b.key] !== undefined).length;
-  // Post-test KKA sudah dihapus dari navigasi, jadi kartu ringkasan memakai
-  // rata-rata Ujian KKA. Nilai post-test lama hanya dipakai sebagai fallback
-  // kelulusan sertifikat untuk siswa yang sempat mengerjakannya.
-  const posttestScore = scores.kka_posttest || 0;
+  // Post-test KKA sudah dihapus dari UI maupun logika kelulusan: satu-satunya
+  // syarat sertifikat adalah menyelesaikan kelima elemen Ujian KKA dengan
+  // rerata minimal 70. Nilai kka_posttest sisa di storage siswa diabaikan.
   // Ujian KKA per elemen: nilai diambil dari riwayat ujian yang tersimpan di
   // perangkat ini (sumber yang sama dengan rekap guru), bukan dari pre/post-test.
   const history = getExamHistory();
@@ -49,20 +48,18 @@ export default function HasilKKA() {
 
   // Post-test KKA sudah dihapus dari UI, jadi badge "pencapaian akhir"
   // (Achiever / Network Pro / Perfect Score / Growing) memakai rata-rata
-  // nilai Ujian KKA per elemen.
+  // nilai Ujian KKA per elemen. posttestKey sengaja tidak dikirim supaya badge
+  // tidak lagi terbaca dari sisa kka_posttest di storage siswa lama.
   const earnedBadges = checkBadges(scores, modulesRead, {
     pretestKey: 'kka_pretest',
-    posttestKey: 'kka_posttest',
     moduleIds: MODULE_IDS,
     examAvg: rataElemen,
     examDone: semuaElemenSelesai,
   });
 
-  // Lulus bila post-test >= 70, atau bila kelima elemen ujian >= 70.
-  const lulusPosttest = posttestScore >= 70;
-  const lulusUjian = semuaElemenSelesai && rataElemen >= 70;
-  const passed = lulusPosttest || lulusUjian;
-  const nilaiSertifikat = lulusPosttest ? posttestScore : (rataElemen ?? 0);
+  // Sertifikat hanya dari Ujian KKA: kelima elemen selesai dan rerata >= 70.
+  const passed = semuaElemenSelesai && rataElemen >= 70;
+  const nilaiSertifikat = rataElemen ?? 0;
   const readCount = MODULE_IDS.filter(id => modulesRead[id]).length;
 
   return (
@@ -104,7 +101,7 @@ export default function HasilKKA() {
       </div>
 
       <div className="result-card fade-in" style={{textAlign: 'left'}}>
-        <Leaderboard scores={scores} pretestKey="kka_pretest" posttestKey="kka_posttest" />
+        <Leaderboard scores={scores} pretestKey="kka_pretest" examAvg={rataElemen} />
       </div>
 
       <div className="result-card fade-in" style={{textAlign: 'left'}}>
@@ -171,7 +168,7 @@ export default function HasilKKA() {
           <div className="rsm-item rsm-total">
             <span className="rsm-label">Rerata {jmlElemen}/{KKA_META.length} elemen</span>
             <span className={`rsm-avg ${rataElemen == null ? 'muted' : ''}`}>{rataElemen == null ? '—' : rataElemen}</span>
-            <span className="rsm-count">{lulusUjian ? 'Lulus ujian KKA' : semuaElemenSelesai ? 'Belum mencapai 70' : 'Belum lengkap'}</span>
+            <span className="rsm-count">{passed ? 'Lulus ujian KKA' : semuaElemenSelesai ? 'Belum mencapai 70' : 'Belum lengkap'}</span>
           </div>
         </div>
       </div>
@@ -180,9 +177,7 @@ export default function HasilKKA() {
         <div className="result-card fade-in">
           <h3 style={{marginBottom: 16}}><Award size={18} style={{color: 'var(--success)', verticalAlign: 'middle'}} /> Sertifikat</h3>
           <p style={{color: 'var(--text-light)', marginBottom: 16, fontSize: '0.9rem'}}>
-            {lulusPosttest
-              ? 'Kamu telah lulus post-test! Download sertifikat di bawah ini.'
-              : `Kamu telah menyelesaikan kelima elemen Ujian KKA dengan rerata ${rataElemen}. Download sertifikat di bawah ini.`}
+            Kamu telah menyelesaikan kelima elemen Ujian KKA dengan rerata {nilaiSertifikat}. Download sertifikat di bawah ini.
           </p>
           <Certificate studentName={studentName || 'Siswa'} score={nilaiSertifikat} module="KKA JarkomLab" title="Koding dan Kecerdasan Artifisial (KKA)" />
         </div>
