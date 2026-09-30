@@ -19,7 +19,6 @@ const WorksheetPage = lazy(() => import('./pages/WorksheetPage'));
 const ModulAjarPage = lazy(() => import('./pages/ModulAjarPage'));
 const Kasus = lazy(() => import('./pages/Kasus'));
 const PreTest = lazy(() => import('./pages/PreTest'));
-const PostTest = lazy(() => import('./pages/PostTest'));
 const Hasil = lazy(() => import('./pages/Hasil'));
 const RekapNilai = lazy(() => import('./pages/RekapNilai'));
 const WiringPuzzle = lazy(() => import('./pages/WiringPuzzle'));
@@ -172,7 +171,6 @@ export default function App() {
                 <Route path="/mpk1/challenge" element={<ChallengePage />} />
                 <Route path="/mpk1/kasus" element={<Kasus />} />
                 <Route path="/mpk1/pretest" element={<PreTest />} />
-                <Route path="/mpk1/posttest" element={<PostTest />} />
                 <Route path="/mpk1/worksheet" element={<WorksheetPage />} />
                 <Route path="/mpk1/modul-ajar" element={<ModulAjarPage />} />
                 <Route path="/mpk1/glossary" element={<GlossaryPage />} />
@@ -181,7 +179,6 @@ export default function App() {
                 <Route path="/mpk1/wiring" element={<WiringPuzzle />} />
                 <Route path="/mpk1/ipclassifier" element={<IPClassifier />} />
                 <Route path="/mpk1/osi-layer" element={<OSILayer />} />
-                <Route path="/mpk1/topologi-arsitektur" element={<OSILayer />} />
                 <Route path="/mpk2" element={<DashboardMPK2 />} />
                 <Route path="/mpk2/modul1" element={<Modul1MPK2 />} />
                 <Route path="/mpk2/modul2" element={<Modul2MPK2 />} />

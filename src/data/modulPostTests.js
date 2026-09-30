@@ -1056,3 +1056,10 @@ export const modul3PostTest = [
     explanation: 'VLSM mengalokasikan prefix sesuai kebutuhan (60→/26, 30→/27, 15→/28, dst) sehingga tidak ada alamat terbuang besar seperti membagi rata 5×/27.'
   },
 ];
+
+/**
+ * Jumlah soal tiap Post-Test modul. Diturunkan dari panjang array modul 1
+ * supaya tidak bisa meleset kalau bank soal ditambah atau dikurangi.
+ * Dipakai halaman Hasil untuk menampilkan "N soal terjawab".
+ */
+export const MODUL_POSTTEST_SOAL_PER_MODUL = modul1PostTest.length;
