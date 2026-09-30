@@ -41,6 +41,8 @@ Semua styling terpusat di `src/App.css` (~2500 baris) + `index.css` (kosong, tid
 ## MPK 1 — Post Test & Rekap Nilai Guru
 - **Mapel:** Perencanaan & Pengalamatan Jaringan, rute `/mpk1/` (dashboard) + modul 1/2/3 + rekap.
 - **Post Test tiap modul kini 25 soal** (bank: `src/data/modulPostTests.js`), level C2–C6 sesuai materi masing-masing modul (1.1–1.4, topologi, IP/subnetting). Soal diacak per siswa & tersimpan.
+- **Post-Test legacy sudah dihapus total** (`PostTest.jsx` + `posttestQuestions.js`, route `/mpk1/posttest`). Satu-satunya nilai akhir MPK 1 = rerata tiga Post-Test per modul. Sertifikat & badge hanya muncul kalau **ketiga modul selesai** dengan rerata ≥ 70. Nilai `posttest` sisa di storage siswa lawas sengaja tidak dibaca.
+- **Badge wajib pakai `pretestKey` + `examAvg`/`examDone` eksplisit.** `checkBadges` masih default ke `pretestKey: 'pretest'` dan `posttestKey: 'posttest'` — kalau lupa, badge Challenger/Sharp Mind/Achiever/Growing mati diam-diam tanpa error. Semua mapel sudah mengirimnya eksplisit.
 - **Alur ujian:** Token ujian (`VITE_EXAM_TOKEN`, default `TKJ235`) → Identitas (Nama + NIS validasi numerik, cek NIS terverifikasi di server) → soal + timer dinamis (±1,5 menit/soal) → submit sekali (retake dikunci server) → review jawaban + penjelasan.
 - **Perangkat bersama:** tombol "Reset Identitas" membersihkan identitas + hasil lokal agar siswa lain bisa mengerjakan.
 - **Anti-contek ringan:** banner peringatan saat pindah tab (≥3× merah) + konfirmasi browser saat menutup/merefresh saat ujian. Tidak memblokir nilai.
@@ -103,24 +105,25 @@ Temuan dari review, sengaja ditunda karena di luar 3 prioritas yang sudah diperb
 - 249 hex mentah masih ada di `App.css` (dark mode masih ditulis manual per-kelas)
 - `aria-live` hanya dipakai di `Quiz.jsx`, padahal ada timer countdown; heading `h1`→`h2` skipping di beberapa halaman
 
-## Pre-Test Terpisah per Elemen/Modul (KKA & KKA XI)
-Pola yang dipakai di dua mapel KKA: pre-test dipecah per unit, bukan satu paket campur.
+## Pre-Test Terpisah per Elemen/Modul (KKA, KKA XI, MPK 1)
+Pola yang dipakai di tiga mapel: pre-test dipecah per unit, bukan satu paket campur.
 - **Kenapa:** siswa bisa mengukur pemahaman awal tiap unit sebelum belajar, dan satu unit
   yang belum dikerjakan tidak menghalangi unit lain. Bank lama yang campur semua elemen
   (KKA) dibuang total.
 - **Komposisi tiap unit:** 30 soal = 10 Mudah (C2) + 10 Sedang (C3) + 10 Sulit (C5).
   Kunci jawaban wajib tersebar merata 6/6/6/6/6 per indeks 0-4 (dicek saat menulis bank).
   Field per soal: `id`, `level` (`'Mudah · C2 - Memahami'`), `diff` (`'Mudah'`),
-  `elemen`, `question`, `options` (5, berprefiks `"A. "`..`"E. "`), `answer` (indeks 0-based),
-  `explanation`.
+  `elemen` (KKA) atau `modul` (KKA XI & MPK 1), `question`, `options`
+  (5, berprefiks `"A. "`..`"E. "`), `answer` (indeks 0-based), `explanation`.
 - **Tidak pakai token guru dan boleh diulang** — tujuannya diagnostik, bukan nilai rapor.
   Bandingkan dengan Ujian (bertoken, submit sekali).
 - **Nilai ganda per unit + agregat:** nilai tiap unit disimpan di key sendiri untuk halaman
   Hasil, lalu rata-rata unit yang sudah dikerjakan disimpan di key agregat lama supaya badge,
   leaderboard, dan growth tidak perlu diubah.
 - **Landing + halaman per unit:** `/kka/pretest` (daftar elemen) dan `/kka/pretest/:slug`;
-  `/kka-xi/pretest` dan `/kka-xi/pretest/:slug`. `Quiz` diberi `key={bank.key}` supaya
-  remount saat pindah unit — tanpa itu state soal/timer mewarisi unit sebelumnya.
+  `/kka-xi/pretest` dan `/kka-xi/pretest/:slug`; `/mpk1/pretest` dan `/mpk1/pretest/:slug`.
+  `Quiz` diberi `key={bank.key}` supaya remount saat pindah unit — tanpa itu state
+  soal/timer mewarisi unit sebelumnya.
 - CSS: `.pretest-tingkat-list` / `-item` / `-badge` + `.ujian-elemen-list` / `-card` di `App.css`
   (dipakai bersama oleh pre-test dan landing ujian).
 - `getNilaiPretest()` dan `getRataPretest()` di file index tiap mapel: nilai 0 ikut dihitung
@@ -147,6 +150,22 @@ Pola yang dipakai di dua mapel KKA: pre-test dipecah per unit, bukan satu paket 
 - Halaman: `src/pages/kka-xi/PreTestKKAXI.jsx` + `PreTestModulKKAXI.jsx`.
 - **State keys:** `kka_xi_modul{1..4}_pretest` + agregat `kka_xi_pretest`.
   Key lama `kka_xi_pretestAnswers` sudah tidak dipakai; `kka_xi_posttest`/`_posttestAnswers` masih aktif.
+
+### MPK 1 — Pre-Test per Modul (3 × 30 = 90 soal)
+- Bank: `src/data/mpk1/pretestModul1MPK1.js` (peralatan/kabel/media), `pretestModul2MPK1.js`
+  (topologi), `pretestModul3MPK1.js` (IP & subnetting).
+- Index: `src/data/mpk1/pretestMPK1.js` → `PRETEST_MPK1`, `PRETEST_MPK1_SOAL_PER_MODUL=30`,
+  `PRETEST_MPK1_TOTAL=90`, `PRETEST_MPK1_SKOR_KEY='mpk1_pretest'`.
+- Halaman: `src/pages/PreTestMPK1.jsx` (landing) + `PreTestModulMPK1.jsx` (per modul).
+  Keduanya di root `src/pages/` — **bukan** subfolder seperti KKA, jadi import-nya pakai `../data/...`.
+- **State keys:** `mpk1_modul{1..3}_pretest` + agregat `mpk1_pretest`.
+  Key lama `pretest`/`jarkomlab_pretestAnswers` + `PreTest.jsx` + `pretestQuestions.js` (25 soal campur) sudah dihapus total.
+- `Hasil.jsx` membaca pre-test lewat `getNilaiPretest`/`getRataPretest`, bukan `scores.pretest`.
+  Kartu "Pre-Test MPK 1 per Modul" ditambahkan di bawah blok post-test.
+- **Soal subnetting wajib dihitung ulang dengan skrip**, jangan dikunci dari feeling.
+  Semua network/broadcast/host-count/prefix di Modul 3 sudah diverifikasi programatik
+  (20 titik). Corners yang mudah salah: `tightest(need)` = prefix **terbesar** yang
+  masih muat (bukan terkecil), dan jumlah subnet = `2 ** (child - parent)`.
 
 ## Post Test Terpisah per Modul
 - Post Test Modul 1/2/3 masing-masing di halaman khusus: `/mpk1/posttest-modul1`, `/mpk1/posttest-modul2`, `/mpk1/posttest-modul3` (lazy-route di `App.jsx`, item + titles/descs di `Layout.jsx`, kartu CTA di halaman materi; storage/score keys tetap `mpk1_modul{1,2,3}_posttest`)
@@ -211,3 +230,8 @@ Pola yang dipakai di dua mapel KKA: pre-test dipecah per unit, bukan satu paket 
 - [x] Audit bank soal KKA: kunci diverifikasi, snippet Python dijalankan, perhitungan statistik dihitung ulang
 - [x] Post-Test KKA dihapus total (route, file, bank soal) + fallback sertifikat/badge/leaderboard
 - [x] Audit bank soal KKA XI: 120 soal diverifikasi, 3 bug kunci soal diperbaiki
+- [x] Post-Test MPK 1 legacy dihapus total (route `/mpk1/posttest`, `PostTest.jsx`, `posttestQuestions.js`)
+- [x] Sertifikat & badge MPK 1 berbasis rerata 3 Post-Test modul (bukan nilai `posttest` lama)
+- [x] Route stale `/mpk1/topologi-arsitektur` dihapus
+- [x] Badge MPK 1 kirim `pretestKey` + `examAvg`/`examDone` eksplisit (default `checkBadges` pasti mati)
+- [x] Pre-Test MPK 1 dipecah per modul (3 × 30 = 90 soal) + hapus bank legacy 25 soal campur

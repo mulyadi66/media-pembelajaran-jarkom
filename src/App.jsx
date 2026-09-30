@@ -18,7 +18,8 @@ const ChallengePage = lazy(() => import('./pages/ChallengePage'));
 const WorksheetPage = lazy(() => import('./pages/WorksheetPage'));
 const ModulAjarPage = lazy(() => import('./pages/ModulAjarPage'));
 const Kasus = lazy(() => import('./pages/Kasus'));
-const PreTest = lazy(() => import('./pages/PreTest'));
+const PreTestMPK1 = lazy(() => import('./pages/PreTestMPK1'));
+const PreTestModulMPK1 = lazy(() => import('./pages/PreTestModulMPK1'));
 const Hasil = lazy(() => import('./pages/Hasil'));
 const RekapNilai = lazy(() => import('./pages/RekapNilai'));
 const WiringPuzzle = lazy(() => import('./pages/WiringPuzzle'));
@@ -170,7 +171,8 @@ export default function App() {
                 <Route path="/mpk1/dragdrop" element={<DragDropSubnet />} />
                 <Route path="/mpk1/challenge" element={<ChallengePage />} />
                 <Route path="/mpk1/kasus" element={<Kasus />} />
-                <Route path="/mpk1/pretest" element={<PreTest />} />
+                <Route path="/mpk1/pretest" element={<PreTestMPK1 />} />
+                <Route path="/mpk1/pretest/:slug" element={<PreTestModulMPK1 />} />
                 <Route path="/mpk1/worksheet" element={<WorksheetPage />} />
                 <Route path="/mpk1/modul-ajar" element={<ModulAjarPage />} />
                 <Route path="/mpk1/glossary" element={<GlossaryPage />} />

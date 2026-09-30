@@ -4,11 +4,25 @@ import { useApp } from '../context/AppContext';
 import { checkBadges } from '../data/badges';
 import { Server, Projector, CreditCard, BookOpen, Trophy, Network, Monitor, Puzzle, Award, BookA, Zap, FileDown, BarChart3, Briefcase, ClipboardCheck, RotateCcw, Cable, Gauge, ClipboardList } from 'lucide-react';
 import ConfirmModal from '../components/ConfirmModal';
+import { PRETEST_MPK1_SOAL_PER_MODUL, PRETEST_MPK1_SKOR_KEY, getRataPretest } from '../data/mpk1/pretestMPK1';
 
 export default function Dashboard() {
   const { modulesRead, scores, resetAll } = useApp();
   const [showReset, setShowReset] = useState(false);
-  const earnedBadges = checkBadges(scores, modulesRead, { moduleIds: ['modul1', 'modul2', 'modul3', 'osi-layer'] });
+  // Post-test MPK 1 dipecah per modul, jadi badge pencapaian akhir memakai
+  // rerata nilai post-test per modul (bukan kunci "posttest" yang sudah dihapus).
+  const modulTestKeys = ['mpk1_modul1_posttest', 'mpk1_modul2_posttest', 'mpk1_modul3_posttest'];
+  const nilaiUjian = modulTestKeys.map(k => (k in scores ? Number(scores[k]) : null)).filter(n => n != null);
+  const examAvg = nilaiUjian.length
+    ? Math.round(nilaiUjian.reduce((a, b) => a + b, 0) / nilaiUjian.length)
+    : null;
+  const earnedBadges = checkBadges(scores, modulesRead, {
+    moduleIds: ['modul1', 'modul2', 'modul3', 'osi-layer'],
+    pretestKey: PRETEST_MPK1_SKOR_KEY,
+    examAvg: examAvg ?? 0,
+    examDone: nilaiUjian.length === modulTestKeys.length,
+  });
+  const pretest = getRataPretest(scores);
 
   const modules = [
     { to: '/mpk1/modul1', icon: Server, title: 'Peralatan Jaringan', desc: 'Kebutuhan teknis, peralatan, dan teknologi', color: ['#667eea', '#764ba2'] },
@@ -22,7 +36,7 @@ export default function Dashboard() {
     { to: '/mpk1/dragdrop', icon: Puzzle, title: 'Drag & Drop', desc: 'Latihan interaktif', color: ['#ec4899', '#db2777'] },
     { to: '/mpk1/challenge', icon: Zap, title: 'Latihan Cepat', desc: 'Subnetting race', color: ['#f59e0b', '#f97316'] },
     { to: '/mpk1/kasus', icon: Briefcase, title: 'Studi Kasus', desc: 'Skenario nyata', color: ['#10b981', '#059669'] },
-    { to: '/mpk1/pretest', icon: ClipboardCheck, title: 'Pre-Test', desc: 'Uji awal per modul', color: ['#06b6d4', '#0891b2'] },
+    { to: '/mpk1/pretest', icon: ClipboardCheck, title: 'Pre-Test', desc: `${PRETEST_MPK1_SOAL_PER_MODUL} soal per modul${pretest.rata != null ? ` · rata-rata ${pretest.rata}` : ''}`, color: ['#06b6d4', '#0891b2'] },
     { to: '/mpk1/worksheet', icon: FileDown, title: 'Lembar Kerja', desc: 'Soal offline', color: ['#7c3aed', '#6d28d9'] },
     { to: '/mpk1/glossary', icon: BookOpen, title: 'Glossarium', desc: 'Istilah jaringan', color: ['#0ea5e9', '#0284c7'] },
     { to: '/mpk1/wiring', icon: Cable, title: 'Wiring Puzzle', desc: 'Susun kabel RJ-45', color: ['#f59e0b', '#d97706'] },

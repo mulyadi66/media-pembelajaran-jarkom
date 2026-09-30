@@ -5,6 +5,7 @@ import { UJIAN_KKA_TOTAL, UJIAN_KKA_SOAL_PER_ELEMEN } from '../data/kka/ujianKKA
 import { UJIAN_KKA_XI_TOTAL, UJIAN_KKA_XI_SOAL_PER_MODUL } from '../data/kka-xi/ujianKKAXI.js';
 import { PRETEST_KKA_XI_TOTAL, PRETEST_KKA_XI_SOAL_PER_MODUL } from '../data/kka-xi/pretestKKAXI.js';
 import { PRETEST_KKA_TOTAL, PRETEST_KKA_SOAL_PER_ELEMEN } from '../data/kka/pretestKKA.js';
+import { PRETEST_MPK1_TOTAL, PRETEST_MPK1_SOAL_PER_MODUL } from '../data/mpk1/pretestMPK1.js';
 import DarkModeToggle from './DarkModeToggle';
 import StreakCounter from './StreakCounter';
 import {
@@ -37,7 +38,7 @@ const subjects = {
       { to: '/mpk1/dragdrop', icon: Puzzle, label: 'Drag & Drop Subnetting' },
       { to: '/mpk1/challenge', icon: Zap, label: 'Latihan Cepat' },
       { to: '/mpk1/kasus', icon: Briefcase, label: 'Studi Kasus' },
-      { to: '/mpk1/pretest', icon: ClipboardCheck, label: 'Pre-Test' },
+      { to: '/mpk1/pretest', icon: ClipboardCheck, label: `Pre-Test (3 x ${PRETEST_MPK1_SOAL_PER_MODUL} soal)` },
       { to: '/mpk1/worksheet', icon: FileDown, label: 'Lembar Kerja' },
       { to: '/mpk1/glossary', icon: BookA, label: 'Glossarium' },
       { to: '/mpk1/hasil', icon: BarChart3, label: 'Hasil & Sertifikat' },
@@ -53,7 +54,7 @@ const subjects = {
       '/mpk1/modul-ajar': 'Modul Ajar',
       '/mpk1/flashcard': 'Flashcard Interaktif', '/mpk1/simulator': 'Simulator Jaringan',
       '/mpk1/dragdrop': 'Drag & Drop Subnetting', '/mpk1/challenge': 'Latihan Cepat',
-      '/mpk1/kasus': 'Studi Kasus', '/mpk1/pretest': 'Pre-Test',
+      '/mpk1/kasus': 'Studi Kasus', '/mpk1/pretest': 'Pre-Test MPK 1',
       '/mpk1/worksheet': 'Lembar Kerja', '/mpk1/glossary': 'Glossarium Jaringan',
       '/mpk1/hasil': 'Hasil & Sertifikat',
     },
@@ -72,7 +73,7 @@ const subjects = {
       '/mpk1/dragdrop': 'Latihan interaktif drag & drop',
       '/mpk1/challenge': 'Latihan cepat subnetting melawan waktu',
       '/mpk1/kasus': 'Terapkan pemahaman dalam permasalahan nyata',
-      '/mpk1/pretest': 'Uji pemahaman awal sebelum mempelajari materi',
+      '/mpk1/pretest': `Pre-Test MPK 1 — 3 Pre-Test per Modul (${PRETEST_MPK1_TOTAL} Soal)`,
       '/mpk1/worksheet': 'Lembar kerja praktik offline',
       '/mpk1/glossary': 'Daftar istilah penting dalam jaringan komputer',
       '/mpk1/hasil': 'Ringkasan, pencapaian, dan sertifikat',
@@ -321,7 +322,7 @@ export default function Layout() {
   const isDashboard = path === prefix;
 
   // Rute dinamis (mis. /kka-xi/pretest/modul3) mewarisi judul & deskripsi induknya.
-  const basePath = ['/kka/ujian/', '/kka/pretest/', '/kka-xi/ujian/', '/kka-xi/pretest/']
+  const basePath = ['/kka/ujian/', '/kka/pretest/', '/kka-xi/ujian/', '/kka-xi/pretest/', '/mpk1/pretest/']
     .find(p => path.startsWith(p))?.slice(0, -1) || path;
   const pageTitle = titles[path] || titles[basePath] || '';
   const pageDesc = descs[path] || descs[basePath] || '';
