@@ -126,7 +126,6 @@ export default function TokenUjianPanel({ onMessage }) {
 
       {rows.map((r) => {
         const expired = isTokenExpired(r.expiresAt);
-        const canEdit = r.source === 'server';
         return (
           <div className="token-row" key={r.subject}>
             <div className="token-row-main">
@@ -155,53 +154,52 @@ export default function TokenUjianPanel({ onMessage }) {
                       {copied === r.subject ? <Check size={15} /> : <Copy size={15} />}
                     </button>
                   </div>
-                  {canEdit ? (
-                    <div className="token-row-edit">
-                      <label>
-                        <span>Token baru</span>
-                        <input
-                          type="text"
-                          value={draft[r.subject]?.token ?? ''}
-                          onChange={(e) => edit(r.subject, { token: e.target.value })}
-                          className="calc-input"
-                          placeholder="Minimal 4 karakter"
-                        />
-                      </label>
-                      <label>
-                        <span>Batas mulai (opsional)</span>
-                        <input
-                          type="datetime-local"
-                          value={draft[r.subject]?.expiry ?? ''}
-                          onChange={(e) => edit(r.subject, { expiry: e.target.value })}
-                          className="calc-input"
-                        />
-                      </label>
-                      <div className="token-row-actions">
-                        <button
-                          type="button"
-                          className="btn btn-primary"
-                          onClick={() => save(r.subject)}
-                          disabled={busy === r.subject}
-                        >
-                          <Save size={15} /> {busy === r.subject ? 'Menyimpan…' : 'Simpan'}
-                        </button>
-                        <button
-                          type="button"
-                          className="btn btn-secondary"
-                          onClick={() => revert(r.subject)}
-                          disabled={busy === r.subject}
-                        >
-                          <RotateCcw size={15} /> Pakai bawaan
-                        </button>
-                      </div>
+                  <div className="token-row-edit">
+                    {r.source !== 'server' && (
+                      <p className="token-row-hint">
+                        Token ini masih dari <strong>{SOURCE_LABEL[r.source]}</strong>. Simpan sekali di
+                        sini untuk mengunci token di server — setelah itu bisa dirotasi tanpa deploy.
+                      </p>
+                    )}
+                    <label>
+                      <span>Token baru</span>
+                      <input
+                        type="text"
+                        value={draft[r.subject]?.token ?? ''}
+                        onChange={(e) => edit(r.subject, { token: e.target.value })}
+                        className="calc-input"
+                        placeholder="Minimal 4 karakter"
+                      />
+                    </label>
+                    <label>
+                      <span>Batas mulai (opsional)</span>
+                      <input
+                        type="datetime-local"
+                        value={draft[r.subject]?.expiry ?? ''}
+                        onChange={(e) => edit(r.subject, { expiry: e.target.value })}
+                        className="calc-input"
+                      />
+                    </label>
+                    <div className="token-row-actions">
+                      <button
+                        type="button"
+                        className="btn btn-primary"
+                        onClick={() => save(r.subject)}
+                        disabled={busy === r.subject}
+                      >
+                        <Save size={15} /> {busy === r.subject ? 'Menyimpan…' : 'Simpan'}
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-secondary"
+                        onClick={() => revert(r.subject)}
+                        disabled={busy === r.subject || r.source !== 'server'}
+                        title={r.source === 'server' ? 'Hapus token server, kembali ke env var/bawaan' : 'Belum ada token server untuk mapel ini'}
+                      >
+                        <RotateCcw size={15} /> Pakai bawaan
+                      </button>
                     </div>
-                  ) : (
-                    <p className="token-row-hint">
-                      {r.source === 'default'
-                        ? 'Belum ada token khusus mapel ini di server — masih memakai bawaan aplikasi. Simpan sekali di sini untuk bisa merotasi tanpa deploy.'
-                        : 'Token ini masih dari env var (VITE_EXAM_TOKEN). Simpan sekali di sini untuk mengaktifkannya tanpa deploy.'}
-                    </p>
-                  )}
+                  </div>
                 </>
               )}
             </div>
