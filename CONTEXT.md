@@ -1,8 +1,8 @@
 # Context Save — Media Pembelajaran Jarkom
 
-**Terakhir diupdate:** 29 September 2026
+**Terakhir diupdate:** 30 September 2026
 **Branch:** master
-**Status:** Bersih (no uncommitted changes — tip terakhir `148385b`)
+**Status:** Semua bank Post Test MPK 1 (Modul 1/2/3) sudah diaudit & diperbaiki.
 
 ---
 
@@ -194,6 +194,121 @@ Pola yang dipakai di tiga mapel: pre-test dipecah per unit, bukan satu paket cam
 - Bank soal: 25 soal/modul, level C2–C6 (HOTS), komposisi tidak seragam antar modul —
   jangan samakan dengan komposisi 10/10/10 milik Pre-Test.
 
+### Audit Bank Post Test: sebaran kunci WAJIB 5/5/5/5/5
+Ditemukan saat memodernisasi Modul 1 (30 Sep 2026): seluruh bank Post Test punya
+sebaran kunci yang parah, sehingga mengukur "tebak B", bukan pemahaman.
+Temuan awal (sebelum perbaikan):
+
+| Bank | A | B | C | D | E |
+|---|---|---|---|---|---|
+| Modul 1 | 2 | 12 | 9 | 2 | 0 |
+| Modul 2 | 1 | **16** | 4 | 4 | 0 |
+| Modul 3 | 5 | 13 | 7 | 0 | 0 |
+
+Gabungan 75 soal: 41 jawabannya B (55%), dan **opsi E tidak pernah jadi kunci sama sekali**.
+Karena nilai Post Test menentukan sertifikat + badge (syarat rerata ≥ 70), bias ini
+langsung tercermin di rapor. **Ketiga bank sekarang sudah diperbaiki.**
+
+Hasil akhir (semua tepat `A=5 B=5 C=5 D=5 E=5`, deviasi 0):
+
+| Bank | Level akhir | HOTS (C4+C5+C6) |
+|---|---|---|
+| Modul 1 | C2=4 C3=7 C4=8 C5=4 C6=2 | 14/25 (56%) |
+| Modul 2 | C2=4 C3=7 C4=9 C5=3 C6=2 | 14/25 (56%) |
+| Modul 3 | C2=5 C3=7 C4=8 C5=3 C6=2 | 13/25 (52%) |
+
+- **Soal yang ditulis ulang dari hafalan jadi aplikatif** (C2/C3 → C4/C5/C6). Modul 2:
+  Q6 (CSMA/CD dari "metode akses apa?" jadi skenario tabrakan), Q7, Q12 (istilah SPOF jadi
+  perbandingan dua topologi), Q13, Q16 (istilah partial mesh jadi hitung kabel), Q18,
+  Q22, Q24. Modul 3: Q8, Q9, Q11, Q13, Q14, Q22.
+- **Dua label C6 palsu dibongkar.** Modul 2 Q7 tadinya berlabel C6 padahal isinya
+  *"gabungan topologi disebut…"* (= C2, hafalan istilah), sekarang jadi tugas desain
+  kampus 4 gedung dengan kendala. Modul 3 Q6 berlabel C5 padahal cuma hafalan
+  network/broadcast address, diturunkan ke C3. Sebaliknya Modul 3 Q24 diturunkan
+  C3 → C2 karena memang hafalan.
+- **Dua soal kembar Modul 3 dibubarkan.** Q4 (/26 → 62 host) dan Q22 (/25 → 126 host)
+  itu type sama, Q22 diganti jadi soal alamat broadcast. Q8 dan Q20 sama-sama
+  C6 VLSM "pilih prefix" — Q8 diubah jadi menghitung network address subnet kedua,
+  jadi keduanya benar-benar berbeda.
+- **Cara meratakan kunci: geser posisi OPSI, jangan mengacak jawaban.** Isi dan
+  makna tiap opsi tidak boleh berubah — hanya urutan hurufnya yang ditata ulang supaya
+  tiap huruf jadi kunci 5×. Memindahkan jawaban acak hanya menyembunyikan pola, tidak
+  memperbaikinya.
+- **Kunci soal yang opsinya terurut natural (mis. `Cat 3 > Cat 5 > Cat 5e > Cat 6a > Cat 7`
+  atau `10 Mbps > 100 Mbps > 1 Gbps > 10 Gbps > 100 Gbps`) TIDAK boleh digeser**, karena
+  mengacak urutan angka terlihat seperti salah ketik dan membingungkan. Di Modul 1 ini
+  soal 10 dan 19 dikunci di slot C. Prinsipnya: sapu kunci soal natural dulu, soal lain
+  yang mengisi sisa kuota.
+- **Jumlah soal "terkunci natural"(itulah yang membatasi sebaran kunci.** Modul 3 punya
+  10 soal yang opsi naturally berurutan dan tidak boleh digeser, dan **6 di antaranya
+  kunci natural-nya semua C** (`Kelas A..E`, `128/168/192/224/240`, `/26../30`,
+  `4/8/16/32/64`, `30/62/126/254/510`, `.16/.32/.64/.128/.192`) — kuota C cuma 5.
+  Q22 sengaja ditulis ulang (lihat di atas) supaya wrestle ini hilang; tanpa itu
+  spread Modul 3 mustahil 5/5/5/5/5 tanpa merusak soal.
+- **`explanation` jangan pernah mengacu huruf opsi** ("B mengabaikan...", "E terbalik...").
+  menggeser urutan opsi = explanation itu diam-diam jadi salah. Tulis mengacu isi opsi
+  ("memilih switch termurah...", "6 GHz adalah Wi-Fi 6E..."). Di Modul 1 soal 7, 11, 13,
+  dan 22 sudah dibetulkan. Opsi tidak diacak saat runtime (`ModulPostTest.jsx` tidak
+  punya `shuffle`), tapi explanation sebaiknya tidak bergantung pada huruf apa pun.
+- **Level harus jujur, bukan kejar kuota.** C6 (Menciptakan) = meminta siswa merancang
+  sesuatu, bukan "pilih kombinasi terbaik". Q7 lama berlabel C6 padahal hanya pertanyaan
+  memilih kombinasi — sudah ditulis ulang jadi tugas desain dengan kendala anggaran.
+  Menaikkan label saja tanpa mengganti isi akan mengarang klaim dan menjatuhkan validitas bank.
+- Saat menulis bank baru: cek dulu `explanation` soal lain yang menyebut huruf opsi
+  sebelum mengacak urutan, dan jalankan skrip audit (spread kunci + spread level +
+  pastikan isi opsi utuh) sebelum commit.
+- **Skrip auditnya ada di temp, bukan di repo** (`%TEMP%\opencode\`): `audit-kunci.mjs`
+  (spread kunci + level per bank), `cek-kualitas-bank.mjs` (karakter non-Latin, kata
+  dobel, explanation yang menyebut huruf opsi, opsi duplikat, prefiks A–E),
+  `verifikasi-opsi-utuh.mjs` (bandingkan bank vs backup: himpunan isi opsi harus sama,
+  hanya urutan berubah), `verifikasi-m3-math.mjs` (34 titik hitungan subnetting/biner
+  dihitung ulang dari definisi), `sim-skor.mjs` (30 skenario stabilitas skor).
+  Kalau temp dibersih, skripnya hilang — yang penting polanya, bukan filenya.
+- **Hati-hati bikin regex deteksi "kata dobel"** untuk bank soal. Pola generik
+  `(\w{3,})\1` akan menandai kata sah seperti "cincin" (cin+cin) dan "memakai" sebagai
+  bug, lalu nanti kamu "memperbaiki" teks yang sebenarnya sudah benar. Pakai pola
+  konservatif, dan selalu konfirmasi temuan manual sebelum diedit.
+
+### Bug skor: layar hasil menghitung ulang dari bank soal
+`Quiz.jsx` dulu menyimpan `submitted` + `answers` saja. Layar hasil menghitung
+ulang `answers[i] === q.answer` terhadap bank **saat render**. Begitu bank diedit
+(kunci digeser saat rebalance), siswa yang sudah submit lalu me-reload melihat
+nilai yang **berbeda dari nilai di Rekap guru** — rapor benar, layar siswa salah.
+Simulasi: submit dapat 60, bank digeser, reload → tampil 56.
+
+- **Nilai di `AppContext` aman** — `saveQuizScore` menyimpan angka dan tidak pernah
+  menghitung ulang, jadi rapor/Rekap/leaderboard/sertifikat tidak berubah. Yang
+  salah hanya tampilan di layar siswa.
+- **Perbaikan:** `handleSubmit` menyimpan `{score, correct, total, fingerprint}` ke
+  `jarkomlab_${storageKey}_result`; layar hasil membacanya. `clearQuizStorage`
+  (`examLib.js`) ikut menghapus `_result` — kalau tidak, di perangkat bersama sisa
+  nilai ujian sebelumnya bisa terbaca siswa berikutnya.
+- **Fingerprint = `bankFingerprint(qs)`**, satu fungsi di `Quiz.jsx` supaya tempat
+  tulis dan baca tidak bisa berbeda. Cakupannya `id:answer:question:isiOpsi`, bukan
+  cuma `id:answer`: versi awal buta terhadap penulisan ulang teks soal pada indeks
+  jawaban yang sama, sehingga review menampilkan kunci yang tidak lagi cocok tanpa
+  peringatan. Isi opsi dinormalisasi awalan `A. `..`E. ` supaya menggeser huruf
+  (rebalance sah) tidak memicu peringatan palsu.
+- **Fallback ke hitung ulang hanya untuk data lama tanpa `_result`.** Bank hasil lama
+  yang sudah terlanjur submit tidak punya snapshot, jadi review-nya masih bisa
+  tidak cocok — yang dijaga adalah **nilainya** tetap sama dengan rapor.
+- **Yang BELUM aman: attempt yang belum submit saat bank diganti.** `_order` hanya
+  divalidasi jumlah + rentang indeks, jadi siswa yang sudah menjawab sebagian lalu
+  bank digeser akan dinilai dengan kunci versi baru. Jangan push di tengah jam
+  ujian berlangsung.
+
+### Jebakan regex saat memproses bank soal dengan skrip
+Tiga bug yang sama-sama merusak file tapi lolos karena JS masih valid:
+- `\n\s*` **memakan newline**, jadi pola seperti `/\n\s*'([^']*)'/g` hanya menangkap
+  opsi ke-1, 3, dan 5 (baris kedua dan keempat dilewati karena `\s` sudah memakan
+  newline-nya). Pakai `\n[ \t]*`.
+- Mengganti `options: [...]` dengan teks pengganti yang **tidak menyertakan newline
+  pembuka** akan menyatukan baris `question:` dan `options:` jadi satu baris
+  (`question: '...',    options: [`). Tetap valid JS, tapi formatnya rusak. Awali teks
+  pengganti dengan `\n` kalau pola yang diganti diawali newline.
+- Untuk newline **penutup**, pakai lookahead `,?(?=\n)`, bukan `\n` yang dimakan. Kalau
+  dimakan, match berikutnya tidak akan menemukan `\n` dan hanya id ganjil yang kena.
+
 
 ## Anti-Contek: Kunci Soal setelah 3× Pelanggaran
 - 3× pindah tab/keluar kunci layar → **soal dikunci** (screensaver "Ujian Dikunci", bukan cuma peringatan). Jawaban tidak bisa dilihat/diubah sampai dibuka guru.
@@ -261,3 +376,9 @@ Pola yang dipakai di tiga mapel: pre-test dipecah per unit, bukan satu paket cam
 - [x] Pre-Test MPK 1 dipecah per modul (3 × 30 = 90 soal) + hapus bank legacy 25 soal campur
 - [x] Post Test MPK 1 diseragamkan ke pola KKA: landing `/mpk1/posttest` + `:slug`, nav 3 item jadi 1
 - [x] Bug `meta` Post Test MPK 1 diperbaiki (filter per modul, tidak lagi ketiga modul sekaligus)
+- [x] Audit bank Post Test MPK 1 ketiga modul: sebaran kunci diratakan ke 5/5/5/5/5
+- [x] Modul 2: 8 soal hafalan ditulis ulang jadi aplikatif, C6 palsu Q7 dibongkar, C2 turun 10 → 4
+- [x] Modul 3: 6 soal ditulis ulang, 2 label level palsu dibetulkan, 2 soal kembar dibubarkan
+- [x] SemuaExplanation referring ke huruf opsi dibetulkan (aman saat opsi digeser)
+- [x] Bug skor: layar hasil tidak lagi menghitung ulang dari bank soal (snapshot `_result`)
+- [x] Fingerprint bank diperkuat sampai mencakup teks soal + isi opsi

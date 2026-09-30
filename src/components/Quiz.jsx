@@ -11,6 +11,30 @@ function shuffleArray(arr) {
   return a;
 }
 
+/**
+ * Sidik jari bank soal, disimpan bersama hasil agar layar hasil bisa tahu
+ * kalau bank tempat siswa itu dihitung sudah berubah.
+ *
+ * Cakupannya harus TEXTS + ISI OPSI, bukan hanya kunci jawaban. Dulu hanya
+ * `id:answer`, sehingga bank boleh diacak ulang atau teks soalnya ditulis ulang
+ * pada indeks jawaban yang sama tanpa sidik jari berubah. Akibatnya review
+ * jawaban lama menampilkan kunci dan penjelasan yang tidak lagi cocok dengan
+ * pertanyaan yang dijawab siswa, tanpa peringatan apa pun.
+ *
+ * Sengaja tanpa crypto: ini bukan kontrol keamanan, hanya deteksi perubahan.
+ */
+function bankFingerprint(questions) {
+  return `${questions.length}|${questions
+    .map((q) => {
+      const opsi = (q.options || [])
+        .map((o) => String(o).replace(/^[A-E]\.\s*/, '').trim())
+        .join('~');
+      return `${q.id ?? ''}:${q.answer}:${q.question}:${opsi}`;
+    })
+    .sort()
+    .join('#')}`;
+}
+
 export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, examToken }) {
   const [shuffledQs] = useState(() => {
     const storedOrder = localStorage.getItem(`jarkomlab_${storageKey}_order`);
@@ -144,6 +168,18 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
     let correct = 0;
     qs.forEach((q, i) => { if (answers[i] === q.answer) correct++; });
     const score = Math.round((correct / total) * 100);
+    // Skor WAJIB disimpan di perangkat. Kalau tidak, layar hasil menghitung
+    // ulang dari bank soal setiap render, dan begitu bank diedit (kunci/level
+    // diubah) siswa yang sudah submit lalu me-reload akan melihat nilai yang
+    // BERBEDA dari nilai yang tersimpan di server/Rekap guru.
+    try {
+      localStorage.setItem(`jarkomlab_${storageKey}_result`, JSON.stringify({
+        score,
+        correct,
+        total,
+        fingerprint: bankFingerprint(qs),
+      }));
+    } catch { /* storage penuh/privat: layar hasil tetap jalan */ }
     if (onScoreSubmit) {
       const startedAt = Number(localStorage.getItem(`jarkomlab_${storageKey}_startedAt`) || 0) || null;
       onScoreSubmit(score, { startedAt, finishedAt: Date.now() });
@@ -270,13 +306,40 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
 
   // Result screen
   if (submitted) {
-    let correct = 0;
-    qs.forEach((q, i) => { if (answers[i] === q.answer) correct++; });
-    const score = Math.round((correct / total) * 100);
+    // Baca hasil yang tersimpan saat submit, bukan hitung ulang dari bank soal.
+    // Fallback ke hitung ulang hanya untuk data lama yang belum punya _result.
+    const saved = (() => {
+      try {
+        return JSON.parse(localStorage.getItem(`jarkomlab_${storageKey}_result`) || 'null');
+      } catch { return null; }
+    })();
+    const correct = Number.isFinite(saved?.correct)
+      ? saved.correct
+      : qs.reduce((n, q, i) => n + (answers[i] === q.answer ? 1 : 0), 0);
+    const score = Number.isFinite(saved?.score)
+      ? saved.score
+      : Math.round((correct / (saved?.total || total)) * 100);
     const passed = score >= 70;
+    // Sidik jari bank: berubah kalau kunci, teks soal, atau isi opsi diedit
+    // guru. Dipakai untuk jujur memberi tahu siswa bahwa review per-soal sudah
+    // tidak lagi cocok dengan soal yang tadi dijawab (nilai sendiri tetap yang
+    // tersimpan saat submit).
+    const bankChanged = Boolean(saved?.fingerprint) && saved.fingerprint !== bankFingerprint(qs);
 
     return (
       <div className="quiz-result fade-in">
+        {bankChanged && (
+          <div className="quiz-review" style={{
+            marginBottom: 16, textAlign: 'left', padding: 12, borderRadius: 10,
+            border: '2px solid var(--primary)', background: 'var(--bg-subtle, #fff)',
+          }}>
+            <strong>Catatan guru:</strong> bank soal untuk ujian ini sudah diperbarui
+            setelah kamu mengumpulkan jawaban. <strong>Nilai {score} di atas tetap yang
+            dihitung saat itu</strong> dan sudah tercatat di rapor, tetapi rincian
+            benar/salah per soal di bawah mengikuti versi terbaru dan bisa tidak
+            sesuai dengan soal yang tadi kamu kerjakan.
+          </div>
+        )}
         <div className={`result-circle ${passed ? 'pass' : 'fail'}`}>
           <div className="result-score">{score}</div>
           <div className="result-label">Nilai</div>

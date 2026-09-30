@@ -247,6 +247,9 @@ function clearQuizStorage(key) {
   localStorage.removeItem(`jarkomlab_${key}_unlocked`);
   localStorage.removeItem(`jarkomlab_${key}_startedAt`);
   localStorage.removeItem(`jarkomlab_${key}_warns`);
+  // Hasil submit yang disimpan (skor akhir). Kalau tidak dihapus, siswa berikutnya
+  // di perangkat bersama bisa membaca sisa nilai ujian sebelumnya.
+  localStorage.removeItem(`jarkomlab_${key}_result`);
 }
 
 /** Hapus semua hasil ujian di perangkat ini (riwayat, kunci retake, antrian, skor). Identitas siswa tetap. */

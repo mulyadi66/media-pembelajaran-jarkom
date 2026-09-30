@@ -4,13 +4,13 @@ export const modul1PostTest = [
     level: 'C4 - Menganalisis',
     question: 'Sebuah lab komputer memiliki 40 PC dan setiap PC melakukan streaming video HD (±5 Mbps). Jika ditambahkan margin 20% untuk peak load, berapa total bandwidth minimal yang perlu disediakan?',
     options: [
-      'A. 40 Mbps',
-      'B. 200 Mbps',
-      'C. 240 Mbps',
+      'A. 240 Mbps',
+      'B. 40 Mbps',
+      'C. 200 Mbps',
       'D. 220 Mbps',
       'E. 260 Mbps'
     ],
-    answer: 2,
+    answer: 0,
     explanation: '40 PC × 5 Mbps = 200 Mbps. Margin 20% = 40 Mbps. Total = 200 + 40 = 240 Mbps.'
   },
   {
@@ -19,12 +19,12 @@ export const modul1PostTest = [
     question: 'Perangkat yang meneruskan paket antar jaringan berbeda berdasarkan alamat IP adalah…',
     options: [
       'A. Hub',
-      'B. Switch',
-      'C. Router',
+      'B. Router',
+      'C. Switch',
       'D. Bridge',
       'E. NIC'
     ],
-    answer: 2,
+    answer: 1,
     explanation: 'Router bekerja di Layer 3 (network) dan merutekan paket antar jaringan berbeda berdasarkan alamat IP.'
   },
   {
@@ -33,12 +33,12 @@ export const modul1PostTest = [
     question: 'Urutan warna pin 1–8 standar T568B yang benar adalah…',
     options: [
       'A. Hijau Putih, Hijau, Oranye Putih, Biru, Biru Putih, Oranye, Coklat Putih, Coklat',
-      'B. Oranye Putih, Oranye, Hijau Putih, Biru, Biru Putih, Hijau, Coklat Putih, Coklat',
-      'C. Oranye Putih, Oranye, Hijau Putih, Hijau, Biru Putih, Biru, Coklat Putih, Coklat',
-      'D. Hijau Putih, Hijau, Oranye Putih, Oranye, Biru Putih, Biru, Coklat Putih, Coklat',
+      'B. Oranye Putih, Oranye, Hijau Putih, Hijau, Biru Putih, Biru, Coklat Putih, Coklat',
+      'C. Hijau Putih, Hijau, Oranye Putih, Oranye, Biru Putih, Biru, Coklat Putih, Coklat',
+      'D. Oranye Putih, Oranye, Hijau Putih, Biru, Biru Putih, Hijau, Coklat Putih, Coklat',
       'E. Biru Putih, Biru, Oranye Putih, Oranye, Hijau Putih, Hijau, Coklat Putih, Coklat'
     ],
-    answer: 1,
+    answer: 3,
     explanation: 'T568B: 1 Oranye Putih, 2 Oranye, 3 Hijau Putih, 4 Biru, 5 Biru Putih, 6 Hijau, 7 Coklat Putih, 8 Coklat.'
   },
   {
@@ -46,28 +46,28 @@ export const modul1PostTest = [
     level: 'C3 - Menerapkan',
     question: 'Kabel yang tepat untuk menghubungkan langsung dua PC (PC ke PC) tanpa switch adalah…',
     options: [
-      'A. Straight-through',
-      'B. Crossover',
+      'A. Crossover',
+      'B. Straight-through',
       'C. Rollover',
       'D. Serial',
       'E. Coaxial'
     ],
-    answer: 1,
+    answer: 0,
     explanation: 'Perangkat sejenis (PC ke PC) memakai kabel crossover (ujung A: 568A, ujung B: 568B). Perangkat berbeda jenis (PC ke Switch) memakai straight-through.'
   },
   {
     id: 5,
     level: 'C4 - Menganalisis',
-    question: 'Dalam instalasi jaringan, media transmisi yang bebas dari interferensi elektromagnetik dan mampu menjangkau jarak jauh adalah…',
+    question: 'Media transmisi yang benar-benar kebal interferensi elektromagnetik karena membawa sinyal dalam bentuk cahaya, bukan arus listrik, adalah…',
     options: [
       'A. Kabel UTP Cat 5e',
       'B. Kabel STP',
-      'C. Fiber Optik',
-      'D. Kabel Coaxial',
+      'C. Kabel Coaxial',
+      'D. Fiber Optik',
       'E. Kabel telepon RJ-11'
     ],
-    answer: 2,
-    explanation: 'Fiber optik menggunakan cahaya, sehingga bebas interferensi elektromagnetik dan dapat menjangkau jarak jauh (hingga puluhan km) tanpa kehilangan sinyal berarti.'
+    answer: 3,
+    explanation: 'Fiber optik membawa sinyal dalam bentuk cahaya, bukan arus listrik, sehingga sama sekali tidak terpengaruh interferensi elektromagnetik dan dapat menjangkau puluhan kilometer tanpa kehilangan berarti. UTP dan STP tetap membawa arus listrik sehingga masih rentan gangguan meski STP berpelindung, dan coaxial juga menggunakan listrik.'
   },
   {
     id: 6,
@@ -75,27 +75,27 @@ export const modul1PostTest = [
     question: 'Kecepatan akhir sebuah segmen jaringan ditentukan oleh…',
     options: [
       'A. Kabel dengan kategori tertinggi',
-      'B. Perangkat terlemah dalam jalur',
-      'C. Panjang kabel',
-      'D. Jumlah konektor',
-      'E. Merek switch'
+      'B. Panjang kabel',
+      'C. Jumlah konektor',
+      'D. Merek switch',
+      'E. Perangkat terlemah dalam jalur'
     ],
-    answer: 1,
+    answer: 4,
     explanation: 'Kategori kabel lebih tinggi tidak menjamin kecepatan lebih tinggi — kecepatan akhir dibatasi perangkat terlemah (mis. kabel Cat6a tetap 1 Gbps jika switch hanya 1 Gbps).'
   },
   {
     id: 7,
     level: 'C6 - Menciptakan',
-    question: 'Sebuah kantor ingin menghubungkan 25 PC ke internet dengan keamanan memadai dan cadangan listrik. Kombinasi perangkat yang paling tepat adalah…',
+    question: 'Sekolah memiliki anggaran Rp15 juta untuk menghubungkan 30 komputer di ruang lab ke internet dengan uplink minimal 100 Mbps, dan sisa anggaran harus dipakai untuk perangkat cadangan. Rancangan jaringan yang paling memenuhi seluruh persyaratan itu adalah…',
     options: [
-      'A. Hanya 1 hub besar tanpa router',
-      'B. Switch 24 port, router, firewall, dan UPS',
-      'C. Switch + laptop',
-      'D. Router saja tanpa switch',
-      'E. Kabel coaxial + repeater'
+      'A. Switch 24-port unmanaged tanpa router',
+      'B. Switch 48-port managed, router, firewall, dan satu switch cadangan',
+      'C. Router saja tanpa switch',
+      'D. Switch 48-port, hub 16-port, dan access point',
+      'E. Kabel coaxial menuju seluruh komputer'
     ],
     answer: 1,
-    explanation: 'Switch menghubungkan PC dalam LAN, router menghubungkan ke internet, firewall menjaga keamanan, dan UPS mencegah mati mendadak.'
+    explanation: 'Butuh minimal 48 port untuk 30 komputer, uplink 100 Mbps ditangani router, keamanan dijaga firewall, dan satu unit cadangan memenuhi syarat anggaran cadangan. Switch 24-port tanpa router tidak cukup untuk 30 komputer, pilihan yang hanya memakai router atau menambah hub tetapi tanpa router tidak bisa melakukan uplink ke internet, dan coaxial bukan media LAN yang lazim dipakai.'
   },
   {
     id: 8,
@@ -113,17 +113,17 @@ export const modul1PostTest = [
   },
   {
     id: 9,
-    level: 'C2 - Memahami',
-    question: 'ALat yang digunakan untuk memotong, mengupas, dan menjepit konektor RJ-45 ke kabel UTP dalam satu perangkat adalah…',
+    level: 'C3 - Menerapkan',
+    question: 'Petugas ingin memasang enam konektor RJ-45 pada kabel UTP Cat 6 sekaligus agar jaket terpotong rapi dan tidak ada pin yang tertekuk. Urutan pekerjaan beserta alat yang tepat adalah…',
     options: [
-      'A. Cable tester',
-      'B. Tang Crimping',
-      'C. Obeng',
-      'D. Tang potong',
-      'E. Multimeter'
+      'A. Cable tester untuk memotong jaket, lalu obeng untuk menjepit konektor',
+      'B. Tang potong untuk mengupas untai, lalu tang crimping untuk menjepit konektor',
+      'C. Multimeter untuk memotong jaket, lalu obeng untuk mengupas untai',
+      'D. Tang crimping: potong jaket, kupas untai, masukkan konektor, lalu jepit sampai terdengar bunyi lock',
+      'E. Tang crimping: masukkan konektor ke dalam jaket terlebih dahulu, baru kupas untai'
     ],
-    answer: 1,
-    explanation: 'Tang crimping memiliki fungsi pemotong, pengupas jaket, dan penjepit konektor dalam satu alat.'
+    answer: 3,
+    explanation: 'Tang crimping satu perangkat untuk memotong, mengupas, dan menjepit. Urutannya benar: potong jaket, kupas untai sesuai urutan warna, masukkan konektor, lalu jepit sampai terdengar bunyi lock. Tester hanya memverifikasi hasil, bukan memasang.'
   },
   {
     id: 10,
@@ -133,25 +133,25 @@ export const modul1PostTest = [
       'A. Cat 3',
       'B. Cat 5',
       'C. Cat 5e',
-      'D. Cat 7',
-      'E. Cat 6a'
+      'D. Cat 6a',
+      'E. Cat 7'
     ],
     answer: 2,
-    explanation: '1000BASE-T membutuhkan minimal Cat5e untuk mendukung 1 Gbps, meskipun Cat6 juga umum dipakai.'
+    explanation: '1000BASE-T membutuhkan minimal Cat5e agar mendukung 1 Gbps. Cat3 hanya sampai 10 Mbps dan Cat5 sampai 100 Mbps, sedangkan Cat6a dan Cat7 memang mendukung 1 Gbps tetapi bukan kategori minimum yang diminta.'
   },
   {
     id: 11,
-    level: 'C2 - Memahami',
-    question: 'Dalam analisis kebutuhan jaringan, faktor yang paling menentukan kapasitas switch dan kebutuhan bandwidth adalah…',
+    level: 'C5 - Mengevaluasi',
+    question: 'Administrator harus memilih switch untuk 42 komputer yang kebetulan hanya melakukan browsing, email, dan cetak dokumen. Pertimbangan mana yang paling tepat untuk menentukan jumlah port dan kapasitas yang perlu disediakan?',
     options: [
-      'A. Jumlah pengguna dan tipe penggunaan',
-      'B. Merek perangkat jaringan',
-      'C. Warna kabel UTP',
-      'D. Ukuran ruang server',
-      'E. Jumlah monitor di setiap PC'
+      'A. Gunakan switch 48-port karena cukup untuk 42 komputer dan menyisakan port untuk perluasan',
+      'B. Pilih switch termurah karena jumlah komputer sudah pasti dan tidak akan bertambah',
+      'C. Gunakan switch 24-port lalu menambah hub 24-port untuk menutup kekurangan port',
+      'D. Tentukan jumlah port dari jumlah komputer saja, karena bandwidth tidak perlu dihitung untuk aktivitas ringan',
+      'E. Gunakan switch 48-port managed tanpa kalkulasi kebutuhan bandwidth karena port sudah lebih dari cukup'
     ],
     answer: 0,
-    explanation: 'Volume pengguna menentukan kapasitas switch (jumlah port) dan tipe penggunaan menentukan besaran bandwidth yang harus disediakan.'
+    explanation: '42 komputer butuh minimal satu port masing-masing, dan switch 48-port menyisakan ruang perluasan tanpa langsung over-specification. Memilih switch termurah karena jumlah komputer dianggap sudah pasti mengabaikan kemungkinan bertambahnya pengguna, menutup kekurangan port dengan hub membuat bandwidth terbagi sehingga menekan performa di seluruh segmen, dan menentukan jumlah port dari jumlah komputer saja tanpa menghitung bandwidth serta headroom tetap berisiko ketika aktivitas meningkat.'
   },
   {
     id: 12,
@@ -161,25 +161,25 @@ export const modul1PostTest = [
       'A. Browsing web',
       'B. Email',
       'C. Chat teks',
-      'D. Streaming video HD',
-      'E. VoIP telepon'
+      'D. VoIP telepon',
+      'E. Streaming video HD'
     ],
-    answer: 3,
+    answer: 4,
     explanation: 'Streaming video HD membutuhkan ±5 Mbps per pengguna — jauh lebih besar daripada browsing (±1 Mbps), email/chat, dan VoIP (±0,1–0,5 Mbps).'
   },
   {
     id: 13,
-    level: 'C2 - Memahami',
-    question: 'Membeli switch dan router dengan spesifikasi jauh di atas kebutuhan pengguna disebut over-specification. Dampaknya adalah…',
+    level: 'C5 - Mengevaluasi',
+    question: 'Sekolah hanya punya 20 komputer, tetapi kepala sekolah memutuskan membeli switch 48-port termurah karena ia menganggap "nanti bisa dipakai untuk menambah siswa". Penilaian yang paling tepat terhadap keputusan tersebut adalah…',
     options: [
-      'A. Jaringan berjalan lebih lambat',
-      'B. Pemborosan biaya',
-      'C. Perangkat cepat rusak',
-      'D. Listrik lebih hemat',
-      'E. Tidak ada dampak'
+      'A. Salah, karena over-specification membuang anggaran tanpa manfaat nyata; switch unmanaged 24-port yang sesuai kebutuhan lebih hemat',
+      'B. Benar, karena switch berkapasitas besar memberi ruang perluasan untuk jangka panjang',
+      'C. Salah, karena perangkat yang melebihi kebutuhan akan lebih cepat rusak',
+      'D. Benar, karena perangkat besar otomatis lebih hemat listrik',
+      'E. Tidak dapat dinilai sebelum ada data pasti jumlah memori server di sekolah'
     ],
-    answer: 1,
-    explanation: 'Over-specification = spesifikasi perangkat melebihi kebutuhan, yang berakibat pemborosan biaya tanpa manfaat nyata. Kebalikannya, under-specification, menyebabkan kinerja buruk.'
+    answer: 0,
+    explanation: 'Over-specification berarti spesifikasi jauh melebihi kebutuhan sehingga anggaran terbuang tanpa manfaat nyata. Menganggap ruang perluasan selalu menguntungkan keliru karena port tersebut belum dipakai, anggapan bahwa over-specification membuat perangkat cepat rusak tidak benar, anggapan bahwa perangkat besar lebih hemat listrik justru terbalik, dan jawaban yang menyangkut memori server tidak relevan karena keputusan tetap bisa dinilai dari jumlah komputer yang ada.'
   },
   {
     id: 14,
@@ -187,12 +187,12 @@ export const modul1PostTest = [
     question: 'Perangkat yang mengubah sinyal digital dari komputer menjadi sinyal analog/optik agar dapat dikirim melalui jalur ISP (ADSL/fiber) adalah…',
     options: [
       'A. Switch',
-      'B. Router',
-      'C. Modem',
+      'B. Modem',
+      'C. Router',
       'D. Repeater',
       'E. Access Point'
     ],
-    answer: 2,
+    answer: 1,
     explanation: 'Modem (modulator-demodulator) mengubah sinyal digital ↔ analog (atau cahaya untuk fiber ONT). Contoh: modem ADSL, ONT fiber.'
   },
   {
@@ -203,10 +203,10 @@ export const modul1PostTest = [
       'A. Firewall',
       'B. Proxy Server',
       'C. VPN Gateway',
-      'D. Load Balancer',
-      'E. UPS'
+      'D. UPS',
+      'E. Load Balancer'
     ],
-    answer: 3,
+    answer: 4,
     explanation: 'Load balancer membagi beban trafik ke beberapa server agar tidak overload sehingga ketersediaan layanan tetap terjaga. Firewall menyaring lalu lintas, proxy memfilter/menyerap konten.'
   },
   {
@@ -215,41 +215,41 @@ export const modul1PostTest = [
     question: 'Dua segmen LAN di kampus disambungkan melalui sebuah perangkat yang menyaring frame berdasarkan MAC address. Perangkat tersebut adalah…',
     options: [
       'A. Hub',
-      'B. Bridge',
-      'C. Router',
+      'B. Router',
+      'C. Bridge',
       'D. Repeater',
       'E. Access Point'
     ],
-    answer: 1,
+    answer: 2,
     explanation: 'Bridge bekerja di Layer 2 (data link): menggabungkan dua segmen LAN dan melakukan filtering berdasarkan MAC address.'
   },
   {
     id: 17,
     level: 'C4 - Menganalisis',
-    question: 'Koneksi point-to-point antar gedung memakai teknologi nirkabel dengan antena searah yang memerlukan line-of-sight tanpa halangan. Teknologi tersebut adalah…',
+    question: 'Koneksi point-to-point antar gedung perkantoran yang berjarak sekitar 3 km memakai antena searah dan wajib tanpa halangan (line-of-sight). Teknologi nirkabel yang tepat untuk koneksi tersebut adalah…',
     options: [
       'A. Wi-Fi',
       'B. Bluetooth',
-      'C. Microwave',
-      'D. Satelit',
+      'C. Satelit',
+      'D. Microwave',
       'E. LTE'
     ],
-    answer: 2,
-    explanation: 'Microwave memakai frekuensi tinggi untuk point-to-point jarak jauh dan membutuhkan line-of-sight (pandangan lurus tanpa halangan) antara kedua antena.'
+    answer: 3,
+    explanation: 'Microwave bekerja pada frekuensi tinggi untuk point-to-point jarak jauh antar gedung dan membutuhkan line-of-sight (pandangan lurus tanpa halangan) antara kedua antena. Satelit memang juga memerlukan line-of-sight, tetapi layanan itu disesuaikan ke orbit dan bukan untuk sambungan antar gedung sedekat 3 km; Bluetooth hanya untuk jarak sangat dekat dan Wi-Fi untuk area lokal.'
   },
   {
     id: 18,
-    level: 'C2 - Memahami',
-    question: 'Konektor yang digunakan pada kabel UTP/STP untuk jaringan Ethernet adalah…',
+    level: 'C4 - Menganalisis',
+    question: 'Anda harus menghubungkan tiga perangkat berikut: PC ke switch, router ke ONT, dan server ke NAS. Konektor yang dibutuhkan berurutan adalah…',
     options: [
-      'A. RJ-11',
-      'B. RJ-45',
-      'C. SC',
-      'D. ST',
-      'E. BNC'
+      'A. RJ-11, RJ-45, RJ-45',
+      'B. RJ-45, RJ-11, SC',
+      'C. BNC, RJ-45, RJ-11',
+      'D. RJ-45, RJ-45, SC',
+      'E. RJ-45, SC, RJ-45'
     ],
-    answer: 1,
-    explanation: 'RJ-45 adalah konektor 8 pin standar Ethernet untuk UTP/STP. RJ-11 untuk telepon (6 pin), SC/ST/LC untuk fiber optik, BNC untuk coaxial.'
+    answer: 4,
+    explanation: 'PC ke switch adalah Ethernet berpasangan tembaga memakai RJ-45. Router ke ONT berjalan di media fiber optik yang memakai konektor SC (atau LC). Server ke NAS kembali ke Ethernet tembaga memakai RJ-45. Jadi urutannya RJ-45, SC, RJ-45.'
   },
   {
     id: 19,
@@ -295,17 +295,17 @@ export const modul1PostTest = [
   },
   {
     id: 22,
-    level: 'C2 - Memahami',
-    question: 'Standar 802.11ac (Wi-Fi 5) bekerja pada frekuensi…',
+    level: 'C6 - Menciptakan',
+    question: 'Anda diminta merancang jangkauan Wi-Fi untuk gedung sekolah 3 lantai, masing-masing 300 m2, dengan satu uplink fiber 1 Gbps dan target 60 pengguna sekaligus per lantai. Rancangan yang paling tepat adalah…',
     options: [
-      'A. 2.4 GHz saja',
-      'B. 5 GHz',
-      'C. 900 MHz',
-      'D. 6 GHz',
-      'E. 1.8 GHz'
+      'A. Satu access point di lantai 1 pada frekuensi 2,4 GHz agar sinyalnya menjangkau semua lantai',
+      'B. Minimal satu access point per lantai pada frekuensi 5 GHz, memakai SSID berbeda per lantai untuk mengurangi interferensi',
+      'C. Satu access point berdaya besar di atap gedung pada frekuensi 5 GHz agar sinyal turun ke semua lantai',
+      'D. Tiga access point pada frekuensi 2,4 GHz dengan kanal identik agar pengguna bisa roam dengan mulus',
+      'E. Access point pada frekuensi 6 GHz karena 802.11ac tidak mendukung 5 GHz'
     ],
     answer: 1,
-    explanation: '802.11ac (Wi-Fi 5) menggunakan 5 GHz dengan kecepatan hingga 6,9 Gbps. Band 6 GHz mulai dipakai pada 802.11ax (Wi-Fi 6E).'
+    explanation: 'Frekuensi 5 GHz menyediakan kapasitas lebih tinggi untuk 60 pengguna sekaligus, dan penempatan satu access point per lantai menghindari sinyal yang harus menembus lantai beton. SSID berbeda per lantai mengurangi interferensi antar access point. Satu access point di lantai 1 tidak akan menjangkau tiga lantai, access point di atap tidak efektif karena lantai beton meredam sinyal, kanal identik justru memicu interferensi, dan 6 GHz adalah Wi-Fi 6E sehingga 802.11ac tetap memakai 5 GHz.'
   },
   {
     id: 23,
@@ -313,12 +313,12 @@ export const modul1PostTest = [
     question: 'Backbone fiber optik antar kota (WAN) paling tepat menggunakan jenis…',
     options: [
       'A. Multi-mode dengan LED',
-      'B. Single-mode dengan laser',
-      'C. Multi-mode 50 µm',
-      'D. Single-mode dengan LED',
+      'B. Multi-mode 50 µm',
+      'C. Single-mode dengan LED',
+      'D. Single-mode dengan laser',
       'E. UTP Cat 6a'
     ],
-    answer: 1,
+    answer: 3,
     explanation: 'Single-mode (inti ±9 µm) dengan sumber laser mampu menjangkau puluhan kilometer — cocok untuk backbone antar kota. Multi-mode (±550 m–2 km) untuk LAN gedung/kampus.'
   },
   {
@@ -328,11 +328,11 @@ export const modul1PostTest = [
     options: [
       'A. 10BASE-T',
       'B. Fast Ethernet',
-      'C. Gigabit Ethernet (Cat5e/Cat6)',
-      'D. 10GBASE-T',
-      'E. Dial-up modem'
+      'C. 10GBASE-T',
+      'D. Dial-up modem',
+      'E. Gigabit Ethernet (Cat5e/Cat6)'
     ],
-    answer: 2,
+    answer: 4,
     explanation: 'Gigabit Ethernet (1000BASE-T) dengan Cat5e/Cat6 adalah standar minimal jaringan kantor saat ini: cepat, murah, dan mendukung hingga 100 m. 10GBASE-T berlebihan untuk workstation.'
   },
   {
@@ -341,12 +341,12 @@ export const modul1PostTest = [
     question: 'Jangkauan Wi-Fi lantai 1 tidak sampai ke lantai 2 di gedung 2 lantai. Solusi perangkat yang paling tepat adalah…',
     options: [
       'A. Menambah LAN tester',
-      'B. Memasang Access Point tambahan atau Wi-Fi repeater di lantai 2',
-      'C. Mengganti semua kabel dengan Cat 7',
+      'B. Mengganti semua kabel dengan Cat 7',
+      'C. Memasang Access Point tambahan atau Wi-Fi repeater di lantai 2',
       'D. Menambah konektor RJ-45',
       'E. Memakai kabel crossover antar lantai'
     ],
-    answer: 1,
+    answer: 2,
     explanation: 'Access Point tambahan atau repeater memperluas area nirkabel ke lantai 2. LAN tester/crimping tidak menambah sinyal, dan mengganti kabel tidak menyelesaikan masalah jangkauan Wi-Fi.'
   },
 ];
@@ -357,13 +357,13 @@ export const modul2PostTest = [
     level: 'C4 - Menganalisis',
     question: 'Dalam topologi star, jika salah satu kabel dari PC ke switch putus, dampaknya adalah…',
     options: [
-      'A. Seluruh jaringan mati',
-      'B. Hanya PC yang kabelnya putus yang terputus',
+      'A. Hanya PC yang kabelnya putus yang terputus',
+      'B. Seluruh jaringan mati',
       'C. Semua PC tidak bisa internet',
       'D. Switch ikut rusak',
       'E. Jaringan menjadi topologi ring'
     ],
-    answer: 1,
+    answer: 0,
     explanation: 'Topologi star memiliki jalur independen tiap node ke pusat, sehingga satu kabel putus hanya memengaruhi node itu saja.'
   },
   {
@@ -386,12 +386,12 @@ export const modul2PostTest = [
     question: 'Jenis topologi yang menggunakan token passing sehingga data tidak pernah bertabrakan adalah…',
     options: [
       'A. Bus',
-      'B. Star',
-      'C. Mesh',
-      'D. Ring',
+      'B. Ring',
+      'C. Star',
+      'D. Mesh',
       'E. Tree'
     ],
-    answer: 3,
+    answer: 1,
     explanation: 'Pada topologi ring, token (paket khusus) beredar dari node ke node — hanya pemegang token yang boleh mengirim, sehingga tabrakan data tidak terjadi.'
   },
   {
@@ -401,11 +401,11 @@ export const modul2PostTest = [
     options: [
       'A. Bus',
       'B. Ring',
-      'C. Mesh',
-      'D. Star',
+      'C. Star',
+      'D. Mesh',
       'E. Linear'
     ],
-    answer: 2,
+    answer: 3,
     explanation: 'Mesh menyediakan banyak jalur redundansi antar node, sehingga bila satu jalur gagal masih ada jalur alternatif — cocok untuk backbone WAN dan jaringan kritis.'
   },
   {
@@ -414,41 +414,45 @@ export const modul2PostTest = [
     question: 'Perangkat pusat pada topologi star (mis. switch/hub) menjadi titik lemah karena…',
     options: [
       'A. Kabelnya murah',
-      'B. Jika perangkat pusat rusak, seluruh node terganggu',
-      'C. Tidak mendukung broadcast',
-      'D. Mudah ditambahkan node',
-      'E. Cepat panas'
+      'B. Tidak mendukung broadcast',
+      'C. Mudah ditambahkan node',
+      'D. Cepat panas',
+      'E. Jika perangkat pusat rusak, seluruh node terganggu'
     ],
-    answer: 1,
+    answer: 4,
     explanation: 'Topologi star bergantung pada perangkat pusat. Jika switch/hub rusak, semua node yang terhubung padanya tidak bisa berkomunikasi.'
   },
   {
     id: 6,
-    level: 'C2 - Memahami',
-    question: 'Metode akses yang digunakan pada topologi bus untuk menangani tabrakan data adalah…',
+    level: 'C4 - Menganalisis',
+    question:
+      'Pada topologi bus, dua komputer sekaligus mulai mengirim data sehingga terjadi tabrakan, lalu keduanya menghentikan pengiriman. Langkah berikutnya yang benar menurut CSMA/CD adalah…',
     options: [
-      'A. Token passing',
-      'B. CSMA/CD',
-      'C. Polling',
-      'D. Frequency hopping',
-      'E. Time division'
+      'A. Keduanya menunggu jeda acak, lalu komputer yang lebih dulu selesai menunggu mengirim ulang',
+      'B. Salah satu komputer memutus sambungan dan komputer lain melanjutkan mengulang',
+      'C. Keduanya mengirim ulang bersamaan tepat setelah menunggu satu detik penuh',
+      'D. Frame tersebut diteruskan switch hanya ke port tujuan',
+      'E. Kedua komputer bergantian mengirim setiap lima menit'
     ],
-    answer: 1,
-    explanation: 'CSMA/CD (Carrier Sense Multiple Access with Collision Detection): setiap node mendengar jalur sebelum mengirim; jika terjadi tabrakan, node mengirim ulang setelah jeda acak.'
+    answer: 0,
+    explanation:
+      'CSMA/CD (Carrier Sense Multiple Access with Collision Detection): node mendengarkan jalur sebelum mengirim, dan ketika tabrakan terdeteksi node berhenti, menunggu jeda acak, lalu mengirim ulang. Jeda acak inilah yang mencegah kedua node mengirim bersamaan lagi. Mengirim ulang serempak setelah waktu yang sama persis justru memicu tabrakan berulang, sedangkan memutus sambungan bukan langkah protokol.'
   },
   {
     id: 7,
     level: 'C6 - Menciptakan',
-    question: 'Desain topologi yang menggabungkan dua atau lebih topologi berbeda dalam satu jaringan disebut…',
+    question:
+      'Anda merancang jaringan untuk kampus dengan 4 gedung. Tiap gedung harus punya jaringan lokal yang mudah dikontrol per lantai, dan keempat gedung harus saling terhubung lewat jalur utama yang tetap berjalan bila satu jalur utama putus. Rancangan yang Anda pilih adalah…',
     options: [
-      'A. Star',
-      'B. Mesh',
-      'C. Tree',
-      'D. Hybrid',
-      'E. Bus'
+      'A. Full mesh antar seluruh PC di keempat gedung',
+      'B. Bus tunggal yang menghubungkan keempat gedung dengan terminator',
+      'C. Star bertingkat: switch utama di gedung pusat, tiap gedung terhubung ke switch sendiri, ditambah satu jalur cadangan',
+      'D. Ring tunggal yang melewati keempat gedung',
+      'E. Star di tiap gedung tanpa satu pun jalur penghubung antargegedung'
     ],
-    answer: 3,
-    explanation: 'Topologi hybrid adalah gabungan beberapa topologi, misalnya star-to-star atau star-to-bus — umum di perusahaan besar.'
+    answer: 2,
+    explanation:
+      'Rancangan yang memenuhi semua kendala sekaligus adalah star bertingkat dengan jalur cadangan. Jaringan lokal tiap gedung memakai star sehingga mudah dikontrol per lantai, keempat gedung dihubungkan switch utama sebagai tulang punggung, dan jalur cadangan menjaga layanan tetap berjalan saat satu jalur putus. Full mesh membutuhkan n(n−1)/2 kabel sehingga boros, bus dan ring sama-sama kehilangan seluruh jaringan begitu satu bagiannya putus, sedangkan star di tiap gedung tanpa jalur penghubung justru tidak menghubungkan antargegedung sama sekali.'
   },
   {
     id: 8,
@@ -456,12 +460,12 @@ export const modul2PostTest = [
     question: 'Topologi tree tersusun sebagai hierarki nested star. Titik single point of failure utama pada topologi ini adalah…',
     options: [
       'A. Semua PC',
-      'B. Node root (server/switch utama) di puncak',
-      'C. Kabel antar switch',
-      'D. Pendingin ruangan',
+      'B. Kabel antar switch',
+      'C. Pendingin ruangan',
+      'D. Node root (server/switch utama) di puncak',
       'E. Setiap PC yang berada di level bawah'
     ],
-    answer: 1,
+    answer: 3,
     explanation: 'Pada tree, node root di puncak menjadi tulang punggung — jika rusak, seluruh turunan di bawahnya ikut terganggu.'
   },
   {
@@ -470,12 +474,12 @@ export const modul2PostTest = [
     question: 'Topologi yang paling hemat kabel untuk jaringan kecil sementara (misal beberapa PC bertukar data) adalah…',
     options: [
       'A. Star',
-      'B. Mesh',
-      'C. Bus',
+      'B. Bus',
+      'C. Mesh',
       'D. Ring',
       'E. Hybrid'
     ],
-    answer: 2,
+    answer: 1,
     explanation: 'Bus hanya memakai satu kabel backbone, sehingga paling hemat — meski kelemahannya satu kabel putus memutus seluruh jaringan.'
   },
   {
@@ -484,12 +488,12 @@ export const modul2PostTest = [
     question: 'Pada topologi ring, jika salah satu node rusak, jaringan akan…',
     options: [
       'A. Tetap normal',
-      'B. Terputus karena aliran data melingkar terhenti',
-      'C. Otomatis menjadi star',
-      'D. Hanya node itu yang terputus',
-      'E. Berpindah ke switch'
+      'B. Otomatis menjadi star',
+      'C. Hanya node itu yang terputus',
+      'D. Berpindah ke switch',
+      'E. Terputus karena aliran data melingkar terhenti'
     ],
-    answer: 1,
+    answer: 4,
     explanation: 'Ring bersifat melingkar berurutan — kegagalan satu node dapat memutus lingkaran dan menghentikan aliran data (jaringan ring klasik seperti Token Ring).'
   },
   {
@@ -497,42 +501,46 @@ export const modul2PostTest = [
     level: 'C2 - Memahami',
     question: 'Jaringan memakai Hub sebagai pusat: kabelnya tersusun seperti bintang, tetapi data disiarkan ke semua port. Yang benar tentang jaringan ini adalah…',
     options: [
-      'A. Fisiknya bus, logisnya star',
-      'B. Fisiknya star, logisnya bus',
+      'A. Fisiknya star, logisnya bus',
+      'B. Fisiknya bus, logisnya star',
       'C. Fisik dan logis sama-sama bus',
       'D. Fisik dan logis sama-sama star',
       'E. Fisiknya ring, logisnya mesh'
     ],
-    answer: 1,
+    answer: 0,
     explanation: 'Hub menyiarkan data ke semua port (perilaku bus) tetapi semua kabel menuju satu pusat (bentuk fisik star). Inilah contoh klasik topologi fisik berbeda dari topologi logis.'
   },
   {
     id: 12,
-    level: 'C2 - Memahami',
-    question: 'Istilah jaringan untuk satu titik yang jika rusak akan memutus seluruh jaringan adalah…',
+    level: 'C4 - Menganalisis',
+    question:
+      'Dua jaringan dibandingkan: (1) star dengan satu switch pusat untuk 20 PC, (2) full mesh 5 node. Pada jaringan mana titik gagal tunggal paling menentukan kelangsungan layanan?',
     options: [
-      'A. Backbone',
-      'B. Segment',
-      'C. Link',
-      'D. Single Point of Failure (SPOF)',
-      'E. Node'
+      'A. Pada (2), karena jaringan penuh kabel sehingga titik gagalnya paling banyak',
+      'B. Pada keduanya sama-sama fatal',
+      'C. Pada (1), karena jaringan star selalu punya banyak jalur alternatif',
+      'D. Pada (1), karena satu switch pusat melayani seluruh node',
+      'E. Tidak ada pada keduanya, karena keduanya sudah redundan'
     ],
     answer: 3,
-    explanation: 'SPOF adalah satu titik yang jika gagal membuat seluruh jaringan tidak berfungsi — contoh: kabel utama bus, switch pusat star, dan root pada tree.'
+    explanation:
+      'Pada star, seluruh node bergantung pada satu switch pusat: begitu switch itu rusak, 20 PC sekaligus kehilangan koneksi. Full mesh 5 node punya 10 jalur antar node, sehingga satu jalur atau satu node yang gagal masih disisakan jalur alternatif. Menyebut mesh sebagai jaringan yang paling rapuh terbalik arah, sebab redundansi justru membuat mesh tahan gangguan. Star memang tidak punya jalur alternatif, dan justru di situlah titik gagal tunggalnya berada.'
   },
   {
     id: 13,
-    level: 'C2 - Memahami',
-    question: 'Jalur utama berkapasitas besar yang menampung lalu lintas antar segmen dalam jaringan disebut…',
+    level: 'C3 - Menerapkan',
+    question:
+      'Pada topologi bus, 20 PC disambungkan ke satu kabel utama yang membentang dari ujung ke ujung ruangan, dan kedua ujung kabel diberi terminator. Komponen yang berfungsi sebagai jalur utama pembawa lalu lintas antar node adalah…',
     options: [
-      'A. Backbone',
-      'B. Segment',
-      'C. Terminator',
-      'D. Node',
-      'E. Collision domain'
+      'A. Kabel pendek dari masing-masing PC ke kabel utama',
+      'B. Terminator yang dipasang di kedua ujung kabel',
+      'C. Kabel utama yang membentang dari satu ujung ke ujung lain',
+      'D. Adapter jaringan pada setiap PC',
+      'E. Port pada hub yang menghubungkan semua PC'
     ],
-    answer: 0,
-    explanation: 'Backbone adalah jalur utama berkapasitas besar yang menghubungkan antar segmen, misalnya kabel utama topologi bus atau link antar switch pada tree.'
+    answer: 2,
+    explanation:
+      'Kabel utama sepanjang ruangan itulah yang berfungsi sebagai backbone, yaitu jalur berkapasitas besar sebagai tulang punggung lalu lintas. Kabel pendek dari PC ke kabel main disebut tap, bukan backbone; terminator hanya menyerap sinyal di ujung supaya tidak memantul; dan hub tidak dipakai pada topologi bus.'
   },
   {
     id: 14,
@@ -540,12 +548,12 @@ export const modul2PostTest = [
     question: 'Fungsi terminator yang dipasang di kedua ujung kabel utama topologi bus adalah…',
     options: [
       'A. Mempercepat transfer data',
-      'B. Menyerap sinyal agar tidak memantul kembali ke kabel',
-      'C. Menambah jumlah node',
-      'D. Mengubah data menjadi sinyal',
-      'E. Menyimpan cache data'
+      'B. Menambah jumlah node',
+      'C. Mengubah data menjadi sinyal',
+      'D. Menyimpan cache data',
+      'E. Menyerap sinyal agar tidak memantul kembali ke kabel'
     ],
-    answer: 1,
+    answer: 4,
     explanation: 'Terminator berfungsi menyerap sinyal di ujung kabel sehingga sinyal tidak memantul kembali dan menabrak sinyal lain. Jika terminator dilepas, komunikasi terganggu.'
   },
   {
@@ -553,28 +561,30 @@ export const modul2PostTest = [
     level: 'C4 - Menganalisis',
     question: 'Semakin banyak node pada topologi bus, kinerja semakin menurun. Alasan utamanya adalah…',
     options: [
-      'A. Kabel cepat aus',
-      'B. Sering terjadi tabrakan data (collision) karena semua node berbagi satu jalur',
+      'A. Sering terjadi tabrakan data (collision) karena semua node berbagi satu jalur',
+      'B. Kabel cepat aus',
       'C. Perangkat keras makin panas',
       'D. Terminator penuh',
       'E. Broadcast address berubah'
     ],
-    answer: 1,
+    answer: 0,
     explanation: 'Pada bus, semua node berbagi satu medium dan memakai CSMA/CD. Makin banyak node makin sering dua node mengirim bersamaan → collision makin sering → kinerja menurun.'
   },
   {
     id: 16,
-    level: 'C2 - Memahami',
-    question: 'Topologi mesh yang hanya menghubungkan node-node yang dianggap penting disebut…',
+    level: 'C3 - Menerapkan',
+    question:
+      'Sebuah kantor memutuskan 6 komputer yang dianggap penting saling terhubung langsung satu sama lain, sedangkan 4 komputer lain cukup terhubung ke salah satu komputer utama saja. Jumlah kabel yang dibutuhkan untuk mesh sebagian tersebut adalah…',
     options: [
-      'A. Full mesh',
-      'B. Partial mesh',
-      'C. Hybrid mesh',
-      'D. Star mesh',
-      'E. Logical mesh'
+      'A. 10 kabel',
+      'B. 15 kabel',
+      'C. 19 kabel',
+      'D. 25 kabel',
+      'E. 30 kabel'
     ],
-    answer: 1,
-    explanation: 'Partial mesh hanya menghubungkan node-node penting secara langsung; full mesh menghubungkan setiap node ke semua node lain (rumus n(n−1)/2 kabel).'
+    answer: 2,
+    explanation:
+      'Enam node yang saling terhubung penuh membutuhkan 6×(6−1)/2 = 15 kabel. Empat node sekunder masing-masing memakai satu kabel ke node utama, jadi 4 kabel. Totalnya 15 + 4 = 19 kabel. Inilah sebabnya mesh sebagian dipakai di kantor-kantor besar: tidak semua node harus saling terhubung.'
   },
   {
     id: 17,
@@ -582,27 +592,29 @@ export const modul2PostTest = [
     question: 'Alasan utama topologi mesh jarang dipakai pada LAN kecil dengan banyak perangkat adalah…',
     options: [
       'A. Kecepatannya rendah',
-      'B. Biaya kabel sangat tinggi karena tiap node terhubung ke semua node',
-      'C. Sulit mendapat kabel',
-      'D. Tidak mendukung switch',
+      'B. Sulit mendapat kabel',
+      'C. Tidak mendukung switch',
+      'D. Biaya kabel sangat tinggi karena tiap node terhubung ke semua node',
       'E. Hanya untuk jaringan nirkabel'
     ],
-    answer: 1,
+    answer: 3,
     explanation: 'Full mesh n node membutuhkan n(n−1)/2 kabel — sangat mahal dan kompleks. Karena itu mesh dicadangkan untuk jaringan kritis/WAN yang membutuhkan keandalan tinggi.'
   },
   {
     id: 18,
-    level: 'C2 - Memahami',
-    question: 'FDDI (Fiber Distributed Data Interface) memakai dua cincin dengan arah berlawanan. Tujuannya adalah…',
+    level: 'C3 - Menerapkan',
+    question:
+      'Jaringan FDDI memakai dua cincin fiber dengan arah aliran berlawanan. Bila salah satu cincin terputus di tengah jalur, yang terjadi adalah…',
     options: [
-      'A. Menambah kecepatan dua kali lipat',
-      'B. Menyediakan jalur cadangan jika satu cincin putus',
-      'C. Mengganti kabel fiber dengan tembaga',
-      'D. Menghilangkan token passing',
-      'E. Menambah jumlah node'
+      'A. Jaringan langsung mati karena kedua cincin bergantung pada satu jalur fisik yang sama',
+      'B. Semua node harus dimatikan lalu dinyalakan ulang',
+      'C. Komunikasi tetap berjalan karena cincin kedua mengambil alih jalur yang terputus',
+      'D. Hanya node tepat di lokasi putus yang kehilangan koneksi',
+      'E. Antrean data pada kedua cincin hilang sebagian'
     ],
-    answer: 1,
-    explanation: 'Dual ring FDDI memberi redundansi — bila satu cincin putus, cincin kedua bisa mengambil alih sehingga komunikasi tetap berjalan.'
+    answer: 2,
+    explanation:
+      'FDDI dirancang dengan dua cincin berlawanan arah khusus untuk redundansi: satu cincin menjadi jalur cadangan, sehingga saat satu cincin putus, cincin lain masih membawa data dan komunikasi tidak terhenti. Inilah beda FDDI dengan ring Token Ring biasa yang hanya punya satu jalur.'
   },
   {
     id: 19,
@@ -610,12 +622,12 @@ export const modul2PostTest = [
     question: 'Sekolah membangun LAN 60 PC di 3 ruangan, dana terbatas, mudah dikelola, dan jumlah PC bertambah tiap tahun. Topologi yang paling tepat adalah…',
     options: [
       'A. Bus',
-      'B. Full mesh',
-      'C. Ring',
-      'D. Tree (star bertingkat)',
+      'B. Tree (star bertingkat)',
+      'C. Full mesh',
+      'D. Ring',
       'E. Point-to-point'
     ],
-    answer: 3,
+    answer: 1,
     explanation: 'Tree (star bertingkat): 1 switch utama + 1 switch per ruangan. Biaya menengah, mudah dikelola per ruangan, skalabilitas tinggi, dan kegagalan switch satu ruangan tidak mematikan seluruh jaringan.'
   },
   {
@@ -624,12 +636,12 @@ export const modul2PostTest = [
     question: 'Jaringan yang menggunakan Hub dianggap boros bandwidth karena Hub…',
     options: [
       'A. Menyimpan data',
-      'B. Meneruskan setiap data ke SEMUA port (broadcast)',
-      'C. Membatasi kecepatan',
-      'D. Hanya menghubungkan 2 perangkat',
-      'E. Memakai token passing'
+      'B. Membatasi kecepatan',
+      'C. Hanya menghubungkan 2 perangkat',
+      'D. Memakai token passing',
+      'E. Meneruskan setiap data ke SEMUA port (broadcast)'
     ],
-    answer: 1,
+    answer: 4,
     explanation: 'Hub menyiarkan data ke semua port sehingga menimbulkan lalu lintas tak perlu dan tabrakan makin sering — beda dengan switch yang meneruskan hanya ke port tujuan.'
   },
   {
@@ -637,28 +649,30 @@ export const modul2PostTest = [
     level: 'C4 - Menganalisis',
     question: 'Bandingkan kebutuhan kabel untuk 5 node: full mesh vs star. Pernyataan yang benar adalah…',
     options: [
-      'A. Mesh 15 kabel, star 10 kabel',
-      'B. Mesh 10 kabel, star 5 kabel',
+      'A. Mesh 10 kabel, star 5 kabel',
+      'B. Mesh 15 kabel, star 10 kabel',
       'C. Mesh 5 kabel, star 10 kabel',
       'D. Mesh 8 kabel, star 8 kabel',
       'E. Mesh 20 kabel, star 4 kabel'
     ],
-    answer: 1,
+    answer: 0,
     explanation: 'Full mesh 5 node = 5×4/2 = 10 kabel. Star 5 node (tiap node langsung ke pusat) = 5 kabel. Mesh selalu jauh lebih boros kabel.'
   },
   {
     id: 22,
     level: 'C6 - Menciptakan',
-    question: 'Perpustakaan sekolah dengan 25 PC di satu ruangan ingin jaringan yang murah, mudah dirawat, dan mudah ditambah PC. Rancangan terbaik adalah…',
+    question:
+      'Perpustakaan sekolah punya 25 PC dalam satu ruangan. Anggaran hanya cukup untuk satu perangkat jaringan, jaringan harus mudah dirawat, dan jumlah PC bertambah tiap semester. Rancangan yang paling tepat adalah…',
     options: [
-      'A. Bus tanpa switch dengan terminator',
-      'B. Star dengan 1 switch 24/48 port',
-      'C. Full mesh antar semua PC',
-      'D. Ring dengan token passing',
-      'E. Koneksi serial berantai'
+      'A. Full mesh antar semua PC di ruangan',
+      'B. Bus tanpa switch dengan terminator di kedua ujung',
+      'C. Ring dengan token passing',
+      'D. Star dengan satu switch 48 port',
+      'E. Hub 24 port dengan transceiver pada setiap PC'
     ],
-    answer: 1,
-    explanation: 'Star dengan 1 switch: harga wajar, mudah troubleshooting (satu kabel rusak hanya memengaruhi 1 PC), dan mudah bertambah (tinggal menambah kabel ke switch).'
+    answer: 3,
+    explanation:
+      'Satu switch 48 port memenuhi semua kendala: hanya satu perangkat sesuai anggaran, mudah dirawat karena semua PC tersambung ke satu titik, menyediakan 23 port kosong untuk penambahan semester berikutnya, dan satu kabel yang putus hanya menurunkan satu PC. Full mesh 25 PC membutuhkan 25×24/2 = 300 kabel, bus dan ring kehilangan seluruh jaringan begitu satu bagiannya putus, dan hub menyiarkan data ke semua port sehingga boros bandwidth.'
   },
   {
     id: 23,
@@ -676,17 +690,19 @@ export const modul2PostTest = [
   },
   {
     id: 24,
-    level: 'C2 - Memahami',
-    question: 'Bagian jaringan yang terpisah dan biasanya dihubungkan oleh bridge atau router disebut…',
+    level: 'C3 - Menerapkan',
+    question:
+      'Jaringan sekolah dengan 60 PC mulai melambat. Guru ingin memecah jaringan menjadi 3 bagian agar lalu lintas tiap bagian tidak saling mengganggu. Perangkat dan istilah hasil pemecahan tersebut adalah…',
     options: [
-      'A. Backbone',
-      'B. Link',
-      'C. Segment',
-      'D. Terminator',
-      'E. Node'
+      'A. 3 segment, setiap bagian dipisahkan repeater',
+      'B. 1 segment dengan 3 kabel',
+      'C. 3 segment, setiap bagian dipisahkan switch',
+      'D. 3 loop yang disambung repeater',
+      'E. 1 bus yang dipecah menjadi 3 bagian oleh terminator'
     ],
     answer: 2,
-    explanation: 'Segment adalah bagian jaringan yang terpisah; bridge/router (atau switch) menghubungkan antar segmen. Contoh: segment lab A dan segment lab B.'
+    explanation:
+      'Switch memisahkan domain tabrakan sehingga tiap bagian menjadi segment tersendiri dan PC dalam satu bagian tidak lagi berebut jalur. Repeater hanya menguatkan sinyal tanpa memisahkan domain tabrakan, jadi memisahkan bagian dengan repeater keliru dan tidak menghasilkan segment baru. Istilah segment memang dipakai untuk bagian jaringan yang terpisah.'
   },
   {
     id: 25,
@@ -695,11 +711,11 @@ export const modul2PostTest = [
     options: [
       'A. Bus satu kabel',
       'B. Ring',
-      'C. Mesh antar router cabang',
-      'D. Star sederhana tanpa router',
-      'E. Point-to-point tunggal'
+      'C. Star sederhana tanpa router',
+      'D. Point-to-point tunggal',
+      'E. Mesh antar router cabang'
     ],
-    answer: 2,
+    answer: 4,
     explanation: 'Mesh antar router cabang menyediakan beberapa jalur redundan — bila satu link antar kota putus, komunikasi tetap berjalan lewat jalur lain. Cocok untuk WAN kritis.'
   },
 ];
@@ -724,13 +740,13 @@ export const modul3PostTest = [
     level: 'C4 - Menganalisis',
     question: 'Manakah daftar berikut yang semuanya merupakan IP privat?',
     options: [
-      'A. 10.0.0.1, 172.20.0.1, 192.168.1.1',
-      'B. 8.8.8.8, 1.1.1.1, 203.0.113.5',
-      'C. 10.0.0.1, 172.32.0.1, 192.168.1.1',
-      'D. 11.0.0.1, 172.31.5.1, 223.0.0.1',
+      'A. 8.8.8.8, 1.1.1.1, 203.0.113.5',
+      'B. 10.0.0.1, 172.32.0.1, 192.168.1.1',
+      'C. 11.0.0.1, 172.31.5.1, 223.0.0.1',
+      'D. 10.0.0.1, 172.20.0.1, 192.168.1.1',
       'E. 127.0.0.1, 0.0.0.0, 255.255.255.255'
     ],
-    answer: 0,
+    answer: 3,
     explanation: 'IP privat: 10.0.0.0/8, 172.16.0.0–172.31.255.255, 192.168.0.0/16. 172.32.x.x bukan privat (di luar 172.16–172.31).'
   },
   {
@@ -777,16 +793,16 @@ export const modul3PostTest = [
   },
   {
     id: 6,
-    level: 'C5 - Mengevaluasi',
+    level: 'C3 - Menerapkan',
     question: 'Dua alamat yang selalu dicadangkan di setiap subnet sehingga mengurangi jumlah host yang bisa dipakai adalah…',
     options: [
       'A. Gateway dan DNS',
-      'B. Network address dan Broadcast address',
-      'C. Loopback dan APIPA',
-      'D. Private dan Public',
-      'E. Subnet mask dan wildcard'
+      'B. Loopback dan APIPA',
+      'C. Private dan Public',
+      'D. Subnet mask dan wildcard',
+      'E. Network address dan Broadcast address'
     ],
-    answer: 1,
+    answer: 4,
     explanation: 'Network address (semua bit host 0) dan broadcast address (semua bit host 1). Itulah mengapa host usable = 2^h − 2.'
   },
   {
@@ -806,30 +822,34 @@ export const modul3PostTest = [
   {
     id: 8,
     level: 'C6 - Menciptakan',
-    question: 'Rancang VLSM untuk 192.168.1.0/24 dengan kebutuhan 60, 30, dan 10 host. Alokasi prefix yang benar adalah…',
+    question:
+      'Anda merancang VLSM untuk 192.168.1.0/24 dengan kebutuhan 60, 30, dan 10 host. Setelah alokasi untuk 60 host selesai, network address beserta prefix untuk subnet 30 host adalah…',
     options: [
-      'A. 60→/26, 30→/27, 10→/28',
-      'B. 60→/27, 30→/27, 10→/27',
-      'C. 60→/25, 30→/25, 10→/26',
-      'D. 60→/28, 30→/28, 10→/28',
-      'E. 60→/24, 30→/25, 10→/30'
+      'A. 192.168.1.64/27',
+      'B. 192.168.1.32/27',
+      'C. 192.168.1.96/27',
+      'D. 192.168.1.0/27',
+      'E. 192.168.1.64/28'
     ],
     answer: 0,
-    explanation: '60 host butuh 62 usable → /26; 30 host butuh 30 usable → /27; 10 host butuh 14 usable → /28. Alokasi mulai dari terbesar.'
+    explanation:
+      'VLSM dialokasikan dari kebutuhan terbesar. 60 host butuh 62 usable, yaitu /26 dengan blok 64, sehingga subnet pertama menempati 192.168.1.0 sampai .63. Alokasi berikutnya mulai dari .64. Karena 30 host butuh 30 usable, prefix-nya /27 dengan blok 32, hasilnya 192.168.1.64 sampai .95. Prefix /28 tidak cukup karena hanya memberi 14 usable.'
   },
   {
     id: 9,
-    level: 'C2 - Memahami',
-    question: 'Keunggulan CIDR dibanding sistem classful adalah…',
+    level: 'C5 - Mengevaluasi',
+    question:
+      'Sebuah perusahaan memakai jaringan 192.168.0.0/16 yang hanya dibagi ke 4 departemen dengan kebutuhan 300, 60, 30, dan 10 host. Dengan CIDR, pembagian yang paling tepat adalah…',
     options: [
-      'A. Menghapus aturan kaku kelas A/B/C agar alamat bisa dibagi sesuai kebutuhan',
-      'B. Mempercepat internet',
-      'C. Mengganti IPv4 menjadi IPv6',
-      'D. Menambah jumlah kelas IP',
-      'E. Menghilangkan kebutuhan subnet mask'
+      'A. Masing-masing departemen mendapat satu blok /24 yang sama besar',
+      'B. Masing-masing departemen mendapat satu blok /16 agar tidak pernah penuh',
+      'C. Keempat departemen berbagi satu blok /24 agar hemat alamat',
+      'D. Tiap departemen mendapat blok /30 agar tidak ada alamat terbuang',
+      'E. Tiap departemen mendapat blok sesuai kebutuhannya: 300→/23, 60→/26, 30→/27, 10→/28'
     ],
-    answer: 0,
-    explanation: 'CIDR memakai notasi /n (jumlah bit network) dan menghapus pembagian kaku kelas — dasar dari subnetting dan VLSM.'
+    answer: 4,
+    explanation:
+      'CIDR menghapus pembagian kaku kelas sehingga blok diberikan sesuai kebutuhan nyata tiap departemen, bukan ukuran yang sama untuk semua. Pilihan yang memberi /24 sama besar gagal karena /24 hanya menyediakan 254 usable, jadi tidak bisa menampung 300 host. Memberi /16 ke tiap departemen justru boros, berbagi satu /24 membuat keempat departemen berebut, dan /30 hanya menyisakan 2 usable sehingga mustahil untuk 300 host.'
   },
   {
     id: 10,
@@ -847,17 +867,19 @@ export const modul3PostTest = [
   },
   {
     id: 11,
-    level: 'C2 - Memahami',
-    question: 'Panjang alamat IPv6 adalah…',
+    level: 'C4 - Menganalisis',
+    question:
+      'Perusahaan memiliki 30.000 perangkat IoT yang harus masing-masing diberi alamat unik. Jumlah perangkat yang terhubung ke internet terus bertambah, sedangkan IPv4 hanya menyediakan sekitar 4,3 miliar alamat. Solusi yang tepat beserta alasannya adalah…',
     options: [
-      'A. 32 bit',
-      'B. 64 bit',
-      'C. 128 bit',
-      'D. 256 bit',
-      'E. 16 bit'
+      'A. Pakai IPv6 yang panjangnya 128 bit sehingga ruang alamatnya jauh lebih besar',
+      'B. Pakai IPv4 kelas A, karena kelas A paling banyak jumlah alamatnya',
+      'C. Pakai IPv4 kelas E, karena kelas itu memang dirancang untuk perangkat IoT',
+      'D. Pakai satu alamat IPv4 yang dibagikan bergilir kepada seluruh perangkat',
+      'E. Pakai subnet mask /8 agar setiap perangkat mendapat satu alamat penuh'
     ],
-    answer: 2,
-    explanation: 'IPv6 sepanjang 128 bit (contoh: 2001:0db8:...) dengan jumlah alamat ±3,4×10³⁸ — mengatasi keterbatasan IPv4 (32 bit, ±4,3 miliar).'
+    answer: 0,
+    explanation:
+      'IPv6 sepanjang 128 bit menyediakan sekitar 3,4×10³⁸ alamat, jauh melampaui 4,3 miliar alamat IPv4. Kelas A IPv4 tetap berada di dalam batas 4,3 miliar, kelas E (240–255) dicadangkan untuk keperluan eksperimen, sedangkan berbagi satu alamat maupun /8 bukan cara menambah ruang alamat.'
   },
   {
     id: 12,
@@ -875,31 +897,35 @@ export const modul3PostTest = [
   },
   {
     id: 13,
-    level: 'C2 - Memahami',
-    question: 'Fungsi utama subnet mask adalah untuk menentukan…',
+    level: 'C4 - Menganalisis',
+    question:
+      'Komputer A memakai 192.168.1.10 dan komputer B memakai 192.168.2.20, keduanya memakai subnet mask 255.255.255.0 (/24). Manakah yang dapat berkomunikasi langsung dengan A tanpa harus lewat router?',
     options: [
-      'A. Kecepatan jaringan',
-      'B. Bagian alamat yang menunjukkan network dan bagian yang menunjukkan host',
-      'C. Nama komputer di jaringan',
-      'D. Password router',
-      'E. Jumlah kabel yang dipakai'
+      'A. Komputer 192.168.2.20, karena masih satu jaringan fisik',
+      'B. Komputer 192.168.1.30, karena nomor IP-nya lebih kecil',
+      'C. Komputer 192.168.2.20, karena masih satu kelas IP',
+      'D. Komputer 192.168.1.30, karena network ID-nya sama',
+      'E. Keduanya dapat, karena berasal dari kelas yang sama'
     ],
-    answer: 1,
-    explanation: 'Subnet mask memisahkan bit network dari bit host (bit 1 = network, bit 0 = host). Contoh mask /24 = 255.255.255.0 → 24 bit network, 8 bit host.'
+    answer: 3,
+    explanation:
+      'Subnet mask /24 memisahkan tiga oktet pertama sebagai bagian network, sehingga 192.168.1.10 dan 192.168.1.30 sama-sama memiliki network ID 192.168.1.0 dan berada di satu segment. Sebaliknya 192.168.2.20 memiliki network ID 192.168.2.0, jadi berbeda segment dan harus lewat router. Yang menentukan bukan nomor IP yang lebih kecil dan bukan kelas IP, melainkan hasil network ID setelah dipotong dengan subnet mask.'
   },
   {
     id: 14,
-    level: 'C4 - Menganalisis',
-    question: 'Jaringan /30 sering dipakai untuk link antar router (point-to-point) karena…',
+    level: 'C5 - Mengevaluasi',
+    question:
+      'Sebuah router punya 5 link point-to-point menuju 5 router lain, semuanya berada di dalam 192.168.0.0/24. Agar alamat tidak terbuang, prefix yang paling tepat untuk setiap link adalah…',
     options: [
-      'A. Menyediakan 254 host',
-      'B. Menyediakan tepat 2 host usable yang pas untuk dua ujung link',
-      'C. Tidak memerlukan subnet mask',
-      'D. Berkecepatan paling tinggi',
-      'E. Menggunakan IPv6'
+      'A. /24, karena paling mudah dikonfigurasi',
+      'B. /25, karena cukup untuk kelima link sekaligus',
+      'C. /22, karena memberi ruang untuk link tambahan',
+      'D. /32, karena tiap link cukup satu alamat saja',
+      'E. /30, karena tiap link hanya butuh tepat 2 host'
     ],
-    answer: 1,
-    explanation: '/30 = 2^2 − 2 = 2 host usable — pas untuk satu ujung di tiap sisi link. Tidak boros alamat dibanding /24.'
+    answer: 4,
+    explanation:
+      'Link point-to-point hanya menghubungkan dua ujung, jadi butuh tepat 2 alamat usable. Prefix /30 menghasilkan 2^2 − 2 = 2 usable, pas tanpa sisa. Memberi /24 per link membutuhkan 254 usable masing-masing sehingga total 1.270 alamat dan tidak muat di dalam /24 yang hanya punya 256. Prefix /32 hanya menyisakan 1 usable sehingga tidak bisa membentuk link. Dengan /30, kelima link memakai 20 dari 256 alamat.'
   },
   {
     id: 15,
@@ -921,12 +947,12 @@ export const modul3PostTest = [
     question: 'Komputer terlanjur memakai alamat 169.254.x.x ketika gagal mendapat IP dari DHCP. Alamat ini dikenal sebagai…',
     options: [
       'A. Loopback',
-      'B. APIPA (Automatic Private IP Addressing)',
-      'C. Broadcast',
-      'D. Multicast',
+      'B. Broadcast',
+      'C. Multicast',
+      'D. APIPA (Automatic Private IP Addressing)',
       'E. Default gateway'
     ],
-    answer: 1,
+    answer: 3,
     explanation: '169.254.x.x adalah APIPA — dipakai otomatis oleh Windows saat DHCP tidak merespons, sehingga komputer tidak benar-benar tersambung internet.'
   },
   {
@@ -935,12 +961,12 @@ export const modul3PostTest = [
     question: 'Alamat 224.0.0.1 termasuk kelas D yang digunakan untuk…',
     options: [
       'A. Loopback',
-      'B. Multicast',
-      'C. Broadcast terbatas',
-      'D. IP privat',
-      'E. Default route'
+      'B. Broadcast terbatas',
+      'C. IP privat',
+      'D. Default route',
+      'E. Multicast'
     ],
-    answer: 1,
+    answer: 4,
     explanation: 'Kelas D (224.0.0.0–239.255.255.255) digunakan untuk multicast — mengirim satu paket ke sekelompok host, misalnya protokol routing OSPF.'
   },
   {
@@ -991,27 +1017,28 @@ export const modul3PostTest = [
     question: 'Perangkat/fungsi pada router yang menerjemahkan IP privat menjadi IP publik untuk akses internet adalah…',
     options: [
       'A. DHCP',
-      'B. NAT (Network Address Translation)',
-      'C. DNS',
-      'D. Firewall',
+      'B. DNS',
+      'C. Firewall',
+      'D. NAT (Network Address Translation)',
       'E. Proxy'
     ],
-    answer: 1,
+    answer: 3,
     explanation: 'NAT menerjemahkan alamat privat (mis. 192.168.1.10) menjadi IP publik saat data keluar ke internet, sehingga banyak perangkat privat bisa berbagi satu IP publik.'
   },
   {
     id: 22,
     level: 'C4 - Menganalisis',
-    question: 'Jumlah host usable pada jaringan /25 adalah…',
+    question: 'Pada subnet 192.168.1.64/26, alamat yang merupakan alamat broadcast subnet tersebut adalah…',
     options: [
-      'A. 30',
-      'B. 62',
-      'C. 126',
-      'D. 254',
-      'E. 510'
+      'A. 192.168.1.127',
+      'B. 192.168.1.64',
+      'C. 192.168.1.126',
+      'D. 192.168.1.128',
+      'E. 192.168.1.63'
     ],
-    answer: 2,
-    explanation: 'Host = 2^(32−25) − 2 = 2^7 − 2 = 128 − 2 = 126 (network + broadcast dicadangkan).'
+    answer: 0,
+    explanation:
+      'Pada /26 berlaku enam bit host, sehingga ukuran blok 64 dan subnet yang dimulai di .64 berakhir di .127. Alamat broadcast ditandai seluruh bit host bernilai 1, yaitu 192.168.1.127. Sementara 192.168.1.64 adalah network address, 192.168.1.126 adalah host terakhir yang masih bisa dipakai, dan .128 sudah termasuk subnet berikutnya.'
   },
   {
     id: 23,
@@ -1029,16 +1056,16 @@ export const modul3PostTest = [
   },
   {
     id: 24,
-    level: 'C3 - Menerapkan',
+    level: 'C2 - Memahami',
     question: 'Alamat 8.8.8.8 (DNS Google) termasuk…',
     options: [
       'A. IP privat',
-      'B. IP publik',
-      'C. Loopback',
-      'D. APIPA',
+      'B. Loopback',
+      'C. APIPA',
+      'D. IP publik',
       'E. Multicast'
     ],
-    answer: 1,
+    answer: 3,
     explanation: '8.8.8.8 adalah IP publik yang dapat diakses dari internet. IP privat seperti 192.168.1.1 dan 10.0.0.1 hanya berlaku di jaringan lokal.'
   },
   {
@@ -1047,12 +1074,12 @@ export const modul3PostTest = [
     question: 'Mengapa VLSM lebih hemat alamat IP dibanding subnetting dengan ukuran subnet seragam?',
     options: [
       'A. VLSM menghapus network dan broadcast',
-      'B. VLSM memberi subnet mask berbeda sesuai kebutuhan nyata tiap subnet',
-      'C. VLSM memakai IPv6',
-      'D. VLSM tidak butuh subnet mask',
-      'E. VLSM menggandakan jumlah host'
+      'B. VLSM memakai IPv6',
+      'C. VLSM tidak butuh subnet mask',
+      'D. VLSM menggandakan jumlah host',
+      'E. VLSM memberi subnet mask berbeda sesuai kebutuhan nyata tiap subnet'
     ],
-    answer: 1,
+    answer: 4,
     explanation: 'VLSM mengalokasikan prefix sesuai kebutuhan (60→/26, 30→/27, 15→/28, dst) sehingga tidak ada alamat terbuang besar seperti membagi rata 5×/27.'
   },
 ];
