@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { CheckCircle, XCircle, ChevronLeft, ChevronRight, Clock, Award, RotateCcw, KeyRound, AlertTriangle, Lock, Maximize2 } from 'lucide-react';
-import { getIdentity, unlockCode } from '../lib/examLib';
+import { getIdentity, unlockCode, isTokenExpired } from '../lib/examLib';
 
 function shuffleArray(arr) {
   const a = [...arr];
@@ -35,7 +35,16 @@ function bankFingerprint(questions) {
     .join('#')}`;
 }
 
-export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, examToken }) {
+/**
+ * @param {object} [examGate] Token gate. Kalau diberikan, siswa WAJIB memasukkan
+ *   token dulu. Bentuknya:
+ *   `{ loading?: boolean, token?: string, expiresAt?: string|null, subject?: string, label?: string }`
+ *   `loading`WAJIB dihormati: sebelum token selesai dimuat, `token` masih kosong.
+ *   Kalau gate di-render hanya saat `token` berisi, halaman akan sempat
+ *   membuka soal tanpa token — dan timer ikut jalan sebelum ada verifikasi.
+ *   Quiz tanpa `examGate` (pre-test, challenge) tidak punya gerbang sama sekali.
+ */
+export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, examGate }) {
   const [shuffledQs] = useState(() => {
     const storedOrder = localStorage.getItem(`jarkomlab_${storageKey}_order`);
     if (storedOrder) {
@@ -79,12 +88,18 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
   const timerRef = useRef(null);
   const locked = lockMode !== 'none';
 
-  // Ujian resmi (ada token guru) baru "mulai" setelah token tervalidasi.
-  // Quiz biasa (pre-test, challenge) tanpa token langsung dianggap berjalan.
+  // Ujian resmi (ada gate token guru) baru "mulai" setelah token tervalidasi.
+  // Quiz biasa (pre-test, challenge) tanpa gate langsung dianggap berjalan.
   // WAJIB dihitung sebelum efek timer: kalau tidak, hitungan mundur sudah
   // berjalan saat siswa masih di layar token, dan bisa auto-submit nilai 0
   // yang lalu mengunci modul secara permanen di server.
-  const examStarted = Boolean(examToken && tokenOk) || !examToken;
+  //
+  // Penentu gerbang adalah `gated` (ada objek gate), BUKAN `token` berisi —
+  // supaya fase loading tetap menahan halaman dan tidak membuka soal.
+  const gated = Boolean(examGate);
+  const gateToken = gated ? String(examGate.token || '').trim() : '';
+  const gateExpired = gated && !examGate.loading && isTokenExpired(examGate.expiresAt);
+  const examStarted = !gated || tokenOk;
 
   const setLock = (mode) => { lockModeRef.current = mode; setLockMode(mode); };
 
@@ -268,38 +283,73 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
   };
 
   // Token ujian (diberikan guru) — wajib sebelum soal terbuka
-  if (examToken && !tokenOk && !submitted) {
+  if (gated && !tokenOk && !submitted) {
+    // Token masih diambil dari server (Supabase, lalu fallback env/default).
+    // Jangan pernah merender soal di fase ini, termasuk kalau server lambat.
+    if (examGate.loading) {
+      return (
+        <div className="quiz-token-gate" role="status" aria-live="polite">
+          <KeyRound size={38} color="#6366f1" />
+          <h2>Token Ujian</h2>
+          <p className="quiz-token-hint">Memuat token ujian…</p>
+        </div>
+      );
+    }
+
     const tryToken = (e) => {
       e.preventDefault();
-      if (token.trim() === String(examToken).trim()) {
+      if (gateExpired) {
+        setTokenError('expired');
+        return;
+      }
+      if (gateToken && token.trim() === gateToken) {
         setTokenOk(true);
         localStorage.setItem(`jarkomlab_${storageKey}_unlocked`, '1');
         autoLock(); // kunci layar otomatis setelah token lolos
       } else {
-        setTokenError(true);
+        setTokenError('wrong');
         setToken('');
       }
     };
+
+    const expiredLabel = examGate.expiresAt
+      ? new Date(examGate.expiresAt).toLocaleString('id-ID', {
+        day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit',
+      })
+      : null;
+
     return (
       <div className="quiz-token-gate">
         <KeyRound size={38} color="#6366f1" />
         <h2>Token Ujian</h2>
         <p className="quiz-token-hint">
-          Masukkan token yang diberikan guru untuk membuka soal ujian. Layar akan <strong>terkunci otomatis</strong> — keluar dari kunci layar akan dicatat.
+          Masukkan token yang diberikan guru untuk membuka soal ujian
+          {examGate.label ? <> <strong>{examGate.label}</strong></> : null}. Layar akan <strong>terkunci otomatis</strong> — keluar dari kunci layar akan dicatat.
         </p>
-        <form onSubmit={tryToken} noValidate>
-          <input
-            type="text" value={token} autoFocus
-            className="calc-input quiz-token-input"
-            placeholder="Token ujian"
-            onChange={(e) => { setToken(e.target.value); setTokenError(false); }}
-            aria-label="Token ujian"
-          />
-          {tokenError && <p className="identity-error">Token salah. Minta token ke guru.</p>}
-          <button className="btn btn-primary" type="submit" style={{ width: '100%', justifyContent: 'center' }}>
-            <KeyRound size={16} /> Buka Soal
-          </button>
-        </form>
+
+        {gateExpired && (
+          <p className="token-expired-notice" role="alert">
+            <AlertTriangle size={16} /> Token ujian sudah tidak berlaku
+            {expiredLabel ? <> (batas mulai: {expiredLabel})</> : null}. Minta token baru ke guru.
+          </p>
+        )}
+
+        {!gateExpired && (
+          <form onSubmit={tryToken} noValidate>
+            <input
+              type="text" value={token} autoFocus
+              className="calc-input quiz-token-input"
+              placeholder="Token ujian"
+              onChange={(e) => { setToken(e.target.value); setTokenError(false); }}
+              aria-label="Token ujian"
+              aria-invalid={Boolean(tokenError)}
+            />
+            {tokenError === 'wrong' && <p className="identity-error">Token salah. Minta token ke guru.</p>}
+            <button className="btn btn-primary" type="submit" style={{ width: '100%', justifyContent: 'center' }}>
+              <KeyRound size={16} /> Buka Soal
+            </button>
+          </form>
+        )}
       </div>
     );
   }
@@ -393,7 +443,7 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
           })}
         </div>
         <div style={{textAlign: 'center', marginTop: 20, display: 'flex', gap: 10, justifyContent: 'center', flexWrap: 'wrap'}}>
-          {examToken ? (
+          {gated ? (
             // Ujian resmi: submit hanya bisa satu kali (dikunci server & guru),
             // jadi jangan tawarkan "Ulangi" — attempt kedua akan ditolak dan
             // layar nilai justru tertutup kartu "sudah dikerjakan".

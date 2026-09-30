@@ -133,3 +133,98 @@ $$;
 
 revoke all on function public.reset_exam_results_subject(pin text, subject_prefix text) from public;
 grant execute on function public.reset_exam_results_subject(pin text, subject_prefix text) to anon;
+
+-- ============================================================================
+-- TOKEN UJIAN PER MATA PELAJARAN + MASA BERLAKU
+--
+-- Jalankan blok ini di Supabase Dashboard > SQL Editor, lalu "Run".
+--
+-- Kenapa tabel, bukan env var: VITE_* di-inline ke dalam bundle JS saat build,
+-- jadi mengganti token selalu butuh redeploy Vercel. Dengan tabel ini guru bisa
+-- rotasi token + tanggal kedaluwarsa langsung dari halaman Rekap Nilai.
+--
+-- Kenapa per mapel: sebelumnya MPK 1, KKA, dan KKA XI semuanya memakai satu
+-- VITE_EXAM_TOKEN yang sama, jadi mengacak token KKA ikut mengubah MPK 1.
+--
+-- Keamanan: anon hanya boleh SELECT. Menulis HANYA lewat set_exam_token yang
+-- memvalidasi PIN. Jangan pernah menambah policy INSERT/UPDATE untuk anon di
+-- tabel ini — kalau ada, siapa pun bisa menimpa token dari console browser,
+-- dan itu membuat gate token jadi tidak berarti sama sekali.
+-- (Token sudah bocor lewat bundle JS sejak awal, jadi read-anon tidak menambah
+-- risiko baru; yang dilindungi di sini adalah hak MENGGANTI token.)
+--
+-- Fallback: kalau tabel kosong atau Supabase sedang down, aplikasi memakai
+-- VITE_EXAM_TOKEN* per mapel, lalu hardcoded default. Jadi blok ini boleh
+-- dijalankan belakangan tanpa memblokir ujian yang sedang berjalan.
+--
+-- PENTING: pin di bawah ('2468') HARUS sama dengan VITE_REKAP_PIN di Vercel.
+-- ============================================================================
+create table if not exists exam_tokens (
+  subject text primary key check (subject in ('mpk1', 'kka', 'kka_xi')),
+  token text not null check (length(trim(token)) >= 4),
+  expires_at timestamptz,
+  updated_at timestamptz not null default now()
+);
+
+alter table exam_tokens enable row level security;
+
+drop policy if exists "select exam tokens" on exam_tokens;
+create policy "select exam tokens"
+  on exam_tokens for select to anon
+  using (true);
+
+-- Guru menyimpan/rotasi token + masa berlaku lewat form di halaman Rekap Nilai.
+create or replace function public.set_exam_token(
+  pin text,
+  p_subject text,
+  p_token text,
+  p_expires_at timestamptz
+)
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  if pin is null or pin <> '2468' then
+    raise exception 'PIN salah';
+  end if;
+  if p_subject is null or p_subject not in ('mpk1', 'kka', 'kka_xi') then
+    raise exception 'Mata pelajaran tidak dikenal';
+  end if;
+  if p_token is null or length(trim(p_token)) < 4 then
+    raise exception 'Token minimal 4 karakter';
+  end if;
+
+  insert into public.exam_tokens (subject, token, expires_at, updated_at)
+  values (p_subject, trim(p_token), p_expires_at, now())
+  on conflict (subject) do update
+    set token = excluded.token,
+        expires_at = excluded.expires_at,
+        updated_at = now();
+end;
+$$;
+
+revoke all on function public.set_exam_token(pin text, p_subject text, p_token text, p_expires_at timestamptz) from public;
+grant execute on function public.set_exam_token(pin text, p_subject text, p_token text, p_expires_at timestamptz) to anon;
+
+-- Menghapus baris -> token mapel ini kembali ke VITE_EXAM_TOKEN / default.
+create or replace function public.clear_exam_token(pin text, p_subject text)
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  if pin is null or pin <> '2468' then
+    raise exception 'PIN salah';
+  end if;
+  if p_subject is null or p_subject not in ('mpk1', 'kka', 'kka_xi') then
+    raise exception 'Mata pelajaran tidak dikenal';
+  end if;
+  delete from public.exam_tokens where subject = p_subject;
+end;
+$$;
+
+revoke all on function public.clear_exam_token(pin text, p_subject text) from public;
+grant execute on function public.clear_exam_token(pin text, p_subject text) to anon;

@@ -43,7 +43,7 @@ Semua styling terpusat di `src/App.css` (~2500 baris) + `index.css` (kosong, tid
 - **Post Test tiap modul kini 25 soal** (bank: `src/data/modulPostTests.js`), level C2–C6 sesuai materi masing-masing modul (1.1–1.4, topologi, IP/subnetting). Soal diacak per siswa & tersimpan.
 - **Post-Test legacy sudah dihapus total** (`PostTest.jsx` + `posttestQuestions.js`, route `/mpk1/posttest`). Satu-satunya nilai akhir MPK 1 = rerata tiga Post-Test per modul. Sertifikat & badge hanya muncul kalau **ketiga modul selesai** dengan rerata ≥ 70. Nilai `posttest` sisa di storage siswa lawas sengaja tidak dibaca.
 - **Badge wajib pakai `pretestKey` + `examAvg`/`examDone` eksplisit.** `checkBadges` masih default ke `pretestKey: 'pretest'` dan `posttestKey: 'posttest'` — kalau lupa, badge Challenger/Sharp Mind/Achiever/Growing mati diam-diam tanpa error. Semua mapel sudah mengirimnya eksplisit.
-- **Alur ujian:** Token ujian (`VITE_EXAM_TOKEN`, default `TKJ235`) → Identitas (Nama + NIS validasi numerik, cek NIS terverifikasi di server) → soal + timer dinamis (±1,5 menit/soal) → submit sekali (retake dikunci server) → review jawaban + penjelasan.
+- **Alur ujian:** Identitas (Nama + NIS validasi numerik, cek NIS terverifikasi di server) → Token ujian (per mapel, ada masa berlaku) → soal + timer dinamis (±1,5 menit/soal) → submit sekali (retake dikunci server) → review jawaban + penjelasan. (Catatan: identitas muncul lebih dulu dari token, jadi kalimat di halaman Ujian yang berbunyi "token guru → identitas" belum sesuai urutan sebenarnya.)
 - **Perangkat bersama:** tombol "Reset Identitas" membersihkan identitas + hasil lokal agar siswa lain bisa mengerjakan.
 - **Anti-contek ringan:** banner peringatan saat pindah tab (≥3× merah) + konfirmasi browser saat menutup/merefresh saat ujian. Tidak memblokir nilai.
 - **Rekap Nilai guru** (`/mpk1/rekap`, PIN = `VITE_REKAP_PIN`, default `2468`): tabel nilai per siswa + kolom **Kelas, Status (Selesai/Sebagian/Belum), Durasi** pengerjaan, filter/pencarian nama-NIS + filter kelas, statistik rata-rata per modul + rerata kelas, export CSV (ikut kolom baru), cetak (print A4), dan tombol Reset (server + lokal; validasi PIN).
@@ -54,8 +54,26 @@ Semua styling terpusat di `src/App.css` (~2500 baris) + `index.css` (kosong, tid
   - **Kolom baru:** `kelas`, `started_at`, `finished_at`, `durasi_detik` — jalankan blok `ALTER TABLE ... ADD COLUMN IF NOT EXISTS` di `supabase/schema.sql` (idempotent). Tanpa migrasi pun aplikasi tetap jalan (fallback kolom dasar saat error `42703`), hanya kolom baru yang kosong.
   - Fungsi `reset_exam_results(pin)` (TRUNCATE + SECURITY DEFINER, PostgREST menolak DELETE tanpa WHERE) — definisi di `supabase/schema.sql`; PIN di fungsi (`2468`) harus sama dengan `VITE_REKAP_PIN`.
   - Env di Vercel WAJIB type **Non-sensitive** — VITE_* hanya ter-inline saat build jika non-sensitive.
+  - Tabel `exam_tokens` + fungsi `set_exam_token` / `clear_exam_token` (lihat bagian Token Ujian di bawah).
+
+## Token Ujian per Mapel + Masa Berlaku
+- **Kenapa diubah:** sebelumnya semua mapel (MPK 1, KKA, KKA XI) memakai satu `VITE_EXAM_TOKEN` yang sama, jadi mengacak token KKA ikut mengubah MPK 1. Dan karena `VITE_*` di-inline saat build, **setiap** penggantian token wajib redeploy Vercel. Sekarang token + tanggal kedaluwarsa disimpan di tabel `exam_tokens` dan bisa dirotasi dari halaman Rekap **tanpa deploy**.
+- **Sumber token (urutan fallback)** — `loadExamToken()` di `src/lib/examLib.js`:
+  1. Tabel `exam_tokens` (server, `source: 'server'`)
+  2. `VITE_EXAM_TOKEN_<SUBJECT>` per mapel, lalu `VITE_EXAM_TOKEN` lama (hanya untuk MPK 1) (`source: 'env'`)
+  3. Hardcoded `TKJ235` / `KKA235` / `KXI235` (`source: 'default'`)
+  Fungsi ini **tidak pernah melempar error** — Supabase mati atau blok SQL belum dijalankan pun halaman ujian tetap jalan. Itu disengaja: migrasi server tidak boleh memblokir ujian.
+- **Petakan modul → mapel** (`subjectFromStorageKey`). Prefix WAJIB tidak tumpang tindih: `mpk1_`, `kka_elemen`, `kka_xi_`. **Jebakan:** `'kka_xi_modul1_ujian'.startsWith('kka_')` → `true`, jadi prefix KKA reguler harus `kka_elemen` (tepat di titik pembeda), bukan `kka`. Sama seperti `SUBJECT_LEGACY_PREFIX`.
+- **Keamanan tulis:** anon **hanya boleh SELECT**. Menulis hanya lewat `set_exam_token(pin, subject, token, expires_at)` / `clear_exam_token(pin, subject)` yang SECURITY DEFINER + validasi PIN. **Jangan pernah menambah policy INSERT/UPDATE/DELETE anon di `exam_tokens`** — kalau ada, siapa pun bisa menimpa token dari console browser dan gerbang token jadi tidak berarti. (Token sendiri sudah bocor dari bundle JS sejak awal, jadi read-anon tidak menambah risiko baru; yang dilindungi adalah hak *mengganti*.)
+- **PIN di fungsi SQL harus sama dengan `VITE_REKAP_PIN`** — sama seperti ketiga fungsi `reset_exam_results*`.
+- **Editor di Rekap:** `src/components/TokenUjianPanel.jsx`, dipasang di ketiga halaman Rekap (ganti kartu `.exam-token-card` yang dulu read-only). Form hanya aktif kalau `source === 'server'`; kalau masih env/default, panel menampilkan read-only + penjelasan cara mengaktifkannya.
+- **Prop `examGate` (bukan `examToken`) di `Quiz.jsx`.** Bentuk: `{ loading, token, expiresAt, subject, label }`. Penentu gerbang adalah **keberadaan objek gate** (`gated`), BUKAN `token` berisi — kalau gate hanya dirender saat `token` truthy, fase loading akan sempat membuka soal tanpa token, dan timer ikut jalan sebelum verifikasi. `ModulPostTest.jsx` yang resolve token lalu meneruskan; `loading: true` sampai `loadExamToken` selesai.
+- **Makna masa berlaku = batas MULAI, bukan batas selesai.** Token kedaluwarsa menolak siswa yang belum membuka soal. Siswa yang **sudah** lolos gate tetap boleh menyelesaikan — masa berlaku tidak memutus timer di tengah jalan. Alasannya: kicking siswa yang sedang ujian lebih merusak daripada membiarkan satu siswa menyelesaikan. Kolom `_unlocked` di localStorage sengaja dibiarkan permanen untuk alasan yang sama, dan dihapus lewat "Reset Identitas" untuk perangkat bersama.
+- `isTokenExpired()` berlaku **fail-open**: `null`/kosong = tidak kedaluwarsa, dan string tanggal yang tidak bisa diparse dianggap tidak kedaluwarsa. Salah baca tanggal = semua siswa terkunci, itu jauh lebih buruk daripada satu mapel sedikit terbebas dari batas.
+- `VITE_EXAM_TOKEN*` hanya cadangan. Kalau nanti dihapus dari Vercel, pastikan tabel `exam_tokens` sudah terisi untuk ketiga mapel — kalau tidak, semua token jatuh ke hardcoded dan sama untuk semua mapel lagi.
+
 - **State keys:** `mpk1_modul1_posttest`, `mpk1_modul2_posttest`, `mpk1_modul3_posttest` (jawaban/order/deadline/submitted/unlocked + `_startedAt`), `jarkomlab_identity`, `jarkomlab_examHistory`, `jarkomlab_examSubmitted`, `jarkomlab_pendingSync`, `jarkomlab_roster`.
-- **Env vars (prod):** `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` (lokal di `.env.local` gitignored), `VITE_REKAP_PIN=2468`, `VITE_EXAM_TOKEN=TKJ235`.
+- **Env vars (prod):** `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` (lokal di `.env.local` gitignored), `VITE_REKAP_PIN=2468`. `VITE_EXAM_TOKEN*` sekarang hanya cadangan — token yang dipakai disimpan di tabel `exam_tokens`.
 
 ## MPK 2
 - **Mapel:** Teknologi Jaringan Kabel dan Nirkabel

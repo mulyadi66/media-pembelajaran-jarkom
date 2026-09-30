@@ -11,6 +11,7 @@
   --accent: #f59e0b;
   --success: #10b981;
   --danger: #ef4444;
+  --danger-text: #b91c1c;
   --warning: #f59e0b;
   --bg: #f0f4ff;
   --bg-card: #ffffff;
@@ -41,6 +42,7 @@
   --primary: #6063e0;
   --primary-text: #a5b4fc;
   --primary-light: #a5b4fc;
+  --danger-text: #fca5a5;
   --text: #f1f5f9;
   --text-light: #cbd5e1;
   --text-lighter: #a8b6c9;
@@ -1776,6 +1778,77 @@ html.exam-lock-active .quiz-container { max-width: 860px; }
   color: var(--primary-text); letter-spacing: 3px;
 }
 .exam-token-info small { color: var(--text-light); font-size: 0.78rem; }
+
+/* ---- Panel pengaturan token per mapel (ganti .exam-token-card di atas) ---- */
+.token-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin-bottom: 18px;
+}
+.token-panel-head {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding-bottom: 12px; margin-bottom: 4px;
+  border-bottom: 1px solid var(--border);
+}
+.token-panel-head > svg { color: var(--primary-text); flex-shrink: 0; margin-top: 2px; }
+.token-panel-head h3 { margin: 0 0 4px; font-size: 1rem; }
+.token-panel-head p { margin: 0; font-size: 0.82rem; color: var(--text-light); line-height: 1.5; }
+
+.token-row { padding: 12px 0; border-bottom: 1px dashed var(--border); }
+.token-row:last-of-type { border-bottom: none; }
+.token-row-title {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 8px;
+}
+.token-row-title strong { font-size: 0.92rem; }
+.token-row-title > svg { color: var(--primary-text); flex-shrink: 0; }
+.token-row-value { display: flex; align-items: center; gap: 8px; }
+.token-row-value code {
+  font-family: monospace; font-size: 1.15rem; font-weight: 800;
+  color: var(--primary-text); letter-spacing: 3px;
+}
+.token-row-hint, .token-row-empty {
+  margin: 6px 0 0; font-size: 0.78rem; color: var(--text-light); line-height: 1.5;
+}
+.token-row-edit {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 10px; margin-top: 12px;
+}
+.token-row-edit label { display: flex; flex-direction: column; gap: 4px; }
+.token-row-edit label span { font-size: 0.76rem; font-weight: 600; color: var(--text-light); }
+.token-row-actions {
+  grid-column: 1 / -1; display: flex; gap: 8px; flex-wrap: wrap;
+}
+.token-row-actions .btn { min-height: 44px; }
+
+.token-source {
+  font-size: 0.7rem; font-weight: 600; padding: 2px 8px;
+  border-radius: 999px; border: 1px solid var(--border); color: var(--text-light);
+}
+.token-source.server { color: var(--primary-text); border-color: var(--primary); }
+.token-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 0.72rem; font-weight: 600; padding: 2px 8px; border-radius: 999px;
+  background: var(--bg); color: var(--text-light); border: 1px solid var(--border);
+}
+.token-badge.expired { color: var(--danger-text); border-color: var(--danger-text); }
+.token-panel-foot {
+  display: flex; align-items: flex-start; gap: 6px; flex-wrap: wrap;
+  margin: 12px 0 0; font-size: 0.76rem; color: var(--text-light); line-height: 1.6;
+}
+.token-panel-foot > svg { flex-shrink: 0; margin-top: 2px; }
+.token-panel-foot code {
+  font-family: monospace; font-size: 0.72rem;
+  background: var(--bg); padding: 1px 5px; border-radius: 4px;
+}
+.token-expired-notice {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--bg-card); border: 1px solid var(--danger-text); color: var(--danger-text);
+  border-radius: var(--radius-sm); padding: 10px 12px; margin: 0 0 4px;
+  font-size: 0.85rem; font-weight: 600; line-height: 1.5;
+}
+.token-expired-notice > svg { flex-shrink: 0; }
 
 /* ========== VIDEO EMBED ========== */
 .video-embed { margin: 16px 0; }

@@ -368,8 +368,186 @@ export function clearRoster(subject) {
   localStorage.removeItem(rosterKey(subject));
 }
 
-/** Token yang harus dimasukkan siswa agar soal Ujian (Post Test modul) bisa dibuka. */
+/** Token lama (semua mapel). Dipertahankan hanya sebagai fallback untuk MPK 1
+ *  agar VITE_EXAM_TOKEN yang sudah terlanjur terpasang di Vercel tetap berlaku.
+ *  @deprecated Pakai {@link loadExamToken} — token sudah per mapel dan punya masa berlaku. */
 export function getExamToken() {
   const fromEnv = import.meta.env.VITE_EXAM_TOKEN;
   return (fromEnv && String(fromEnv).trim()) || 'TKJ235';
+}
+
+// ============ TOKEN UJIAN PER MAPEL + MASA BERLAKU ============
+
+/**
+ * Definisi token per mata pelajaran.
+ *
+ * `prefix` WAJIB tidak tumpang tindih dan harus cocok dengan kunci storage,
+ * karena dipakai untuk memetakan modul -> mapel. Perhatikan 'kka_xi_':
+ * prefix 'kka' akan membuat 'kka_xi_modul1_ujian' ikut terdeteksi sebagai KKA.
+ * Maka prefix KKA reguler memakai 'kka_elemen' (tepat di titik pembeda) —
+ * sama seperti SUBJECT_LEGACY_PREFIX di atas.
+ *
+ * `envToken` / `envExpires` adalah jalur cadangan ketika Supabase kosong/down,
+ * jadi sistem tetap jalan walau blok SQL belum pernah dijalankan.
+ */
+export const EXAM_SUBJECTS = [
+  {
+    key: 'mpk1',
+    label: 'MPK 1',
+    fullLabel: 'MPK 1 — Perencanaan & Pengalamatan Jaringan',
+    prefix: 'mpk1_',
+    envToken: 'VITE_EXAM_TOKEN_MPK1',
+    envExpires: 'VITE_EXAM_TOKEN_MPK1_EXPIRES',
+    legacyEnvToken: 'VITE_EXAM_TOKEN',
+    defaultToken: 'TKJ235',
+  },
+  {
+    key: 'kka',
+    label: 'KKA',
+    fullLabel: 'KKA — Koding & Kecerdasan Artifisial',
+    prefix: 'kka_elemen',
+    envToken: 'VITE_EXAM_TOKEN_KKA',
+    envExpires: 'VITE_EXAM_TOKEN_KKA_EXPIRES',
+    legacyEnvToken: '',
+    defaultToken: 'KKA235',
+  },
+  {
+    key: 'kka_xi',
+    label: 'KKA XI',
+    fullLabel: 'KKA XI — Koding & Kecerdasan Artifisial XI',
+    prefix: 'kka_xi_',
+    envToken: 'VITE_EXAM_TOKEN_KKA_XI',
+    envExpires: 'VITE_EXAM_TOKEN_KKA_XI_EXPIRES',
+    legacyEnvToken: '',
+    defaultToken: 'KXI235',
+  },
+];
+
+export function getSubjectMeta(subject) {
+  return EXAM_SUBJECTS.find((s) => s.key === subject) || null;
+}
+
+/** Petakan kunci storage modul ke mapelnya. `null` kalau bukan ujian bertoken. */
+export function subjectFromStorageKey(storageKey) {
+  const k = String(storageKey || '');
+  return EXAM_SUBJECTS.find((s) => k.startsWith(s.prefix))?.key || null;
+}
+
+/** `expires_at` null/kosong = tidak kedaluwarsa. String yang tidak bisa diparse
+ *  dianggap TIDAK kedaluwarsa (lebih aman daripada mengunci semua siswa). */
+export function isTokenExpired(expiresAt, now = Date.now()) {
+  if (expiresAt == null || expiresAt === '') return false;
+  const t = expiresAt instanceof Date ? expiresAt.getTime() : Date.parse(String(expiresAt));
+  return Number.isFinite(t) && t <= now;
+}
+
+function envValue(name) {
+  if (!name) return '';
+  const v = import.meta.env[name];
+  return v && String(v).trim() ? String(v).trim() : '';
+}
+
+/** Nilai cadangan tanpa server: env var per mapel -> env var lama -> default. */
+function tokenFallback(subject) {
+  const meta = getSubjectMeta(subject) || EXAM_SUBJECTS[0];
+  const token = envValue(meta.envToken)
+    || envValue(meta.legacyEnvToken)
+    || meta.defaultToken;
+  const source = envValue(meta.envToken) || envValue(meta.legacyEnvToken) ? 'env' : 'default';
+  return {
+    subject: meta.key,
+    token,
+    expiresAt: envValue(meta.envExpires) || null,
+    source,
+    error: null,
+  };
+}
+
+/**
+ * Ambil token + masa berlaku satu mapel. Urutan: tabel `exam_tokens` di server
+ * -> env var -> hardcoded default. Tidak pernah melempar error, sehingga
+ * kegagalan Supabase tidak bisa membuat halaman ujian blank.
+ * @returns {Promise<{subject:string, token:string, expiresAt:string|null, source:'server'|'env'|'default', error:string|null}>}
+ */
+export async function loadExamToken(subject) {
+  const fallback = tokenFallback(subject);
+  if (!supabase) return fallback;
+
+  try {
+    const { data, error } = await supabase
+      .from('exam_tokens')
+      .select('subject, token, expires_at')
+      .eq('subject', fallback.subject)
+      .maybeSingle();
+
+    if (error) return fallback; // termasuk 42P01 saat tabel belum dibuat
+    if (data?.token) {
+      return {
+        subject: fallback.subject,
+        token: String(data.token).trim(),
+        expiresAt: data.expires_at || null,
+        source: 'server',
+        error: null,
+      };
+    }
+    return fallback; // baris belum di-set -> pakai env/default
+  } catch (e) {
+    return { ...fallback, error: e?.message || 'Gagal memuat token dari server.' };
+  }
+}
+
+function rpcErrorHint(error) {
+  const msg = error?.message || '';
+  if (/PIN salah|42501|permission denied/i.test(msg)) return 'PIN salah.';
+  if (/PGRST202|42883|does not exist|not found/i.test(msg)) {
+    return 'Fungsi ini belum ada di database. Jalankan blok exam_tokens di Supabase > SQL Editor.';
+  }
+  return msg || 'Gagal menyimpan ke server.';
+}
+
+/** Guru menyimpan/rotasi token + tanggal berlaku dari halaman Rekap Nilai. */
+export async function saveExamToken(pin, subject, token, expiresAt) {
+  if (!supabase) return { ok: false, error: 'Supabase belum dikonfigurasi — token hanya bisa diubah lewat SQL Editor.' };
+  if (!getSubjectMeta(subject)) return { ok: false, error: 'Mata pelajaran tidak dikenal.' };
+
+  const { error } = await supabase.rpc('set_exam_token', {
+    pin: String(pin || ''),
+    p_subject: subject,
+    p_token: String(token || ''),
+    p_expires_at: expiresAt || null,
+  });
+  if (error) return { ok: false, error: rpcErrorHint(error) };
+  return { ok: true };
+}
+
+/** Hapus override server -> mapel ini kembali ke env var / default. */
+export async function resetExamToken(pin, subject) {
+  if (!supabase) return { ok: false, error: 'Supabase belum dikonfigurasi.' };
+  if (!getSubjectMeta(subject)) return { ok: false, error: 'Mata pelajaran tidak dikenal.' };
+
+  const { error } = await supabase.rpc('clear_exam_token', {
+    pin: String(pin || ''),
+    p_subject: subject,
+  });
+  if (error) return { ok: false, error: rpcErrorHint(error) };
+  return { ok: true };
+}
+
+/** Format tanggal Indonesia yang enak dibaca guru, mis. "30 Sep 2026, 23.59". */
+export function formatTokenExpiry(expiresAt) {
+  if (!expiresAt) return 'Tanpa batas waktu';
+  const d = expiresAt instanceof Date ? expiresAt : new Date(expiresAt);
+  if (Number.isNaN(d.getTime())) return '—';
+  return d.toLocaleString('id-ID', {
+    day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit',
+  });
+}
+
+/** Ubah ISO string jadi nilai `datetime-local` (dipakai <input type="datetime-local">). */
+export function toLocalInputValue(expiresAt) {
+  if (!expiresAt) return '';
+  const d = expiresAt instanceof Date ? expiresAt : new Date(expiresAt);
+  if (Number.isNaN(d.getTime())) return '';
+  const pad = (n) => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
 }

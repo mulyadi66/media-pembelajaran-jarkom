@@ -14,13 +14,13 @@ import {
   Search,
   Users,
 } from 'lucide-react';
+import TokenUjianPanel from '../../components/TokenUjianPanel';
 import {
   fetchExamResults,
   syncPending,
   getExamHistory,
   KKA_XI_META,
   getRekapPin,
-  getExamToken,
   isSupabaseConfigured,
   resetExamResultsSubject,
   clearExamLocalSubject,
@@ -228,7 +228,6 @@ export default function RekapNilaiKKAXI() {
   const done = baseRowset.filter(r => r.jml > 0);
   const selesai = baseRowset.filter(r => r.status === 'selesai').length;
   const kelasAvg = done.length ? Math.round(done.reduce((a, r) => a + r.rata, 0) / done.length) : null;
-  const examToken = getExamToken();
 
   // Rata-rata per modul pada baris yang sedang difilter kelas.
   const perModul = KOLOM.map(k => {
@@ -240,15 +239,6 @@ export default function RekapNilaiKKAXI() {
   const filtered = qNorm
     ? baseRowset.filter(r => r.nama.toLowerCase().includes(qNorm) || r.nis.toLowerCase().includes(qNorm))
     : baseRowset;
-
-  const copyToken = async () => {
-    try {
-      await navigator.clipboard.writeText(examToken);
-      setMessage('Token ujian disalin ke clipboard.');
-    } catch {
-      setMessage('Gagal menyalin token.');
-    }
-  };
 
   // Ekspor selalu mengikuti yang terlihat di tabel. Kalau tidak ada fallback ke
   // seluruh data: guru yang mengetik nama yang salah mengira dia mengexpor
@@ -398,17 +388,7 @@ export default function RekapNilaiKKAXI() {
           </div>
         </div>
 
-        <div className="exam-token-card">
-          <KeyRound size={20} />
-          <div className="exam-token-info">
-            <strong>Token Ujian</strong>
-            <span className="exam-token-value">{examToken}</span>
-            <small>Token yang sama dengan MPK 1 dan KKA. Bagikan ke siswa agar mereka bisa membuka Ujian KKA XI di halaman /kka-xi/ujian.</small>
-          </div>
-          <button className="btn btn-secondary" onClick={copyToken} aria-label="Salin token ujian">
-            <Copy size={16} /> Salin
-          </button>
-        </div>
+        <TokenUjianPanel onMessage={setMessage} />
 
         {rosterOpen && (
           <div className="rekap-roster no-print">

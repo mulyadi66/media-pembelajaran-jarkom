@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
 import Quiz from './Quiz';
 import {
@@ -17,7 +17,8 @@ import {
   isModulLocked,
   hasAnySubmission,
   addExamResult,
-  getExamToken,
+  loadExamToken,
+  subjectFromStorageKey,
   clearExamLocal,
   clearIdentity,
   findNisRecords,
@@ -95,6 +96,30 @@ export default function ModulPostTest({ questions, storageKey, scoreKey, title, 
   const [locked, setLocked] = useState(() => isModulLocked(scoreKey));
   const [editing, setEditing] = useState(false);
   const [status, setStatus] = useState(null);
+
+  // Token ujian diambil dari server per mapel (dengan fallback env var), lalu
+  // diteruskan ke Quiz sebagai `examGate`. `loading` wajib true sampai selesai:
+  // sebelum token tiba, gerbang harus tetap menutup halaman.
+  const examSubject = subjectFromStorageKey(storageKey);
+  const [examGate, setExamGate] = useState(() => (
+    examSubject ? { loading: true, token: '', expiresAt: null, subject: examSubject } : null
+  ));
+
+  useEffect(() => {
+    if (!examSubject) { setExamGate(null); return; }
+    let alive = true;
+    loadExamToken(examSubject).then((t) => {
+      if (!alive) return;
+      setExamGate({
+        loading: false,
+        token: t.token,
+        expiresAt: t.expiresAt,
+        subject: t.subject,
+        label: t.subject === 'mpk1' ? 'Post Test MPK 1' : t.subject === 'kka' ? 'Ujian KKA' : 'Ujian KKA XI',
+      });
+    });
+    return () => { alive = false; };
+  }, [examSubject]);
 
   const handleIdentitySubmit = async (i) => {
     if (isSupabaseConfigured) {
@@ -229,7 +254,7 @@ export default function ModulPostTest({ questions, storageKey, scoreKey, title, 
         questions={questions}
         storageKey={storageKey}
         timeLimit={Math.max(10, Math.ceil(questions.length * 1.5))}
-        examToken={getExamToken()}
+        examGate={examGate}
         onScoreSubmit={handleScore}
       />
       {!isSupabaseConfigured && (

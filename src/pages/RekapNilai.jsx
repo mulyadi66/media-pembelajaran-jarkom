@@ -14,13 +14,13 @@ import {
   Search,
   Users,
 } from 'lucide-react';
+import TokenUjianPanel from '../components/TokenUjianPanel';
 import {
   fetchExamResults,
   syncPending,
   getExamHistory,
   MODUL_META,
   getRekapPin,
-  getExamToken,
   isSupabaseConfigured,
   resetExamResults,
   clearExamLocal,
@@ -229,7 +229,6 @@ export default function RekapNilai() {
   const baseRowset = kelasSel ? effective.filter(r => r.kelas === kelasSel) : effective;
   const verified = baseRowset.reduce((a, r) => a + r.count, 0);
   const completed = baseRowset.filter(r => r.count === MODUL_META.length).length;
-  const examToken = getExamToken();
 
   const modulAvgs = MODUL_META.map((m, idx) => {
     const vals = baseRowset.map(r => r.vals[idx]).filter(v => v != null);
@@ -244,15 +243,6 @@ export default function RekapNilai() {
   const filtered = qNorm
     ? baseRowset.filter(r => r.nama.toLowerCase().includes(qNorm) || r.nis.toLowerCase().includes(qNorm))
     : baseRowset;
-
-  const copyToken = async () => {
-    try {
-      await navigator.clipboard.writeText(examToken);
-      setMessage('Token ujian disalin ke clipboard.');
-    } catch {
-      setMessage('Gagal menyalin token.');
-    }
-  };
 
   const handleReset = async () => {
     if (!rows.length) { setMessage('Tidak ada data untuk direset.'); return; }
@@ -346,17 +336,7 @@ export default function RekapNilai() {
           </div>
         </div>
 
-        <div className="exam-token-card">
-          <KeyRound size={20} />
-          <div className="exam-token-info">
-            <strong>Token Ujian</strong>
-            <span className="exam-token-value">{examToken}</span>
-            <small>Bagikan token ini ke siswa agar mereka bisa membuka Post Test (Ujian) modul. Untuk mengganti, ubah VITE_EXAM_TOKEN di Vercel lalu redeploy.</small>
-          </div>
-          <button className="btn btn-secondary" onClick={copyToken} aria-label="Salin token ujian">
-            <Copy size={16} /> Salin
-          </button>
-        </div>
+        <TokenUjianPanel onMessage={setMessage} />
 
         {rosterOpen && (
           <div className="rekap-roster no-print">
