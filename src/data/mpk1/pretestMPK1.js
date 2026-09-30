@@ -11,7 +11,7 @@
  * Setiap bank berisi tiga tingkat kesulitan berimbang:
  * 10 soal Mudah (C2), 10 soal Sedang (C3), 10 soal Sulit (C5).
  *
- * Berbeda dengan Post Test MPK 1 (/mpk1/posttest-modul{n}), pre-test tidak
+ * Berbeda dengan Post Test MPK 1 (/mpk1/posttest/:slug), pre-test tidak
  * memakai token guru dan boleh diulang karena tujuannya murni diagnostik.
  *
  * Halaman: /mpk1/pretest (daftar modul) dan /mpk1/pretest/:slug.

@@ -167,9 +167,33 @@ Pola yang dipakai di tiga mapel: pre-test dipecah per unit, bukan satu paket cam
   (20 titik). Corners yang mudah salah: `tightest(need)` = prefix **terbesar** yang
   masih muat (bukan terkecil), dan jumlah subnet = `2 ** (child - parent)`.
 
-## Post Test Terpisah per Modul
-- Post Test Modul 1/2/3 masing-masing di halaman khusus: `/mpk1/posttest-modul1`, `/mpk1/posttest-modul2`, `/mpk1/posttest-modul3` (lazy-route di `App.jsx`, item + titles/descs di `Layout.jsx`, kartu CTA di halaman materi; storage/score keys tetap `mpk1_modul{1,2,3}_posttest`)
-- Fitur ujian tetap sama: token gate + kunci layar otomatis + timer + auto-grade + review + anti-contek
+## Post Test Terpisah per Modul (landing + slug, mirip KKA)
+- Pola disamakan dengan **Ujian KKA**: satu landing berisi daftar modul, lalu satu rute
+  bertipe `:slug`. Bukan tiga file halaman terpisah.
+- **Rute:** `/mpk1/posttest` (landing, kartu modul + status Selesai/Belum) dan
+  `/mpk1/posttest/:slug` (`modul1` | `modul2` | `modul3`). Nav sidebar dirapatkan jadi
+  **satu item** "Post Test (3 x 25 soal)" — sebelumnya 3 item yang interleaved di tiap modul.
+- **Halaman:** `src/pages/PostTestMPK1.jsx` (landing) + `src/pages/PostTestModulMPK1.jsx`
+  (per modul). Ketiga `PostTestModul{1,2,3}.jsx` yang lama dihapus.
+- **Data:** index ditambahkan di `src/data/modulPostTests.js` → `MODUL_POSTTEST`
+  (metadata slug/label/judul/desc + bank), `MODUL_POSTTEST_TOTAL` (75),
+  `getPostTestBySlug(slug)`. `modul{1,2,3}PostTest` tetap diekspor (dipakai `Hasil.jsx`).
+- **Backward compatible:** rute lama `/mpk1/posttest-modul{1,2,3}` tetap ada sebagai
+  `<Navigate replace>` ke slug baru, supaya bookmark siswa yang sudah dibuka tidak jadi
+  halaman kosong. Kalau sudah yakin tidak ada yang memakai, hapus saja.
+- **Status landing** dibaca dari `isModulLocked(key)` (submit sudah terkunci), bukan dari
+  nilai di storage — badge "Selesai" harus akurat walau syncing ke server gagal.
+- **`meta` WAJIB difilter per modul.** `ModulPostTest` memakai `meta` untuk cek NIS di
+  server (`findNisRecords`). Kalau `meta` berisi ketiga modul, siswa yang sudah selesai
+  Modul 1 lalu mau lanjut Modul 2 akan **ditolak** karena NIS-nya sudah terverifikasi di
+  Modul 1. `PostTestModulMPK1.jsx` mengirim `MODUL_META.filter(m => m.key === bank.key)`
+  — sama seperti `UjianElemenKKA.jsx`. Jangan dihapus filter ini.
+- Fitur ujian tetap sama: token gate + kunci layar otomatis + timer + auto-grade +
+  review + anti-contek. Storage/score keys tetap `mpk1_modul{1,2,3}_posttest`
+  (tidak berubah, jadi nilai siswa yang sudah ada tetap terbaca).
+- Bank soal: 25 soal/modul, level C2–C6 (HOTS), komposisi tidak seragam antar modul —
+  jangan samakan dengan komposisi 10/10/10 milik Pre-Test.
+
 
 ## Anti-Contek: Kunci Soal setelah 3× Pelanggaran
 - 3× pindah tab/keluar kunci layar → **soal dikunci** (screensaver "Ujian Dikunci", bukan cuma peringatan). Jawaban tidak bisa dilihat/diubah sampai dibuka guru.
@@ -235,3 +259,5 @@ Pola yang dipakai di tiga mapel: pre-test dipecah per unit, bukan satu paket cam
 - [x] Route stale `/mpk1/topologi-arsitektur` dihapus
 - [x] Badge MPK 1 kirim `pretestKey` + `examAvg`/`examDone` eksplisit (default `checkBadges` pasti mati)
 - [x] Pre-Test MPK 1 dipecah per modul (3 × 30 = 90 soal) + hapus bank legacy 25 soal campur
+- [x] Post Test MPK 1 diseragamkan ke pola KKA: landing `/mpk1/posttest` + `:slug`, nav 3 item jadi 1
+- [x] Bug `meta` Post Test MPK 1 diperbaiki (filter per modul, tidak lagi ketiga modul sekaligus)

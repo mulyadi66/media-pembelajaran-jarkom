@@ -6,6 +6,7 @@ import { UJIAN_KKA_XI_TOTAL, UJIAN_KKA_XI_SOAL_PER_MODUL } from '../data/kka-xi/
 import { PRETEST_KKA_XI_TOTAL, PRETEST_KKA_XI_SOAL_PER_MODUL } from '../data/kka-xi/pretestKKAXI.js';
 import { PRETEST_KKA_TOTAL, PRETEST_KKA_SOAL_PER_ELEMEN } from '../data/kka/pretestKKA.js';
 import { PRETEST_MPK1_TOTAL, PRETEST_MPK1_SOAL_PER_MODUL } from '../data/mpk1/pretestMPK1.js';
+import { MODUL_POSTTEST_SOAL_PER_MODUL } from '../data/modulPostTests.js';
 import DarkModeToggle from './DarkModeToggle';
 import StreakCounter from './StreakCounter';
 import {
@@ -26,11 +27,9 @@ const subjects = {
     items: [
       { to: '/mpk1', icon: Home, label: 'Dashboard' },
       { to: '/mpk1/modul1', icon: Server, label: 'Modul 1: Peralatan Jaringan' },
-      { to: '/mpk1/posttest-modul1', icon: ClipboardCheck, label: 'Post Test Modul 1' },
       { to: '/mpk1/modul2', icon: Projector, label: 'Modul 2: Topologi Jaringan' },
-      { to: '/mpk1/posttest-modul2', icon: ClipboardCheck, label: 'Post Test Modul 2' },
       { to: '/mpk1/modul3', icon: CreditCard, label: 'Modul 3: Pengalamatan Jaringan' },
-      { to: '/mpk1/posttest-modul3', icon: ClipboardCheck, label: 'Post Test Modul 3' },
+      { to: '/mpk1/posttest', icon: ClipboardCheck, label: `Post Test (3 x ${MODUL_POSTTEST_SOAL_PER_MODUL} soal)` },
       { to: '/mpk1/osi-layer', icon: Layers, label: 'Layer OSI' },
       { to: '/mpk1/modul-ajar', icon: FileText, label: 'Modul Ajar' },
       { to: '/mpk1/flashcard', icon: BookOpen, label: 'Flashcard' },
@@ -44,12 +43,10 @@ const subjects = {
       { to: '/mpk1/hasil', icon: BarChart3, label: 'Hasil & Sertifikat' },
     ],
     titles: {
-      '/mpk1': 'Dashboard', '/mpk1/modul1': 'Modul 1: Peralatan Jaringan',
-      '/mpk1/posttest-modul1': 'Post Test Modul 1',
+      '/mpk1': 'Dashboard',       '/mpk1/modul1': 'Modul 1: Peralatan Jaringan',
       '/mpk1/modul2': 'Modul 2: Topologi Jaringan',
-      '/mpk1/posttest-modul2': 'Post Test Modul 2',
       '/mpk1/modul3': 'Modul 3: Pengalamatan Jaringan',
-      '/mpk1/posttest-modul3': 'Post Test Modul 3',
+      '/mpk1/posttest': 'Post Test MPK 1',
       '/mpk1/osi-layer': 'Layer OSI',
       '/mpk1/modul-ajar': 'Modul Ajar',
       '/mpk1/flashcard': 'Flashcard Interaktif', '/mpk1/simulator': 'Simulator Jaringan',
@@ -61,11 +58,9 @@ const subjects = {
     descs: {
       '/mpk1': 'Media Pembelajaran Perencanaan & Pengalamatan Jaringan',
       '/mpk1/modul1': 'Kebutuhan teknis pengguna dan peralatan jaringan',
-      '/mpk1/posttest-modul1': 'Evaluasi akhir Modul 1 — 25 soal. Target: ≥70',
       '/mpk1/modul2': 'Perancangan dan simulasi berbagai topologi jaringan',
-      '/mpk1/posttest-modul2': 'Evaluasi akhir Modul 2 — 25 soal. Target: ≥70',
       '/mpk1/modul3': 'IP Address, Subnetting, CIDR, dan VLSM',
-      '/mpk1/posttest-modul3': 'Evaluasi akhir Modul 3 — 25 soal. Target: ≥70',
+      '/mpk1/posttest': `Evaluasi akhir tiap modul — 3 x ${MODUL_POSTTEST_SOAL_PER_MODUL} soal HOTS. Sertifikat bila rerata ≥70`,
       '/mpk1/osi-layer': 'Model referensi OSI: 7 layer, enkapsulasi, dan TCP/IP',
       '/mpk1/modul-ajar': 'Modul Ajar Perencanaan & Pengalamatan Jaringan — Fase F',
       '/mpk1/flashcard': 'Kartu interaktif istilah jaringan komputer',
@@ -322,7 +317,7 @@ export default function Layout() {
   const isDashboard = path === prefix;
 
   // Rute dinamis (mis. /kka-xi/pretest/modul3) mewarisi judul & deskripsi induknya.
-  const basePath = ['/kka/ujian/', '/kka/pretest/', '/kka-xi/ujian/', '/kka-xi/pretest/', '/mpk1/pretest/']
+  const basePath = ['/kka/ujian/', '/kka/pretest/', '/kka-xi/ujian/', '/kka-xi/pretest/', '/mpk1/pretest/', '/mpk1/posttest/']
     .find(p => path.startsWith(p))?.slice(0, -1) || path;
   const pageTitle = titles[path] || titles[basePath] || '';
   const pageDesc = descs[path] || descs[basePath] || '';

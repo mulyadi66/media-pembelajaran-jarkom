@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AppProvider } from './context/AppContext';
 import ErrorBoundary from './components/ErrorBoundary';
 import Layout from './components/Layout';
@@ -24,9 +24,8 @@ const Hasil = lazy(() => import('./pages/Hasil'));
 const RekapNilai = lazy(() => import('./pages/RekapNilai'));
 const WiringPuzzle = lazy(() => import('./pages/WiringPuzzle'));
 const IPClassifier = lazy(() => import('./pages/IPClassifier'));
-const PostTestModul1 = lazy(() => import('./pages/PostTestModul1'));
-const PostTestModul2 = lazy(() => import('./pages/PostTestModul2'));
-const PostTestModul3 = lazy(() => import('./pages/PostTestModul3'));
+const PostTestMPK1 = lazy(() => import('./pages/PostTestMPK1'));
+const PostTestModulMPK1 = lazy(() => import('./pages/PostTestModulMPK1'));
 
 // DKK pages
 const Elemen1 = lazy(() => import('./pages/dkk/Elemen1'));
@@ -162,10 +161,14 @@ export default function App() {
                 <Route path="/kka-xi/hasil" element={<HasilKKAXI />} />
                 <Route path="/mpk1/modul1" element={<Modul1 />} />
                 <Route path="/mpk1/modul2" element={<Modul2 />} />
-                <Route path="/mpk1/posttest-modul2" element={<PostTestModul2 />} />
                 <Route path="/mpk1/modul3" element={<Modul3 />} />
-                <Route path="/mpk1/posttest-modul3" element={<PostTestModul3 />} />
-                <Route path="/mpk1/posttest-modul1" element={<PostTestModul1 />} />
+                <Route path="/mpk1/posttest" element={<PostTestMPK1 />} />
+                <Route path="/mpk1/posttest/:slug" element={<PostTestModulMPK1 />} />
+                {/* Rute lama (3 file terpisah) -> Landing + slug. Redirect dipakai
+                    supaya bookmark siswa yang sudah dibuka tidak jadi halaman kosong. */}
+                <Route path="/mpk1/posttest-modul1" element={<Navigate to="/mpk1/posttest/modul1" replace />} />
+                <Route path="/mpk1/posttest-modul2" element={<Navigate to="/mpk1/posttest/modul2" replace />} />
+                <Route path="/mpk1/posttest-modul3" element={<Navigate to="/mpk1/posttest/modul3" replace />} />
                 <Route path="/mpk1/flashcard" element={<FlashcardPage />} />
                 <Route path="/mpk1/simulator" element={<DeviceSimulator />} />
                 <Route path="/mpk1/dragdrop" element={<DragDropSubnet />} />

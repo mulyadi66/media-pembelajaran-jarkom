@@ -312,7 +312,7 @@ export default function Modul2() {
             </p>
           </div>
         </div>
-        <Link to="/mpk1/posttest-modul2" className="btn btn-primary" style={{ justifyContent: 'center', marginTop: 12 }}>
+        <Link to="/mpk1/posttest/modul2" className="btn btn-primary" style={{ justifyContent: 'center', marginTop: 12 }}>
           Buka Halaman Post Test Modul 2 <ArrowRight size={16} />
         </Link>
       </div>

@@ -1063,3 +1063,50 @@ export const modul3PostTest = [
  * Dipakai halaman Hasil untuk menampilkan "N soal terjawab".
  */
 export const MODUL_POSTTEST_SOAL_PER_MODUL = modul1PostTest.length;
+
+/**
+ * Daftar Post-Test MPK 1 untuk halaman /mpk1/posttest dan routing
+ * /mpk1/posttest/:slug.
+ *
+ * Bank soal dipisah per modul (25 soal, level C2-C6 / HOTS) dan tiap modul
+ * punya kunci storage sendiri, jadi satu modul yang belum dikerjakan tidak
+ * menghalangi modul lain. Ketiga modul wajib selesai untuk terbitnya
+ * sertifikat (rerata >= 70).
+ */
+export const MODUL_POSTTEST = [
+  {
+    no: 1,
+    slug: 'modul1',
+    key: 'mpk1_modul1_posttest',
+    label: 'Modul 1',
+    judul: 'Peralatan Jaringan',
+    desc: 'Kebutuhan teknis pengguna, jenis kabel, konektor, crimping, dan media transmisi',
+    questions: modul1PostTest,
+  },
+  {
+    no: 2,
+    slug: 'modul2',
+    key: 'mpk1_modul2_posttest',
+    label: 'Modul 2',
+    judul: 'Topologi Jaringan',
+    desc: 'Bus, star, ring, mesh, tree, hybrid, dan pemilihan topologi sesuai kebutuhan',
+    questions: modul2PostTest,
+  },
+  {
+    no: 3,
+    slug: 'modul3',
+    key: 'mpk1_modul3_posttest',
+    label: 'Modul 3',
+    judul: 'Pengalamatan Jaringan',
+    desc: 'IP address, subnet mask, kelas IP, subnetting, CIDR, dan VLSM',
+    questions: modul3PostTest,
+  },
+];
+
+/** Total soal seluruh modul (3 x 25 = 75). */
+export const MODUL_POSTTEST_TOTAL = MODUL_POSTTEST_SOAL_PER_MODUL * MODUL_POSTTEST.length;
+
+/** @param {string} slug contoh "modul2" */
+export function getPostTestBySlug(slug) {
+  return MODUL_POSTTEST.find(b => b.slug === slug) || null;
+}
