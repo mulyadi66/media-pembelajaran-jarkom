@@ -2,7 +2,7 @@
 
 **Terakhir diupdate:** 30 September 2026
 **Branch:** master
-**Status:** Semua bank Post Test MPK 1 (Modul 1/2/3) sudah diaudit & diperbaiki.
+**Status:** Bank Post Test MPK 1 (Modul 1/2/3) sudah diaudit & diperbaiki; token ujian jadi per mapel + masa berlaku dan bisa dirotasi dari Rekap tanpa deploy.
 
 ---
 
@@ -66,7 +66,7 @@ Semua styling terpusat di `src/App.css` (~2500 baris) + `index.css` (kosong, tid
 - **Petakan modul → mapel** (`subjectFromStorageKey`). Prefix WAJIB tidak tumpang tindih: `mpk1_`, `kka_elemen`, `kka_xi_`. **Jebakan:** `'kka_xi_modul1_ujian'.startsWith('kka_')` → `true`, jadi prefix KKA reguler harus `kka_elemen` (tepat di titik pembeda), bukan `kka`. Sama seperti `SUBJECT_LEGACY_PREFIX`.
 - **Keamanan tulis:** anon **hanya boleh SELECT**. Menulis hanya lewat `set_exam_token(pin, subject, token, expires_at)` / `clear_exam_token(pin, subject)` yang SECURITY DEFINER + validasi PIN. **Jangan pernah menambah policy INSERT/UPDATE/DELETE anon di `exam_tokens`** — kalau ada, siapa pun bisa menimpa token dari console browser dan gerbang token jadi tidak berarti. (Token sendiri sudah bocor dari bundle JS sejak awal, jadi read-anon tidak menambah risiko baru; yang dilindungi adalah hak *mengganti*.)
 - **PIN di fungsi SQL harus sama dengan `VITE_REKAP_PIN`** — sama seperti ketiga fungsi `reset_exam_results*`.
-- **Editor di Rekap:** `src/components/TokenUjianPanel.jsx`, dipasang di ketiga halaman Rekap (ganti kartu `.exam-token-card` yang dulu read-only). Form hanya aktif kalau `source === 'server'`; kalau masih env/default, panel menampilkan read-only + penjelasan cara mengaktifkannya.
+- **Editor di Rekap:** `src/components/TokenUjianPanel.jsx`, dipasang di ketiga halaman Rekap (ganti kartu `.exam-token-card` yang dulu read-only). **Form (Token baru + Batas mulai + Simpan) selalu dirender untuk semua mapel** — badge asal token (`Server` / `Cadangan` / `Bawaan`) itu informasi, bukan syarat. Dulu form hanya muncul kalau `source === 'server'`, padahal `source` cuma jadi `'server'` setelah disimpan → panel menampilkan "Simpan sekali di sini" tanpa ada tombol Simpan (dead-end, `fa2ce90`). Tombol "Pakai bawaan" hanya aktif kalau memang ada token server.
 - **Prop `examGate` (bukan `examToken`) di `Quiz.jsx`.** Bentuk: `{ loading, token, expiresAt, subject, label }`. Penentu gerbang adalah **keberadaan objek gate** (`gated`), BUKAN `token` berisi — kalau gate hanya dirender saat `token` truthy, fase loading akan sempat membuka soal tanpa token, dan timer ikut jalan sebelum verifikasi. `ModulPostTest.jsx` yang resolve token lalu meneruskan; `loading: true` sampai `loadExamToken` selesai.
 - **Makna masa berlaku = batas MULAI, bukan batas selesai.** Token kedaluwarsa menolak siswa yang belum membuka soal. Siswa yang **sudah** lolos gate tetap boleh menyelesaikan — masa berlaku tidak memutus timer di tengah jalan. Alasannya: kicking siswa yang sedang ujian lebih merusak daripada membiarkan satu siswa menyelesaikan. Kolom `_unlocked` di localStorage sengaja dibiarkan permanen untuk alasan yang sama, dan dihapus lewat "Reset Identitas" untuk perangkat bersama.
 - `isTokenExpired()` berlaku **fail-open**: `null`/kosong = tidak kedaluwarsa, dan string tanggal yang tidak bisa diparse dianggap tidak kedaluwarsa. Salah baca tanggal = semua siswa terkunci, itu jauh lebih buruk daripada satu mapel sedikit terbebas dari batas.
@@ -114,6 +114,12 @@ Semua styling terpusat di `src/App.css` (~2500 baris) + `index.css` (kosong, tid
    berbunyi "Rata-rata Ujian" dan bukan "Post-Test 0" selamanya
 10. **Post-Test KKA dihapus total** (`cd1a3c7`) dan `PostTestUjianKKA.jsx` di-rename jadi
     `UjianKKALanding.jsx` (`148385b`) karena namanya menyesatkan (sebenarnya landing Ujian)
+11. **Skor layar hasil** (`7310477`): `Quiz.jsx` menyimpan snapshot `{score, correct, total, fingerprint}`
+    ke `jarkomlab_${key}_result`, jadi bank diedit tidak lagi mengubah nilai yang tampil ke siswa
+12. **Token ujian per mapel + masa berlaku** (`d3a3b65`): tabel `exam_tokens` + RPC PIN-gated,
+    editor di ketiga halaman Rekap — detail di bagian Token Ujian di bawah
+13. **Form token selalu bisa diedit** (`fa2ce90`): panel Rekap sempat menampilkan "Simpan sekali di
+    sini" tanpa menyediakan input/ tombol Simpan karena form hanya dirender saat `source==='server'`
 
 ## Catatan Review UI/UX (28 Sep 2026) — belum dikerjakan
 Temuan dari review, sengaja ditunda karena di luar 3 prioritas yang sudah diperbaiki:
@@ -326,6 +332,44 @@ Tiga bug yang sama-sama merusak file tapi lolos karena JS masih valid:
   pengganti dengan `\n` kalau pola yang diganti diawali newline.
 - Untuk newline **penutup**, pakai lookahead `,?(?=\n)`, bukan `\n` yang dimakan. Kalau
   dimakan, match berikutnya tidak akan menemukan `\n` dan hanya id ganjil yang kena.
+- **Yang ketiga ini yang paling merusak di luar bank soal.** Mengganti blok JSX
+  `<div className="exam-token-card">…</div>` dengan pola non-greedy
+  `/\[ \t\]*<div className="exam-token-card">[\s\S]*?\n[ \t]*<\/div>\r?\n/` berhenti di
+  `</div>` **pertama** yang ada di baris berikutnya — itu penutup `exam-token-info`,
+  bukan penutup blok lu. Akibatnya `<button onClick={copyToken}>` yatim tertinggal dan
+  `copyToken` sudah dihapus di langkah sebelumnya → `is not defined` saat render.
+  Untuk blok JSX bersarang, jangan pakai `[\s\S]*?`; pakai teks **eksak** dari `edit` tool.
+  Kalau terlanjur pakai skrip, selalu `git checkout --` dulu lalu ulangi secara eksak.
+
+## Jebakan Fallback yang Berputar (dead-end UI)
+- Pola: "form hanya tampil kalau kondisi X" sementara yang membuat X itu sendiri
+  hanya bisa terjadi lewat form tersebut. Contoh nyata di `TokenUjianPanel.jsx`:
+  `canEdit = source === 'server'`, padahal `source` baru jadi `'server'` **setelah**
+  guru menekan Simpan — dan tombol Simpan ada di dalam form yang tidak dirender.
+  Panel menampilkan "Simpan sekali di sini untuk mengaktifkannya" tanpa ada input
+  maupun tombol sama sekali.
+- **Gejalanya tidak muncul saat build/lint.** Kode valid, tidak ada error, React
+  tidak crash. Baru ketahuan waktu guru membuka halaman.
+- **Aturan:** kalau ada teks di UI yang menyuruh pengguna melakukan sesuatu, pastikan
+  kontrol untuk melakukan itu benar-benar ada di layar yang sama. Badge/label sumber
+  data itu **informasi**, bukan syarat — jangan dipakai sebagai gerbang render.
+- Verifikasi cepat: cek setiap nilai yang dipakai sebagai kondisi render
+  (`canEdit`, `isActive`, `hasX`) — bisa nilainya berubah dari luar layar itu?
+
+## Jebakan Kontras: token warna yang gagal di dark mode
+- `--danger: #ef4444` cuma mencapai **3.76:1** di putih dan **3.89:1** di
+  `#1e293b` (kartu gelap) — gagal 4.5:1 untuk teks di **kedua** mode. Badge kecil
+  dan teks error bertumpuk adalah kasus terburuk karena font kecil = butuh rasio lebih tinggi.
+- Solusi mengikuti preseden `--primary` vs `--primary-text`: tambah token khusus teks,
+  misal `--danger-text: #b91c1c` (light) / `#fca5a5` (dark) — 6.47:1 dan 7.71:1.
+- Nilai `#b91c1c` / `#fca5a5` ternyata **sudah** dipakai manual di ~8 tempat
+  (`.exam-status.locked`, `.cb-feedback.wrong`, `.aih-choice.wrong`, dll), jadi
+  mengadopsinya bukan inventing warna baru, cuma memfabrikasi yang sudah ada jadi token.
+- Dark mode project memakai `[data-theme="dark"]`, **bukan**
+  `@media (prefers-color-scheme: dark)`. Menulis blok media query untuk dark
+  akan diam-diam tidak aktif.
+- Token yang dipakai tapi tidak ada = `background: var(--bg-soft)` diam-diam
+  transparan. Verifikasi nama token yang dipakai benar-benar ada di blok `:root`.
 
 
 ## Anti-Contek: Kunci Soal setelah 3× Pelanggaran
@@ -397,6 +441,27 @@ Tiga bug yang sama-sama merusak file tapi lolos karena JS masih valid:
 - [x] Audit bank Post Test MPK 1 ketiga modul: sebaran kunci diratakan ke 5/5/5/5/5
 - [x] Modul 2: 8 soal hafalan ditulis ulang jadi aplikatif, C6 palsu Q7 dibongkar, C2 turun 10 → 4
 - [x] Modul 3: 6 soal ditulis ulang, 2 label level palsu dibetulkan, 2 soal kembar dibubarkan
+- [x] Semua `explanation` yang mengacu ke huruf opsi dibetulkan (aman saat opsi digeser)
+- [x] Bug skor: layar hasil tidak lagi menghitung ulang dari bank soal (snapshot `_result`)
+- [x] Fingerprint bank diperkuat sampai mencakup teks soal + isi opsi
+- [x] Token ujian per mapel + masa berlaku via tabel `exam_tokens` (rotasi tanpa deploy)
+- [x] Editor token dipasang di ketiga halaman Rekap (MPK 1, KKA, KKA XI)
+- [x] Supabase terverifikasi read-only untuk anon: SELECT jalan, INSERT ditolak, RPC ada dan PIN salah ditolak
+- [x] Form token di Rekap selalu bisa diedit — hilangkan dead-end "Simpan sekali di sini" (`fa2ce90`)
+
+## Cara Mengecek Bundle yang Sedang Dipakai Browser
+- Kalau guru bilang "fitur baru tidak muncul" padahal sudah di-deploy, jangan buru-buru
+  ubah kode. Cek dulu apa bundle-nya memang sudah berganti:
+  1. Buka `https://<domain>/` → cari `assets/index-<hash>.js` di HTML.
+  2. Fetch `assets/<NamaKomponen>-<hash>.js` → cari string UI yang diharapkan.
+     Lazy chunk **tidak** ada di dalam entry, jadi memeriksa entry saja akan selalu
+     "tidak ada" dan menyesatkan.
+  3. `index.html` sudah `Cache-Control: public, max-age=0, must-revalidate` —
+     kalau hash di `index.html` sudah benar tapi guru masih tidak melihat,
+     suruh hard refresh (`Ctrl+Shift+R`) atau Incognito.
+- Gejala "panel tidak ada" ternyata **bukan** masalah cache atau deploy: komponennya
+  sudah live, tapi form-nya memang tidak dirender karena kondisi `source === 'server'`.
+  Before a cache diagnosis, ask user what text they actually see on screen.
 - [x] SemuaExplanation referring ke huruf opsi dibetulkan (aman saat opsi digeser)
 - [x] Bug skor: layar hasil tidak lagi menghitung ulang dari bank soal (snapshot `_result`)
 - [x] Fingerprint bank diperkuat sampai mencakup teks soal + isi opsi
