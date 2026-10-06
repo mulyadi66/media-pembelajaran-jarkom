@@ -81,16 +81,15 @@ export default function RosterPanel({ subject, label, roster, setRoster, onMessa
           <UserCheck size={16} /> Terapkan Roster
         </button>
         <button className="btn btn-secondary" onClick={() => setText('')} disabled={!text}>Bersihkan</button>
-        {roster.length > 0 && (
-          <>
-            <button className="btn btn-secondary" onClick={kirimServer} disabled={busy}>
-              <CloudUpload size={16} /> {busy ? 'Mengirim…' : 'Kirim ke Server'}
-            </button>
-            <button className="btn btn-danger" onClick={hapusSemua} disabled={busy}>
-              <Trash size={16} /> Hapus dari Server + Lokal
-            </button>
-          </>
-        )}
+        {/* Tombol server selalu dirender, disabled saat roster kosong. Kalau
+            disembunyikan (roster.length > 0 jadi syarat), guru tidak pernah
+            melihatnya dan menyangka fiturnya tidak ada. */}
+        <button className="btn btn-secondary" onClick={kirimServer} disabled={busy || roster.length === 0}>
+          <CloudUpload size={16} /> {busy ? 'Mengirim…' : 'Kirim ke Server'}
+        </button>
+        <button className="btn btn-danger" onClick={hapusSemua} disabled={busy}>
+          <Trash size={16} /> Hapus dari Server + Lokal
+        </button>
       </div>
       {roster.length > 0 ? (
         <p className="roster-hint">
@@ -100,8 +99,10 @@ export default function RosterPanel({ subject, label, roster, setRoster, onMessa
         </p>
       ) : (
         <p className="roster-hint">
-          <CloudOff size={13} style={{ verticalAlign: 'middle' }} /> Belum ada roster. Siswa tetap bisa ujian
-          dengan mengetik nama sendiri, hanya tidak auto-terisi.
+          <CloudOff size={13} style={{ verticalAlign: 'middle' }} /> Belum ada roster. Tempel daftar
+          <code> NIS;Nama;Kelas </code>di kotak di atas lalu tekan <strong>Terapkan Roster</strong>, baru{' '}
+          <strong>Kirim ke Server</strong> aktif. Selama itu siswa tetap bisa ujian dengan mengetik nama
+          sendiri, hanya tidak auto-terisi.
         </p>
       )}
     </div>
