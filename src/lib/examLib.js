@@ -41,8 +41,22 @@ export const KKA_XI_META = [
   { key: 'kka_xi_modul4_ujian', label: 'Modul 4' },
 ];
 
+/**
+ * Ujian Tengah Semester (UTS) DKK. Post Test DKK lama sudah dihapus, jadi
+ * hanya ada satu kunci: `dkk_uts`. Kunci ini WAJIB sama dengan `key` di
+ * src/data/dkk/utsDKK.js karena dipakai sebagai storageKey, scoreKey, dan
+ * kolom `modul` di Supabase.
+ *
+ * Prefix dipakai 'dkk_uts' (bukan 'dkk_') supaya `dkk_pretestAnswers` milik
+ * Pre-Test tidak ikut terdeteksi sebagai ujian bertoken — Pre-Test sengaja
+ * tidak memakai token dan boleh diulang.
+ */
+export const DKK_META = [
+  { key: 'dkk_uts', label: 'UTS' },
+];
+
 /** Semua kunci ujian di aplikasi — dipakai saat membersihkan data lokal. */
-export const ALL_MODUL_META = [...MODUL_META, ...KKA_META, ...KKA_XI_META];
+export const ALL_MODUL_META = [...MODUL_META, ...KKA_META, ...KKA_XI_META, ...DKK_META];
 
 /**
  * Kunci modul ujian per mata pelajaran — dipakai saat reset per mapel.
@@ -55,6 +69,7 @@ export const SUBJECT_KEYS = {
   mpk1: MODUL_META.map(m => m.key),
   kka: KKA_META.map(m => m.key),
   kka_xi: KKA_XI_META.map(m => m.key),
+  dkk: DKK_META.map(m => m.key),
 };
 
 /**
@@ -62,7 +77,12 @@ export const SUBJECT_KEYS = {
  * `like prefix || '%'`). Dipilih agar tetap tidak tumpang tindih:
  * 'kka_elemen' hanya mengenai KKA reguler, bukan 'kka_xi_...'.
  */
-export const SUBJECT_LEGACY_PREFIX = { mpk1: 'mpk1_', kka: 'kka_elemen', kka_xi: 'kka_xi_' };
+export const SUBJECT_LEGACY_PREFIX = {
+  mpk1: 'mpk1_',
+  kka: 'kka_elemen',
+  kka_xi: 'kka_xi_',
+  dkk: 'dkk_uts',
+};
 
 /** Kunci modul ujian milik satu mapel. */
 export function getSubjectKeys(subject) {
@@ -420,6 +440,16 @@ export const EXAM_SUBJECTS = [
     envExpires: 'VITE_EXAM_TOKEN_KKA_XI_EXPIRES',
     legacyEnvToken: '',
     defaultToken: 'KXI235',
+  },
+  {
+    key: 'dkk',
+    label: 'DKK',
+    fullLabel: 'DKK — Dasar Kompetensi Keahlian',
+    prefix: 'dkk_uts',
+    envToken: 'VITE_EXAM_TOKEN_DKK',
+    envExpires: 'VITE_EXAM_TOKEN_DKK_EXPIRES',
+    legacyEnvToken: '',
+    defaultToken: 'DKK235',
   },
 ];
 

@@ -10,7 +10,7 @@ export default function DashboardDKK() {
   const [showReset, setShowReset] = useState(false);
   const earnedBadges = checkBadges(scores, modulesRead, {
     pretestKey: 'dkk_pretest',
-    posttestKey: 'dkk_posttest',
+    posttestKey: 'dkk_uts',
     moduleIds: ['dkk_elemen1', 'dkk_elemen2', 'dkk_elemen3', 'dkk_elemen4'],
   });
 
@@ -26,7 +26,7 @@ export default function DashboardDKK() {
     { to: '/dkk/challenge', icon: Zap, title: 'Latihan Cepat', desc: 'Tes kecepatan', color: ['#f59e0b', '#f97316'] },
     { to: '/dkk/kasus', icon: Briefcase, title: 'Studi Kasus', desc: 'Skenario nyata', color: ['#10b981', '#059669'] },
     { to: '/dkk/pretest', icon: ClipboardCheck, title: 'Pre-Test', desc: 'Uji awal', color: ['#06b6d4', '#0891b2'] },
-    { to: '/dkk/posttest', icon: FileText, title: 'Post-Test', desc: 'Evaluasi akhir', color: ['#ef4444', '#dc2626'] },
+    { to: '/dkk/uts', icon: FileText, title: 'UTS', desc: 'Ujian tengah semester', color: ['#ef4444', '#dc2626'] },
     { to: '/dkk/worksheet', icon: FileDown, title: 'Lembar Kerja', desc: 'Soal offline', color: ['#7c3aed', '#6d28d9'] },
     { to: '/dkk/glossary', icon: BookOpen, title: 'Glossarium', desc: 'Istilah DKK', color: ['#0ea5e9', '#0284c7'] },
     { to: '/dkk/hasil', icon: BarChart3, title: 'Hasil', desc: 'Pencapaian & sertifikat', color: ['#f43f5e', '#e11d48'] },

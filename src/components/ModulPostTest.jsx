@@ -22,6 +22,7 @@ import {
   clearExamLocal,
   clearIdentity,
   findNisRecords,
+  getSubjectMeta,
   MODUL_META,
 } from '../lib/examLib';
 import { isSupabaseConfigured } from '../lib/supabase';
@@ -90,7 +91,16 @@ function IdentityForm({ initial, onSubmit, onCancel, kelasPlaceholder }) {
   );
 }
 
-export default function ModulPostTest({ questions, storageKey, scoreKey, title, meta = MODUL_META, kelasPlaceholder = 'contoh: X TJKT 1' }) {
+export default function ModulPostTest({
+  questions,
+  storageKey,
+  scoreKey,
+  title,
+  meta = MODUL_META,
+  kelasPlaceholder = 'contoh: X TJKT 1',
+  examLabel = 'Ujian',
+  subtitle = 'Kerjakan di akhir modul untuk mengukur pemahamanmu.',
+}) {
   const { saveQuizScore } = useApp();
   const [identity, setIdentity] = useState(() => getIdentity());
   const [locked, setLocked] = useState(() => isModulLocked(scoreKey));
@@ -115,11 +125,14 @@ export default function ModulPostTest({ questions, storageKey, scoreKey, title, 
         token: t.token,
         expiresAt: t.expiresAt,
         subject: t.subject,
-        label: t.subject === 'mpk1' ? 'Post Test MPK 1' : t.subject === 'kka' ? 'Ujian KKA' : 'Ujian KKA XI',
+        // Label diambil dari EXAM_SUBJECTS, bukan daftar if-else. Daftar if-else
+        // diam-diam jatuh ke cabang terakhir begitu ada mapel baru — DKK pernah
+        // tampil sebagai "Ujian KKA XI" karena tanda tangannya belum ditambah.
+        label: `${getSubjectMeta(t.subject)?.label || 'Ujian'} — ${examLabel}`,
       });
     });
     return () => { alive = false; };
-  }, [examSubject]);
+  }, [examSubject, examLabel]);
 
   const handleIdentitySubmit = async (i) => {
     if (isSupabaseConfigured) {
@@ -163,7 +176,7 @@ export default function ModulPostTest({ questions, storageKey, scoreKey, title, 
           <div>
             <h3 style={{ margin: 0 }}>{title}</h3>
             <p style={{ margin: '2px 0 0', fontSize: '0.85rem', color: 'var(--text-light)' }}>
-              Kerjakan di akhir modul untuk mengukur pemahamanmu.
+              {subtitle}
             </p>
           </div>
         </div>
@@ -221,7 +234,7 @@ export default function ModulPostTest({ questions, storageKey, scoreKey, title, 
         <div>
           <h3 style={{ margin: 0 }}>{title}</h3>
           <p style={{ margin: '2px 0 0', fontSize: '0.85rem', color: 'var(--text-light)' }}>
-            Kerjakan di akhir modul untuk mengukur pemahamanmu.
+            {subtitle}
           </p>
         </div>
       </div>

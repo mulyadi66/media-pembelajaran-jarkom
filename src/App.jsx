@@ -36,7 +36,8 @@ const FlashcardPageDKK = lazy(() => import('./pages/dkk/FlashcardPageDKK'));
 const GlossaryPageDKK = lazy(() => import('./pages/dkk/GlossaryPageDKK'));
 const WorksheetPageDKK = lazy(() => import('./pages/dkk/WorksheetPageDKK'));
 const PreTestDKK = lazy(() => import('./pages/dkk/PreTestDKK'));
-const PostTestDKK = lazy(() => import('./pages/dkk/PostTestDKK'));
+const UjianTengahSemesterDKK = lazy(() => import('./pages/dkk/UjianTengahSemesterDKK'));
+const RekapUTS = lazy(() => import('./pages/dkk/RekapUTS'));
 const ChallengePageDKK = lazy(() => import('./pages/dkk/ChallengePageDKK'));
 const KasusDKK = lazy(() => import('./pages/dkk/KasusDKK'));
 const HasilDKK = lazy(() => import('./pages/dkk/HasilDKK'));
@@ -120,7 +121,11 @@ export default function App() {
                 <Route path="/dkk/glossary" element={<GlossaryPageDKK />} />
                 <Route path="/dkk/worksheet" element={<WorksheetPageDKK />} />
                 <Route path="/dkk/pretest" element={<PreTestDKK />} />
-                <Route path="/dkk/posttest" element={<PostTestDKK />} />
+                <Route path="/dkk/uts" element={<UjianTengahSemesterDKK />} />
+      <Route path="/dkk/rekap" element={<RekapUTS />} />
+      {/* Post Test DKK lama diganti Ujian. Bookmark siswa yang sudah pernah
+          dibuka diarahkan ke halaman baru, bukan jadi halaman kosong. */}
+      <Route path="/dkk/posttest" element={<Navigate to="/dkk/uts" replace />} />
                 <Route path="/dkk/challenge" element={<ChallengePageDKK />} />
                 <Route path="/dkk/kasus" element={<KasusDKK />} />
                 <Route path="/dkk/hasil" element={<HasilDKK />} />

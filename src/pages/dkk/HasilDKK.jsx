@@ -9,16 +9,16 @@ export default function HasilDKK() {
   const MODULE_IDS = ['dkk_elemen1', 'dkk_elemen2', 'dkk_elemen3', 'dkk_elemen4'];
   const { scores, modulesRead, resetAll, studentName, saveStudentName } = useApp();
   const pretestScore = scores.dkk_pretest || 0;
-  const posttestScore = scores.dkk_posttest || 0;
-  const pretestAnswered = Object.keys(JSON.parse(localStorage.getItem('jarkomlab_dkk_pretestAnswers') || '{}')).length;
-  const posttestAnswered = Object.keys(JSON.parse(localStorage.getItem('jarkomlab_dkk_posttestAnswers') || '{}')).length;
-  const growth = posttestScore > 0 && pretestScore > 0 ? posttestScore - pretestScore : null;
+  const utsScore = scores.dkk_uts || 0;
+  const pretestAnswered = countAnswered('jarkomlab_dkk_pretestAnswers');
+  const utsAnswered = countAnswered('jarkomlab_dkk_uts');
+  const growth = utsScore > 0 && pretestScore > 0 ? utsScore - pretestScore : null;
   const earnedBadges = checkBadges(scores, modulesRead, {
     pretestKey: 'dkk_pretest',
-    posttestKey: 'dkk_posttest',
+    posttestKey: 'dkk_uts',
     moduleIds: MODULE_IDS,
   });
-  const passed = posttestScore >= 70;
+  const passed = utsScore >= 70;
   const readCount = MODULE_IDS.filter(id => modulesRead[id]).length;
 
   return (
@@ -38,8 +38,8 @@ export default function HasilDKK() {
             <div className="detail-label">Pre-Test</div>
           </div>
           <div className="result-detail">
-            <div className="detail-value">{posttestScore}</div>
-            <div className="detail-label">Post-Test</div>
+            <div className="detail-value">{utsScore}</div>
+            <div className="detail-label">UTS</div>
           </div>
           <div className="result-detail">
             <div className="detail-value" style={{color: growth !== null ? (growth > 0 ? 'var(--success)' : 'var(--danger)') : 'var(--text-light)'}}>
@@ -56,13 +56,13 @@ export default function HasilDKK() {
       </div>
 
       <div className="result-card fade-in" style={{textAlign: 'left'}}>
-        <Leaderboard scores={scores} pretestKey="dkk_pretest" posttestKey="dkk_posttest" />
+        <Leaderboard scores={scores} pretestKey="dkk_pretest" posttestKey="dkk_uts" />
       </div>
 
       <div className="result-card fade-in" style={{textAlign: 'left'}}>
         <h3 style={{marginBottom: 20}}>Detail Penilaian</h3>
         <ScoreBar label="Pre-Test DKK" score={pretestScore} answered={pretestAnswered} />
-        <ScoreBar label="Post-Test DKK" score={posttestScore} answered={posttestAnswered} />
+        <ScoreBar label="UTS DKK" score={utsScore} answered={utsAnswered} />
         <div style={{marginTop: 16}}>
           <div style={{display:'flex',justifyContent:'space-between',marginBottom:8}}>
             <span style={{fontWeight:600}}>Elemen Dibaca</span>
@@ -78,9 +78,9 @@ export default function HasilDKK() {
         <div className="result-card fade-in">
           <h3 style={{marginBottom: 16}}><Award size={18} style={{color: 'var(--success)', verticalAlign: 'middle'}} /> Sertifikat</h3>
           <p style={{color: 'var(--text-light)', marginBottom: 16, fontSize: '0.9rem'}}>
-            Kamu telah lulus post-test! Download sertifikat di bawah ini.
+            Kamu telah lulus Ujian Tengah Semester! Download sertifikat di bawah ini.
           </p>
-          <Certificate studentName={studentName || 'Siswa'} score={posttestScore} module="DKK JarkomLab" />
+          <Certificate studentName={studentName || 'Siswa'} score={utsScore} module="DKK JarkomLab" />
         </div>
       )}
 
@@ -91,6 +91,21 @@ export default function HasilDKK() {
       </div>
     </div>
   );
+}
+
+/**
+ * Hitung jumlah soal terjawab. Bentuk data berbeda antar bank:
+ * Quiz biasa (Pre-Test) menyimpan objek `{index: answer}`, sedangkan
+ * ModulPostTest (UTS) menyimpan array jawaban langsung. Count keduanya di sini
+ * supaya tidak ada halaman yang lagi baca storage dengan asumsi bentuk lain.
+ */
+function countAnswered(key) {
+  try {
+    const data = JSON.parse(localStorage.getItem(key) || 'null');
+    if (Array.isArray(data)) return data.filter(v => v != null).length;
+    if (data && typeof data === 'object') return Object.keys(data).length;
+  } catch { /* storage rusak: anggap belum dikerjakan */ }
+  return 0;
 }
 
 function ScoreBar({ label, score, answered }) {
