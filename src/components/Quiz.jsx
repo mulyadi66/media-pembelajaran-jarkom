@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { CheckCircle, XCircle, ChevronLeft, ChevronRight, Clock, Award, RotateCcw, KeyRound, AlertTriangle, Lock, Maximize2 } from 'lucide-react';
 import { getIdentity, unlockCode, isTokenExpired } from '../lib/examLib';
 
@@ -23,9 +23,35 @@ function shuffleArray(arr) {
  *
  * Sengaja tanpa crypto: ini bukan kontrol keamanan, hanya deteksi perubahan.
  */
+/**
+ * Permutasi indeks opsi: `perm[pos]` = indeks opsi ASLI yang ditampilkan di
+ * posisi `pos`. Dipakai supaya huruf kunci tiap soal berbeda antar perangkat.
+ *
+ * Tanpa ini urutan soal sudah acak, tapi kunci hurufnya tetap sama di semua
+ * perangkat (mis. soal "urutan proses bisnis" selalu A) — pola yang justru
+ * paling gampang dihafal saat mau nyontek. Yang diacak hanya URUTAN ISI opsi;
+ * teks opsi tidak pernah diubah, dan huruf yang tampil selalu dihitung ulang
+ * dari posisinya, bukan dari prefiks `A. ` yang tersimpan di bank.
+ */
+function buildOptOrder(questions) {
+  return questions.map(q => shuffleArray((q.options || []).map((_, i) => i)));
+}
+
+/** Permutasi hanya sah kalau tetap memakai setiap indeks tepat satu kali. */
+function isPermutation(arr, len) {
+  return Array.isArray(arr)
+    && arr.length === len
+    && new Set(arr).size === len
+    && arr.every(i => Number.isInteger(i) && i >= 0 && i < len);
+}
+
 function bankFingerprint(questions) {
   return `${questions.length}|${questions
     .map((q) => {
+      // WAJIB dipanggil dengan bank soal ASLI (urutan opsi asli), bukan dengan
+      // `qs` yang sudah diacak per perangkat: sidik jari harus sama di semua
+      // perangkat, kalau ikut-acak tiap siswa akan selalu melihat "bank soal
+      // berubah" padahal bank-nya tidak pernah diedit guru.
       const opsi = (q.options || [])
         .map((o) => String(o).replace(/^[A-E]\.\s*/, '').trim())
         .join('~');
@@ -60,6 +86,20 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
       } catch { /* order korup, acak ulang */ }
     }
     return shuffleArray(questions);
+  });
+  const [optOrders] = useState(() => {
+    const key = `jarkomlab_${storageKey}_optorder`;
+    const stored = localStorage.getItem(key);
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        const valid = Array.isArray(parsed)
+          && parsed.length === questions.length
+          && parsed.every((perm, i) => isPermutation(perm, (questions[i].options || []).length));
+        if (valid) return parsed;
+      } catch { /* order korup, acak ulang */ }
+    }
+    return buildOptOrder(questions);
   });
   const [answers, setAnswers] = useState(() => {
     const saved = localStorage.getItem(`jarkomlab_${storageKey}`);
@@ -166,7 +206,20 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
     setLock('pseudo');
   };
 
-  const qs = shuffledQs;
+  // Opsi tiap soal ikut diacak sesuai permutasi yang tersimpan per perangkat.
+  // `q.answer` (indeks di bank) harus dipetakan ulang ke posisi baru, kalau tidak
+  // kunci akan bergeser dan penilaian jadi salah semua.
+  const qs = useMemo(() => shuffledQs.map((sq) => {
+    const perm = optOrders[questions.indexOf(sq)] || [];
+    const bankOpts = sq.options || [];
+    if (perm.length !== bankOpts.length) return sq;
+    const newAnswer = perm.indexOf(sq.answer);
+    return {
+      ...sq,
+      options: perm.map((orig) => bankOpts[orig]),
+      answer: newAnswer === -1 ? sq.answer : newAnswer,
+    };
+  }), [shuffledQs, optOrders, questions]);
   const q = qs[currentIdx];
   const total = qs.length;
   const letters = ['A', 'B', 'C', 'D', 'E'];
@@ -192,14 +245,14 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
         score,
         correct,
         total,
-        fingerprint: bankFingerprint(qs),
+        fingerprint: bankFingerprint(questions),
       }));
     } catch { /* storage penuh/privat: layar hasil tetap jalan */ }
     if (onScoreSubmit) {
       const startedAt = Number(localStorage.getItem(`jarkomlab_${storageKey}_startedAt`) || 0) || null;
       onScoreSubmit(score, { startedAt, finishedAt: Date.now() });
     }
-  }, [answers, qs, total, onScoreSubmit, storageKey]);
+  }, [answers, qs, total, onScoreSubmit, storageKey, questions]);
 
   const submitRef = useRef(handleSubmit);
   useEffect(() => { submitRef.current = handleSubmit; }, [handleSubmit]);
@@ -232,8 +285,9 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
   useEffect(() => {
     if (!submitted) {
       localStorage.setItem(`jarkomlab_${storageKey}_order`, JSON.stringify(shuffledQs.map(q => questions.indexOf(q))));
+      localStorage.setItem(`jarkomlab_${storageKey}_optorder`, JSON.stringify(optOrders));
     }
-  }, [submitted, storageKey, shuffledQs, questions]);
+  }, [submitted, storageKey, shuffledQs, optOrders, questions]);
 
   // Peringatan anti-contek: monitor pindah tab / keluar saat ujian berlangsung
   useEffect(() => {
@@ -269,6 +323,7 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
     localStorage.removeItem(`jarkomlab_${storageKey}`);
     localStorage.removeItem(`jarkomlab_${storageKey}_submitted`);
     localStorage.removeItem(`jarkomlab_${storageKey}_order`);
+    localStorage.removeItem(`jarkomlab_${storageKey}_optorder`);
     localStorage.removeItem(`jarkomlab_${storageKey}_deadline`);
     localStorage.removeItem(`jarkomlab_${storageKey}_startedAt`);
     localStorage.removeItem(`jarkomlab_${storageKey}_warns`);
@@ -374,7 +429,7 @@ export default function Quiz({ questions, storageKey, timeLimit, onScoreSubmit, 
     // guru. Dipakai untuk jujur memberi tahu siswa bahwa review per-soal sudah
     // tidak lagi cocok dengan soal yang tadi dijawab (nilai sendiri tetap yang
     // tersimpan saat submit).
-    const bankChanged = Boolean(saved?.fingerprint) && saved.fingerprint !== bankFingerprint(qs);
+    const bankChanged = Boolean(saved?.fingerprint) && saved.fingerprint !== bankFingerprint(questions);
 
     return (
       <div className="quiz-result fade-in">

@@ -262,6 +262,7 @@ function clearQuizStorage(key) {
   localStorage.removeItem(`jarkomlab_${key}`);
   localStorage.removeItem(`jarkomlab_${key}_mode`);
   localStorage.removeItem(`jarkomlab_${key}_order`);
+  localStorage.removeItem(`jarkomlab_${key}_optorder`);
   localStorage.removeItem(`jarkomlab_${key}_submitted`);
   localStorage.removeItem(`jarkomlab_${key}_deadline`);
   localStorage.removeItem(`jarkomlab_${key}_unlocked`);
