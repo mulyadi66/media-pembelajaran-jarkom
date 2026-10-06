@@ -1,319 +1,48 @@
-/**
- * Bank soal Ujian Tengah Semester (UTS) DKK.
- *
- * Struktur sama dengan bank Post Test MPK 1: `answer` adalah indeks 0-based
- * dari `options`, dan tiap opsi sudah berprefiks "A. " .. "E. ".
- *
- * Komposisi:
- * - 20 soal, level sedang (10 C3 Menerapkan + 10 C4 Menganalisis)
- * - 5 topik x 4 soal: proses bisnis, K3LH, kewirausahaan, perakitan
- *   komputer, dan setting IP address di Windows
- * - Sebaran kunci dibuat rata 4/4/4/4/4 supaya siswa tidak bisa menebak
- *   satu huruf saja. Kalau perlu meratakan kunci, geser POSISI OPSI --
- *   jangan mengubah isi opsi, dan jangan menulis explanation yang menyebut
- *   huruf opsi karena langsung jadi salah begitu urutannya berubah.
- */
-export const UTS_DKK_SOAL = 20;
+﻿// ============================================================================
+// BANK SOAL UJIAN TENGAH SEMESTER (UTS) DKK
+// ----------------------------------------------------------------------------
+//ISI FILE INI SAJA. Struktur tiap soal:
+//
+// {
+//   id: 1,
+//   topik: 'Perakitan Komputer',
+//   level: 'C3 - Menerapkan',
+//   question: 'Teks soal di sini...',
+//   options: [
+//     'A. Opsi pertama',
+//     'B. Opsi kedua',
+//     'C. Opsi ketiga',
+//     'D. Opsi keempat',
+//     'E. Opsi kelima',
+//   ],
+//   answer: 2,            // INDEKS 0-based: 0=A, 1=B, 2=C, 3=D, 4=E
+//   explanation: 'Penjelasan kenapa jawaban itu benar.',
+// }
+//
+// ATURAN WAJIB (kalau dilanggar, soal bisa merusak nilai rapor siswa):
+// 1. `options` selalu 5, dan tiap opsi sudah berprefiks 'A. ' .. 'E. '.
+//    Jangan wrote prefiks sendiri di teks soal.
+// 2. `answer` adalah INDEKS, bukan huruf. 0=A, 1=B, 2=C, 3=D, 4=E.
+// 3. Jangan isi jawaban dengan 'C' atau 'C. ...' â€” itu akan salah baca.
+// 4. `explanation` jangan pernah menyebut huruf opsi ("opsi B mengabaikan...").
+//    Kalau nanti opsi digeser, penjelasan itu diam-diam jadi salah.
+//    Tulis yang mengacu ke isi opsi.
+// 5. `topik` harus salah satu dari daftar di bawah supaya rekap bisa dikelompokkan.
+// 6. Usahakan kunci A-E tersebar merata. Bank soal dengan kunci didominasi
+//    satu huruf mengukur "tebak huruf", bukan pemahaman.
+// ============================================================================
 
-export const utsDKK = [
-  {
-    id: 1,
-    topik: 'Proses Bisnis',
-    level: 'C3 - Menerapkan',
-    question: 'Sebuah toko komputer menjual laptop dengan harga beli Rp6.000.000. Biaya operasional per unit Rp500.000 dan toko menerapkan markup 25% dari harga beli. Berapa harga jual yang tepat?',
-    options: [
-      'A. Rp7.500.000',
-      'B. Rp7.750.000',
-      'C. Rp8.000.000',
-      'D. Rp8.500.000',
-      'E. Rp9.000.000',
-    ],
-    answer: 2,
-    explanation: 'Harga pokok penjualan = harga beli + biaya operasional = 6.000.000 + 500.000 = Rp6.500.000. Markup 25% dari harga beli = 25% x 6.000.000 = Rp1.500.000. Harga jual = 6.500.000 + 1.500.000 = Rp8.000.000.',
-  },
-  {
-    id: 2,
-    topik: 'Proses Bisnis',
-    level: 'C3 - Menerapkan',
-    question: 'Manakah urutan tahapan proses bisnis yang benar dalam sebuah perusahaan?',
-    options: [
-      'A. Perencanaan - Organisasi - Pelaksanaan - Pengawasan',
-      'B. Organisasi - Perencanaan - Pengawasan - Pelaksanaan',
-      'C. Pelaksanaan - Perencanaan - Organisasi - Pengawasan',
-      'D. Pengawasan - Pelaksanaan - Organisasi - Perencanaan',
-      'E. Perencanaan - Pelaksanaan - Organisasi - Pengawasan',
-    ],
-    answer: 0,
-    explanation: 'Tahapan proses bisnis mengikuti siklus manajemen: perencanaan (planning), organisasi (organizing), pelaksanaan (acting), lalu pengawasan (controlling). Pengawasan berada di akhir karena hasilnya dipakai memperbaiki tahap berikutnya.',
-  },
-  {
-    id: 3,
-    topik: 'Proses Bisnis',
-    level: 'C3 - Menerapkan',
-    question: 'Sebuah usaha makanan rumahan ingin menjual produknya ke supermarket. Selain izin PIRT, dokumen yang WAJIB dimiliki agar produknya layak beredar luas adalah...',
-    options: [
-      'A. Sertifikat ISO 9001',
-      'B. Laporan keuangan tahunan',
-      'C. Akta pendirian perseroan terbatas',
-      'D. Sertifikasi ISO 14001 untuk lingkungan',
-      'E. Sertifikat halal dari lembaga yang diakui pemerintah',
-    ],
-    answer: 4,
-    explanation: 'Produk pangan yang beredar luas wajib memiliki sertifikat halal dari lembaga yang diakui pemerintah. Sertifikat ISO (mutu atau lingkungan), akta perseroan, dan laporan keuangan adalah dokumen perusahaan, bukan syarat legalitas produk pangan.',
-  },
-  {
-    id: 4,
-    topik: 'Proses Bisnis',
-    level: 'C3 - Menerapkan',
-    question: 'Dalam pola kemitraan usaha, PU (Pusat Usaha) adalah pihak yang...',
-    options: [
-      'A. Menyediakan pasar dan distribusi tanpa ikut menanggung risiko',
-      'B. Menyediakan modal dan ikut menanggung risiko serta hasil usaha',
-      'C. Hanya menyewakan tenaga kerja',
-      'D. Membeli produk mitra lalu menjualnya kembali',
-      'E. Membiayai operasional mitra tanpa ikut menanggung untung-rugi',
-    ],
-    answer: 1,
-    explanation: 'PU (Pusat Usaha) menanggung modal dan ikut menanggung risiko serta hasil usaha. UP (Upstream) bergerak di bidang upstream seperti bahan baku atau jasa pendukung, sedangkan P (Profit) menambah nilai tanpa menanggung modal.',
-  },
-  {
-    id: 5,
-    topik: 'K3LH',
-    level: 'C3 - Menerapkan',
-    question: 'Menurut hierarki pengendalian risiko di tempat kerja, langkah yang paling efektif untuk mengurangi risiko paparan uap kimia berbahaya di laboratorium praktikum adalah...',
-    options: [
-      'A. Memberikan masker dan kacamata proteksi',
-      'B. Melarang siswa masuk ke laboratorium',
-      'C. Memasang ventilasi atau fume hood',
-      'D. Mengganti bahan kimia berbahaya dengan bahan yang lebih tidak berbahaya',
-      'E. Melakukan pemeriksaan kesehatan rutin',
-    ],
-    answer: 3,
-    explanation: 'Hierarki pengendalian risiko urut dari paling efektif: eliminasi, substitusi, kontrol teknis (engineering control), lalu alat pelindung diri (APD). Mengganti bahan berbahaya termasuk substitusi karena menghilangkan sumber bahaya, sedangkan masker dan kacamata hanya melindungi pekerja dari bahaya yang masih ada.',
-  },
-  {
-    id: 6,
-    topik: 'K3LH',
-    level: 'C3 - Menerapkan',
-    question: 'Setelah terjadi kecelakaan kerja ringan di workshop, langkah pertama yang WAJIB dilakukan pekerja adalah...',
-    options: [
-      'A. Langsung melapor ke kepala bagian produksi',
-      'B. Mencari izin atasan lebih dulu sebelum menyentuh korban',
-      'C. Melakukan pertolongan pertama pada korban sesuai prosedur',
-      'D. Melanjutkan pekerjaan sambil menunggu korban sadar',
-      'E. Membawanya pulang agar tidak menambah masalah perusahaan',
-    ],
-    answer: 2,
-    explanation: 'Urutan tindakan setelah kecelakaan: amankan lokasi, berikan pertolongan pertama pada korban, baru kemudian lapor. Mencari izin lebih dulu akan menunda pertolongan.',
-  },
-  {
-    id: 7,
-    topik: 'K3LH',
-    level: 'C3 - Menerapkan',
-    question: 'Prinsip 5S yang menjelaskan kegiatan memisahkan barang yang tidak diperlukan dari barang yang masih diperlukan disebut...',
-    options: [
-      'A. Seiri',
-      'B. Seiton',
-      'C. Seiso',
-      'D. Seiketsu',
-      'E. Shitsuke',
-    ],
-    answer: 0,
-    explanation: 'Seiri (rapi) memisahkan yang perlu dan tidak perlu. Seiton (tertata) menempatkan barang agar mudah diambil. Seiso (bersih) membersihkan area. Seiketsu (standar) divulgada ke seluruh area. Shitsuke (disiplin) membiasakan dan menjaga.',
-  },
-  {
-    id: 8,
-    topik: 'K3LH',
-    level: 'C3 - Menerapkan',
-    question: 'Komponen K3LH yang berisi penjelasan tentang bahaya, cara mencegah, serta tindakan yang harus dilakukan ketika terjadi kecelakaan disebut...',
-    options: [
-      'A. Laporan insiden kerja',
-      'B. Rencana tanggap darurat',
-      'C. Izin kerja (work permit)',
-      'D. Daftar periksa alat',
-      'E. Prosedur kerja operasi standar (SOP)',
-    ],
-    answer: 4,
-    explanation: 'SOP memuat bahaya pekerjaan, tindakan pencegahan, dan langkah darurat. Izin kerja dipakai untuk pekerjaan berisiko tinggi, rencana tanggap darurat disusun untuk suatu bangunan, sedangkan laporan insiden dan daftar periksa dibuat setelah atau saat kegiatan berjalan.',
-  },
-  {
-    id: 9,
-    topik: 'Kewirausahaan',
-    level: 'C3 - Menerapkan',
-    question: 'Menurut kaidah kewirausahaan, ciri pembeda utama seorang wirausaha dibandingkan manajer perusahaan pada umumnya adalah...',
-    options: [
-      'A. Mengurus administrasi dan keuangan perusahaan',
-      'B. Berani mengambil risiko dan berinisiatif memulai usaha baru',
-      'C. Mengawasi kinerja setiap karyawan',
-      'D. Menetapkan standar mutu produk',
-      'E. Menyusun anggaran tahunan perusahaan',
-    ],
-    answer: 1,
-    explanation: 'Pembeda utama seorang wirausaha adalah keberanian mengambil risiko dan inisiatif memulai usaha dari nol, sedangkan manajer menjalankan program yang sudah disusun pemilik.',
-  },
-  {
-    id: 10,
-    topik: 'Kewirausahaan',
-    level: 'C3 - Menerapkan',
-    question: 'Sebuah usaha disebut memiliki modal campuran karena...',
-    options: [
-      'A. Seluruh modalnya berasal dari pinjaman bank',
-      'B. Seluruh modalnya berasal dari simpanan pribadi pemilik',
-      'C. Modalnya seluruhnya berupa barang dagangan',
-      'D. Modalnya merupakan gabungan modal sendiri dan modal asing',
-      'E. Modalnya dihimpun dari iuran wajib seluruh pekerja',
-    ],
-    answer: 3,
-    explanation: 'Modal campuran adalah gabungan modal sendiri dan modal asing, misalnya uang pribadi ditambah pinjaman bank. Kalau seluruhnya milik sendiri disebut modal sendiri, dan kalau seluruhnya dari pihak luar disebut modal asing.',
-  },
-  {
-    id: 11,
-    topik: 'Kewirausahaan',
-    level: 'C4 - Menganalisis',
-    question: 'Sebelum memulai usaha, wirausaha perlu menyusun rencana usaha (business plan) terutama untuk...',
-    options: [
-      'A. Menentukan harga jual dan biaya promosi',
-      'B. Memilih jenis kendaraan operasional',
-      'C. Menganalisis kelayakan usaha dari aspek pasar, biaya, dan risiko',
-      'D. Menetapkan struktur organisasi perusahaan',
-      'E. Mengajukan perizinan operasional perusahaan',
-    ],
-    answer: 2,
-    explanation: 'Business plan dipakai menilai kelayakan usaha dari aspek pasar, teknis, finansial, dan risiko sebelum modal dikeluarkan. Harga, promosi, struktur organisasi, dan perizinan merupakan bagian dari rencana, bukan tujuan utamanya.',
-  },
-  {
-    id: 12,
-    topik: 'Kewirausahaan',
-    level: 'C4 - Menganalisis',
-    question: 'Dalam bauran pemasaran (marketing mix), yang termasuk kelompok produk (product) adalah...',
-    options: [
-      'A. Spesifikasi, kualitas, dan merek dagang yang ditawarkan',
-      'B. Harga jual, diskon, dan termin pembayaran',
-      'C. Saluran distribusi dan lokasi gerai',
-      'D. Iklan di media sosial dan sponsorship acara',
-      'E. Rekomendasi dari pelanggan lama',
-    ],
-    answer: 0,
-    explanation: 'Empat kelompok bauran pemasaran: produk (spesifikasi, kualitas, merek), harga (harga jual, diskon, termin), tempat (saluran distribusi, lokasi), dan promosi (iklan, sponsorship, rekomendasi pelanggan).',
-  },
-  {
-    id: 13,
-    topik: 'Perakitan Komputer',
-    level: 'C4 - Menganalisis',
-    question: 'Saat merakit komputer, komponen yang berfungsi sebagai tempat seluruh komponen dipasang dan saling terhubung disebut...',
-    options: [
-      'A. Catu daya (PSU)',
-      'B. Motherboard',
-      'C. Kipas pendingin (cooler)',
-      'D. Casing',
-      'E. Kabel jumper',
-    ],
-    answer: 1,
-    explanation: 'Motherboard atau mainboard menyediakan soket untuk CPU dan RAM serta jalur printed circuit yang menghubungkan seluruh komponen. Catu daya hanya mengubah listrik menjadi daya yang cocok, sedangkan casing berfungsi sebagai pelindung.',
-  },
-  {
-    id: 14,
-    topik: 'Perakitan Komputer',
-    level: 'C4 - Menganalisis',
-    question: 'Sebuah komputer dinyalakan tetapi tidak ada kipas yang berputar sama sekali dan monitor gelap. Komponen yang paling tepat diperiksa terlebih dahulu adalah...',
-    options: [
-      'A. Sistem operasi yang terpasang',
-      'B. Keyboard',
-      'C. Mouse',
-      'D. Catu daya (PSU)',
-      'E. Monitor',
-    ],
-    answer: 3,
-    explanation: 'Tidak adanya kipas yang berputar menunjukkan tidak ada tegangan listrik sama sekali, sehingga catu daya (PSU) adalah suspects pertama. Sistem operasi, keyboard, mouse, dan monitor tidak berpengaruh terhadap apakah kipas PSU berputar.',
-  },
-  {
-    id: 15,
-    topik: 'Perakitan Komputer',
-    level: 'C4 - Menganalisis',
-    question: 'Untuk mencegah kerusakan komponen akibat listrik statis (ESD) saat merakit komputer, tindakan yang paling tepat adalah...',
-    options: [
-      'A. Mengerjakan perakitan di ruangan yang lembap',
-      'B. Menyimpan komponen di dalam kantong plastik biasa',
-      'C. Mengganti seluruh baut motherboard dengan baut dari perangkat lain',
-      'D. Mematikan listrik PLN sebelum mulai merakit',
-      'E. Memakai gelang anti statis yang terhubung ke ground',
-    ],
-    answer: 4,
-    explanation: 'Gelang anti statis yang terhubung ke ground membuat muatan listrik pada tubuh terbuang sehingga tidak merusak komponen. Ruangan lembap justru meningkatkan risiko korosi.',
-  },
-  {
-    id: 16,
-    topik: 'Perakitan Komputer',
-    level: 'C4 - Menganalisis',
-    question: 'Sebuah komputer tercatat memiliki spesifikasi Intel Core i5 generasi ke-12, RAM 16 GB DDR4, SSD 512 GB, motherboard chipset B760, dan catu daya 650 watt. Komponen yang berperan sebagai otak utama sekaligus inti pemrosesan (core) pada komputer tersebut adalah...',
-    options: [
-      'A. RAM 16 GB DDR4',
-      'B. SSD 512 GB',
-      'C. Intel Core i5 generasi ke-12',
-      'D. Motherboard chipset B760',
-      'E. Catu daya 650 watt',
-    ],
-    answer: 2,
-    explanation: 'Otak utama sekaligus inti pemrosesan (core) adalah processor atau CPU, di sini Intel Core i5 generasi ke-12. RAM hanya berfungsi sebagai penyimpanan sementara saat komputer hidup, SSD adalah penyimpanan permanen, motherboard menjadi papan penghubung seluruh komponen, dan catu daya tugasnya hanya memasok listrik.',
-  },
-  {
-    id: 17,
-    topik: 'Setting IP Address Windows',
-    level: 'C4 - Menganalisis',
-    question: 'Seorang teknisi menjalankan perintah ipconfig di PC sekolah dan melihat IPv4 address 10.8.0.27 dengan subnet mask 255.255.0.0. Alamat tersebut termasuk...',
-    options: [
-      'A. Alamat privat yang lazim dipakai pada jaringan internal',
-      'B. Alamat publik yang boleh dipasang bebas pada PC lokal',
-      'C. Alamat loopback untuk menguji konektivitas ke mesin itu sendiri',
-      'D. Alamat broadcast untuk menghubungi semua perangkat di segmen yang sama',
-      'E. Alamat gateway yang dipakai perangkat lain untuk menghubungi PC ini',
-    ],
-    answer: 0,
-    explanation: 'Rentang 10.0.0.0 sampai 10.255.255.255 adalah alamat privat yang dipakai untuk jaringan internal. Loopback adalah 127.0.0.1, alamat broadcast berakhiran bit host semua satu, dan gateway adalah alamat router yang menjadi pintu keluar jaringan.',
-  },
-  {
-    id: 18,
-    topik: 'Setting IP Address Windows',
-    level: 'C4 - Menganalisis',
-    question: 'Untuk memberi IP address manual pada Windows 10 atau 11, urutan langkah yang benar adalah...',
-    options: [
-      'A. Control Panel - Network - IPv4 - Use the following IP address',
-      'B. Settings - Network & internet - pilih adapter - Properties - IPv4 - Use the following IP address',
-      'C. Command Prompt - ipconfig - lalu ketik IP address baru',
-      'D. Device Manager - Network adapter - Properties - isi kolom IP address',
-      'E. Control Panel - System and Security - masukkan IP address',
-    ],
-    answer: 1,
-    explanation: 'Di Windows 10/11: Settings - Network & internet - pilih Wi-Fi atau Ethernet - Properties - IPv4 - Properties - pilih Use the following IP address, lalu isi IP address, subnet mask, dan default gateway. Device Manager bukan tempat pengaturan alamat IP.',
-  },
-  {
-    id: 19,
-    topik: 'Setting IP Address Windows',
-    level: 'C4 - Menganalisis',
-    question: 'Di jaringan sekolah, PC siswa umumnya memakai DHCP agar alamat IP diberikan otomatis. Keuntungan utama memakai DHCP dibanding menulis IP manual adalah...',
-    options: [
-      'A. Alamat IP tidak akan pernah bentrok dengan perangkat lain',
-      'B. PC tidak memerlukan subnet mask',
-      'C. Koneksi internet menjadi lebih cepat',
-      'D. PC bisa langsung terhubung ke internet tanpa konfigurasi access point',
-      'E. Konfigurasi otomatis dan mudah dipelihara saat perangkat pindah jaringan',
-    ],
-    answer: 4,
-    explanation: 'DHCP menghindari salah ketik dan konflik alamat. Subnet mask tetap diperlukan dan diberikan oleh DHCP, DHCP tetap membutuhkan access point atau router yang berfungsi, dan DHCP tidak membuat koneksi lebih cepat.',
-  },
-  {
-    id: 20,
-    topik: 'Setting IP Address Windows',
-    level: 'C4 - Menganalisis',
-    question: 'Sebuah PC sudah terhubung ke internet tetapi tidak bisa membuka salah satu situs web, sementara situs lain tetap terbuka. Dugaan awal adalah cache DNS yang sudah usang. Perintah di Command Prompt yang tepat adalah...',
-    options: [
-      'A. ipconfig /release',
-      'B. ipconfig /renew',
-      'C. ipconfig /displaydns',
-      'D. ipconfig /flushdns',
-      'E. ping 8.8.8.8',
-    ],
-    answer: 3,
-    explanation: 'Perintah ipconfig /flushdns menghapus cache DNS lokal sehingga nama host dicari ulang ke DNS server. Perintah /renew meminta alamat IP baru dari DHCP, sedangkan ping ke 8.8.8.8 hanya menguji konektivitas IP tanpa membersihkan cache.',
-  },
+/** Daftar topik yang sah. Dipakai halaman UTS & Rekap untuk mengelompokkan. */
+export const TOPIK_UTS_DKK = [
+  'Proses Bisnis',
+  'K3LH',
+  'Kewirausahaan',
+  'Perakitan Komputer',
+  'Setting IP Address Windows',
 ];
+
+/** Bank soal UTS DKK. Isi di bawah `export const utsDKK = [` */
+export const utsDKK = [];
+
+/** Jumlah soal â€” dibaca otomatis dari bank, jangan diubah manual. */
+export const UTS_DKK_SOAL = 0;
