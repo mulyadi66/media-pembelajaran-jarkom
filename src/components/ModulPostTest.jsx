@@ -13,7 +13,6 @@ import {
 import {
   getIdentity,
   saveIdentity,
-  getIdentityError,
   isModulLocked,
   hasAnySubmission,
   addExamResult,
@@ -29,23 +28,24 @@ import {
 } from '../lib/examLib';
 import { isSupabaseConfigured } from '../lib/supabase';
 
-function IdentityForm({ initial, onSubmit, onCancel, kelasPlaceholder, subject }) {
-  const [nama, setNama] = useState(initial?.nama || '');
+function IdentityForm({ initial, onSubmit, onCancel, subject }) {
   const [nis, setNis] = useState(initial?.nis || '');
-  const [kelas, setKelas] = useState(initial?.kelas || '');
   const [error, setError] = useState(null);
   const [busy, setBusy] = useState(false);
   const [lookup, setLookup] = useState({ status: 'idle', ketemu: null });
 
   /**
-   * Auto-fill dari NIS. Dipanggil saat blur atau saat NIS sudah cukup panjang.
+   * Cari siswa dari NIS. Dipanggil otomatis saat mengetik (debounce) dan saat
+   * submit — siswa hanya mengetik NIS, tidak ada isian manual nama/kelas.
    *
-   * `requestId` dipakai sebagai token antibatal: mengetik NIS lagi dengan cepat
-   * bisa membuat dua lookup tumpang tindih, dan respons yang telat belonging ke
-   * NIS LAMA bisa menimpa ketikan siswa. Yang lambat harus dibuang, bukan
-   * menimpa input yang lebih baru.
+   * `reqRef` dipakai sebagai token antibatal: mengetik NIS lagi dengan cepat
+   * bisa membuat dua lookup tumpang tindih, dan respons yang telat milik NIS
+   * LAMA harus dibuang, bukan menimpa hasil yang lebih baru.
    */
   const reqRef = useRef(0);
+  const debounceRef = useRef(null);
+  useEffect(() => () => clearTimeout(debounceRef.current), []);
+
   const cariSiswa = async (angka) => {
     const req = ++reqRef.current;
     const bersih = String(angka || '').trim();
@@ -56,47 +56,48 @@ function IdentityForm({ initial, onSubmit, onCancel, kelasPlaceholder, subject }
     setLookup({ status: 'loading', ketemu: null });
     // Server dulu, roster lokal perangkat ini sebagai cadangan saat offline.
     const data = (await findSiswa(bersih, subject)) || findSiswaLokal(bersih, subject);
-    if (req !== reqRef.current) return null; // ada lookup lebih baru yang menang
+    if (req !== reqRef.current) return null;
     if (data) {
-      setNama(data.nama);
-      if (data.kelas) setKelas(data.kelas);
-      setLookup({ status: 'found', ketemu: data });
+      setLookup({ status: 'found', ketemu: { ...data, nis: bersih } });
       return data;
     }
     setLookup({ status: 'missing', ketemu: null });
     return null;
   };
 
+  const jadwalCari = (v) => {
+    clearTimeout(debounceRef.current);
+    const bersih = (v || '').trim();
+    if (/^\d{4,12}$/.test(bersih)) {
+      debounceRef.current = setTimeout(() => cariSiswa(bersih), 400);
+    } else {
+      setLookup({ status: 'idle', ketemu: null });
+    }
+  };
+
   const submit = async (e) => {
     e.preventDefault();
+    setError(null);
     const nisFinal = nis.trim();
 
-    // Siswa bisa menekan Enter / Simpan sebelum blur selesai, jadi lookup belum
-    // tentu sudah jalan. Tanpa ini, identitas ditolak "nama wajib diisi"
-    // padahal datanya ada di server — pesan yang mengarahkan siswa ke jalan
-    // buntu. Jadi lookup ditunggu dulu, dan hasilNYA yang dipakai, bukan state
-    // React yang belum来得及 ter-render.
-    let namaFinal = nama.trim();
-    let kelasFinal = kelas.trim();
-    if (/^\d{4,12}$/.test(nisFinal) && lookup.status !== 'found') {
-      setBusy(true);
-      try {
-        const data = await cariSiswa(nisFinal);
-        if (data) {
-          namaFinal = data.nama;
-          if (!kelasFinal) kelasFinal = data.kelas || '';
-        }
-      } finally {
-        setBusy(false);
-      }
-    }
-
-    const err = getIdentityError({ nama: namaFinal, nis: nisFinal });
-    if (err) { setError(err); return; }
+    // Siswa berhak lanjut HANYA kalau NIS-nya terdaftar di daftar siswa. Kalau
+    // tidak ada, blokir dan arahkan menghubungi guru — tidak ada isian manual.
+    // Tombol Lanjut memang disabled saat belum ditemukan, tapi guard tetap ada:
+    // siswa bisa menekan Enter sebelum pencarian selesai, dan hasil lookup yang
+    // dipakai adalah hasilNYA, bukan state React yang belum ter-render.
     setBusy(true);
-    setError(null);
+    let data = null;
     try {
-      await onSubmit({ nama: namaFinal, nis: nisFinal, kelas: kelasFinal });
+      if (lookup.status === 'found' && lookup.ketemu?.nis === nisFinal) {
+        data = lookup.ketemu;
+      } else {
+        data = await cariSiswa(nisFinal);
+      }
+      if (!data) {
+        setError('NIS tidak terdaftar di daftar siswa. Silakan hubungi guru — ujian baru bisa dimulai kalau NIS sudah didaftarkan.');
+        return;
+      }
+      await onSubmit({ nis: data.nis, nama: data.nama, kelas: data.kelas || '' });
     } catch (e2) {
       setError(e2?.message || 'Gagal menyimpan identitas. Coba lagi.');
     } finally {
@@ -104,30 +105,25 @@ function IdentityForm({ initial, onSubmit, onCancel, kelasPlaceholder, subject }
     }
   };
 
-  const namaDariDaftar = lookup.status === 'found';
-
   return (
     <form className="identity-form" onSubmit={submit} noValidate>
       <h3 style={{ marginBottom: 4 }}>Identitas Siswa</h3>
       <p style={{ color: 'var(--text-light)', fontSize: '0.85rem', marginBottom: 16 }}>
-        Ketik NIS dulu. Nama & kelas akan terisi otomatis dari daftar siswa — tidak perlu ketik ulang.
+        Ketik NIS dulu — nama &amp; kelas dicari otomatis dari daftar siswa. Ujian hanya bisa
+        dimulai untuk NIS yang sudah terdaftar.
       </p>
       <label className="identity-field">
         <span>NIS (4–12 digit angka)</span>
         <input
           type="text" inputMode="numeric" value={nis}
           placeholder="contoh: 202412345678" maxLength={12} autoFocus
+          autoComplete="off"
           onChange={(e) => {
             setNis(e.target.value);
             setError(null);
-            // NIS diubah setelah lookup berhasil → status FIND harus dibuang,
-            // kalau tidak nama siswa lain tetap terkunci dan tidak bisa diedit.
-            setLookup((l) => (l.status === 'idle' ? l : { status: 'idle', ketemu: null }));
-          }}
-          onBlur={(e) => {
-            // Lewati kalau jawaban untuk NIS yang sama sudah ada.
-            if (lookup.status === 'found' && lookup.ketemu?.nis === e.target.value.trim()) return;
-            cariSiswa(e.target.value);
+            // NIS diubah → status FIND/MISSING dibuang supaya tombol Lanjut
+            // nonaktif sampai pencarian untuk NIS baru selesai.
+            jadwalCari(e.target.value);
           }}
         />
       </label>
@@ -137,36 +133,20 @@ function IdentityForm({ initial, onSubmit, onCancel, kelasPlaceholder, subject }
         </p>
       )}
       {lookup.status === 'found' && (
-        <p style={{ color: 'var(--success)', fontSize: '0.8rem', margin: '0 0 8px' }} role="status">
-          <BadgeCheck size={14} style={{ verticalAlign: 'middle' }} /> Data ditemukan — nama & kelas terisi otomatis dari daftar siswa.
-          {namaDariDaftar && ' Kalau nama yang terisi salah, minta guru memperbaiki daftar siswanya.'}
+        <p className="identity-found" role="status">
+          <BadgeCheck size={14} /> NIS terdaftar — <strong>{lookup.ketemu.nama}</strong>
+          {lookup.ketemu.kelas && <> · Kelas {lookup.ketemu.kelas}</>}. Lanjut untuk memasukkan token ujian.
         </p>
       )}
       {lookup.status === 'missing' && (
-        <p style={{ color: 'var(--text-light)', fontSize: '0.8rem', margin: '0 0 8px' }}>
-          NIS ini belum ada di daftar siswa. Lanjut isi nama & kelas sendiri.
+        <p className="identity-block" role="alert">
+          NIS <strong>{nis.trim()}</strong> tidak terdaftar di daftar siswa. Silakan hubungi
+          guru untuk didaftarkan — ujian baru bisa dimulai setelah NIS terdaftar.
         </p>
       )}
-      <label className="identity-field">
-        <span>Nama Lengkap</span>
-        <input
-          type="text" value={nama}
-          onChange={(e) => { setNama(e.target.value); setError(null); }}
-          placeholder="contoh: Ahmad Fauzi" autoComplete="name"
-          readOnly={namaDariDaftar}
-        />
-      </label>
-      <label className="identity-field">
-        <span>Kelas (opsional)</span>
-        <input
-          type="text" value={kelas}
-          onChange={(e) => { setKelas(e.target.value); setError(null); }}
-          placeholder={kelasPlaceholder} maxLength={40}
-        />
-      </label>
       <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
-        <button className="btn btn-primary" type="submit" style={{ marginLeft: 0 }} disabled={busy}>
-          <BadgeCheck size={16} /> {busy ? 'Memeriksa…' : 'Simpan Identitas'}
+        <button className="btn btn-primary" type="submit" style={{ marginLeft: 0 }} disabled={busy || lookup.status !== 'found'}>
+          <BadgeCheck size={16} /> {busy ? 'Memeriksa…' : 'Lanjut ke Token Ujian'}
         </button>
         {onCancel && (
           <button type="button" className="btn btn-secondary" onClick={onCancel}>Batal</button>
@@ -183,7 +163,6 @@ export default function ModulPostTest({
   scoreKey,
   title,
   meta = MODUL_META,
-  kelasPlaceholder = 'contoh: X TJKT 1',
   examLabel = 'Ujian',
   subtitle = 'Kerjakan di akhir modul untuk mengukur pemahamanmu.',
 }) {
@@ -270,7 +249,6 @@ export default function ModulPostTest({
           initial={identity}
           onSubmit={handleIdentitySubmit}
           onCancel={identity ? () => setEditing(false) : undefined}
-          kelasPlaceholder={kelasPlaceholder}
           subject={examSubject}
         />
       </div>

@@ -101,8 +101,8 @@ export default function RosterPanel({ subject, label, roster, setRoster, onMessa
         <p className="roster-hint">
           <CloudOff size={13} style={{ verticalAlign: 'middle' }} /> Belum ada roster. Tempel daftar
           <code> NIS;Nama;Kelas </code>di kotak di atas lalu tekan <strong>Terapkan Roster</strong>, baru{' '}
-          <strong>Kirim ke Server</strong> aktif. Selama itu siswa tetap bisa ujian dengan mengetik nama
-          sendiri, hanya tidak auto-terisi.
+          <strong>Kirim ke Server</strong>. Ujian sudah <strong>wajib NIS terdaftar</strong> — tanpa
+          dikirim ke server, siswa di perangkat lain tidak bisa memulai ujian (diblokir, disuruh hubungi guru).
         </p>
       )}
     </div>

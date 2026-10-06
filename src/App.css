@@ -571,6 +571,18 @@ a { text-decoration: none; color: inherit; }
   color: var(--danger); font-size: 0.82rem; font-weight: 600; margin-top: 12px;
 }
 
+.identity-found,
+.identity-block {
+  display: flex; align-items: center; gap: 6px;
+  border-radius: 8px; padding: 8px 12px; margin: 0 0 10px;
+  font-size: 0.82rem; font-weight: 600;
+}
+
+.identity-found { background: #ecfdf5; border: 1px solid #a7f3d0; color: #047857; }
+.identity-found svg { flex-shrink: 0; }
+
+.identity-block { background: #fef2f2; border: 1px solid #fecaca; color: var(--danger-text); }
+
 /* ========== CHIP IDENTITAS ========== */
 .identity-chip {
   display: flex; align-items: center; gap: 10px; flex-wrap: wrap;

@@ -48,7 +48,6 @@ export default function UjianModulKKAXI() {
         storageKey={bank.key}
         scoreKey={bank.key}
         meta={meta}
-        kelasPlaceholder="Contoh: XI"
       />
 
       <p style={{ textAlign: 'center', marginTop: 16 }}>
