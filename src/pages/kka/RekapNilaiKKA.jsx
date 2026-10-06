@@ -360,7 +360,7 @@ export default function RekapNilaiKKA() {
           </div>
         </div>
 
-        <TokenUjianPanel onMessage={setMessage} />
+        <TokenUjianPanel onMessage={setMessage} subject={SUBJECT} />
 
         {rosterOpen && (
           <RosterPanel

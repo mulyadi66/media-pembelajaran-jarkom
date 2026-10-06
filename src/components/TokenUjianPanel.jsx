@@ -28,6 +28,16 @@ function inputToIso(value) {
 }
 
 /**
+ * Mapel yang ditampilkan panel. Tanpa prop `subject`, tampilkan semua mapel
+ * (perilaku lama). Dengan `subject`, hanya mapel itu — token mapel lain ada di
+ * halaman Rekap masing-masing. Kalau `subject` tidak dikenal, jatuh ke semua.
+ */
+function listFor(subject) {
+  const filtered = subject ? EXAM_SUBJECTS.filter((s) => s.key === subject) : EXAM_SUBJECTS;
+  return filtered.length ? filtered : EXAM_SUBJECTS;
+}
+
+/**
  * Panel pengaturan token ujian per mata pelajaran.
  *
  * Hanya dirender di halaman yang PIN-nya sudah tervalidasi (Rekap Nilai).
@@ -36,9 +46,9 @@ function inputToIso(value) {
  * belum dikonfigurasi atau blok SQL belum dijalankan, panel ini tetap tampil
  * read-only dari env var dan menjelaskan kendalanya — bukan diam-diam gagal.
  */
-export default function TokenUjianPanel({ onMessage }) {
+export default function TokenUjianPanel({ onMessage, subject }) {
   const [rows, setRows] = useState(() =>
-    EXAM_SUBJECTS.map((s) => ({
+    listFor(subject).map((s) => ({
       subject: s.key,
       label: s.fullLabel,
       token: '',
@@ -54,8 +64,9 @@ export default function TokenUjianPanel({ onMessage }) {
   const say = useCallback((msg) => { onMessage?.(msg); }, [onMessage]);
 
   const reload = useCallback(async () => {
-    const loaded = await Promise.all(EXAM_SUBJECTS.map((s) => loadExamToken(s.key)));
-    setRows(EXAM_SUBJECTS.map((s, i) => ({ subject: s.key, label: s.fullLabel, loading: false, ...loaded[i] })));
+    const list = listFor(subject);
+    const loaded = await Promise.all(list.map((s) => loadExamToken(s.key)));
+    setRows(list.map((s, i) => ({ subject: s.key, label: s.fullLabel, loading: false, ...loaded[i] })));
     setDraft((d) => {
       const next = { ...d };
       for (const r of loaded) {
@@ -64,7 +75,7 @@ export default function TokenUjianPanel({ onMessage }) {
       }
       return next;
     });
-  }, []);
+  }, [subject]);
 
   useEffect(() => { reload(); }, [reload]);
 

@@ -358,7 +358,7 @@ export default function RekapUTS() {
           </div>
         </div>
 
-        <TokenUjianPanel onMessage={setMessage} />
+        <TokenUjianPanel onMessage={setMessage} subject={SUBJECT} />
 
         {rosterOpen && (
           <RosterPanel

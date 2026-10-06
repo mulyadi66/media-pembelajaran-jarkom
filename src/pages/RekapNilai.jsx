@@ -309,7 +309,7 @@ const copyUnlock = async (modul) => {
           </div>
         </div>
 
-        <TokenUjianPanel onMessage={setMessage} />
+        <TokenUjianPanel onMessage={setMessage} subject="mpk1" />
 
         {rosterOpen && (
           <RosterPanel

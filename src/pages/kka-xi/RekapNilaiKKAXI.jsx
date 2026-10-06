@@ -365,7 +365,7 @@ export default function RekapNilaiKKAXI() {
           </div>
         </div>
 
-        <TokenUjianPanel onMessage={setMessage} />
+        <TokenUjianPanel onMessage={setMessage} subject={SUBJECT} />
 
         {rosterOpen && (
           <RosterPanel
