@@ -228,3 +228,128 @@ $$;
 
 revoke all on function public.clear_exam_token(pin text, p_subject text) from public;
 grant execute on function public.clear_exam_token(pin text, p_subject text) to anon;
+-- ============================================================================
+-- DATA SISWA (NIS -> Nama, Kelas) UNTUK AUTO-FILL IDENTITAS
+-- ============================================================================
+-- Supabase Dashboard > SQL Editor > New query > tempel blok ini > Run.
+-- Idempotent: aman dijalankan berulang kali.
+--
+-- Tujuan: di halaman Ujian siswa cukup mengetik NIS, nama & kelas otomatis
+-- terisi. Tipe Ketik Manual tetap ada sebagai fallback (NIS tidak ada di
+-- daftar / siswa baru), supaya migrasi server tidak pernah memblokir ujian.
+--
+-- Kenapa mapel bisa 'all': daftar siswa sebenarnya milik kelas, bukan milik
+-- pelajaran. Mapel dipakai hanya supaya satu kelas bisa punya roster berbeda
+-- per pelajaran (mis. XI TJKT 1 untuk KKA, XI TJKT 2 untuk KKA XI).
+-- Lookup selalu mencoba mapel spesifik dulu, baru jatuh ke 'all'.
+--
+-- Keamanan: anon hanya boleh SELECT — sama seperti exam_tokens dan
+-- exam_results, nama/NIS siswa sudah bisa dibaca anon dari exam_results
+-- (dipakai fitur Rekap), jadi tabel ini tidak menambah risiko baru. Yang
+-- dilindungi adalah hak MENGGANTI/HAPUS daftar: menulis hanya lewat RPC yang
+-- memvalidasi PIN. Jangan pernah menambah policy INSERT/UPDATE/DELETE anon.
+--
+-- PENTING: pin di bawah ('2468') HARUS sama dengan VITE_REKAP_PIN di Vercel.
+-- ============================================================================
+create table if not exists siswa (
+  nis text not null check (nis ~ '^[0-9]{4,12}$'),
+  mapel text not null default 'all',
+  nama text not null check (length(trim(nama)) > 0),
+  kelas text,
+  updated_at timestamptz not null default now(),
+  primary key (nis, mapel)
+);
+
+create index if not exists siswa_nis_idx on siswa (nis);
+
+alter table siswa enable row level security;
+
+drop policy if exists "select siswa" on siswa;
+create policy "select siswa"
+  on siswa for select to anon
+  using (true);
+
+-- Guru mengunggah roster dari panel "Daftar Siswa" di halaman Rekap Nilai.
+-- Upsert per (nis, mapel): mengunggah ulang daftar yang sama aman, dan siswa
+-- yang pindah kelas cukup diupload ulang tanpa dihapus manual.
+create or replace function public.set_siswa(
+  pin text,
+  p_subject text,
+  p_rows jsonb
+)
+returns integer
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  v_subject text := case when p_subject is null or trim(p_subject) = '' then 'all' else trim(p_subject) end;
+  v_nis text;
+  v_nama text;
+  v_kelas text;
+  v_item jsonb;
+  v_count integer := 0;
+  v_skip integer := 0;
+begin
+  if pin is null or pin <> '2468' then
+    raise exception 'PIN salah';
+  end if;
+  if v_subject <> 'all' and v_subject not in ('mpk1', 'kka', 'kka_xi', 'dkk') then
+    raise exception 'Mata pelajaran tidak dikenal';
+  end if;
+  if p_rows is null or jsonb_typeof(p_rows) <> 'array' then
+    raise exception 'Daftar siswa harus berupa array';
+  end if;
+
+  -- Baris tidak valid DILEWATI, bukan membuat seluruh upload gagal. Kalau satu
+  -- baris rusak membatalkan 30 baris yang benar, guru harus mengetik ulang
+  -- daftar satu kelas hanya gara-gara satu NIS salah ketik.
+  for v_item in select * from jsonb_array_elements(p_rows) loop
+    v_nis := nullif(trim(coalesce(v_item ->> 'nis', '')), '');
+    v_nama := nullif(trim(coalesce(v_item ->> 'nama', '')), '');
+    v_kelas := nullif(trim(coalesce(v_item ->> 'kelas', '')), '');
+
+    if v_nis is null or v_nama is null or v_nis !~ '^[0-9]{4,12}$' then
+      v_skip := v_skip + 1;
+      continue;
+    end if;
+
+    insert into public.siswa (nis, mapel, nama, kelas, updated_at)
+    values (v_nis, v_subject, v_nama, v_kelas, now())
+    on conflict (nis, mapel) do update
+      set nama = excluded.nama,
+          kelas = excluded.kelas,
+          updated_at = now();
+    v_count := v_count + 1;
+  end loop;
+
+  if v_count = 0 and v_skip > 0 then
+    raise exception 'Tidak ada baris valid (NIS 4-12 angka + nama wajib). % baris dilewati.', v_skip;
+  end if;
+
+  -- Kembalikan jumlah yang TERSIMPAN, bukan jumlah input. Kalau selisih,
+  -- frontend bisa memberi tahu guru ada baris yang terbuang diam-diam.
+  return v_count;
+end;
+$$;
+
+revoke all on function public.set_siswa(pin text, p_subject text, p_rows jsonb) from public;
+grant execute on function public.set_siswa(pin text, p_subject text, p_rows jsonb) to anon;
+
+-- Menghapus semua roster satu mapel (untuk mulai dari daftar baru).
+create or replace function public.clear_siswa(pin text, p_subject text)
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  if pin is null or pin <> '2468' then
+    raise exception 'PIN salah';
+  end if;
+  delete from public.siswa where mapel = coalesce(nullif(trim(p_subject), ''), 'all');
+end;
+$$;
+
+revoke all on function public.clear_siswa(pin text, p_subject text) from public;
+grant execute on function public.clear_siswa(pin text, p_subject text) to anon;

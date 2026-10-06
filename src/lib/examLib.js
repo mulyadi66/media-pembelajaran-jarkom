@@ -370,13 +370,13 @@ export function unlockCode(nis, modulKey) {
   return Math.abs(h).toString(36).toUpperCase().padStart(6, '0').slice(0, 6);
 }
 
-// ============ ROSTER SISWA (lokal saja, untuk rekap) ============
+// ============ ROSTER / DATA SISWA ============
 /** Kunci roster dipisah per mapel agar daftar siswa tiap pelajaran tidak tertimpa. */
 function rosterKey(subject) {
   return subject && subject !== 'mpk1' ? `${K.roster}_${subject}` : K.roster;
 }
 
-/** Daftar siswa {nis, nama, kelas} — disimpan lokal guru, tidak dikirim ke server. */
+/** Daftar siswa {nis, nama, kelas} — versi lokal (fallback offline). */
 export function getRoster(subject) {
   return loadJSON(rosterKey(subject), []);
 }
@@ -387,6 +387,115 @@ export function saveRoster(list, subject) {
 
 export function clearRoster(subject) {
   localStorage.removeItem(rosterKey(subject));
+}
+
+/**
+ * Cari data siswa dari tabel `siswa` di server untuk auto-fill identitas.
+ *
+ * Urutan sumber: server -> roster lokal -> null (siswa ketik manual).
+ * Sengaja TIDAK pernah melempar error: migrasi SQL yang belum dijalankan atau
+ * Supabase yang down harus membuat siswa ketik manual, bukan terkunci.
+ *
+ * Mapel spesifik didahulukan atas 'all' karena roster milik kelas: kelas yang
+ * sama bisa punya daftar berbeda per pelajaran.
+ *
+ * @returns {Promise<{nis: string, nama: string, kelas: string}|null>}
+ */
+export async function findSiswa(nis, subject) {
+  const bersih = String(nis || '').trim();
+  if (!isSupabaseConfigured || !/^\d{4,12}$/.test(bersih)) return null;
+
+  const mapel = subject ? String(subject) : 'all';
+  try {
+    const { data, error } = await supabase
+      .from('siswa')
+      .select('nis, mapel, nama, kelas')
+      .eq('nis', bersih)
+      .in('mapel', mapel === 'all' ? ['all'] : [mapel, 'all']);
+    if (error || !Array.isArray(data) || data.length === 0) return null;
+
+    const spesifik = data.find((r) => r.mapel === mapel);
+    const row = spesifik || data[0];
+    if (!row?.nama) return null;
+    return { nis: row.nis, nama: row.nama, kelas: row.kelas || '' };
+  } catch {
+    return null;
+  }
+}
+
+/** Cari di roster lokal perangkat ini (dipakai kalau server tidak terjangkau). */
+export function findSiswaLokal(nis, subject) {
+  const bersih = String(nis || '').trim();
+  if (!bersih) return null;
+  const s = getRoster(subject).find((x) => String(x.nis) === bersih);
+  return s?.nama ? { nis: bersih, nama: s.nama, kelas: s.kelas || '' } : null;
+}
+
+/**
+ * Guru mengirim roster ke server dari panel "Daftar Siswa" di Rekap Nilai,
+ * supaya semua perangkat siswa bisa auto-fill dari NIS saja.
+ *
+ * SELALU menyimpan salinan lokal lebih dulu: kalau RPC-nya belum ada di
+ * Supabase (blok SQL belum dijalankan), daftar tetap dipakai di perangkat
+ * guru alih-alih hilang.
+ *
+ * @returns {Promise<{ok: boolean, message: string, synced?: number}>}
+ */
+export async function pushSiswa(list, subject) {
+  const rows = (list || [])
+    .filter((s) => /^\d{4,12}$/.test(String(s.nis || '').trim()) && String(s.nama || '').trim())
+    .map((s) => ({
+      nis: String(s.nis).trim(),
+      nama: String(s.nama).trim(),
+      kelas: String(s.kelas || '').trim(),
+    }));
+  if (!rows.length) return { ok: false, message: 'Tidak ada baris valid untuk dikirim (NIS 4-12 angka + nama wajib).' };
+
+  saveRoster(rows, subject);
+
+  if (!isSupabaseConfigured) {
+    return { ok: false, message: `Tersimpan lokal saja (Supabase belum dikonfigurasi). ${rows.length} siswa.` };
+  }
+  try {
+    const { data, error } = await supabase.rpc('set_siswa', {
+      pin: getRekapPin(),
+      p_subject: subject || 'all',
+      p_rows: rows,
+    });
+    if (error) throw new Error(error.message);
+    // RPC mengembalikan jumlah baris yang TERSIMPAN, yang bisa lebih kecil dari
+    // jumlah dikirim kalau ada baris tidak valid lolos filter sisi klien.
+    // `??` bukan `||` supaya angka 0 tidak diam-diam diartikan "semua tersimpan".
+    const n = typeof data === 'number' ? data : rows.length;
+    const base = `${n} siswa terkirim ke server. Siswa cukup ketik NIS saat ujian.`;
+    return {
+      ok: true,
+      message: n < rows.length
+        ? `${base} ${rows.length - n} baris tidak valid dilewati (NIS harus 4-12 angka).`
+        : base,
+      synced: n,
+    };
+  } catch (e) {
+    return {
+      ok: false,
+      message: `Gagal kirim ke server: ${e?.message || 'tidak diketahui'}. Daftar tetap tersimpan di perangkat ini.`,
+    };
+  }
+}
+
+/** Hapus roster mapel ini di server (PIN divalidasi di fungsi SQL). */
+export async function clearSiswaServer(subject) {
+  if (!isSupabaseConfigured) return { ok: false, message: 'Supabase belum dikonfigurasi.' };
+  try {
+    const { error } = await supabase.rpc('clear_siswa', {
+      pin: getRekapPin(),
+      p_subject: subject || 'all',
+    });
+    if (error) throw new Error(error.message);
+    return { ok: true, message: 'Daftar siswa di server sudah dihapus.' };
+  } catch (e) {
+    return { ok: false, message: `Gagal hapus di server: ${e?.message || 'tidak diketahui'}` };
+  }
 }
 
 /** Token lama (semua mapel). Dipertahankan hanya sebagai fallback untuk MPK 1

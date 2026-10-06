@@ -25,10 +25,9 @@ import {
   resetExamResults,
   clearExamLocal,
   getRoster,
-  saveRoster,
-  clearRoster,
   unlockCode,
 } from '../lib/examLib';
+import RosterPanel from '../components/RosterPanel';
 
 function predikat(avg) {
   if (avg == null) return { grade: '—', label: '—' };
@@ -98,16 +97,7 @@ function mergeRoster(rows, roster) {
   return [...map.values()].sort((a, b) => a.nis.localeCompare(b.nis));
 }
 
-/** Parse teks roster "NIS;Nama;Kelas" per baris → array siswa. */
-function parseRosterText(text) {
-  return (text || '').split(/\r?\n/)
-    .map(l => l.trim()).filter(Boolean)
-    .map(l => {
-      const p = l.split(/[;,\t]/).map(s => s.trim());
-      return { nis: p[0] || '', nama: p[1] || '', kelas: p[2] || '' };
-    })
-    .filter(s => /^\d{4,12}$/.test(s.nis) && s.nama);
-}
+
 
 function exportCSV(rows) {
   const cols = ['No', 'Nama', 'NIS', 'Kelas', 'Modul 1', 'Modul 2', 'Modul 3', 'Rata-rata', 'Predikat', 'Status', 'Durasi (mnt)'];
@@ -141,7 +131,6 @@ export default function RekapNilai() {
   const [q, setQ] = useState('');
   const [kelasSel, setKelasSel] = useState('');
   const [roster, setRoster] = useState(() => getRoster());
-  const [rosterText, setRosterText] = useState('');
   const [rosterOpen, setRosterOpen] = useState(false);
 
   const load = useCallback(async () => {
@@ -273,23 +262,7 @@ export default function RekapNilai() {
     setLoading(false);
   };
 
-  const applyRoster = () => {
-    const list = parseRosterText(rosterText);
-    if (!list.length) { setMessage('Roster kosong — format NIS;Nama;Kelas per baris.'); return; }
-    setRoster(list);
-    saveRoster(list);
-    setRosterText('');
-    setRosterOpen(false);
-    setMessage(`Roster disimpan — ${list.length} siswa (tersimpan lokal di perangkat ini).`);
-  };
-
-  const deleteRoster = () => {
-    setRoster([]);
-    clearRoster();
-    setMessage('Roster siswa dihapus.');
-  };
-
-  const copyUnlock = async (modul) => {
+const copyUnlock = async (modul) => {
     if (!unlockSel) return;
     const code = unlockCode(unlockSel.nis, modul.key);
     try {
@@ -339,34 +312,13 @@ export default function RekapNilai() {
         <TokenUjianPanel onMessage={setMessage} />
 
         {rosterOpen && (
-          <div className="rekap-roster no-print">
-            <p className="roster-head">
-              <Users size={14} /> Roster Siswa <small>— untuk melihat siapa yang belum mengerjakan. Tersimpan lokal di perangkat ini.</small>
-            </p>
-            <textarea
-              className="roster-textarea" rows={5}
-              value={rosterText}
-              onChange={(e) => setRosterText(e.target.value)}
-              placeholder={'Format satu baris per siswa: NIS;Nama;Kelas\n20241234;Ahmad Fauzi;X TJKT 1\n20241235;Siti Aminah;X TJKT 1'}
-              aria-label="Daftar siswa NIS;Nama;Kelas"
-            />
-            <div className="roster-actions">
-              <button className="btn btn-primary" onClick={applyRoster} disabled={!rosterText.trim()}>
-                <UserCheck size={16} /> Terapkan Roster
-              </button>
-              <button className="btn btn-secondary" onClick={() => setRosterText('')}>Bersihkan</button>
-              {roster.length > 0 && (
-                <button className="btn btn-danger" onClick={deleteRoster}>
-                  <Trash2 size={16} /> Hapus Roster
-                </button>
-              )}
-            </div>
-            {roster.length > 0 && (
-              <p className="roster-hint">
-                {roster.length} siswa tersimpan · siswa di roster yang belum mengerjakan tampil berstatus <strong>Belum</strong>.
-              </p>
-            )}
-          </div>
+          <RosterPanel
+            subject="mpk1"
+            label="MPK 1"
+            roster={roster}
+            setRoster={setRoster}
+            onMessage={setMessage}
+          />
         )}
 
         <div className="rekap-stats">

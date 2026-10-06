@@ -15,6 +15,7 @@ import {
   Users,
 } from 'lucide-react';
 import TokenUjianPanel from '../../components/TokenUjianPanel';
+import RosterPanel from '../../components/RosterPanel';
 import {
   fetchExamResults,
   syncPending,
@@ -25,8 +26,6 @@ import {
   resetExamResultsSubject,
   clearExamLocalSubject,
   getRoster,
-  saveRoster,
-  clearRoster,
   unlockCode,
 } from '../../lib/examLib';
 import { UJIAN_KKA_SOAL_PER_ELEMEN } from '../../data/kka/ujianKKA.js';
@@ -98,17 +97,6 @@ function mergeRoster(rows, roster) {
   return [...map.values()].sort((a, b) => a.nis.localeCompare(b.nis));
 }
 
-/** Parse teks roster "NIS;Nama;Kelas" per baris -> array siswa. */
-function parseRosterText(text) {
-  return (text || '').split(/\r?\n/)
-    .map(l => l.trim()).filter(Boolean)
-    .map(l => {
-      const p = l.split(/[;,\t]/).map(s => s.trim());
-      return { nis: p[0] || '', nama: p[1] || '', kelas: p[2] || '' };
-    })
-    .filter(s => /^\d{4,12}$/.test(s.nis) && s.nama);
-}
-
 function formatTanggal(iso) {
   if (!iso) return '—';
   const d = new Date(iso);
@@ -150,7 +138,6 @@ export default function RekapNilaiKKA() {
   const [q, setQ] = useState('');
   const [kelasSel, setKelasSel] = useState('');
   const [roster, setRoster] = useState(() => getRoster(SUBJECT));
-  const [rosterText, setRosterText] = useState('');
   const [rosterOpen, setRosterOpen] = useState(false);
 
   const load = useCallback(async () => {
@@ -252,11 +239,6 @@ export default function RekapNilaiKKA() {
     setMessage(`CSV dibuat untuk ${filtered.length} siswa sesuai filter yang aktif.`);
   };
 
-  const clearRosterSave = () => {
-    setRoster([]);
-    clearRoster(SUBJECT);
-  };
-
   const handleReset = async () => {
     if (!rows.length) { setMessage('Tidak ada data untuk direset.'); return; }
     const pinInput = window.prompt('Reset akan menghapus hasil Ujian KKA saja (server + perangkat ini).\nNilai MPK 1 / DKK / mapel lain tidak ikut terhapus.\nKetik PIN untuk melanjutkan:');
@@ -289,16 +271,6 @@ export default function RekapNilaiKKA() {
     clearExamLocalSubject(SUBJECT);
     await load();
     setLoading(false);
-  };
-
-  const applyRoster = () => {
-    const list = parseRosterText(rosterText);
-    if (!list.length) { setMessage('Roster kosong — format NIS;Nama;Kelas per baris.'); return; }
-    setRoster(list);
-    saveRoster(list, SUBJECT);
-    setRosterText('');
-    setRosterOpen(false);
-    setMessage(`Roster disimpan — ${list.length} siswa (tersimpan lokal di perangkat ini).`);
   };
 
   const copyUnlock = async (key) => {
@@ -391,34 +363,13 @@ export default function RekapNilaiKKA() {
         <TokenUjianPanel onMessage={setMessage} />
 
         {rosterOpen && (
-          <div className="rekap-roster no-print">
-            <p className="roster-head">
-              <Users size={14} /> Roster Siswa KKA <small>— untuk melihat siapa yang belum ujian. Tersimpan lokal di perangkat ini.</small>
-            </p>
-            <textarea
-              className="roster-textarea" rows={5}
-              value={rosterText}
-              onChange={(e) => setRosterText(e.target.value)}
-              placeholder={'Format satu baris per siswa: NIS;Nama;Kelas\n20241234;Ahmad Fauzi;X TJKT 1\n20241235;Siti Aminah;X TJKT 1'}
-              aria-label="Daftar siswa NIS;Nama;Kelas"
-            />
-            <div className="roster-actions">
-              <button className="btn btn-primary" onClick={applyRoster} disabled={!rosterText.trim()}>
-                <UserCheck size={16} /> Terapkan Roster
-              </button>
-              <button className="btn btn-secondary" onClick={() => setRosterText('')}>Bersihkan</button>
-              {roster.length > 0 && (
-                <button className="btn btn-danger" onClick={clearRosterSave}>
-                  <Trash2 size={16} /> Hapus Roster
-                </button>
-              )}
-            </div>
-            {roster.length > 0 && (
-              <p className="roster-hint">
-                {roster.length} siswa tersimpan · siswa di roster yang belum ujian tampil berstatus <strong>Belum</strong>.
-              </p>
-            )}
-          </div>
+          <RosterPanel
+            subject={SUBJECT}
+            label="KKA"
+            roster={roster}
+            setRoster={setRoster}
+            onMessage={setMessage}
+          />
         )}
 
         <div className="rekap-stats">

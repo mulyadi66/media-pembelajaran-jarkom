@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useApp } from '../context/AppContext';
 import Quiz from './Quiz';
 import {
@@ -22,26 +22,81 @@ import {
   clearExamLocal,
   clearIdentity,
   findNisRecords,
+  findSiswa,
+  findSiswaLokal,
   getSubjectMeta,
   MODUL_META,
 } from '../lib/examLib';
 import { isSupabaseConfigured } from '../lib/supabase';
 
-function IdentityForm({ initial, onSubmit, onCancel, kelasPlaceholder }) {
+function IdentityForm({ initial, onSubmit, onCancel, kelasPlaceholder, subject }) {
   const [nama, setNama] = useState(initial?.nama || '');
   const [nis, setNis] = useState(initial?.nis || '');
   const [kelas, setKelas] = useState(initial?.kelas || '');
   const [error, setError] = useState(null);
   const [busy, setBusy] = useState(false);
+  const [lookup, setLookup] = useState({ status: 'idle', ketemu: null });
+
+  /**
+   * Auto-fill dari NIS. Dipanggil saat blur atau saat NIS sudah cukup panjang.
+   *
+   * `requestId` dipakai sebagai token antibatal: mengetik NIS lagi dengan cepat
+   * bisa membuat dua lookup tumpang tindih, dan respons yang telat belonging ke
+   * NIS LAMA bisa menimpa ketikan siswa. Yang lambat harus dibuang, bukan
+   * menimpa input yang lebih baru.
+   */
+  const reqRef = useRef(0);
+  const cariSiswa = async (angka) => {
+    const req = ++reqRef.current;
+    const bersih = String(angka || '').trim();
+    if (!/^\d{4,12}$/.test(bersih)) {
+      setLookup({ status: 'idle', ketemu: null });
+      return null;
+    }
+    setLookup({ status: 'loading', ketemu: null });
+    // Server dulu, roster lokal perangkat ini sebagai cadangan saat offline.
+    const data = (await findSiswa(bersih, subject)) || findSiswaLokal(bersih, subject);
+    if (req !== reqRef.current) return null; // ada lookup lebih baru yang menang
+    if (data) {
+      setNama(data.nama);
+      if (data.kelas) setKelas(data.kelas);
+      setLookup({ status: 'found', ketemu: data });
+      return data;
+    }
+    setLookup({ status: 'missing', ketemu: null });
+    return null;
+  };
 
   const submit = async (e) => {
     e.preventDefault();
-    const err = getIdentityError({ nama, nis });
+    const nisFinal = nis.trim();
+
+    // Siswa bisa menekan Enter / Simpan sebelum blur selesai, jadi lookup belum
+    // tentu sudah jalan. Tanpa ini, identitas ditolak "nama wajib diisi"
+    // padahal datanya ada di server — pesan yang mengarahkan siswa ke jalan
+    // buntu. Jadi lookup ditunggu dulu, dan hasilNYA yang dipakai, bukan state
+    // React yang belum来得及 ter-render.
+    let namaFinal = nama.trim();
+    let kelasFinal = kelas.trim();
+    if (/^\d{4,12}$/.test(nisFinal) && lookup.status !== 'found') {
+      setBusy(true);
+      try {
+        const data = await cariSiswa(nisFinal);
+        if (data) {
+          namaFinal = data.nama;
+          if (!kelasFinal) kelasFinal = data.kelas || '';
+        }
+      } finally {
+        setBusy(false);
+      }
+    }
+
+    const err = getIdentityError({ nama: namaFinal, nis: nisFinal });
     if (err) { setError(err); return; }
     setBusy(true);
     setError(null);
     try {
-      await onSubmit({ nama: nama.trim(), nis: nis.trim(), kelas: kelas.trim() });
+      await onSubmit({ nama: namaFinal, nis: nisFinal, kelas: kelasFinal });
     } catch (e2) {
       setError(e2?.message || 'Gagal menyimpan identitas. Coba lagi.');
     } finally {
@@ -49,25 +104,56 @@ function IdentityForm({ initial, onSubmit, onCancel, kelasPlaceholder }) {
     }
   };
 
+  const namaDariDaftar = lookup.status === 'found';
+
   return (
     <form className="identity-form" onSubmit={submit} noValidate>
       <h3 style={{ marginBottom: 4 }}>Identitas Siswa</h3>
       <p style={{ color: 'var(--text-light)', fontSize: '0.85rem', marginBottom: 16 }}>
-        Isi sebelum mengerjakan ujian. Nilai akan direkap atas nama ini.
+        Ketik NIS dulu. Nama & kelas akan terisi otomatis dari daftar siswa — tidak perlu ketik ulang.
       </p>
-      <label className="identity-field">
-        <span>Nama Lengkap</span>
-        <input
-          type="text" value={nama} onChange={(e) => { setNama(e.target.value); setError(null); }}
-          placeholder="contoh: Ahmad Fauzi" autoComplete="name" autoFocus
-        />
-      </label>
       <label className="identity-field">
         <span>NIS (4–12 digit angka)</span>
         <input
           type="text" inputMode="numeric" value={nis}
-          placeholder="contoh: 202412345678" maxLength={12}
-          onChange={(e) => { setNis(e.target.value); setError(null); }}
+          placeholder="contoh: 202412345678" maxLength={12} autoFocus
+          onChange={(e) => {
+            setNis(e.target.value);
+            setError(null);
+            // NIS diubah setelah lookup berhasil → status FIND harus dibuang,
+            // kalau tidak nama siswa lain tetap terkunci dan tidak bisa diedit.
+            setLookup((l) => (l.status === 'idle' ? l : { status: 'idle', ketemu: null }));
+          }}
+          onBlur={(e) => {
+            // Lewati kalau jawaban untuk NIS yang sama sudah ada.
+            if (lookup.status === 'found' && lookup.ketemu?.nis === e.target.value.trim()) return;
+            cariSiswa(e.target.value);
+          }}
+        />
+      </label>
+      {lookup.status === 'loading' && (
+        <p style={{ color: 'var(--text-light)', fontSize: '0.8rem', margin: '0 0 8px' }} role="status">
+          Mencari data siswa…
+        </p>
+      )}
+      {lookup.status === 'found' && (
+        <p style={{ color: 'var(--success)', fontSize: '0.8rem', margin: '0 0 8px' }} role="status">
+          <BadgeCheck size={14} style={{ verticalAlign: 'middle' }} /> Data ditemukan — nama & kelas terisi otomatis dari daftar siswa.
+          {namaDariDaftar && ' Kalau nama yang terisi salah, minta guru memperbaiki daftar siswanya.'}
+        </p>
+      )}
+      {lookup.status === 'missing' && (
+        <p style={{ color: 'var(--text-light)', fontSize: '0.8rem', margin: '0 0 8px' }}>
+          NIS ini belum ada di daftar siswa. Lanjut isi nama & kelas sendiri.
+        </p>
+      )}
+      <label className="identity-field">
+        <span>Nama Lengkap</span>
+        <input
+          type="text" value={nama}
+          onChange={(e) => { setNama(e.target.value); setError(null); }}
+          placeholder="contoh: Ahmad Fauzi" autoComplete="name"
+          readOnly={namaDariDaftar}
         />
       </label>
       <label className="identity-field">
@@ -185,6 +271,7 @@ export default function ModulPostTest({
           onSubmit={handleIdentitySubmit}
           onCancel={identity ? () => setEditing(false) : undefined}
           kelasPlaceholder={kelasPlaceholder}
+          subject={examSubject}
         />
       </div>
     );
