@@ -1,8 +1,8 @@
 # Context Save — Media Pembelajaran Jarkom
 
-**Terakhir diupdate:** 30 September 2026
+**Terakhir diupdate:** 6 Oktober 2026
 **Branch:** master
-**Status:** Bank Post Test MPK 1 (Modul 1/2/3) sudah diaudit & diperbaiki; token ujian jadi per mapel + masa berlaku dan bisa dirotasi dari Rekap tanpa deploy.
+**Status:** Identitas siswa auto-fill dari NIS via tabel `siswa` (guru upload roster dari Rekap, siswa cukup ketik NIS); UTS DKK 20 soal + urutan opsi diacak per perangkat.
 
 ---
 
@@ -47,7 +47,7 @@ Semua styling terpusat di `src/App.css` (~2500 baris) + `index.css` (kosong, tid
 - **Perangkat bersama:** tombol "Reset Identitas" membersihkan identitas + hasil lokal agar siswa lain bisa mengerjakan.
 - **Anti-contek ringan:** banner peringatan saat pindah tab (≥3× merah) + konfirmasi browser saat menutup/merefresh saat ujian. Tidak memblokir nilai.
 - **Rekap Nilai guru** (`/mpk1/rekap`, PIN = `VITE_REKAP_PIN`, default `2468`): tabel nilai per siswa + kolom **Kelas, Status (Selesai/Sebagian/Belum), Durasi** pengerjaan, filter/pencarian nama-NIS + filter kelas, statistik rata-rata per modul + rerata kelas, export CSV (ikut kolom baru), cetak (print A4), dan tombol Reset (server + lokal; validasi PIN).
-- **Roster siswa**: panel "Daftar Siswa" di Rekap — tempel teks `NIS;Nama;Kelas` per baris → tersimpan lokal (key `jarkomlab_roster`); siswa roster yang belum mengerjakan tampil berstatus **Belum** (row disorot, tidak perlu sudah submit).
+- **Roster siswa**: panel "Daftar Siswa" di Rekap — tempel teks `NIS;Nama;Kelas` per baris → tersimpan lokal (key `jarkomlab_roster`) **+ opsional kirim ke tabel `siswa`** (lihat bagian Auto-Fill Identitas dari NIS); siswa roster yang belum mengerjakan tampil berstatus **Belum** (row disorot, tidak perlu sudah submit).
 - **Durasi pengerjaan**: waktu mulai dicatat di `jarkomlab_${key}_startedAt` saat ujian mulai; saat submit dikirim `started_at`/`finished_at`, server menghitung `durasi_detik` (kolom baru) → tampil per modul + total di Rekap & CSV.
 - **Supabase:**
   - URL `https://ogrlegwzktrelokhwoyg.supabase.co`; tabel `exam_results` dengan `unique (nis, modul)` → submit kedua ditolak server (HTTP 409).
@@ -55,6 +55,9 @@ Semua styling terpusat di `src/App.css` (~2500 baris) + `index.css` (kosong, tid
   - Fungsi `reset_exam_results(pin)` (TRUNCATE + SECURITY DEFINER, PostgREST menolak DELETE tanpa WHERE) — definisi di `supabase/schema.sql`; PIN di fungsi (`2468`) harus sama dengan `VITE_REKAP_PIN`.
   - Env di Vercel WAJIB type **Non-sensitive** — VITE_* hanya ter-inline saat build jika non-sensitive.
   - Tabel `exam_tokens` + fungsi `set_exam_token` / `clear_exam_token` (lihat bagian Token Ujian di bawah).
+  - Tabel `siswa` + fungsi `set_siswa` / `clear_siswa` (lihat bagian Auto-Fill Identitas dari NIS di bawah).
+- **State keys:** `mpk1_modul1_posttest`, `mpk1_modul2_posttest`, `mpk1_modul3_posttest` (jawaban/order/deadline/submitted/unlocked + `_startedAt`), `jarkomlab_identity`, `jarkomlab_examHistory`, `jarkomlab_examSubmitted`, `jarkomlab_pendingSync`, `jarkomlab_roster`.
+- **Env vars (prod):** `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` (lokal di `.env.local` gitignored), `VITE_REKAP_PIN=2468`. `VITE_EXAM_TOKEN*` sekarang hanya cadangan — token yang dipakai disimpan di tabel `exam_tokens`.
 
 ## Token Ujian per Mapel + Masa Berlaku
 - **Kenapa diubah:** sebelumnya semua mapel (MPK 1, KKA, KKA XI) memakai satu `VITE_EXAM_TOKEN` yang sama, jadi mengacak token KKA ikut mengubah MPK 1. Dan karena `VITE_*` di-inline saat build, **setiap** penggantian token wajib redeploy Vercel. Sekarang token + tanggal kedaluwarsa disimpan di tabel `exam_tokens` dan bisa dirotasi dari halaman Rekap **tanpa deploy**.
@@ -72,8 +75,38 @@ Semua styling terpusat di `src/App.css` (~2500 baris) + `index.css` (kosong, tid
 - `isTokenExpired()` berlaku **fail-open**: `null`/kosong = tidak kedaluwarsa, dan string tanggal yang tidak bisa diparse dianggap tidak kedaluwarsa. Salah baca tanggal = semua siswa terkunci, itu jauh lebih buruk daripada satu mapel sedikit terbebas dari batas.
 - `VITE_EXAM_TOKEN*` hanya cadangan. Kalau nanti dihapus dari Vercel, pastikan tabel `exam_tokens` sudah terisi untuk ketiga mapel — kalau tidak, semua token jatuh ke hardcoded dan sama untuk semua mapel lagi.
 
-- **State keys:** `mpk1_modul1_posttest`, `mpk1_modul2_posttest`, `mpk1_modul3_posttest` (jawaban/order/deadline/submitted/unlocked + `_startedAt`), `jarkomlab_identity`, `jarkomlab_examHistory`, `jarkomlab_examSubmitted`, `jarkomlab_pendingSync`, `jarkomlab_roster`.
-- **Env vars (prod):** `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` (lokal di `.env.local` gitignored), `VITE_REKAP_PIN=2468`. `VITE_EXAM_TOKEN*` sekarang hanya cadangan — token yang dipakai disimpan di tabel `exam_tokens`.
+## Auto-Fill Identitas dari NIS (tabel `siswa`)
+- **Alur:** guru buka Rekap → **Daftar Siswa** → tempel `NIS;Nama;Kelas` per baris → **Terapkan Roster** (lokal) → **Kirim ke Server**. Siswa cukup mengetik NIS di halaman Ujian, nama & kelas terisi sendiri.
+- **Kenapa tidak localStorage saja:** localStorage per perangkat. Laptop guru ≠ laptop siswa, jadi roster lokal tidak pernah sampai ke tempat yang membutuhkannya. Server yang membuat daftar ini jadi bisa dipakai lintas perangkat tanpa deploy ulang.
+- **Skema:** `siswa (nis text, mapel text default 'all', nama, kelas, updated_at)`, PK `(nis, mapel)`, `nis ~ '^[0-9]{4,12}$'`. Definisi + policy + RPC di `supabase/schema.sql`.
+- **Mapel sebagai bagian PK, bukan satu daftar global.** Roster sebenarnya milik kelas; mapel dipakai supaya satu kelas bisa punya daftar berbeda per pelajaran (XI TJKT 1 untuk KKA, XI TJKT 2 untuk KKA XI). Lookup selalu **mencoba mapel spesifik dulu, baru jatuh ke `'all'`** — bukan `all` dulu. Efek samping yang harus disadari: kelas yang belajar lebih dari satu mapel **harus upload roster terpisah di tiap Rekap**; tidak otomatis ikut.
+- **Nilai mapel harus sama persis dengan `EXAM_SUBJECTS[].key`** (`mpk1`, `kka`, `kka_xi`, `dkk`) — itu yang dipakai `subjectFromStorageKey` dari prefix storage key (`mpk1_`, `kka_elemen`, `kka_xi_`, `dkk_uts`). Kalau nama mapel di SQL dan di app berbeda, roster terupload tapi tidak pernah ketemu. Whitelist `set_siswa` juga harus memuat semua nilai itu.
+- **Keamanan:** anon hanya boleh `SELECT`, persis seperti `exam_tokens`/`exam_results`. `nama`/`nis` siswa sudah bisa dibaca anon dari `exam_results` (dipakai fitur Rekap), jadi tabel ini tidak menambah kebocoran baru — yang dilindungi adalah hak **mengganti/menghapus** daftar, itu sebabnya tulisannya hanya lewat RPC `set_siswa`/`clear_siswa` (SECURITY DEFINER + PIN). **Jangan pernah menambah policy INSERT/UPDATE/DELETE anon di `siswa`.**
+- **PIN di `set_siswa`/`clear_siswa` harus sama dengan `VITE_REKAP_PIN`**, sama seperti `reset_exam_results*` dan `set_exam_token`.
+- **`findSiswa()` + `findSiswaLokal()` tidak boleh pernah melempar error.** Urutan: server → roster lokal → `null` (siswa ketik manual). Tabel `siswa` belum ada / Supabase mati / migrasi SQL belum dijalankan = siswa harus tetap bisa ujian, bukan terkunci. `findSiswaLokal` menutup kasus perangkat siswa yang offline.
+- **Nama terkunci (`readOnly`), kelas tetap bisa diedit.** `nama` jadi identitas rapor dan bersumber dari satu daftar — Allow edit = 30 siswa mengetik 30 ejaan berbeda atas nama yang sama. `kelas` cuma buat filter/label, jadi tidak berbahaya kalau dikoreksi siswa. Kalau nama salah ketik di roster, perbaikannya di sisi guru (upload ulang = upsert, bukan perlu hapus dulu).
+- **Upload bersifat upsert dan tidak menghapus.** Siswa yang pindah kelas cukup upload ulang; siswa yang dihapus dari daftar masih ada di server. Itu disengaja — destructive delete dari teks tempel adalah cara cepat menghapus 32 siswa karena salah pilih file.
+- **Baris tidak valid di SQL DILEWATI, bukan membuat seluruh upload gagal.** Kalau satu NIS salah ketik membatalkan 30 baris yang benar, guru harus mengetik ulang daftar satu kelas. Kalau semua baris tidak valid tetap lempar error. Fungsi mengembalikan **jumlah baris yang TERSIMPAN** (bukan jumlah input) supaya frontend bisa memberi tahu ada baris terbuang — makanya `pushSiswa` pakai `typeof data === 'number'`, **bukan `||`**: `Number(0) || rows.length` diam-diam melapor "semua tersimpan" padahal tidak ada yang masuk.
+- **`RosterPanel.jsx` dipakai keempat halaman Rekap** (MPK 1, KKA, KKA XI, DKK). Sebelumnya tiap halaman punya salinan sendiri dengan `parseRosterText`/state `rosterText` sendiri — perubahan perilaku harus empat kali, dan tidak sinkron adalah default. Kalau menambah halaman Rekap, pakai komponen ini, jangan tulis ulang panelnya.
+- **`localStorage` roster tetap dipertahankan** (`rosterKey(subject)`; MPK 1 memakai key lama tanpa sufiks demi kompatibel). Fungsinya tidak cuma auto-fill: roster lokal itu yang bikin siswa **belum ujian** tampil berstatus **Belum** di tabel rekap, dan itu tidak ada di server.
+- **Status lookup di-reset saat NIS diubah.** Kalau tidak, setelah lookup berhasil lalu siswa menambah angka, `status` tetap `found` dan `readOnly` menahan edit — nama siswa lain terkunci tanpa cara melepas.
+- **Submit harus menunggu lookup yang masih jalan.** Siswa mengetik NIS lalu langsung Enter: submit jalan sebelum `cariSiswa` selesai, `nama` masih kosong, dan identitas ditolak "nama wajib diisi" padahal datanya ada di server. Submit memanggil lookup sendiri dan memakai **nilai balik**-nya, bukan state React yang belum ter-render. Ini pola yang sama seperti `examGate`: gerbang harus menutup sampai jawabannya benar-benar ada.
+- Token antibatal `reqRef` (counter, bukan flag) ada karena mengetik NIS cepat bisa membuat dua lookup tumpang tindih dan respons yang telat belonging ke NIS lama menimpa ketikan siswa. Yang lambat dibuang, bukan menimpa input lebih baru.
+
+## DKK (Dasar-Dasar Ke ») — `src/pages/dkk/`
+- **Rute:** `/dkk` (dashboard), `/dkk/elemen1..3`, `/dkk/pretest`, `/dkk/uts` (UTS), `/dkk/rekap`, `/dkk/challenge`, `/dkk/kasus`, `/dkk/hasil`
+- **UTS DKK = 20 soal** (`src/data/dkk/utsDKK.js`, `UTS_DKK_SOAL`), satu bank untuk seluruh topik (`DKK_META = [{ key: 'dkk_uts', label: 'UTS' }]`), bukan per modul seperti mapel lain.
+- **Storage key `dkk_uts`** — prefix `dkk_uts`, harus tetap sinkron dengan `EXAM_SUBJECTS` dan whitelist `set_siswa`.
+- `/dkk/posttest` = `<Navigate>` ke `/dkk/uts` supaya bookmark siswa lama tidak jadi halaman kosong.
+- Rekap `/dkk/rekap` (flag sessionStorage `rekapPinDkkOk`)
+
+## Pengacakan Opsi Jawaban per Perangkat (semua Quiz)
+- `Quiz.jsx` mengacak **urutan opsi** tiap soal per perangkat, disimpan di `jarkomlab_${storageKey}_optorder` (`buildOptOrder`, jalur acak Fisher-Yates). Berlaku global: pre-test, post-test, Ujian KKA/KKA XI, UTS DKK.
+- Konsekuensi yang wajib diingat: **huruf yang dilihat siswa ≠ huruf di bank.** Semua `explanation` jadi wajib mengacu isi opsi ("memilih switch termurah"), bukan huruf ("B mengabaikan…"). Ini alasannya semaphore penyesuaian bank yang sama berlaku untuk bank apa pun.
+- Urutan opsi **tidak boleh diacak ulang di tengah ujian berlangsung** pada bank yang belum submit — Attempt yang sudah dijawab masih memakai `_order` lama, dan `_result` menyimpan skor sebagai snapshot (lihat bagian "Bug skor") supaya nilai rapor dan layar siswa tetap sama.
+- `_optorder` divalidasi `isPermutation` (panjang + indeks unik + rentang). Jadi urutan rusak di storage akan diabaikan dan diacak ulang — tapi kalau bank berubah jumlah opsinya, attempt yang belum submit bisa dinilai dengan kunci versi baru. Jangan push di tengah jam ujian.
+- `bankFingerprint` WAJIB dipanggil dengan bank soal **ASLI**, bukan dengan `qs` yang sudah diacak — kalau ikut-acak, sidik jari berbeda di tiap perangkat dan siswa selalu melihat peringatan bank berubah. Ini alasan normalisasi awalan `A. `..`E. ` ada di sana: menggeser huruf opsi (rebalance sah) tidak memicu peringatan palsu.
+- `_optorder` ikut dihapus `clearQuizStorage` (`examLib.js:265`) — kalau tidak, di perangkat bersama sisa urutan soal ujian sebelumnya bisa terbaca siswa berikutnya.
 
 ## MPK 2
 - **Mapel:** Teknologi Jaringan Kabel dan Nirkabel
@@ -380,7 +413,7 @@ Tiga bug yang sama-sama merusak file tapi lolos karena JS masih valid:
 
 ## Fitur Lengkap
 - Dashboard, Modul 1-3 (materi + video + section tracker), Post Test ujian per modul (exam-only: token gate + timer + auto-grade + review + anti-contek)
-- Rekap Nilai guru (PIN, filter/pencarian, filter kelas, statistik per modul, kolom Kelas/Status/Durasi, roster siswa, CSV, cetak, reset server+lokal)
+- Rekap Nilai guru (PIN, filter/pencarian, filter kelas, statistik per modul, kolom Kelas/Status/Durasi, roster siswa lokal **+ kirim ke server**, CSV, cetak, reset server+lokal)
 - Flashcard (35 istilah), Glossary (35 istilah + search), Worksheet (24 essay), Challenge mode (30 soal timed)
 - Device Simulator (drag & drop), Certificate generator, Badges, Streak, Leaderboard
 - Dark mode, PWA, Print styles, Error boundary
@@ -448,6 +481,13 @@ Tiga bug yang sama-sama merusak file tapi lolos karena JS masih valid:
 - [x] Editor token dipasang di ketiga halaman Rekap (MPK 1, KKA, KKA XI)
 - [x] Supabase terverifikasi read-only untuk anon: SELECT jalan, INSERT ditolak, RPC ada dan PIN salah ditolak
 - [x] Form token di Rekap selalu bisa diedit — hilangkan dead-end "Simpan sekali di sini" (`fa2ce90`)
+- [x] UTS DKK 20 soal (semua opsi 5) + koreksi kunci 9=E, 13=B, 15=D
+- [x] Urutan opsi jawaban diacak per perangkat + disimpan (`_optorder`), berlaku global di semua Quiz
+- [x] Tabel `siswa` + RPC `set_siswa`/`clear_siswa`; identitas auto-fill dari NIS
+- [x] Panel roster jadi satu komponen `RosterPanel` untuk keempat halaman Rekap
+- [x] Submit identitas menunggu lookup NIS (tidak lagi ditolak "nama wajib" saat lookup belum selesai)
+- [x] Baris roster tidak valid dilewati di SQL, bukan membatalkan seluruh upload; `set_siswa` melaporkan jumlah TERSIMPAN
+- [x] Supabase terverifikasi: `siswa` SELECT anon OK, `set_siswa`/`clear_siswa` menolak PIN salah (`P0001`), INSERT anon ditolak 401
 
 ## Cara Mengecek Bundle yang Sedang Dipakai Browser
 - Kalau guru bilang "fitur baru tidak muncul" padahal sudah di-deploy, jangan buru-buru
@@ -462,6 +502,3 @@ Tiga bug yang sama-sama merusak file tapi lolos karena JS masih valid:
 - Gejala "panel tidak ada" ternyata **bukan** masalah cache atau deploy: komponennya
   sudah live, tapi form-nya memang tidak dirender karena kondisi `source === 'server'`.
   Before a cache diagnosis, ask user what text they actually see on screen.
-- [x] SemuaExplanation referring ke huruf opsi dibetulkan (aman saat opsi digeser)
-- [x] Bug skor: layar hasil tidak lagi menghitung ulang dari bank soal (snapshot `_result`)
-- [x] Fingerprint bank diperkuat sampai mencakup teks soal + isi opsi
