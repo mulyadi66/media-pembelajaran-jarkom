@@ -38,12 +38,12 @@ export default function DashboardDKK() {
         <div className="hero-content">
           <div className="hero-badge">Kelas XI TJKT</div>
           <h1>Dasar Kompetensi Keahlian (DKK)</h1>
-          <p>Mata Pelajaran Kejuruan — Kompetensi Dasar Kejuruan TJKT</p>
+          <p>Mata Pelajaran Kejuruan — Dasar Kompetensi Keahlian TJKT</p>
           <div className="hero-stats">
             <div className="stat"><BookOpen size={18} /> <span>4 Elemen</span></div>
             <div className="stat"><Briefcase size={18} /> <span>Studi Kasus</span></div>
             <div className="stat"><Shield size={18} /> <span>K3LH</span></div>
-            <div className="stat"><ClipboardCheck size={18} /> <span>Pre & Post Test</span></div>
+            <div className="stat"><ClipboardCheck size={18} /> <span>Pre-Test & UTS</span></div>
           </div>
         </div>
         <div className="hero-visual">
@@ -139,7 +139,7 @@ export default function DashboardDKK() {
         <ConfirmModal
           open={showReset}
           title="Reset Semua Pengerjaan?"
-          message="Semua progress, nilai, jawaban pretest/posttest, dan data lainnya akan dihapus permanen."
+          message="Semua progress, nilai, jawaban pretest/UTS, dan data lainnya akan dihapus permanen."
           confirmLabel="Ya, Reset"
           cancelLabel="Batal"
           onConfirm={() => { resetAll(); setShowReset(false); }}

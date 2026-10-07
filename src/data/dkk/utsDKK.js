@@ -21,9 +21,9 @@
 //
 // ATURAN WAJIB (kalau dilanggar, soal bisa merusak nilai rapor siswa):
 // 1. `options` selalu 5, dan tiap opsi sudah berprefiks 'A. ' .. 'E. '.
-//    Jangan wrote prefiks sendiri di teks soal.
+//    Jangan tulis prefiks sendiri di teks soal.
 // 2. `answer` adalah INDEKS, bukan huruf. 0=A, 1=B, 2=C, 3=D, 4=E.
-// 3. Jangan isi jawaban dengan 'C' atau 'C. ...' â€” itu akan salah baca.
+// 3. Jangan isi jawaban dengan 'C' atau 'C. ...' — itu akan salah baca.
 // 4. `explanation` jangan pernah menyebut huruf opsi ("opsi B mengabaikan...").
 //    Kalau nanti opsi digeser, penjelasan itu diam-diam jadi salah.
 //    Tulis yang mengacu ke isi opsi.
@@ -56,7 +56,7 @@ export const utsDKK = [
     id: 2,
     level: 'C3 - Menerapkan',
     question:
-      'Papan rangkaian computer tempat semua komponen elektronik computer terangkai disebut dengan...',
+      'Papan rangkaian komputer tempat semua komponen elektronik komputer terangkai disebut dengan...',
     options: [
       'A. Keyboard',
       'B. Motherboard',
@@ -86,14 +86,14 @@ export const utsDKK = [
     level: 'C3 - Menerapkan',
     question: 'Berikut ini yang merupakan tugas dari CPU adalah....',
     options: [
-      'A. Merupakan otak computer',
+      'A. Merupakan otak komputer',
       'B. Untuk Menyimpan Data dan Program',
       'C. Memasukkan data dan mengambil data',
       'D. Mengetik dan memasukkan data',
       'E. Mengetik dan menyimpan data',
     ],
     answer: 0,
-    explanation: 'CPU adalah otak pemrosesan computer yang mengolah seluruh instruksi.',
+    explanation: 'CPU adalah otak pemrosesan komputer yang mengolah seluruh instruksi.',
   },
   {
     id: 5,
@@ -178,7 +178,7 @@ export const utsDKK = [
     id: 10,
     level: 'C3 - Menerapkan',
     question:
-      'Bekerja di tempat tinggi adalah pekerjaan dilakukan di permukaan tanah yang atau perairan yang memiliki perbedaan ketinggian dan potensi terjatuh. Penjelasan tersebut merupakan definisi bekerja pada ketinggian menurut regulasi pemerintah. Regulasi yang dijadikan acuan dalam prosedur kerja di tempat tinggi adalah...',
+      'Bekerja di tempat tinggi adalah pekerjaan yang dilakukan di permukaan tanah atau perairan yang memiliki perbedaan ketinggian dan potensi terjatuh. Penjelasan tersebut merupakan definisi bekerja pada ketinggian menurut regulasi pemerintah. Regulasi yang dijadikan acuan dalam prosedur kerja di tempat tinggi adalah...',
     options: [
       'A. UU No. 1 Tahun 1970',
       'B. UU No. 7 Tahun 1990',
@@ -332,5 +332,5 @@ export const utsDKK = [
   },
 ];
 
-/** Jumlah soal â€” dibaca otomatis dari bank, jangan diubah manual. */
+/** Jumlah soal — dibaca otomatis dari bank, jangan diubah manual. */
 export const UTS_DKK_SOAL = utsDKK.length;
