@@ -91,10 +91,10 @@ const subjects = {
       { to: '/dkk/kasus', icon: Briefcase, label: 'Studi Kasus' },
       { to: '/dkk/pretest', icon: ClipboardCheck, label: 'Pre-Test' },
       { to: '/dkk/uts', icon: FileText, label: 'UTS' },
+      { to: '/dkk/rekap', icon: ClipboardList, label: 'Rekap Nilai (Guru)' },
       { to: '/dkk/worksheet', icon: FileDown, label: 'Lembar Kerja' },
       { to: '/dkk/glossary', icon: BookA, label: 'Glossarium' },
       { to: '/dkk/hasil', icon: BarChart3, label: 'Hasil & Sertifikat' },
-{ to: '/dkk/rekap', icon: ClipboardList, label: 'Rekap Nilai (Guru)' },
     ],
     titles: {
       '/dkk': 'Dashboard DKK',

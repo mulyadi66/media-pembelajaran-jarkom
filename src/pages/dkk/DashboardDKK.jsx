@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useApp } from '../../context/AppContext';
 import { checkBadges } from '../../data/badges';
-import { Globe, Shield, Radio, Ruler, BookOpen, Trophy, Award, BookA, Zap, FileDown, BarChart3, Briefcase, ClipboardCheck, FileText, RotateCcw, Monitor } from 'lucide-react';
+import { Globe, Shield, Radio, Ruler, BookOpen, Trophy, Award, BookA, Zap, FileDown, BarChart3, Briefcase, ClipboardCheck, ClipboardList, FileText, RotateCcw, Monitor } from 'lucide-react';
 import ConfirmModal from '../../components/ConfirmModal';
 
 export default function DashboardDKK() {
@@ -27,6 +27,7 @@ export default function DashboardDKK() {
     { to: '/dkk/kasus', icon: Briefcase, title: 'Studi Kasus', desc: 'Skenario nyata', color: ['#10b981', '#059669'] },
     { to: '/dkk/pretest', icon: ClipboardCheck, title: 'Pre-Test', desc: 'Uji awal', color: ['#06b6d4', '#0891b2'] },
     { to: '/dkk/uts', icon: FileText, title: 'UTS', desc: 'Ujian tengah semester', color: ['#ef4444', '#dc2626'] },
+    { to: '/dkk/rekap', icon: ClipboardList, title: 'Rekap Nilai', desc: 'Nilai UTS per siswa (guru)', color: ['#0d9488', '#0f766e'] },
     { to: '/dkk/worksheet', icon: FileDown, title: 'Lembar Kerja', desc: 'Soal offline', color: ['#7c3aed', '#6d28d9'] },
     { to: '/dkk/glossary', icon: BookOpen, title: 'Glossarium', desc: 'Istilah DKK', color: ['#0ea5e9', '#0284c7'] },
     { to: '/dkk/hasil', icon: BarChart3, title: 'Hasil', desc: 'Pencapaian & sertifikat', color: ['#f43f5e', '#e11d48'] },
