@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import {
   KeyRound, Copy, Check, Save, RotateCcw, ServerCog,
-  TriangleAlert, CircleCheck, Clock,
+  TriangleAlert, CircleCheck, Clock, ChevronDown, ChevronUp,
 } from 'lucide-react';
 import {
   EXAM_SUBJECTS,
@@ -60,6 +60,9 @@ export default function TokenUjianPanel({ onMessage, subject }) {
   const [draft, setDraft] = useState({});
   const [busy, setBusy] = useState(null);
   const [copied, setCopied] = useState(null);
+  // Panel disembunyikan (auto-hide) secara default supaya tidak menghalangi
+  // tabel rekap. Baru memuat token dari server saat dibuka.
+  const [open, setOpen] = useState(false);
 
   const say = useCallback((msg) => { onMessage?.(msg); }, [onMessage]);
 
@@ -77,7 +80,7 @@ export default function TokenUjianPanel({ onMessage, subject }) {
     });
   }, [subject]);
 
-  useEffect(() => { reload(); }, [reload]);
+  useEffect(() => { if (open) reload(); }, [open, reload]);
 
   const edit = (subject, patch) => setDraft((d) => ({ ...d, [subject]: { ...d[subject], ...patch } }));
 
@@ -121,7 +124,7 @@ export default function TokenUjianPanel({ onMessage, subject }) {
   };
 
   return (
-    <section className="token-panel" aria-labelledby="token-panel-h">
+    <section className={`token-panel${open ? ' open' : ''}`} aria-labelledby="token-panel-h">
       <div className="token-panel-head">
         <ServerCog size={18} />
         <div>
@@ -133,97 +136,112 @@ export default function TokenUjianPanel({ onMessage, subject }) {
             bisa menyelesaikan — masa berlaku tidak memutus timer di tengah jalan.
           </p>
         </div>
+        {open
+          ? <ChevronUp size={18} className="token-panel-chevron" />
+          : <ChevronDown size={18} className="token-panel-chevron" />}
+        {/* Tombol transparan menutupi seluruh header: cukup valid HTML (heading
+            tidak boleh di dalam <button>) sekaligus name tombol dari aria-label. */}
+        <button
+          type="button"
+          className="token-panel-toggle-cover"
+          onClick={() => setOpen((o) => !o)}
+          aria-expanded={open}
+          aria-controls="token-panel-body"
+          aria-label={`${open ? 'Sembunyikan' : 'Tampilkan'} pengaturan token ujian`}
+        />
       </div>
 
-      {rows.map((r) => {
-        const expired = isTokenExpired(r.expiresAt);
-        return (
-          <div className="token-row" key={r.subject}>
-            <div className="token-row-main">
-              <div className="token-row-title">
-                <KeyRound size={16} />
-                <strong>{r.label}</strong>
-                <span className={`token-source ${r.source}`}>{SOURCE_LABEL[r.source] || r.source}</span>
-                {expired && <span className="token-badge expired"><TriangleAlert size={12} /> Kedaluwarsa</span>}
-                {!expired && r.expiresAt && (
-                  <span className="token-badge"><Clock size={12} /> {formatTokenExpiry(r.expiresAt)}</span>
-                )}
-              </div>
+      <div className="token-panel-body" id="token-panel-body" hidden={!open}>
+        {rows.map((r) => {
+          const expired = isTokenExpired(r.expiresAt);
+          return (
+            <div className="token-row" key={r.subject}>
+              <div className="token-row-main">
+                <div className="token-row-title">
+                  <KeyRound size={16} />
+                  <strong>{r.label}</strong>
+                  <span className={`token-source ${r.source}`}>{SOURCE_LABEL[r.source] || r.source}</span>
+                  {expired && <span className="token-badge expired"><TriangleAlert size={12} /> Kedaluwarsa</span>}
+                  {!expired && r.expiresAt && (
+                    <span className="token-badge"><Clock size={12} /> {formatTokenExpiry(r.expiresAt)}</span>
+                  )}
+                </div>
 
-              {r.loading ? (
-                <p className="token-row-empty">Memuat…</p>
-              ) : (
-                <>
-                  <div className="token-row-value">
-                    <code>{r.token}</code>
-                    <button
-                      type="button"
-                      className="btn-icon-sm"
-                      onClick={() => copy(r.subject, r.token)}
-                      aria-label={`Salin token ${r.label}`}
-                    >
-                      {copied === r.subject ? <Check size={15} /> : <Copy size={15} />}
-                    </button>
-                  </div>
-                  <div className="token-row-edit">
-                    {r.source !== 'server' && (
-                      <p className="token-row-hint">
-                        Token ini masih dari <strong>{SOURCE_LABEL[r.source]}</strong>. Simpan sekali di
-                        sini untuk mengunci token di server — setelah itu bisa dirotasi tanpa deploy.
-                      </p>
-                    )}
-                    <label>
-                      <span>Token baru</span>
-                      <input
-                        type="text"
-                        value={draft[r.subject]?.token ?? ''}
-                        onChange={(e) => edit(r.subject, { token: e.target.value })}
-                        className="calc-input"
-                        placeholder="Minimal 4 karakter"
-                      />
-                    </label>
-                    <label>
-                      <span>Batas mulai (opsional)</span>
-                      <input
-                        type="datetime-local"
-                        value={draft[r.subject]?.expiry ?? ''}
-                        onChange={(e) => edit(r.subject, { expiry: e.target.value })}
-                        className="calc-input"
-                      />
-                    </label>
-                    <div className="token-row-actions">
+                {r.loading ? (
+                  <p className="token-row-empty">Memuat…</p>
+                ) : (
+                  <>
+                    <div className="token-row-value">
+                      <code>{r.token}</code>
                       <button
                         type="button"
-                        className="btn btn-primary"
-                        onClick={() => save(r.subject)}
-                        disabled={busy === r.subject}
+                        className="btn-icon-sm"
+                        onClick={() => copy(r.subject, r.token)}
+                        aria-label={`Salin token ${r.label}`}
                       >
-                        <Save size={15} /> {busy === r.subject ? 'Menyimpan…' : 'Simpan'}
-                      </button>
-                      <button
-                        type="button"
-                        className="btn btn-secondary"
-                        onClick={() => revert(r.subject)}
-                        disabled={busy === r.subject || r.source !== 'server'}
-                        title={r.source === 'server' ? 'Hapus token server, kembali ke env var/bawaan' : 'Belum ada token server untuk mapel ini'}
-                      >
-                        <RotateCcw size={15} /> Pakai bawaan
+                        {copied === r.subject ? <Check size={15} /> : <Copy size={15} />}
                       </button>
                     </div>
-                  </div>
-                </>
-              )}
+                    <div className="token-row-edit">
+                      {r.source !== 'server' && (
+                        <p className="token-row-hint">
+                          Token ini masih dari <strong>{SOURCE_LABEL[r.source]}</strong>. Simpan sekali di
+                          sini untuk mengunci token di server — setelah itu bisa dirotasi tanpa deploy.
+                        </p>
+                      )}
+                      <label>
+                        <span>Token baru</span>
+                        <input
+                          type="text"
+                          value={draft[r.subject]?.token ?? ''}
+                          onChange={(e) => edit(r.subject, { token: e.target.value })}
+                          className="calc-input"
+                          placeholder="Minimal 4 karakter"
+                        />
+                      </label>
+                      <label>
+                        <span>Batas mulai (opsional)</span>
+                        <input
+                          type="datetime-local"
+                          value={draft[r.subject]?.expiry ?? ''}
+                          onChange={(e) => edit(r.subject, { expiry: e.target.value })}
+                          className="calc-input"
+                        />
+                      </label>
+                      <div className="token-row-actions">
+                        <button
+                          type="button"
+                          className="btn btn-primary"
+                          onClick={() => save(r.subject)}
+                          disabled={busy === r.subject}
+                        >
+                          <Save size={15} /> {busy === r.subject ? 'Menyimpan…' : 'Simpan'}
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-secondary"
+                          onClick={() => revert(r.subject)}
+                          disabled={busy === r.subject || r.source !== 'server'}
+                          title={r.source === 'server' ? 'Hapus token server, kembali ke env var/bawaan' : 'Belum ada token server untuk mapel ini'}
+                        >
+                          <RotateCcw size={15} /> Pakai bawaan
+                        </button>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
 
-      <p className="token-panel-foot">
-        <CircleCheck size={14} /> Simpan di sini tidak perlu deploy. Bila tabel
-        <code> exam_tokens</code> belum dibuat, jalankan blok <code>exam_tokens</code> di
-        Supabase &rarr; SQL Editor (lihat <code>supabase/schema.sql</code>); sampai itu
-        aplikasi tetap jalan memakai token bawaan.
-      </p>
+        <p className="token-panel-foot">
+          <CircleCheck size={14} /> Simpan di sini tidak perlu deploy. Bila tabel
+          <code> exam_tokens</code> belum dibuat, jalankan blok <code>exam_tokens</code> di
+          Supabase &rarr; SQL Editor (lihat <code>supabase/schema.sql</code>); sampai itu
+          aplikasi tetap jalan memakai token bawaan.
+        </p>
+      </div>
     </section>
   );
 }

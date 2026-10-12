@@ -1835,13 +1835,32 @@ html.exam-lock-active .quiz-container { max-width: 860px; }
   margin-bottom: 18px;
 }
 .token-panel-head {
+  position: relative;
   display: flex; gap: 10px; align-items: flex-start;
+  padding: 0; margin: 0;
+}
+.token-panel-head:hover h3 { color: var(--primary-text); }
+.token-panel.open .token-panel-head {
   padding-bottom: 12px; margin-bottom: 4px;
   border-bottom: 1px solid var(--border);
 }
 .token-panel-head > svg { color: var(--primary-text); flex-shrink: 0; margin-top: 2px; }
-.token-panel-head h3 { margin: 0 0 4px; font-size: 1rem; }
+.token-panel-head .token-panel-chevron {
+  margin-left: auto; margin-top: 2px; color: var(--text-light); flex-shrink: 0;
+}
+.token-panel-head h3 { margin: 0 0 4px; font-size: 1rem; transition: color 0.15s; }
 .token-panel-head p { margin: 0; font-size: 0.82rem; color: var(--text-light); line-height: 1.5; }
+/* Saat tertutup: tampilkan bar tipis (judul saja), sembunyikan penjelasan. */
+.token-panel:not(.open) .token-panel-head h3 { margin: 0; }
+.token-panel:not(.open) .token-panel-head p { display: none; }
+/* Tombol transparan yang menutupi seluruh header → seluruh bar bisa diklik
+   tanpa melanggar aturan HTML (heading tidak boleh di dalam <button>). */
+.token-panel-toggle-cover {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  background: none; border: 0; padding: 0; margin: 0;
+  cursor: pointer; border-radius: 6px;
+}
+.token-panel-toggle-cover:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
 
 .token-row { padding: 12px 0; border-bottom: 1px dashed var(--border); }
 .token-row:last-of-type { border-bottom: none; }
