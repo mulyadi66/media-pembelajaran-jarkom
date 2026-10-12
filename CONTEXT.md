@@ -426,6 +426,11 @@ Tiga bug yang sama-sama merusak file tapi lolos karena JS masih valid:
 - Alur sama seperti Post Test MPK 1: token → identitas → soal + timer → submit → review
 - **State keys:** `kka_elemen{1..5}_ujian` (satu key per elemen)
 - Rekap `/kka/rekap` (PIN via `getRekapPin`, flag sessionStorage `rekapPinKkaOk`)
+  - **Tabel sortable:** klik header (Nama/NIS/Kelas/kelima elemen/Rerata/Status/Durasi). Angka default menurun, teks menaik; nilai kosong selalu ke bawah. State `{key,dir}` + helper `thSort`/`toggleSort`.
+  - **Filter:** kelas, **status** (Selesai/Sebagian/Belum), dan **elemen** ("sudah mengerjakan elemen X") — selain pencarian nama/NIS.
+  - **Header dinamis:** label kelas diambil dari data (`kelasList`); fallback "Kelas XI TJKT" hanya bila tidak ada roster/kelas.
+  - **Ringkasan:** sebaran predikat A–E, jumlah lolos (rerata ≥ 70) + persentase, rata-rata per kelas, dan rerata per elemen.
+  - **Export Excel** (`write-excel-file/browser`, lazy `import()` → chunk terpisah): 2 sheet — "Rekap Nilai" (header ungu, kolom NIS diformat teks `@`, nilai < 70 merah) + "Ringkasan" (per-elemen, sebaran predikat, lolos ≥ 70). Export ikut baris yang sedang terlihat (filter aktif). Tombol CSV lama tetap ada.
 - **Post-Test KKA sudah dihapus total** (`cd1a3c7`): file `PostTestKKA.jsx` + `posttestKKA.js`
   dan route `/kka/posttest` dibuang. Sertifikat + badge + leaderboard **tidak** lagi membaca
   `kka_posttest`; syaratnya hanya Ujian KKA (5 elemen selesai, rerata ≥ 70). Nilai `kka_posttest`
@@ -449,6 +454,7 @@ Tiga bug yang sama-sama merusak file tapi lolos karena JS masih valid:
 - [x] Rekap nilai: filter/pencarian nama-NIS, statistik rata-rata per modul, reset server (RPC TRUNCATE) + reset lokal
 - [x] Kolom Kelas/Grup opsional di identitas → filter kelas + statistik per kelas di Rekap
 - [x] Durasi pengerjaan per siswa per modul (started_at/finished_at/durasi_detik) → kolom Durasi di Rekap + CSV
+- [x] Rekap KKA: tabel sortable (klik header), filter status & elemen, header kelas dinamis, blok ringkasan (predikat/lolos ≥70/rata per kelas), export **Excel 2 sheet** (`write-excel-file`, lazy-loaded) di samping CSV
 - [x] Roster siswa (NIS;Nama;Kelas, tersimpan lokal) → siswa yang belum mengerjakan tampil status Belum
 - [x] Token ujian + peringatan anti-contek (pindah tab, tutup/merefresh tab) saat ujian berlangsung
 - [x] Verifikasi device simulator — touch-action:none + e.preventDefault() untuk mobile drag
