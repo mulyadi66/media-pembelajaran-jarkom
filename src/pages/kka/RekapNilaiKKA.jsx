@@ -269,8 +269,17 @@ export default function RekapNilaiKKA() {
         setRows(buildRows(data || []));
         setSource('server');
       }
-      const pend = syncPending();
-      pend.then(n => { if (n > 0) { setMessage(`Tersinkron ${n} hasil yang tertunda.`); load(); } }).catch(() => {});
+      // Sinkronkan hasil yang mengantri. Pesannya dipasang SETELAH reload ulang
+      // selesai, karena load() memulai dengan setMessage('') — kalau dipasang
+      // sebelum reload, teks "Tersinkron N…" langsung terhapus dan tak terlihat.
+      syncPending()
+        .then(async (n) => {
+          if (n > 0) {
+            await load();
+            setMessage(`Tersinkron ${n} hasil yang tertunda.`);
+          }
+        })
+        .catch(() => {});
     } else {
       setRows(buildRows(getExamHistory()));
       setSource('local');
