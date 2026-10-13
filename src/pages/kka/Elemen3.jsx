@@ -348,7 +348,7 @@ print("Halo,", nama)`}</CodeBlock>
           <strong><CheckSquare size={14} /> Tugas:</strong>
           <ol>
             <li>Tulis program Python yang menerima <strong>nama dan umur</strong>, lalu menampilkan sapaan beserta kategori umur (anak, remaja, dewasa).</li>
-            <li>Tulis program Python yang menghitung <strong>luas lingkaran</strong> (π × r × r, gunakan r = 3.14).</li>
+            <li>Tulis program Python yang menghitung <strong>luas lingkaran</strong> (π × r × r, gunakan π = 3.14).</li>
             <li>Jalankan kedua program dan sertakan tangkapan layar hasilnya.</li>
           </ol>
         </div>

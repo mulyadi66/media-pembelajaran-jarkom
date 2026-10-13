@@ -197,7 +197,7 @@ export default [
       'E. print(25000 * 0.1)',
     ],
     answer: 2,
-    explanation: 'Diskon 10 persen dihitung sebagai harga dikali 0,1, yaitu 2500, lalu dikurangkan dari harga sehingga hasil akhirnya 22500. Kode C memakai variabel yang jelas dan perhitungannya benar.',
+    explanation: 'Diskon 10 persen dihitung sebagai harga dikali 0,1, yaitu 2500, lalu dikurangkan dari harga sehingga hasil akhirnya 22500. Kode yang tepat memakai variabel yang jelas dan perhitungannya benar.',
   },
   {
     id: 16, level: 'C2 - Memahami', elemen: 'Elemen 3',
@@ -314,7 +314,7 @@ export default [
       'E. nilai1 = 0\nfor i in range(5):\n    nilai1 = nilai1\nprint(nilai1)',
     ],
     answer: 1,
-    explanation: 'Kode B memakai fungsi max untuk membandingkan kelima nilai lalu menyimpan hasilnya pada variabel bernama jelas. Kode lain tidak membandingkan seluruh nilai dengan benar.',
+    explanation: 'Kode yang tepat memakai fungsi max untuk membandingkan kelima nilai lalu menyimpan hasilnya pada variabel bernama jelas. Kode lain tidak membandingkan seluruh nilai dengan benar.',
   },
   {
     id: 25, level: 'C5 - Menilai', elemen: 'Elemen 3',

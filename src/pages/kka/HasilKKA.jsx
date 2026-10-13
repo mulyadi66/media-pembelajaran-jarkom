@@ -126,7 +126,7 @@ export default function HasilKKA() {
         <p style={{color: 'var(--text-light)', fontSize: '0.85rem', marginBottom: 16}}>
           Nilai pemahaman awal, dikerjakan di halaman <strong>Pre-Test</strong> sebelum belajar
           ({PRETEST_KKA_SOAL_PER_ELEMEN} soal per elemen, boleh diulang). Bandingkan dengan nilai
-          Ujian KKA di bawah untuk melihat how besar kemajuanmu.
+          Ujian KKA di bawah untuk melihat seberapa besar kemajuanmu.
         </p>
         {pretestElemen.map(m => (
           <ScoreBar

@@ -173,7 +173,7 @@ export default [
       'E. Menghafal seluruh data sekolah sebelum mulai menulis laporan'
     ],
     answer: 2,
-    explanation: 'Dekomposisi memecah pekerjaan besar menjadi tugas-tugas kecil yang bisa dikerjakan satu per satu. Pilihan C memisahkan pengumpulan data, penyusunan isi, pembuatan visualisasi, dan pemeriksaan secara runtut.'
+    explanation: 'Dekomposisi memecah pekerjaan besar menjadi tugas-tugas kecil yang bisa dikerjakan satu per satu. Jawaban yang tepat memisahkan pengumpulan data, penyusunan isi, pembuatan visualisasi, dan pemeriksaan secara runtut.'
   },
   {
     id: 12,
@@ -285,7 +285,7 @@ export default [
       'E. Tuang air panas ke gelas, biarkan hingga dingin, baru masukkan teh celup'
     ],
     answer: 3,
-    explanation: 'Urutan langkah menentukan hasil akhir algoritma. Pilihan D sesuai dengan urutan pada materi: teh celup dan gula dimasukkan lebih dulu, baru air panas dituang, lalu diaduk sampai merata.'
+    explanation: 'Urutan langkah menentukan hasil akhir algoritma. Jawaban yang tepat menyesuaikan urutan pada materi: teh celup dan gula dimasukkan lebih dulu, baru air panas dituang, lalu diaduk sampai merata.'
   },
   {
     id: 19,
@@ -349,7 +349,7 @@ export default [
       'E. (1) Baca masukan alas dan tinggi, (2) bagi alas dengan 2, (3) bagi tinggi dengan 2, (4) jumlahkan keduanya, (5) tampilkan'
     ],
     answer: 2,
-    explanation: 'Algoritma harus logis dan terurut: masukan dibaca lebih dulu, baru rumus luas 1/2 x alas x tinggi dihitung, lalu hasilnya ditampilkan. Pilihan E salah karena menjumlahkan alas dan tinggi, bukan mengalikan.'
+    explanation: 'Algoritma harus logis dan terurut: masukan dibaca lebih dulu, baru rumus luas 1/2 x alas x tinggi dihitung, lalu hasilnya ditampilkan. Urutan yang menjumlahkan alas dan tinggi, bukan mengalikannya, merupakan langkah yang salah.'
   },
   {
     id: 23,

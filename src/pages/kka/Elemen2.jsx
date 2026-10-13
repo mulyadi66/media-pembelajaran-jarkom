@@ -114,7 +114,7 @@ export default function Elemen2() {
               <tr>
                 <td><strong>Digital Culture</strong></td>
                 <td>Nilai dan budaya dalam berinteraksi di dunia digital</td>
-                <td>Berprilaku sopan, menghargai keberagaman, tidak menyebar hoaks</td>
+                <td>Berperilaku sopan, menghargai keberagaman, tidak menyebar hoaks</td>
               </tr>
               <tr>
                 <td><strong>Digital Ethics</strong></td>
@@ -124,7 +124,7 @@ export default function Elemen2() {
               <tr>
                 <td><strong>Digital Safety</strong></td>
                 <td>Keamanan diri dan data di ruang digital</td>
-                <td>Kata sandi kuat, 2FA, mengenali phising</td>
+                <td>Kata sandi kuat, 2FA, mengenali phishing</td>
               </tr>
             </tbody>
           </table>
@@ -161,7 +161,7 @@ export default function Elemen2() {
         <ul>
           <li>Menggunakan kata sandi kuat dan berbeda untuk tiap akun</li>
           <li>Mengaktifkan autentikasi dua faktor (2FA)</li>
-          <li>Waspada phising, malware, dan penipuan online</li>
+          <li>Waspada phishing, malware, dan penipuan online</li>
           <li>Menjaga data pribadi seperti KTP, rekening, dan PIN</li>
           <li>Berhati-hati saat menggunakan Wi-Fi publik</li>
         </ul>
@@ -205,7 +205,7 @@ export default function Elemen2() {
         <ul>
           <li>Gunakan kata sandi kuat (minimal 8 karakter, kombinasi huruf, angka, simbol)</li>
           <li>Aktifkan autentikasi dua faktor (2FA) pada akun penting</li>
-          <li>Waspada phising — jangan klik tautan mencurigakan</li>
+          <li>Waspada phishing — jangan klik tautan mencurigakan</li>
           <li>Perbarui perangkat lunak secara rutin</li>
         </ul>
 
@@ -217,13 +217,13 @@ export default function Elemen2() {
               <tr><td><strong>Virus</strong></td><td>Program jahat yang menyebar lewat file</td><td>Gunakan antivirus, jangan buka file mencurigakan</td></tr>
               <tr><td><strong>Trojan</strong></td><td>Mencuri data dengan menyamar sebagai program baik</td><td>Unduh aplikasi dari sumber resmi saja</td></tr>
               <tr><td><strong>Ransomware</strong></td><td>Mengunci data lalu meminta tebusan</td><td>Backup data rutin, jangan bayar tebusan</td></tr>
-              <tr><td><strong>Phising</strong></td><td>Menipu dengan tautan/pesan palsu untuk mencuri data</td><td>Cek alamat situs, jangan klik tautan mencurigakan</td></tr>
+              <tr><td><strong>Phishing</strong></td><td>Menipu dengan tautan/pesan palsu untuk mencuri data</td><td>Cek alamat situs, jangan klik tautan mencurigakan</td></tr>
               <tr><td><strong>Spyware</strong></td><td>Mata-mata yang merekam aktivitas pengguna</td><td>Perbarui sistem, periksa izin aplikasi</td></tr>
             </tbody>
           </table>
         </div>
         <div className="info-box warning">
-          <strong>Contoh Phising:</strong> Email atau pesan yang berpura-pura dari bank meminta kata sandi. Bank tidak pernah meminta kata sandi lewat pesan.
+          <strong>Contoh Phishing:</strong> Email atau pesan yang berpura-pura dari bank meminta kata sandi. Bank tidak pernah meminta kata sandi lewat pesan.
         </div>
         <div className="info-box success">
           <strong><CheckSquare size={14} /> Tugas:</strong>

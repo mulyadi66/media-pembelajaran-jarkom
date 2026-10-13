@@ -197,7 +197,7 @@ export default [
       'E. Tampilkan angka acak',
     ],
     answer: 3,
-    explanation: 'Algoritma yang tepat menggunakan dekomposisi dan pengenalan pola: telusuri tiap angka 1 sampai 10, uji apakah habis dibagi 2 (genap), lalu tampilkan yang memenuhi. Opsi C benar hasilnya, tetapi bukan algoritma umum yang menggambarkan cara berpikirnya.',
+    explanation: 'Algoritma yang tepat menggunakan dekomposisi dan pengenalan pola: telusuri tiap angka 1 sampai 10, uji apakah habis dibagi 2 (genap), lalu tampilkan yang memenuhi. Jawaban yang langsung menuliskan daftar angka tertentu tidak menjelaskan cara berpikir yang dapat dipakai ulang untuk rentang angka lain.',
   },
   {
     id: 16, level: 'C2 - Memahami', elemen: 'Elemen 1',
