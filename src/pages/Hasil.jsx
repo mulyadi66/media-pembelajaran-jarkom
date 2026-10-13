@@ -143,7 +143,7 @@ export default function Hasil() {
         <p style={{color: 'var(--text-light)', fontSize: '0.85rem', marginBottom: 16}}>
           Nilai pemahaman awal, dikerjakan di halaman <strong>Pre-Test</strong> sebelum belajar
           ({PRETEST_MPK1_SOAL_PER_MODUL} soal per modul, boleh diulang). Bandingkan dengan nilai
-          Post-Test di atas untuk melihat how besar kemajuanmu.
+          Post-Test di atas untuk melihat seberapa besar kemajuanmu.
         </p>
         {pretestModul.map(m => (
           <ScoreBar

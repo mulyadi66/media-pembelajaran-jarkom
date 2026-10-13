@@ -91,7 +91,7 @@ export default function Modul3KKAXI() {
 
     # Metode
     def perkenalan(self):
-        return f"Halo, saya {nama} dari kelas {self.kelas}"
+        return f"Halo, saya {self.nama} dari kelas {self.kelas}"
 
     def tambah_nilai(self, n):
         self.nilai.append(n)
