@@ -59,7 +59,7 @@ export default function Modul2KKAXI() {
 
         {/* A.1 Pengertian dan Motivasi */}
         <h4 style={{marginTop: 0}}>A.1 Dari Algoritma Dasar ke Algoritma Kompleks</h4>
-        <p>Di Modul 1 kamu telah mempelajari algoritma dasar: sequential, conditional, dan iterative. Sekarang kita masuk ke algoritma yang mampu menyelesaikan masalah jauh lebih besar dan kompleks. Perbedaan utamanya:</p>
+        <p>Sebelumnya kamu telah mempelajari algoritma dasar: sequential, conditional, dan iterative. Sekarang kita masuk ke algoritma yang mampu menyelesaikan masalah jauh lebih besar dan kompleks. Perbedaan utamanya:</p>
         <ul>
           <li><strong>Algoritma Dasar</strong> — Menyelesaikan masalah sederhana: menghitung rata-rata, mencari nilai maksimum, mengurutkan array kecil.</li>
           <li><strong>Algoritma Kompleks</strong> — Menyelesaikan masalah yang melibatkan banyak keputusan, kombinasi besar, atau struktur data bersarang: menemukan rute terpendek di peta, menjadwalkan ribuan tugas, atau mengoptimalkan penggunaan memori.</li>
@@ -383,7 +383,7 @@ export default function Modul2KKAXI() {
         <Tugas data={[
           'Analisis Kompleksitas — Untuk setiap skenario berikut, tentukan algoritma/struktur data yang paling tepat dan analisis kompleksitas Big O-nya: (a) Cari nama kontak di phonebook 10.000 nama, (b) Urutkan 500 siswa berdasarkan nilai ujian, (c) Cari rute terpendek di peta kota dengan 200 persimpangan, (d) Cek apakah sebuah kata palindrome.',
           'Studi Kasus: Toko Online — Sebuah toko online memiliki 100.000 produk. Buatlah rancangan sistem pencarian produk yang mencakup: (a) Struktur data untuk menyimpan dan mencari produk, (b) Algoritma untuk pencarian berdasarkan nama, (c) Algoritma untuk sorting berdasarkan harga, (d) Algoritma untuk rekomendasi produk (suggestion), (e) Analisis Big O untuk setiap komponen.',
-          'Refleksi Pemrograman — Setelah mempelajari Modul 1 dan Modul 2, buatlah refleksi: (a) Algoritma kompleks mana yang paling menarik bagimu dan mengapa, (b) Kasus nyata di sekitarmu yang bisa diselesaikan dengan Tree atau Graph, (c) Rencana belajar algoritma lanjutan apa yang ingin kamu pelajari selanjutnya.',
+          'Refleksi Pemrograman — Setelah mempelajari algoritma kompleks dan struktur data pada modul ini, buatlah refleksi: (a) Algoritma kompleks mana yang paling menarik bagimu dan mengapa, (b) Kasus nyata di sekitarmu yang bisa diselesaikan dengan Tree atau Graph, (c) Rencana belajar algoritma lanjutan apa yang ingin kamu pelajari selanjutnya.',
         ]} />
 
       </MateriCard>

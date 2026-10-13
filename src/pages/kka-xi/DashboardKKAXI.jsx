@@ -34,8 +34,8 @@ export default function DashboardKKAXI() {
 
   const modules = [
     { to: '/kka-xi/modul1', icon: Globe, title: 'Menyaring Fakta, Identitas Digital & Kolaborasi Konten', desc: 'Verifikasi hoaks, reputasi online, dan kreasi konten digital', color: ['#06b6d4', '#0891b2'] },
-    { to: '/kka-xi/modul2', icon: Brain, title: 'Pengembangan Algoritma dan Struktur Data', desc: 'Array, linked list, stack, queue, sorting, searching', color: ['#10b981', '#059669'] },
-    { to: '/kka-xi/modul3', icon: Terminal, title: 'Algoritma Pemrograman', desc: 'Variabel, percabangan, perulangan, fungsi, debugging', color: ['#f59e0b', '#d97706'] },
+    { to: '/kka-xi/modul2', icon: Brain, title: 'Algoritma & Struktur Data', desc: 'Rekursi, dynamic programming, tree, graph, BFS/DFS, dan kompleksitas', color: ['#10b981', '#059669'] },
+    { to: '/kka-xi/modul3', icon: Terminal, title: 'Algoritma Pemrograman Berorientasi Objek', desc: 'Class dan object, inheritance, polymorphism, encapsulation, GUI', color: ['#f59e0b', '#d97706'] },
     { to: '/kka-xi/modul4', icon: Code2, title: 'Pengembangan Web yang Responsif dan Interaktif', desc: 'HTML, CSS, JavaScript, responsive design, DOM', color: ['#8b5cf6', '#6d28d9'] },
   ];
 

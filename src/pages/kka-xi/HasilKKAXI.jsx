@@ -102,7 +102,7 @@ export default function HasilKKAXI() {
         <p style={{color: 'var(--text-light)', fontSize: '0.85rem', marginBottom: 16}}>
           Nilai pemahaman awal, dikerjakan di halaman <strong>Pre-Test</strong> sebelum belajar
           ({PRETEST_KKA_XI_SOAL_PER_MODUL} soal per modul, boleh diulang). Bandingkan dengan nilai
-          Ujian KKA XI di bawah untuk melihat how besar kemajuanmu.
+          Ujian KKA XI di bawah untuk melihat seberapa besar kemajuanmu.
         </p>
         {pretestModul.map(m => (
           <ScoreBar

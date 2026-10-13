@@ -22,7 +22,7 @@ export const challengeKKAXI = [
   { q: 'Perulangan yang menggunakan kondisi?', answer: 'While loop', accept: ['while loop', 'while', 'perulangan while'] },
   { q: 'Fungsi utama dari <canvas> di HTML5?', answer: 'Menggambar grafis', accept: ['menggambar grafis', 'drawing', 'canvas', 'grafis'] },
   { q: 'Approach desain web dari layar kecil ke besar?', answer: 'Mobile-first', accept: ['mobile-first', 'mobile first'] },
-  { q: 'Pendekatan memecah masalah jadi bagian kecil?', answer: 'Divide and conquer', accept: ['divide and conquer', 'divide and conquer'] },
+  { q: 'Pendekatan memecah masalah jadi bagian kecil?', answer: 'Divide and conquer', accept: ['divide and conquer', 'divide & conquer'] },
   { q: 'Tipe data untuk teks di Python?', answer: 'String', accept: ['string', 'str'] },
   { q: 'Tipe data untuk benar/salah?', answer: 'Boolean', accept: ['boolean', 'bool'] },
   { q: 'Properti CSS untuk layout fleksibel?', answer: 'display: flex', accept: ['display: flex', 'flexbox', 'flex'] },

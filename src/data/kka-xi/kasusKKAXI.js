@@ -9,7 +9,7 @@ export const kasusKKAXI = [
     desc: 'Seorang siswa SMK menemukan berita viral di grup WhatsApp yang menyatakan bahwa "semua makanan kemasan mengandung zat berbahaya". Berita ini menyebabkan kepanikan di kalangan warga sekolah.',
     details: [
       'Berita tersebut berasal dari akun tidak dikenal tanpa sumber resmi',
-      'Sudah dibagikan ke 15 grup WhatsApp dan mendapat ratusan转发',
+      'Sudah dibagikan ke 15 grup WhatsApp dan diteruskan ratusan kali',
       'Beberapa orang tua siswa mulai memboikot makanan kantin sekolah',
       'Kepala sekolah meminta bantuan siswa TI untuk mengecek kebenaran berita'
     ],

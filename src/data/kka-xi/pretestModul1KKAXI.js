@@ -29,7 +29,7 @@ export default [
       'E. Iklan berbayar di media sosial'
     ],
     answer: 3,
-    explanation: 'Hoaks adalah informasi yang isinya salah atau menyesatkan, baik disengaja maupun tidak, lalu diseneaarkan seolah-olah benar.'
+    explanation: 'Hoaks adalah informasi yang isinya salah atau menyesatkan, baik disengaja maupun tidak, lalu disebarkan seolah-olah benar.'
   },
   {
     id: 3,

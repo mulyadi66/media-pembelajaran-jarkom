@@ -541,7 +541,7 @@ Setiap contoh ada label nama teknik Flexbox yang digunakan dan kode CSS-nya dita
 
         {/* B.2 Membuat Akun GitHub */}
         <h4 style={{marginTop: 0}}>B.2 Membuat Akun GitHub & Repository Baru</h4>
-        <p>GitHub adalah platform kolaborasi开发 berbasis Git. Semua kode project disimpan di repository (folder online) yang bisa diakses dari mana saja. Ikuti langkah berikut untuk membuat akun dan repository baru.</p>
+        <p>GitHub adalah platform kolaborasi dan pengembangan berbasis Git. Semua kode project disimpan di repository (folder online) yang bisa diakses dari mana saja. Ikuti langkah berikut untuk membuat akun dan repository baru.</p>
 
         {/* Step 1 */}
         <div style={{display:'flex', gap:16, alignItems:'flex-start', margin:'20px 0', padding:16, background:'var(--bg-secondary)', borderRadius:10, border:'1px solid var(--border)'}}>

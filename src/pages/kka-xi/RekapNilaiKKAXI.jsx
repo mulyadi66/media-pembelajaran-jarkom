@@ -97,7 +97,7 @@ function mergeRoster(rows, roster) {
   return [...map.values()].sort((a, b) => a.nis.localeCompare(b.nis));
 }
 
-/** Parse teks roster "NIS;Nama;Kelas" per baris -> array siswa. */
+/** Format ISO timestamp menjadi tanggal-waktu lokal, mis. "12 Okt 2026, 14.30". */
 function formatTanggal(iso) {
   if (!iso) return '—';
   const d = new Date(iso);
@@ -108,11 +108,12 @@ function formatTanggal(iso) {
 const STATUS_LABEL = { selesai: 'Selesai', sebagian: 'Sebagian', belum: 'Belum' };
 
 function exportCSV(rows) {
-  const cols = ['No', 'Nama', 'NIS', 'Kelas', ...KOLOM.map(k => k.label), 'Rerata', 'Status', 'Durasi Total (mnt)', 'Waktu Submit'];
+  const cols = ['No', 'Nama', 'NIS', 'Kelas', ...KOLOM.map(k => k.label), 'Rerata', 'Predikat', 'Status', 'Durasi Total (mnt)', 'Waktu Submit'];
   const lines = rows.map((r, i) => [
     i + 1, r.nama, r.nis, r.kelas,
     ...KOLOM.map(k => (r.el[k.key].nilai == null ? '' : r.el[k.key].nilai)),
     r.rata ?? '',
+    r.rata == null ? '' : predikat(r.rata).grade,
     STATUS_LABEL[r.status],
     r.durTotal ?? '',
     r.at ? formatTanggal(r.at) : '',
@@ -228,6 +229,13 @@ export default function RekapNilaiKKAXI() {
     ? baseRowset.filter(r => r.nama.toLowerCase().includes(qNorm) || r.nis.toLowerCase().includes(qNorm))
     : baseRowset;
 
+  // Rerata di footer ikut baris yang terlihat (pencarian), sejalan dengan ekspor
+  // yang juga mengikuti tabel. `kelasAvg` tetap dipakai untuk statistik kelas.
+  const filteredDone = filtered.filter(r => r.jml > 0);
+  const rerataTampil = filteredDone.length
+    ? Math.round(filteredDone.reduce((a, r) => a + r.rata, 0) / filteredDone.length)
+    : null;
+
   // Ekspor selalu mengikuti yang terlihat di tabel. Kalau tidak ada fallback ke
   // seluruh data: guru yang mengetik nama yang salah mengira dia mengexpor
   // semua siswa padahal hanya dapat 0 baris (atau sebaliknya).
@@ -300,7 +308,7 @@ export default function RekapNilaiKKAXI() {
   const nKolom = 5 + KOLOM.length + 3; // No/Nama/NIS/Kelas/Akses + 4 modul + rerata/status/waktu
   const cells = (r) => (
     <tr key={r.nis} className={r.status === 'belum' ? 'row-belum' : ''}>
-      <td>{effective.indexOf(r) + 1}</td>
+      <td>{filtered.indexOf(r) + 1}</td>
       <td style={{ fontWeight: 600 }}>{r.nama}</td>
       <td className="rekap-nis">{r.nis}</td>
       <td className="rekap-kelas">{r.kelas || '—'}</td>
@@ -473,7 +481,7 @@ export default function RekapNilaiKKAXI() {
         {filtered.length > 0 && (
           <p className="rekap-foot">
             <UserCheck size={14} style={{ verticalAlign: 'middle' }} />
-            {filtered.length} siswa · rerata kelas <strong>{kelasAvg ?? '—'}</strong>
+            {filtered.length} siswa · rerata kelas <strong>{rerataTampil ?? '—'}</strong>
             {kelasSel && <> · filter: {kelasSel}</>}
           </p>
         )}
