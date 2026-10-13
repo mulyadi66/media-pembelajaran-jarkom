@@ -13,6 +13,10 @@ import {
   Copy,
   Search,
   Users,
+  FileSpreadsheet,
+  ArrowUp,
+  ArrowDown,
+  ChevronsUpDown,
 } from 'lucide-react';
 import TokenUjianPanel from '../../components/TokenUjianPanel';
 import {
@@ -126,6 +130,109 @@ function exportCSV(rows) {
   URL.revokeObjectURL(a.href);
 }
 
+/**
+ * Ekspor .xlsx rapi (sheet "Rekap Nilai" + sheet "Ringkasan") memakai
+ * write-excel-file (dimuat lazy supaya chunk hanya ter-download saat dipakai).
+ * Sheet utama memakai shortcut objects+columns; NIS dipaksa format teks (@)
+ * supaya Excel tidak mengubahnya jadi angka.
+ */
+async function exportExcel(rows) {
+  const { default: writeExcelFile, getSheetData } = await import('write-excel-file/browser');
+
+  const header = (text) => ({
+    value: text,
+    fontWeight: 'bold',
+    backgroundColor: '#4f46e5',
+    textColor: '#ffffff',
+    align: 'center',
+    alignVertical: 'center',
+    wrap: true,
+  });
+
+  const columns = [
+    { header: header('No'), width: 5, cell: (r, i) => ({ value: i + 1, align: 'center' }) },
+    { header: header('Nama'), width: 26, cell: (r) => ({ value: r.nama }) },
+    {
+      header: header('NIS'), width: 15,
+      cell: (r) => ({ value: r.nis, type: String, format: '@' }),
+    },
+    { header: header('Kelas'), width: 13, cell: (r) => ({ value: r.kelas || '' }) },
+    ...KOLOM.map((k) => ({
+      header: header(k.label),
+      width: 10,
+      cell: (r) => {
+        const v = r.el[k.key].nilai;
+        return {
+          value: v == null ? '' : v,
+          align: 'center',
+          fontWeight: v != null && v < 70 ? 'bold' : undefined,
+          textColor: v != null && v < 70 ? '#b91c1c' : undefined,
+        };
+      },
+    })),
+    {
+      header: header('Predikat'), width: 11,
+      cell: (r) => ({ value: r.rata == null ? '' : predikat(r.rata).grade, align: 'center' }),
+    },
+    {
+      header: header('Status'), width: 12,
+      cell: (r) => ({ value: STATUS_LABEL[r.status], align: 'center' }),
+    },
+    {
+      header: header('Durasi Total (mnt)'), width: 11,
+      cell: (r) => ({ value: r.durTotal == null ? '' : r.durTotal, align: 'center' }),
+    },
+    {
+      header: header('Waktu Submit'), width: 22,
+      cell: (r) => (r.at ? { value: new Date(r.at), type: Date, format: 'dd/mm/yyyy hh:mm' } : { value: '' }),
+    },
+  ];
+
+  // Sheet Ringkasan — dibangun sebagai sheetData (array baris) langsung.
+  const intL = (v) => ({ value: v, fontWeight: 'bold', backgroundColor: '#eef2ff' });
+  const title = (v) => ({ value: v, fontWeight: 'bold', fontSize: 14, backgroundColor: '#eef2ff' });
+  const ringkasanData = [
+    [title('Ringkasan Rekap Nilai UTS DKK'), null, null, null],
+    [{ value: `Dibuat ${new Date().toLocaleString('id-ID')} · ${rows.length} siswa pada filter aktif`, textColor: '#6b7280' }, null, null, null],
+    [],
+    [intL('Topik'), intL('Jumlah Nilai'), intL('Rata-rata'), intL('Terendah / Tertinggi')],
+    ...KOLOM.map((k) => {
+      const vals = rows.map((r) => r.el[k.key].nilai).filter((v) => v != null);
+      if (!vals.length) return [k.label, 0, '', ''];
+      return [
+        k.label,
+        vals.length,
+        Math.round(vals.reduce((a, b) => a + b, 0) / vals.length),
+        `${Math.min(...vals)} / ${Math.max(...vals)}`,
+      ];
+    }),
+    [],
+    [intL('Sebaran Predikat'), intL('Jumlah'), null, null],
+    ...['A', 'B', 'C', 'D', 'E'].map((g) => [
+      g,
+      rows.filter((r) => r.rata != null && predikat(r.rata).grade === g).length,
+      '',
+      '',
+    ]),
+    [],
+    [intL('Siswa yang sudah ujian'), rows.filter((r) => r.jml > 0).length, null, null],
+    [intL('Lolos rerata ≥ 70'), rows.filter((r) => r.jml > 0 && r.rata >= 70).length, null, null],
+  ];
+  const ringkasanCols = [{ width: 24 }, { width: 13 }, { width: 12 }, { width: 22 }];
+
+  const res = await writeExcelFile([
+    { data: getSheetData(rows, columns), sheet: 'Rekap Nilai', columns, stickyRowsCount: 1, orientation: 'landscape' },
+    { data: ringkasanData, sheet: 'Ringkasan', columns: ringkasanCols },
+  ]);
+  const blob = await res.toBlob();
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'rekap-nilai-uts-dkk.xlsx';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
 export default function RekapUTS() {
   const [unlocked, setUnlocked] = useState(() => sessionStorage.getItem(PIN_KEY) === '1');
   const [pin, setPin] = useState('');
@@ -138,6 +245,8 @@ export default function RekapUTS() {
   const [manualNis, setManualNis] = useState('');
   const [q, setQ] = useState('');
   const [kelasSel, setKelasSel] = useState('');
+  const [statusSel, setStatusSel] = useState('');
+  const [sort, setSort] = useState({ key: null, dir: 1 });
   const [roster, setRoster] = useState(() => getRoster(SUBJECT));
   const [rosterOpen, setRosterOpen] = useState(false);
 
@@ -154,8 +263,17 @@ export default function RekapUTS() {
         setRows(buildRows(data || []));
         setSource('server');
       }
-      const pend = syncPending();
-      pend.then(n => { if (n > 0) { setMessage(`Tersinkron ${n} hasil yang tertunda.`); load(); } }).catch(() => {});
+      // Sinkronkan hasil yang mengantri. Pesannya dipasang SETELAH reload ulang
+      // selesai, karena load() memulai dengan setMessage('') — kalau dipasang
+      // sebelum reload, teks "Tersinkron N…" langsung terhapus dan tak terlihat.
+      syncPending()
+        .then(async (n) => {
+          if (n > 0) {
+            await load();
+            setMessage(`Tersinkron ${n} hasil yang tertunda.`);
+          }
+        })
+        .catch(() => {});
     } else {
       setRows(buildRows(getExamHistory()));
       setSource('local');
@@ -212,7 +330,43 @@ export default function RekapUTS() {
 
   const effective = mergeRoster(rows, roster);
   const kelasList = [...new Set(effective.map(r => r.kelas).filter(Boolean))].sort();
-  const baseRowset = kelasSel ? effective.filter(r => r.kelas === kelasSel) : effective;
+
+  // --- Sortir kolom (klik header) ---
+  // Nilai kosong selalu ke bawah apa pun arahnya, supaya siswa yang belum
+  // ujian tidak "menang" saat diurutkan menurun.
+  const STATUS_RANK = { selesai: 0, sebagian: 1, belum: 2 };
+  const sortVal = (r, key) => {
+    if (key === 'nama') return r.nama.toLowerCase();
+    if (key === 'nis') return r.nis;
+    if (key === 'kelas') return (r.kelas || '').toLowerCase();
+    if (key === 'rata') return r.rata;
+    if (key === 'dur') return r.durTotal;
+    if (key === 'status') return STATUS_RANK[r.status] ?? 3;
+    return r.el[key] ? r.el[key].nilai : undefined;
+  };
+  const sorted = sort.key
+    ? [...effective].sort((a, b) => {
+      const av = sortVal(a, sort.key);
+      const bv = sortVal(b, sort.key);
+      if (av == null && bv == null) return 0;
+      if (av == null) return 1;
+      if (bv == null) return -1;
+      if (typeof av === 'number' && typeof bv === 'number') return (av - bv) * sort.dir;
+      return String(av).localeCompare(String(bv)) * sort.dir;
+    })
+    : effective;
+
+  const toggleSort = (key) => {
+    setSort((s) => {
+      if (s.key === key) return { key, dir: -s.dir };
+      const numerik = key === 'rata' || key === 'dur' || KOLOM.some(k => k.key === key);
+      return { key, dir: numerik ? -1 : 1 }; // nilai: tertinggi dulu
+    });
+  };
+
+  let baseRowset = kelasSel ? sorted.filter(r => r.kelas === kelasSel) : sorted;
+  if (statusSel) baseRowset = baseRowset.filter(r => r.status === statusSel);
+
   const done = baseRowset.filter(r => r.jml > 0);
   const selesai = baseRowset.filter(r => r.status === 'selesai').length;
   const kelasAvg = done.length ? Math.round(done.reduce((a, r) => a + r.rata, 0) / done.length) : null;
@@ -223,10 +377,36 @@ export default function RekapUTS() {
     return { key: k.key, label: k.label, jml: vals.length, rata: vals.length ? Math.round(vals.reduce((a, b) => a + b, 0) / vals.length) : null };
   });
 
+  // Ringkasan: sebaran predikat, jumlah lolos, dan rerata per kelas.
+  const predikatCount = ['A', 'B', 'C', 'D', 'E'].map(g => ({
+    g, jml: done.filter(r => predikat(r.rata).grade === g).length,
+  }));
+  const lolosCount = done.filter(r => r.rata >= 70).length;
+  const perKelas = kelasList.map(k => {
+    const rowsK = baseRowset.filter(r => r.kelas === k);
+    const doneK = rowsK.filter(r => r.jml > 0);
+    return {
+      k,
+      total: rowsK.length,
+      n: doneK.length,
+      rata: doneK.length ? Math.round(doneK.reduce((a, r) => a + r.rata, 0) / doneK.length) : null,
+    };
+  });
+
+  // Header dinamis: tampilkan kelas yang benar-benar ada di data, bukan hardcode.
+  const kelasLabel = kelasList.length ? kelasList.join(' · ') : 'Kelas XI TJKT';
+
   const qNorm = q.trim().toLowerCase();
   const filtered = qNorm
     ? baseRowset.filter(r => r.nama.toLowerCase().includes(qNorm) || r.nis.toLowerCase().includes(qNorm))
     : baseRowset;
+
+  // Rerata di footer ikut baris yang terlihat (filter/pencarian), sejalan
+  // dengan ekspor. `kelasAvg` tetap dipakai untuk statistik tingkat kelas.
+  const filteredDone = filtered.filter(r => r.jml > 0);
+  const rerataTampil = filteredDone.length
+    ? Math.round(filteredDone.reduce((a, r) => a + (r.rata ?? 0), 0) / filteredDone.length)
+    : null;
 
   // Ekspor selalu mengikuti yang terlihat di tabel. Kalau tidak ada fallback ke
   // seluruh data: guru yang mengetik nama yang salah mengira dia mengexpor
@@ -238,6 +418,20 @@ export default function RekapUTS() {
     }
     exportCSV(filtered);
     setMessage(`CSV dibuat untuk ${filtered.length} siswa sesuai filter yang aktif.`);
+  };
+
+  const doExportExcel = async () => {
+    if (!filtered.length) {
+      setMessage('Tidak ada baris untuk diekspor — longgarkan pencarian atau filter kelas.');
+      return;
+    }
+    setMessage('Menyiapkan file Excel…');
+    try {
+      await exportExcel(filtered);
+      setMessage(`File Excel dibuat untuk ${filtered.length} siswa sesuai filter yang aktif.`);
+    } catch (e) {
+      setMessage(`Gagal membuat file Excel: ${e?.message || 'kesalahan tidak diketahui'}.`);
+    }
   };
 
   const handleReset = async () => {
@@ -293,10 +487,28 @@ export default function RekapUTS() {
     setUnlockSel({ nis, nama: found ? found.nama : `Siswa NIS ${nis}` });
   };
 
-  const nKolom = 5 + KOLOM.length + 3; // No/Nama/NIS/Kelas/Akses + kolom UTS + rerata/status/waktu
+  const nKolom = 5 + KOLOM.length + 3; // No/Nama/NIS/Kelas/Akses + kolom UTS + predikat/status/waktu
+
+  const thSort = (label, key) => {
+    const aktif = sort.key === key;
+    return (
+      <th key={key} aria-sort={aktif ? (sort.dir === 1 ? 'ascending' : 'descending') : 'none'}>
+        <button
+          type="button"
+          className={`rekap-sort-btn${aktif ? ' aktif' : ''}`}
+          onClick={() => toggleSort(key)}
+          aria-label={`Urutkan berdasarkan ${label}`}
+        >
+          <span>{label}</span>
+          {aktif ? (sort.dir === 1 ? <ArrowUp size={12} /> : <ArrowDown size={12} />) : <ChevronsUpDown size={12} />}
+        </button>
+      </th>
+    );
+  };
+
   const cells = (r) => (
     <tr key={r.nis} className={r.status === 'belum' ? 'row-belum' : ''}>
-      <td>{effective.indexOf(r) + 1}</td>
+      <td>{filtered.indexOf(r) + 1}</td>
       <td style={{ fontWeight: 600 }}>{r.nama}</td>
       <td className="rekap-nis">{r.nis}</td>
       <td className="rekap-kelas">{r.kelas || '—'}</td>
@@ -336,7 +548,7 @@ export default function RekapUTS() {
           <div>
             <h2 style={{ marginBottom: 4 }}><ClipboardList size={20} style={{ verticalAlign: 'middle' }} /> Rekap Nilai UTS DKK</h2>
             <p style={{ color: 'var(--text-light)', fontSize: '0.85rem' }}>
-              Dasar Kompetensi Keahlian (DKK) · Kelas XI TJKT · {UTS_DKK_SOAL} soal
+              Dasar Kompetensi Keahlian (DKK) · {kelasLabel} · {UTS_DKK_SOAL} soal
             </p>
           </div>
           <div className="rekap-actions no-print">
@@ -348,6 +560,9 @@ export default function RekapUTS() {
             </button>
             <button className="btn btn-secondary" onClick={doExportCSV} disabled={!effective.length}>
               <Download size={16} /> CSV
+            </button>
+            <button className="btn btn-secondary" onClick={doExportExcel} disabled={!effective.length}>
+              <FileSpreadsheet size={16} /> Excel
             </button>
             <button className="btn btn-secondary" onClick={() => window.print()} disabled={!effective.length}>
               <Printer size={16} /> Cetak
@@ -392,6 +607,39 @@ export default function RekapUTS() {
           </div>
         </div>
 
+        <div className="rekap-summary">
+          <div className="rekap-summary-block">
+            <span className="rs-label">Sebaran Predikat</span>
+            <div className="rs-predikats">
+              {predikatCount.map(p => (
+                <span key={p.g} className="predikat-badge" data-grade={p.g} title={`${p.jml} siswa`}>
+                  {p.g} — {p.jml}
+                </span>
+              ))}
+            </div>
+          </div>
+          <div className="rekap-summary-block">
+            <span className="rs-label">Lolos (rerata ≥ 70)</span>
+            <span className="rs-big">
+              {lolosCount}
+              <small> / {done.length} siswa ujian{done.length ? ` (${Math.round((lolosCount / done.length) * 100)}%)` : ''}</small>
+            </span>
+          </div>
+          <div className="rekap-summary-block">
+            <span className="rs-label">Rata-rata per Kelas</span>
+            <div className="rs-classes">
+              {perKelas.length === 0 && <span className="muted">—</span>}
+              {perKelas.map(pk => (
+                <span key={pk.k} className="rs-class">
+                  <strong>{pk.k}</strong>
+                  <span className={`rs-class-avg ${pk.rata == null ? 'muted' : ''}`}>{pk.rata == null ? '—' : pk.rata}</span>
+                  <small>{pk.n}/{pk.total} ujian</small>
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+
         <div className="rekap-toolbar no-print">
           <div className="rekap-search">
             <Search size={16} />
@@ -408,6 +656,17 @@ export default function RekapUTS() {
           >
             <option value="">Semua kelas ({effective.length})</option>
             {kelasList.map(k => <option key={k} value={k}>{k}</option>)}
+          </select>
+          <select
+            className="rekap-kelas-select"
+            value={statusSel}
+            onChange={(e) => setStatusSel(e.target.value)}
+            aria-label="Filter status pengerjaan"
+          >
+            <option value="">Semua status</option>
+            <option value="selesai">Selesai ({TOTAL_MODUL} ujian)</option>
+            <option value="sebagian">Sebagian</option>
+            <option value="belum">Belum ujian</option>
           </select>
           <span className="rekap-search-hint">
             {qNorm ? `${filtered.length} dari ${baseRowset.length} siswa` : `${baseRowset.length} siswa`}
@@ -442,9 +701,15 @@ export default function RekapUTS() {
           <table className="rekap-table">
             <thead>
               <tr>
-                <th>No</th><th>Nama</th><th>NIS</th><th>Kelas</th><th>Akses</th>
-                {KOLOM.map(k => <th key={k.key}>{k.label}</th>)}
-                <th>Predikat</th><th>Status</th><th>Durasi / Submit</th>
+                <th>No</th>
+                {thSort('Nama', 'nama')}
+                {thSort('NIS', 'nis')}
+                {thSort('Kelas', 'kelas')}
+                <th>Akses</th>
+                {KOLOM.map(k => thSort(k.label, k.key))}
+                {thSort('Predikat', 'rata')}
+                {thSort('Status', 'status')}
+                {thSort('Durasi / Submit', 'dur')}
               </tr>
             </thead>
             <tbody>
@@ -466,7 +731,7 @@ export default function RekapUTS() {
         {filtered.length > 0 && (
           <p className="rekap-foot">
             <UserCheck size={14} style={{ verticalAlign: 'middle' }} />
-            {filtered.length} siswa · rata-rata kelas <strong>{kelasAvg ?? '—'}</strong>
+            {filtered.length} siswa · rata-rata kelas <strong>{rerataTampil ?? '—'}</strong>
             {kelasSel && <> · filter: {kelasSel}</>}
           </p>
         )}
