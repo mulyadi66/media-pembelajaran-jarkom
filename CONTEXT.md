@@ -428,7 +428,7 @@ Tiga bug yang sama-sama merusak file tapi lolos karena JS masih valid:
 - Rekap `/kka/rekap` (PIN via `getRekapPin`, flag sessionStorage `rekapPinKkaOk`)
   - **Tabel sortable:** klik header (Nama/NIS/Kelas/kelima elemen/Rerata/Status/Durasi). Angka default menurun, teks menaik; nilai kosong selalu ke bawah. State `{key,dir}` + helper `thSort`/`toggleSort`.
   - **Filter:** kelas, **status** (Selesai/Sebagian/Belum), dan **elemen** ("sudah mengerjakan elemen X") — selain pencarian nama/NIS.
-  - **Header dinamis:** label kelas diambil dari data (`kelasList`); fallback "Kelas XI TJKT" hanya bila tidak ada roster/kelas.
+  - **Header dinamis:** label kelas diambil dari data (`kelasList`); fallback "Kelas X TJKT" hanya bila tidak ada roster/kelas.
   - **Ringkasan:** sebaran predikat A–E, jumlah lolos (rerata ≥ 70) + persentase, rata-rata per kelas, dan rerata per elemen.
   - **Export Excel** (`write-excel-file/browser`, lazy `import()` → chunk terpisah): 2 sheet — "Rekap Nilai" (header ungu, kolom NIS diformat teks `@`, nilai < 70 merah) + "Ringkasan" (per-elemen, sebaran predikat, lolos ≥ 70). Export ikut baris yang sedang terlihat (filter aktif). Tombol CSV lama tetap ada.
 - **Post-Test KKA sudah dihapus total** (`cd1a3c7`): file `PostTestKKA.jsx` + `posttestKKA.js`

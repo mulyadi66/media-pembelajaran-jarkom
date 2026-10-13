@@ -111,11 +111,12 @@ function formatTanggal(iso) {
 const STATUS_LABEL = { selesai: 'Selesai', sebagian: 'Sebagian', belum: 'Belum' };
 
 function exportCSV(rows) {
-  const cols = ['No', 'Nama', 'NIS', 'Kelas', ...KOLOM.map(k => k.label), 'Rerata', 'Status', 'Durasi Total (mnt)', 'Waktu Submit'];
+  const cols = ['No', 'Nama', 'NIS', 'Kelas', ...KOLOM.map(k => k.label), 'Rerata', 'Predikat', 'Status', 'Durasi Total (mnt)', 'Waktu Submit'];
   const lines = rows.map((r, i) => [
     i + 1, r.nama, r.nis, r.kelas,
     ...KOLOM.map(k => (r.el[k.key].nilai == null ? '' : r.el[k.key].nilai)),
     r.rata ?? '',
+    r.rata == null ? '' : predikat(r.rata).grade,
     STATUS_LABEL[r.status],
     r.durTotal ?? '',
     r.at ? formatTanggal(r.at) : '',
@@ -392,12 +393,20 @@ export default function RekapNilaiKKA() {
   });
 
   // Header dinamis: tampilkan kelas yang benar-benar ada di data, bukan hardcode.
-  const kelasLabel = kelasList.length ? kelasList.join(' · ') : 'Kelas XI TJKT';
+  const kelasLabel = kelasList.length ? kelasList.join(' · ') : 'Kelas X TJKT';
 
   const qNorm = q.trim().toLowerCase();
   const filtered = qNorm
     ? baseRowset.filter(r => r.nama.toLowerCase().includes(qNorm) || r.nis.toLowerCase().includes(qNorm))
     : baseRowset;
+
+  // Rerata di footer ikut baris yang terlihat (filter/pencarian), sejalan dengan
+  // ekspor yang juga mengikuti tabel. `kelasAvg` tetap dipakai untuk statistik
+  // tingkat kelas di blok ringkasan di atas.
+  const filteredDone = filtered.filter(r => r.jml > 0);
+  const rerataTampil = filteredDone.length
+    ? Math.round(filteredDone.reduce((a, r) => a + r.rata, 0) / filteredDone.length)
+    : null;
 
   // Ekspor selalu mengikuti yang terlihat di tabel. Kalau tidak ada fallback ke
   // seluruh data: guru yang mengetik nama yang salah mengira dia mengexpor
@@ -734,7 +743,7 @@ export default function RekapNilaiKKA() {
         {filtered.length > 0 && (
           <p className="rekap-foot">
             <UserCheck size={14} style={{ verticalAlign: 'middle' }} />
-            {filtered.length} siswa · rerata kelas <strong>{kelasAvg ?? '—'}</strong>
+            {filtered.length} siswa · rerata kelas <strong>{rerataTampil ?? '—'}</strong>
             {kelasSel && <> · filter: {kelasSel}</>}
           </p>
         )}
